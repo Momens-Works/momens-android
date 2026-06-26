@@ -1,0 +1,42 @@
+# Gradle
+.gradle/
+build/
+
+# Local configuration
+local.properties
+
+# Android Studio / IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+.navigation/
+
+# Android generated files
+captures/
+.externalNativeBuild/
+.cxx/
+gen-external-apklibs/
+output.json
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+bin/
+gen/
+out/
+obj/
+proguard/
+
+# Logs and crash dumps
+*.log
+*.hprof
+hs_err_pid*
+*.stackdump
+
+# macOS
+.DS_Store
+
+# Keep Gradle wrapper jar tracked
+!/gradle/wrapper/gradle-wrapper.jar
