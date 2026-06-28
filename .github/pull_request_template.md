@@ -7,7 +7,7 @@
 
 
 ## Screenshot 📸
-<img src="" width="360"/>
+<!-- 필요한 경우 스크린샷을 첨부해주세요. 예: ![변경 화면](image-url) -->
 
 ## Uncompleted Tasks 😅
 - [ ] Task1
