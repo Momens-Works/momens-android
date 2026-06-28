@@ -115,3 +115,16 @@ dependencies {
 
     debugImplementation(libs.bundles.compose.debug)
 }
+
+ktlint {
+    android = true
+    debug = true
+    coloredOutput = true
+    verbose = true
+    outputToConsole = true
+
+    filter {
+        exclude { element -> element.file.path.contains("test/") }
+        exclude { element -> element.file.path.contains("androidTest/") }
+    }
+}
