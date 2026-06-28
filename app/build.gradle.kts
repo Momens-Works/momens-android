@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -28,18 +32,54 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
 
+kotlin {
+    jvmToolchain(libs.versions.jvmTarget.get().toInt())
+}
+
 dependencies {
+    implementation(libs.bundles.androidx.core)
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
+
+    implementation(libs.bundles.kotlin.extensions)
+    implementation(libs.bundles.coroutines)
+
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.bundles.network)
+
+    implementation(libs.bundles.hilt)
+    implementation(libs.androidx.constraintlayout)
+    ksp(libs.hilt.compiler)
+
+    implementation(platform(libs.coil.bom))
+    implementation(libs.bundles.coil)
+
+    implementation(libs.androidx.navigation)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.timber)
+    implementation(libs.lottie)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.bundles.android.test)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    debugImplementation(libs.bundles.compose.debug)
+
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
