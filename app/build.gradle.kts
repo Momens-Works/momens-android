@@ -36,7 +36,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                properties.getProperty("debug.base.url")
+                properties.getProperty("debug.base.url"),
             )
         }
 
@@ -46,12 +46,12 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                properties.getProperty("release.base.url")
+                properties.getProperty("release.base.url"),
             )
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
 
             optimization {
