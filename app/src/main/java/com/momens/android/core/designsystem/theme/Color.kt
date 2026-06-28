@@ -1,4 +1,4 @@
-package com.momens.android.ui.theme
+package com.momens.android.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
