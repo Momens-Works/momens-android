@@ -79,7 +79,6 @@ dependencies {
     implementation(libs.bundles.androidx.core)
 
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.activity.compose)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.lifecycle.compose)
 
