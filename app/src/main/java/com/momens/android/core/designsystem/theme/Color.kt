@@ -4,86 +4,101 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-private val Gray900 = Color(0xFF393939)
-private val Gray800 = Color(0xFF4D4D4D)
-private val Gray700 = Color(0xFF595959)
-private val Gray600 = Color(0xFF737373)
-private val Gray500 = Color(0xFFB6B6B6)
-private val Gray400 = Color(0xFFCDCDCD)
-private val Gray300 = Color(0xFFDBDBDB)
-private val Gray200 = Color(0xFFF0F0F0)
-private val Gray100 = Color(0xFFF5F5F5)
+// Primary
+private val Primary100 = Color(0xFF3765EF)
+private val Primary50 = Color(0xFF668CFF)
+private val Primary10 = Color(0xFFF2F5FF)
 
-private val Blue300 = Color(0xFF2F363E)
-private val Blue200 = Color(0xFF4A535A)
-private val Blue100 = Color(0xFFB8BCBF)
+// Point
+private val PointRed = Color(0xFFFE8E8E)
+private val PointPurple = Color(0xFF7E70FF)
+private val PointYellow = Color(0xFFFFB854)
+private val PointMint = Color(0xFF70D4CC)
 
+// Black & White
 private val White = Color(0xFFFFFFFF)
 private val Black = Color(0xFF191919)
 
-private val Yellow400 = Color(0xFFFFF9C4)
-private val Yellow500 = Color(0xFFFEE500)
-private val Yellow600 = Color(0xFFF6DE00)
+// Background
+private val NavGray = Color(0xCC666E74)
+private val UiBg = Color(0xFFEFF1F1)
+private val UiBlackBg = Color(0x99191919)
 
-private val Orange300 = Color(0xFFEA5B21)
-private val Orange200 = Color(0xFFFF9117)
-private val Orange100 = Color(0xFFFDEEE7)
+// Grayscale
+private val Gray100 = Color(0xFFEDF0F4)
+private val Gray200 = Color(0xFFD5DADF)
+private val Gray300 = Color(0xFFBCC4CC)
+private val Gray400 = Color(0xFF959CA3)
+private val Gray500 = Color(0xFF788087)
+private val Gray600 = Color(0xFF666E74)
+private val Gray700 = Color(0xFF4A5156)
+private val Gray800 = Color(0xFF36393C)
+private val Gray900 = Color(0xFF202223)
 
 @Immutable
 data class MomensColors(
-    val gray900: Color,
-    val gray800: Color,
-    val gray700: Color,
-    val gray600: Color,
-    val gray500: Color,
-    val gray400: Color,
-    val gray300: Color,
-    val gray200: Color,
-    val gray100: Color,
 
-    val blue300: Color,
-    val blue200: Color,
-    val blue100: Color,
+    // Primary
+    val primary100: Color,
+    val primary50: Color,
+    val primary10: Color,
 
+    // Point
+    val pointRed: Color,
+    val pointPurple: Color,
+    val pointYellow: Color,
+    val pointMint: Color,
+
+    // B&W
     val white: Color,
     val black: Color,
 
-    val yellow400: Color,
-    val yellow500: Color,
-    val yellow600: Color,
+    // Background
+    val navGray: Color,
+    val uiBg: Color,
+    val uiBlackBg: Color,
 
-    val orange300: Color,
-    val orange200: Color,
-    val orange100: Color
+    // Gray
+    val gray100: Color,
+    val gray200: Color,
+    val gray300: Color,
+    val gray400: Color,
+    val gray500: Color,
+    val gray600: Color,
+    val gray700: Color,
+    val gray800: Color,
+    val gray900: Color,
 )
 
-val defaultMomensColors = MomensColors(
-    gray900 = Gray900,
-    gray800 = Gray800,
-    gray700 = Gray700,
-    gray600 = Gray600,
-    gray500 = Gray500,
-    gray400 = Gray400,
-    gray300 = Gray300,
-    gray200 = Gray200,
-    gray100 = Gray100,
+val DefaultMomensColors = MomensColors(
 
-    blue300 = Blue300,
-    blue200 = Blue200,
-    blue100 = Blue100,
+    primary100 = Primary100,
+    primary50 = Primary50,
+    primary10 = Primary10,
+
+    pointRed = PointRed,
+    pointPurple = PointPurple,
+    pointYellow = PointYellow,
+    pointMint = PointMint,
 
     white = White,
     black = Black,
 
-    yellow400 = Yellow400,
-    yellow500 = Yellow500,
-    yellow600 = Yellow600,
+    navGray = NavGray,
+    uiBg = UiBg,
+    uiBlackBg = UiBlackBg,
 
-    orange300 = Orange300,
-    orange200 = Orange200,
-    orange100 = Orange100
+    gray100 = Gray100,
+    gray200 = Gray200,
+    gray300 = Gray300,
+    gray400 = Gray400,
+    gray500 = Gray500,
+    gray600 = Gray600,
+    gray700 = Gray700,
+    gray800 = Gray800,
+    gray900 = Gray900,
 )
 
 val LocalMomensColorProvider = staticCompositionLocalOf {
-    defaultMomensColors
+    DefaultMomensColors
 }
