@@ -19,11 +19,6 @@ private val PointMint = Color(0xFF70D4CC)
 private val White = Color(0xFFFFFFFF)
 private val Black = Color(0xFF191919)
 
-// Background
-private val NavGray = Color(0xCC666E74)
-private val UiBg = Color(0xFFEFF1F1)
-private val UiBlackBg = Color(0x99191919)
-
 // Grayscale
 private val Gray100 = Color(0xFFEDF0F4)
 private val Gray200 = Color(0xFFD5DADF)
@@ -34,6 +29,12 @@ private val Gray600 = Color(0xFF666E74)
 private val Gray700 = Color(0xFF4A5156)
 private val Gray800 = Color(0xFF36393C)
 private val Gray900 = Color(0xFF202223)
+
+// Background
+private val NavGray = Gray600.copy(alpha = 0.8f)
+private val UiBg = Color(0xFFEFF1F1)
+private val UiBlackBg = Black.copy(alpha = 0.6f)
+
 
 @Immutable
 data class MomensColors(
@@ -53,11 +54,6 @@ data class MomensColors(
     val white: Color,
     val black: Color,
 
-    // Background
-    val navGray: Color,
-    val uiBg: Color,
-    val uiBlackBg: Color,
-
     // Gray
     val gray100: Color,
     val gray200: Color,
@@ -68,6 +64,11 @@ data class MomensColors(
     val gray700: Color,
     val gray800: Color,
     val gray900: Color,
+
+    // Background
+    val navGray: Color,
+    val uiBg: Color,
+    val uiBlackBg: Color
 )
 
 val defaultMomensColors = MomensColors(
