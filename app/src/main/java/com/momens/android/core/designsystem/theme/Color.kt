@@ -70,7 +70,7 @@ data class MomensColors(
     val gray900: Color,
 )
 
-val DefaultMomensColors = MomensColors(
+val defaultMomensColors = MomensColors(
 
     primary100 = Primary100,
     primary50 = Primary50,
@@ -100,5 +100,5 @@ val DefaultMomensColors = MomensColors(
 )
 
 val LocalMomensColorProvider = staticCompositionLocalOf {
-    DefaultMomensColors
+    defaultMomensColors
 }
