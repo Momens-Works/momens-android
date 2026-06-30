@@ -8,97 +8,149 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.momens.android.R
 
 @Immutable
 data class MomensTypography(
-    val body1: TextStyle,
-    val body2: TextStyle,
-    val body3: TextStyle,
-    val body4: TextStyle,
-    val body5: TextStyle,
-    val body6: TextStyle,
-    val head1: TextStyle,
-    val head2: TextStyle,
-    val head3: TextStyle,
-    val head4: TextStyle
+    // Title
+    val titleBold24: TextStyle,
+    val titleBold20: TextStyle,
+    val titleMedium20: TextStyle,
+
+    // Body
+    val bodyBold16: TextStyle,
+    val bodyMedium16: TextStyle,
+    val bodyBold14: TextStyle,
+    val bodyMedium14: TextStyle,
+    val bodyBold12: TextStyle,
+    val bodyMedium12: TextStyle,
+
+    // Caption
+    val captionBold11: TextStyle,
+    val captionMedium11: TextStyle,
+    val captionBold10: TextStyle,
+    val captionMedium10: TextStyle,
 )
 
-private val PretendardFontFamily = FontFamily(
-    Font(R.font.pretendard_medium, weight = FontWeight.Medium),
-    Font(R.font.pretendard_bold, weight = FontWeight.Bold),
+private val SuitFontFamily = FontFamily(
+    Font(R.font.suit_medium, weight = FontWeight.Medium),
+    Font(R.font.suit_bold, weight = FontWeight.Bold),
 )
 
 val defaultMomensTypography = MomensTypography(
-    body1 = TextStyle(
-        fontFamily = PretendardFontFamily,
+
+    // -------------------------
+    // Title
+    // -------------------------
+    titleBold24 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        lineHeight = 31.2.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    titleBold20 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        lineHeight = 26.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    titleMedium20 = TextStyle(
+        fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
-        lineHeight = 24.sp,
+        fontSize = 20.sp,
+        lineHeight = 26.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    // -------------------------
+    // Body
+    // -------------------------
+    bodyBold16 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-        letterSpacing = 0.01.em
-    ),
-    body2 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 22.5.sp,
-        fontSize = 15.sp,
-        letterSpacing = 0.01.em
-    ),
-    body3 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 18.2.sp,
-        fontSize = 13.sp,
-        letterSpacing = 0.01.em
-    ),
-    body4 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 18.sp,
-        fontSize = 12.sp,
-        letterSpacing = 0.01.em
-    ),
-    body5 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 16.5.sp,
-        fontSize = 11.sp,
-        letterSpacing = 0.01.em
-    ),
-    body6 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 12.sp,
-        fontSize = 8.sp,
-        letterSpacing = 0.01.em
-    ),
-    head1 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
-        lineHeight = 33.sp,
-        fontSize = 22.sp,
-        letterSpacing = 0.05.em
-    ),
-    head2 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
         lineHeight = 24.sp,
-        fontSize = 16.sp,
-        letterSpacing = 0.05.em
+        letterSpacing = (-0.02).em
     ),
-    head3 = TextStyle(
-        fontFamily = PretendardFontFamily,
+
+    bodyMedium16 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    bodyBold14 = TextStyle(
+        fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
-        lineHeight = 21.sp,
         fontSize = 14.sp,
-        letterSpacing = 0.05.em
+        lineHeight = 21.sp,
+        letterSpacing = (-0.02).em
     ),
-    head4 = TextStyle(
-        fontFamily = PretendardFontFamily,
+
+    bodyMedium14 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 21.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    bodyBold12 = TextStyle(
+        fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
-        lineHeight = 18.sp,
         fontSize = 12.sp,
-        letterSpacing = 0.05.em
-    )
+        lineHeight = 18.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    bodyMedium12 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        lineHeight = 18.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    // -------------------------
+    // Caption
+    // -------------------------
+    captionBold11 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 11.sp,
+        lineHeight = 16.5.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    captionMedium11 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp,
+        lineHeight = 16.5.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    captionBold10 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 10.sp,
+        lineHeight = 15.sp,
+        letterSpacing = (-0.02).em
+    ),
+
+    captionMedium10 = TextStyle(
+        fontFamily = SuitFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp,
+        lineHeight = 15.sp,
+        letterSpacing = (-0.02).em
+    ),
 )
 
 val LocalMomensTypographyProvider = staticCompositionLocalOf {
