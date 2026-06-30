@@ -13,23 +13,23 @@ import com.momens.android.R
 @Immutable
 data class MomensTypography(
     // Title
-    val titleBold24: TextStyle,
-    val titleBold20: TextStyle,
-    val titleMedium20: TextStyle,
+    val titleB24: TextStyle,
+    val titleB20: TextStyle,
+    val titleM20: TextStyle,
 
     // Body
-    val bodyBold16: TextStyle,
-    val bodyMedium16: TextStyle,
-    val bodyBold14: TextStyle,
-    val bodyMedium14: TextStyle,
-    val bodyBold12: TextStyle,
-    val bodyMedium12: TextStyle,
+    val bodyB16: TextStyle,
+    val bodyM16: TextStyle,
+    val bodyB14: TextStyle,
+    val bodyM14: TextStyle,
+    val bodyB12: TextStyle,
+    val bodyM12: TextStyle,
 
     // Caption
-    val captionBold11: TextStyle,
-    val captionMedium11: TextStyle,
-    val captionBold10: TextStyle,
-    val captionMedium10: TextStyle,
+    val captionB11: TextStyle,
+    val captionM11: TextStyle,
+    val captionB10: TextStyle,
+    val captionM10: TextStyle,
 )
 
 private val SuitFontFamily = FontFamily(
@@ -42,7 +42,7 @@ val defaultMomensTypography = MomensTypography(
     // -------------------------
     // Title
     // -------------------------
-    titleBold24 = TextStyle(
+    titleB24 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
@@ -50,7 +50,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    titleBold20 = TextStyle(
+    titleB20 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
@@ -58,7 +58,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    titleMedium20 = TextStyle(
+    titleM20 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
@@ -69,7 +69,7 @@ val defaultMomensTypography = MomensTypography(
     // -------------------------
     // Body
     // -------------------------
-    bodyBold16 = TextStyle(
+    bodyB16 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
@@ -77,7 +77,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    bodyMedium16 = TextStyle(
+    bodyM16 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
@@ -85,7 +85,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    bodyBold14 = TextStyle(
+    bodyB14 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
@@ -93,7 +93,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    bodyMedium14 = TextStyle(
+    bodyM14 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
@@ -101,7 +101,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    bodyBold12 = TextStyle(
+    bodyB12 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
@@ -109,7 +109,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    bodyMedium12 = TextStyle(
+    bodyM12 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
@@ -120,7 +120,7 @@ val defaultMomensTypography = MomensTypography(
     // -------------------------
     // Caption
     // -------------------------
-    captionBold11 = TextStyle(
+    captionB11 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp,
@@ -128,7 +128,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    captionMedium11 = TextStyle(
+    captionM11 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
@@ -136,7 +136,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    captionBold10 = TextStyle(
+    captionB10 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 10.sp,
@@ -144,7 +144,7 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 
-    captionMedium10 = TextStyle(
+    captionM10 = TextStyle(
         fontFamily = SuitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 10.sp,
