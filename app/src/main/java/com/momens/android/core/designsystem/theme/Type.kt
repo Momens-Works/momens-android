@@ -32,7 +32,7 @@ data class MomensTypography(
     val captionM10: TextStyle,
 )
 
-private val SuitFontFamily = FontFamily(
+private val suitFontFamily = FontFamily(
     Font(R.font.suit_medium, weight = FontWeight.Medium),
     Font(R.font.suit_bold, weight = FontWeight.Bold),
 )
@@ -43,7 +43,7 @@ val defaultMomensTypography = MomensTypography(
     // Title
     // -------------------------
     titleB24 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 31.2.sp,
@@ -51,7 +51,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     titleB20 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 26.sp,
@@ -59,7 +59,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     titleM20 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
         lineHeight = 26.sp,
@@ -70,7 +70,7 @@ val defaultMomensTypography = MomensTypography(
     // Body
     // -------------------------
     bodyB16 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -78,7 +78,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     bodyM16 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -86,7 +86,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     bodyB14 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 21.sp,
@@ -94,7 +94,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     bodyM14 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
         lineHeight = 21.sp,
@@ -102,7 +102,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     bodyB12 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 18.sp,
@@ -110,7 +110,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     bodyM12 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
         lineHeight = 18.sp,
@@ -121,7 +121,7 @@ val defaultMomensTypography = MomensTypography(
     // Caption
     // -------------------------
     captionB11 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp,
         lineHeight = 16.5.sp,
@@ -129,7 +129,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     captionM11 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.5.sp,
@@ -137,7 +137,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     captionB10 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 10.sp,
         lineHeight = 15.sp,
@@ -145,7 +145,7 @@ val defaultMomensTypography = MomensTypography(
     ),
 
     captionM10 = TextStyle(
-        fontFamily = SuitFontFamily,
+        fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 10.sp,
         lineHeight = 15.sp,
