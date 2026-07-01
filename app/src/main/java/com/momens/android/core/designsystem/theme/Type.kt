@@ -36,6 +36,20 @@ private val suitFontFamily = FontFamily(
     Font(R.font.suit_bold, weight = FontWeight.Bold),
 )
 
+private object TypographyDefaults {
+    // Title
+    val TitleLetterSpacing = (-0.02).em
+    val TitleLineHeight = 1.3.em
+
+    // Body
+    val BodyLetterSpacing = (-0.02).em
+    val BodyLineHeight = 1.5.em
+
+    // Caption
+    val CaptionLetterSpacing = (-0.02).em
+    val CaptionLineHeight = 1.5.em
+}
+
 val defaultMomensTypography = MomensTypography(
 
     // -------------------------
@@ -45,24 +59,24 @@ val defaultMomensTypography = MomensTypography(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
-        lineHeight = 31.2.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.TitleLineHeight,
+        letterSpacing = TypographyDefaults.TitleLetterSpacing
     ),
 
     titleB20 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
-        lineHeight = 26.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.TitleLineHeight,
+        letterSpacing = TypographyDefaults.TitleLetterSpacing
     ),
 
     titleM20 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
-        lineHeight = 26.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.TitleLineHeight,
+        letterSpacing = TypographyDefaults.TitleLetterSpacing
     ),
 
     // -------------------------
@@ -72,48 +86,48 @@ val defaultMomensTypography = MomensTypography(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.BodyLineHeight,
+        letterSpacing = TypographyDefaults.BodyLetterSpacing
     ),
 
     bodyM16 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.BodyLineHeight,
+        letterSpacing = TypographyDefaults.BodyLetterSpacing
     ),
 
     bodyB14 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
-        lineHeight = 21.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.BodyLineHeight,
+        letterSpacing = TypographyDefaults.BodyLetterSpacing
     ),
 
     bodyM14 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        lineHeight = 21.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.BodyLineHeight,
+        letterSpacing = TypographyDefaults.BodyLetterSpacing
     ),
 
     bodyB12 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
-        lineHeight = 18.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.BodyLineHeight,
+        letterSpacing = TypographyDefaults.BodyLetterSpacing
     ),
 
     bodyM12 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
-        lineHeight = 18.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.BodyLineHeight,
+        letterSpacing = TypographyDefaults.BodyLetterSpacing
     ),
 
     // -------------------------
@@ -123,31 +137,31 @@ val defaultMomensTypography = MomensTypography(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp,
-        lineHeight = 16.5.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.CaptionLineHeight,
+        letterSpacing = TypographyDefaults.CaptionLetterSpacing
     ),
 
     captionM11 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
-        lineHeight = 16.5.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.CaptionLineHeight,
+        letterSpacing = TypographyDefaults.CaptionLetterSpacing
     ),
 
     captionB10 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 10.sp,
-        lineHeight = 15.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.CaptionLineHeight,
+        letterSpacing = TypographyDefaults.CaptionLetterSpacing
     ),
 
     captionM10 = TextStyle(
         fontFamily = suitFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 10.sp,
-        lineHeight = 15.sp,
-        letterSpacing = (-0.02).em
+        lineHeight = TypographyDefaults.CaptionLineHeight,
+        letterSpacing = TypographyDefaults.CaptionLetterSpacing
     ),
 )

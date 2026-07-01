@@ -3,6 +3,7 @@ package com.momens.android.core.designsystem.theme
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -27,9 +28,10 @@ fun MomensTheme(
     content: @Composable () -> Unit
 ) {
     val view = LocalView.current
+    val activity = LocalActivity.current
     if (!view.isInEditMode) {
         SideEffect {
-            view.context.findActivity()?.window?.let { window ->
+            activity?.window?.let { window ->
                 WindowCompat.getInsetsController(window, view)
                     .isAppearanceLightStatusBars = true
             }
@@ -55,10 +57,4 @@ object MomensTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalMomensTypographyProvider.current
-}
-
-private tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
 }
