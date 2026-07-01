@@ -31,9 +31,9 @@ private val Gray800 = Color(0xFF36393C)
 private val Gray900 = Color(0xFF202223)
 
 // Background
-private val NavGray = Gray600.copy(alpha = 0.8f)
+private val NavGray = Color(0xFF666E74).copy(alpha = 0.8f)
 private val UiBg = Color(0xFFEFF1F1)
-private val UiBlackBg = Black.copy(alpha = 0.6f)
+private val UiBlackBg = Color(0xFF191919).copy(alpha = 0.6f)
 
 
 @Immutable
