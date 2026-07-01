@@ -1,7 +1,6 @@
 package com.momens.android.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -152,7 +151,3 @@ val defaultMomensTypography = MomensTypography(
         letterSpacing = (-0.02).em
     ),
 )
-
-val LocalMomensTypographyProvider = staticCompositionLocalOf {
-    defaultMomensTypography
-}
