@@ -1,8 +1,5 @@
 package com.momens.android.core.designsystem.theme
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,10 +18,15 @@ val LocalMomensTypographyProvider = staticCompositionLocalOf {
     defaultMomensTypography
 }
 
+val LocalMomensEffectProvider = staticCompositionLocalOf {
+    defaultMomensEffect
+}
+
 @Composable
 fun MomensTheme(
     colors: MomensColors = defaultMomensColors,
     typography: MomensTypography = defaultMomensTypography,
+    effect: MomensEffect = defaultMomensEffect,
     content: @Composable () -> Unit
 ) {
     val view = LocalView.current
@@ -40,7 +42,8 @@ fun MomensTheme(
 
     CompositionLocalProvider(
         LocalMomensColorProvider provides colors,
-        LocalMomensTypographyProvider provides typography
+        LocalMomensTypographyProvider provides typography,
+        LocalMomensEffectProvider provides effect
     ) {
         MaterialTheme(
             content = content
@@ -57,4 +60,8 @@ object MomensTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalMomensTypographyProvider.current
+    val effect: MomensEffect
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalMomensEffectProvider.current
 }
