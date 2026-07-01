@@ -1,3 +1,3 @@
-import com.momens.android.core.common.navigation.Route
+package com.momens.android.core.common.navigation
 
 interface MainTabRoute : Route
