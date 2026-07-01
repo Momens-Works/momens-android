@@ -1,7 +1,6 @@
 package com.momens.android.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 // Primary
@@ -99,7 +98,3 @@ val defaultMomensColors = MomensColors(
     gray800 = Gray800,
     gray900 = Gray900,
 )
-
-val LocalMomensColorProvider = staticCompositionLocalOf {
-    defaultMomensColors
-}
