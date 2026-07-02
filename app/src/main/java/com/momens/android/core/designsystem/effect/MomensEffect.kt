@@ -8,11 +8,10 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.os.Build
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
@@ -28,7 +27,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 
-@Composable
 fun Modifier.momensUiShadow(
     shape: Shape = RoundedCornerShape(8.dp),
 ): Modifier = dropShadow(
@@ -40,7 +38,6 @@ fun Modifier.momensUiShadow(
     spread = 0.dp,
 )
 
-@Composable
 fun Modifier.momensBottomSheetShadow(
     shape: Shape
 ): Modifier = dropShadow(
@@ -54,7 +51,6 @@ fun Modifier.momensBottomSheetShadow(
 
 fun Modifier.momensNavBlur(): Modifier = customBlur( 4.dp)
 
-@Composable
 fun Modifier.dropShadow(
     shape: Shape,
     color: Color,
@@ -79,7 +75,7 @@ fun Modifier.dropShadow(
         }
     }
 
-    drawBehind {
+    drawWithCache {
         val spreadPx = spread.toPx()
         val offsetXPx = offsetX.toPx()
         val offsetYPx = offsetY.toPx()
@@ -87,16 +83,21 @@ fun Modifier.dropShadow(
         val shadowWidth = size.width + spreadPx
         val shadowHeight = size.height + spreadPx
 
-        if (shadowWidth <= 0f || shadowHeight <= 0f) return@drawBehind
+        if (shadowWidth <= 0f || shadowHeight <= 0f) {
+            return@drawWithCache onDrawBehind {}
+        }
 
         val shadowSize = Size(shadowWidth, shadowHeight)
         val shadowOutline = shape.createOutline(shadowSize, layoutDirection, this)
+        val shadowPath = shadowOutline.toAndroidPath()
 
-        drawIntoCanvas { canvas ->
-            canvas.save()
-            canvas.translate(offsetXPx - spreadPx / 2f, offsetYPx - spreadPx / 2f)
-            canvas.nativeCanvas.drawOutline(shadowOutline, paint)
-            canvas.restore()
+        onDrawBehind {
+            drawIntoCanvas { canvas ->
+                canvas.save()
+                canvas.translate(offsetXPx - spreadPx / 2f, offsetYPx - spreadPx / 2f)
+                canvas.nativeCanvas.drawOutline(shadowOutline, shadowPath, paint)
+                canvas.restore()
+            }
         }
     }
 }
@@ -124,17 +125,26 @@ fun Modifier.customBlur(
 
 private fun android.graphics.Canvas.drawOutline(
     outline: Outline,
+    path: Path?,
     paint: Paint,
 ) {
     when (outline) {
-        is Outline.Generic -> drawPath(outline.path.asAndroidPath(), paint)
+        is Outline.Generic -> path?.let { drawPath(it, paint) }
         is Outline.Rectangle -> {
             val rect = outline.rect
             drawRect(rect.left, rect.top, rect.right, rect.bottom, paint)
         }
 
+        is Outline.Rounded -> path?.let { drawPath(it, paint) }
+    }
+}
+
+private fun Outline.toAndroidPath(): Path? {
+    return when (this) {
+        is Outline.Generic -> path.asAndroidPath()
+        is Outline.Rectangle -> null
         is Outline.Rounded -> {
-            val roundRect = outline.roundRect
+            val roundRect = this.roundRect
             val rect = RectF(roundRect.left, roundRect.top, roundRect.right, roundRect.bottom)
             val radii = floatArrayOf(
                 roundRect.topLeftCornerRadius.x,
@@ -147,12 +157,9 @@ private fun android.graphics.Canvas.drawOutline(
                 roundRect.bottomLeftCornerRadius.y,
             )
 
-            drawPath(
-                Path().apply {
-                    addRoundRect(rect, radii, Path.Direction.CW)
-                },
-                paint,
-            )
+            Path().apply {
+                addRoundRect(rect, radii, Path.Direction.CW)
+            }
         }
     }
 }
