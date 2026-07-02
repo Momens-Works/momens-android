@@ -23,7 +23,7 @@ enum class TagType{
 }
 
 private data class TagStyle(
-    val text: String,
+    val label: String,
     val background: Color,
 )
 
@@ -48,7 +48,7 @@ fun MomensTag(
             .padding(horizontal = 12.dp, vertical = 1.dp)
     ){
         Text(
-            text = style.text,
+            text = style.label,
             color = MomensTheme.colors.white,
             style = MomensTheme.typography.captionB10,
         )
