@@ -54,12 +54,14 @@ fun MomensProgressBar(
 @Preview(showBackground = true)
 @Composable
 private fun MomensProgressBarPreview() {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-    ) {
-        repeat(11) { step ->
-            MomensProgressBar(percentage = step / 10f)
+    MomensTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+        ) {
+            repeat(11) { step ->
+                MomensProgressBar(percentage = step / 10f)
+            }
         }
     }
 }
