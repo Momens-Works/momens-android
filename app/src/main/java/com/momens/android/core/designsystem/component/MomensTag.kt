@@ -15,26 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
 import androidx.compose.ui.graphics.Color
 
-enum class TagType{
-    RISK,
-    DECISION,
-    CHANGE,
-    QUESTION,
-}
-
-private data class TagStyle(
-    val label: String,
-    val background: Color,
-)
-
-@Composable
-private fun TagType.toStyle() = when (this) {
-    TagType.RISK -> TagStyle("Risk", MomensTheme.colors.pointRed)
-    TagType.DECISION -> TagStyle("Decision", MomensTheme.colors.pointPurple)
-    TagType.CHANGE -> TagStyle("Change", MomensTheme.colors.pointYellow)
-    TagType.QUESTION -> TagStyle("Question", MomensTheme.colors.pointMint)
-}
-
 @Composable
 fun MomensTag(
     type: TagType,
@@ -53,6 +33,26 @@ fun MomensTag(
             style = MomensTheme.typography.captionB10,
         )
     }
+}
+
+enum class TagType{
+    RISK,
+    DECISION,
+    CHANGE,
+    QUESTION,
+}
+
+private data class TagStyle(
+    val label: String,
+    val background: Color,
+)
+
+@Composable
+private fun TagType.toStyle() = when (this) {
+    TagType.RISK -> TagStyle("Risk", MomensTheme.colors.pointRed)
+    TagType.DECISION -> TagStyle("Decision", MomensTheme.colors.pointPurple)
+    TagType.CHANGE -> TagStyle("Change", MomensTheme.colors.pointYellow)
+    TagType.QUESTION -> TagStyle("Question", MomensTheme.colors.pointMint)
 }
 
 @Preview(showBackground = true)
