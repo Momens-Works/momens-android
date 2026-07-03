@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component
+package com.momens.android.core.designsystem.component.divider
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
