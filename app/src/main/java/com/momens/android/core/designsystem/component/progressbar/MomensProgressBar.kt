@@ -3,14 +3,12 @@ package com.momens.android.core.designsystem.component.progressbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -22,10 +20,10 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensProgressBar(
-    percentage: Float,
+    progress: Float,
     modifier: Modifier = Modifier,
 ) {
-    val fraction = percentage.coerceIn(0f, 1f)
+    val fraction = progress.coerceIn(0f, 1f)
 
     Box(
         modifier = modifier
@@ -69,7 +67,7 @@ private fun MomensProgressBarPreview() {
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             repeat(11) { step ->
-                MomensProgressBar(percentage = step / 10f)
+                MomensProgressBar(progress = step / 10f)
             }
         }
     }
