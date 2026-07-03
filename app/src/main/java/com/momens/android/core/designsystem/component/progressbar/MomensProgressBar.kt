@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +27,7 @@ fun MomensProgressBar(
 ) {
     val fraction = percentage.coerceIn(0f, 1f)
 
-    BoxWithConstraints(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .height(12.dp)
@@ -35,11 +36,10 @@ fun MomensProgressBar(
                 shape = CircleShape
             )
     ) {
-        val fillWidth = (maxWidth * fraction).coerceAtLeast(14.dp)
-
         Box(
             modifier = Modifier
-                .width(fillWidth)
+                .fillMaxWidth(fraction = fraction)
+                .widthIn(min = 14.dp)
                 .fillMaxHeight()
                 .background(
                     color = MomensTheme.colors.white,
