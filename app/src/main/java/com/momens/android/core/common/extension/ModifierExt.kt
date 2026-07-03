@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.findRootCoordinates
@@ -24,8 +23,8 @@ import androidx.compose.ui.platform.LocalDensity
 inline fun Modifier.noRippleClickable(
     enabled: Boolean = true,
     crossinline onClick: () -> Unit
-): Modifier = composed {
-    this.clickable(
+): Modifier {
+    return clickable(
         indication = null,
         interactionSource = remember { MutableInteractionSource() },
         onClick = { onClick() },
@@ -41,9 +40,12 @@ fun Modifier.addFocusCleaner(focusManager: FocusManager): Modifier {
     }
 }
 
-fun Modifier.advancedImePadding() = composed {
+@Composable
+fun Modifier.advancedImePadding(): Modifier {
     var consumePadding by remember { mutableStateOf(0) }
-    onGloballyPositioned { coordinates ->
+    val density = LocalDensity.current
+
+    return onGloballyPositioned { coordinates ->
         consumePadding = (
             coordinates.findRootCoordinates().size.height -
                 (coordinates.positionInWindow().y + coordinates.size.height).toInt()
@@ -52,7 +54,7 @@ fun Modifier.advancedImePadding() = composed {
         )
     }
         .consumeWindowInsets(
-            PaddingValues(bottom = with(LocalDensity.current) { consumePadding.toDp() })
+            PaddingValues(bottom = with(density) { consumePadding.toDp() })
         )
         .imePadding()
 }
