@@ -77,8 +77,8 @@ fun Modifier.dropShadow(
     val offsetXPx = offsetX.toPx()
     val offsetYPx = offsetY.toPx()
 
-    val shadowWidth = size.width + spreadPx
-    val shadowHeight = size.height + spreadPx
+    val shadowWidth = size.width + spreadPx * 2f
+    val shadowHeight = size.height + spreadPx * 2f
 
     if (shadowWidth <= 0f || shadowHeight <= 0f) {
         return@drawWithCache onDrawBehind {}
@@ -91,7 +91,7 @@ fun Modifier.dropShadow(
     onDrawBehind {
         drawIntoCanvas { canvas ->
             canvas.save()
-            canvas.translate(offsetXPx - spreadPx / 2f, offsetYPx - spreadPx / 2f)
+            canvas.translate(offsetXPx - spreadPx, offsetYPx - spreadPx)
             canvas.nativeCanvas.drawOutline(shadowOutline, shadowPath, paint)
             canvas.restore()
         }
