@@ -34,7 +34,7 @@ private fun MomensDividerPreview() {
         Box(
             modifier = Modifier
                 .height(720.dp)
-                .width(360.dp),
+                .width(360.dp)
         ) {
             MomensDivider(modifier = Modifier.align(alignment = Alignment.Center))
         }
