@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component
+package com.momens.android.core.designsystem.component.tag
 
 
 import androidx.compose.foundation.background
@@ -20,40 +20,34 @@ fun MomensTag(
     type: TagType,
     modifier: Modifier = Modifier,
 ){
-    val style = type.toStyle()
 
     Box(
         modifier = modifier
-            .background(style.background, RoundedCornerShape(4.dp))
+            .background(
+                color = type.background(),
+                shape = RoundedCornerShape(4.dp)
+            )
             .padding(horizontal = 12.dp, vertical = 1.dp)
     ){
         Text(
-            text = style.label,
+            text = type.label,
             color = MomensTheme.colors.white,
             style = MomensTheme.typography.captionB10,
         )
     }
 }
 
-enum class TagType{
-    RISK,
-    DECISION,
-    CHANGE,
-    QUESTION,
-}
-
-private data class TagStyle(
+enum class TagType(
     val label: String,
-    val background: Color,
-)
-
-@Composable
-private fun TagType.toStyle() = when (this) {
-    TagType.RISK -> TagStyle("Risk", MomensTheme.colors.pointRed)
-    TagType.DECISION -> TagStyle("Decision", MomensTheme.colors.pointPurple)
-    TagType.CHANGE -> TagStyle("Change", MomensTheme.colors.pointYellow)
-    TagType.QUESTION -> TagStyle("Question", MomensTheme.colors.pointMint)
+    val background: @Composable () -> Color,
+){
+    RISK("Risk", {MomensTheme.colors.pointRed}),
+    DECISION("Decision", {MomensTheme.colors.pointPurple}),
+    CHANGE("Change", {MomensTheme.colors.pointYellow}),
+    QUESTION("Question", {MomensTheme.colors.pointMint}),
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
