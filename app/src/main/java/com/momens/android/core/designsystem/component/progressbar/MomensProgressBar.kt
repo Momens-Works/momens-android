@@ -30,7 +30,10 @@ fun MomensProgressBar(
         modifier = modifier
             .fillMaxWidth()
             .height(12.dp)
-            .background(MomensTheme.colors.primary50, CircleShape)
+            .background(
+                color = MomensTheme.colors.primary50,
+                shape = CircleShape
+            )
     ) {
         val fillWidth = (maxWidth * fraction).coerceAtLeast(14.dp)
 
@@ -38,14 +41,20 @@ fun MomensProgressBar(
             modifier = Modifier
                 .width(fillWidth)
                 .fillMaxHeight()
-                .background(MomensTheme.colors.white, CircleShape),
+                .background(
+                    color = MomensTheme.colors.white,
+                    shape = CircleShape
+                ),
             contentAlignment = Alignment.CenterEnd,
         ) {
             Box(
                 Modifier
                     .padding(end = 4.dp)
                     .size(6.dp)
-                    .background(MomensTheme.colors.primary50, CircleShape)
+                    .background(
+                        color = MomensTheme.colors.primary50,
+                        shape = CircleShape
+                    )
             )
         }
     }
