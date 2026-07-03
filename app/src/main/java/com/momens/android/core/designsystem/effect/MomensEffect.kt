@@ -1,6 +1,7 @@
 package com.momens.android.core.designsystem.effect
 
 import android.graphics.BlurMaskFilter
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RenderEffect
@@ -8,6 +9,7 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.os.Build
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -25,31 +27,34 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.designsystem.theme.MomensTheme
 
 
+@Composable
 fun Modifier.momensUiShadow(
     shape: Shape = RoundedCornerShape(8.dp),
 ): Modifier = dropShadow(
     shape = shape,
-    color = Color.Black.copy(alpha = 0.04f), // DS 적용 예정입니닷 ,,
+    color = MomensTheme.colors.black.copy(alpha = 0.04f),
     blur = 12.dp,
     offsetX = 0.dp,
     offsetY = 2.dp,
     spread = 0.dp,
 )
 
+@Composable
 fun Modifier.momensBottomSheetShadow(
     shape: Shape
 ): Modifier = dropShadow(
     shape = shape,
-    color = Color.Black.copy(alpha = 0.25f), //얘도  // DS 적용 예정입니닷 ,,
+    color = MomensTheme.colors.black.copy(alpha = 0.25f),
     blur = 16.dp,
     offsetX = 0.dp,
     offsetY = (-6).dp,
     spread = 0.dp,
 )
 
-fun Modifier.momensNavBlur(): Modifier = customBlur( 4.dp)
+fun Modifier.momensNavBlur(): Modifier = customBlur(4.dp)
 
 fun Modifier.dropShadow(
     shape: Shape,
@@ -123,7 +128,7 @@ fun Modifier.customBlur(
     }
 }
 
-private fun android.graphics.Canvas.drawOutline(
+private fun Canvas.drawOutline(
     outline: Outline,
     path: Path?,
     paint: Paint,
