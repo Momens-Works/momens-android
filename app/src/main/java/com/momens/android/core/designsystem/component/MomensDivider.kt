@@ -10,17 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensDivider(
     modifier: Modifier = Modifier,
+    height: Dp = 4.dp
 ) {
     HorizontalDivider(
         modifier = modifier
             .fillMaxWidth()
-            .height(4.dp)
+            .height(height)
             .background(MomensTheme.colors.gray100),
     )
 }
