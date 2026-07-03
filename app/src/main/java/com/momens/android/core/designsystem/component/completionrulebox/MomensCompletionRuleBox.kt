@@ -78,8 +78,10 @@ fun MomensCompletionRuleBox(
                         ),
                 )
 
+                val isEmpty = state.text.isEmpty()
+
                 Box(modifier = Modifier.weight(1f)) {
-                    if (state.text.isEmpty()) {
+                    if (isEmpty) {
                         Text(
                             text = placeholder,
                             style = textStyle,
@@ -92,10 +94,10 @@ fun MomensCompletionRuleBox(
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_cancel),
                     contentDescription = "삭제",
-                    tint = if (state.text.isEmpty()) MomensTheme.colors.gray500 else contentColor,
+                    tint = if (isEmpty) MomensTheme.colors.gray500 else contentColor,
                     modifier = Modifier
                         .size(14.dp)
-                        .noRippleClickable(onClick = onClearClick),
+                        .noRippleClickable(enabled = enabled, onClick = onClearClick),
                 )
             }
         },
