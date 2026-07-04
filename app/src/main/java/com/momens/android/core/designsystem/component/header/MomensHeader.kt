@@ -35,8 +35,7 @@ fun MomensHeader(
             .fillMaxWidth()
             .height(48.dp)
             .background(backgroundColor)
-            .padding(horizontal = 19.dp, vertical = 12.dp),
-        contentAlignment = Alignment.Center
+            .padding(horizontal = 19.dp, vertical = 12.dp)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_next),
