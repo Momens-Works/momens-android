@@ -99,8 +99,8 @@ private fun FileTextContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier, //Todo() : 디썜들에게 물어봐서 간격아직 답 안옴 ,<<,,!
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Text(
             text = title,
