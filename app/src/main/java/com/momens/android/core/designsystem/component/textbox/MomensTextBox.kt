@@ -68,7 +68,7 @@ fun MomensTextBox(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow),
                     contentDescription = null,
-                    tint = MomensTheme.colors.primary100,
+                    tint = MomensTheme.colors.gray500,
                     modifier = Modifier.clickable(onClick = onArrowClick),
                 )
             }
