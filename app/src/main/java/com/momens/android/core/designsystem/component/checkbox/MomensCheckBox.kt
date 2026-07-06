@@ -26,20 +26,20 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensCheckBox(
-    checked: Boolean,
+    isChecked: Boolean,
     label: String,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
-    val iconRes = if (checked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
-    val iconTint = if (checked) MomensTheme.colors.primary100 else MomensTheme.colors.gray300
+    val iconRes = if (isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
+    val iconTint = if (isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .noRippleToggleable(
-                value = checked,
+                value = isChecked,
                 onValueChange = onCheckedChange,
                 enabled = enabled,
                 role = Role.Checkbox,
@@ -66,23 +66,23 @@ fun MomensCheckBox(
 @Composable
 private fun MomensCheckBoxPreview() {
     MomensTheme {
-        var firstChecked by remember { mutableStateOf(false) }
-        var secondChecked by remember { mutableStateOf(true) }
+        var isFirstChecked by remember { mutableStateOf(false) }
+        var isSecondChecked by remember { mutableStateOf(true) }
 
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MomensCheckBox(
-                checked = firstChecked,
+                isChecked = isFirstChecked,
                 label = "어쩌구어쩌구 반영",
-                onCheckedChange = { firstChecked = it },
+                onCheckedChange = { isFirstChecked = it },
             )
 
             MomensCheckBox(
-                checked = secondChecked,
+                isChecked = isSecondChecked,
                 label = "어쩌구어쩌구 반영",
-                onCheckedChange = { secondChecked = it },
+                onCheckedChange = { isSecondChecked = it },
             )
         }
     }
