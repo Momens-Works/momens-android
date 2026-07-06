@@ -1,12 +1,12 @@
-package com.momens.android.core.designsystem.component
+package com.momens.android.core.designsystem.component.componentstatus
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -21,44 +21,55 @@ import com.momens.android.R
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensStatusEditComponent(
+fun MomensStatusEdit(
     status: String,
-    isActive: Boolean
-){
-    val backgroundColor = if (isActive) MomensTheme.colors.primary10 else MomensTheme.colors.white
-    val textColor = if (isActive) MomensTheme.colors.primary100 else MomensTheme.colors.primary100
+    isSelected: Boolean = false,
+    modifier: Modifier = Modifier,
+) {
+    val backgroundColor = if (isSelected) MomensTheme.colors.primary10 else MomensTheme.colors.white
+    val textColor = if (isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.gray500
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
             .padding(horizontal = 12.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ){
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
         Icon(
             modifier = Modifier.size(24.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_backlog),
             tint = MomensTheme.colors.primary100,
-            contentDescription = null
+            contentDescription = null,
         )
-
-        Spacer(modifier = Modifier.width(3.5.dp))
 
         Text(
             text = status,
             color = textColor,
-            style = MomensTheme.typography.captionM11
+            style = MomensTheme.typography.captionM11,
         )
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFE8E8E)
 @Composable
-fun MomensStatusEditComponentPreview(){
+private fun MomensStatusEditPreview() {
     MomensTheme() {
-        MomensStatusEditComponent(
-            status = "백로그",
-            isActive = true
-        )
+        Column(
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            MomensStatusEdit(
+                status = "백로그",
+                isSelected = true,
+            )
+
+            MomensStatusEdit(
+                status = "백로그",
+            )
+        }
     }
 }
+
+
