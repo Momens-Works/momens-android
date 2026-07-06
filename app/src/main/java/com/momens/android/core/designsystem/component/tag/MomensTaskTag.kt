@@ -37,6 +37,7 @@ fun MomensTaskTag(
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+
         Icon(
             painter = painterResource(type.iconRes),
             contentDescription = null,
@@ -66,12 +67,15 @@ private fun MomensTaskTagPreview() {
             MomensTaskTag(
                 type = MomensTaskType.IN_PROGRESS,
             )
+
             MomensTaskTag(
                 type = MomensTaskType.DONE,
             )
+
             MomensTaskTag(
                 type = MomensTaskType.CANCELED,
             )
+
             MomensTaskTag(
                 type = MomensTaskType.BACKLOG,
             )
