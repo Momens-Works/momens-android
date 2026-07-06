@@ -26,8 +26,8 @@ fun MomensFileListItem(
     title: String,
     role: String,
     category: String,
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
