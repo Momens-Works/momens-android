@@ -27,13 +27,18 @@ fun MomensImportantStatus(
     val iconRes = when (tone) {
         ImportantTone.GRAY -> level.grayIcon
         ImportantTone.BLUE -> level.blueIcon
+        ImportantTone.CLEAR -> level.grayIcon
     }
 
     Row(
         modifier = modifier
-            .background(
-                color = tone.background(),
-                shape = RoundedCornerShape(4.dp),
+            .then(
+                tone.background?.let { bg ->
+                    Modifier.background(
+                        color = bg(),
+                        shape = RoundedCornerShape(4.dp),
+                    )
+                } ?: Modifier
             )
             .padding(horizontal = 10.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -67,6 +72,9 @@ private fun MomensImportantStatusPreview() {
             MomensImportantStatus(level = ImportantLevel.LOW, tone = ImportantTone.BLUE)
             MomensImportantStatus(level = ImportantLevel.MEDIUM, tone = ImportantTone.BLUE)
             MomensImportantStatus(level = ImportantLevel.HIGH, tone = ImportantTone.BLUE)
+            MomensImportantStatus(level = ImportantLevel.LOW, tone = ImportantTone.CLEAR)
+            MomensImportantStatus(level = ImportantLevel.MEDIUM, tone = ImportantTone.CLEAR)
+            MomensImportantStatus(level = ImportantLevel.HIGH, tone = ImportantTone.CLEAR)
         }
     }
 }
