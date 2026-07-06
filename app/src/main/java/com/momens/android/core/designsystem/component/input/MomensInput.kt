@@ -1,6 +1,5 @@
 package com.momens.android.core.designsystem.component.input
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,8 +41,7 @@ fun MomensInput(
     lineLimits: TextFieldLineLimits = TextFieldLineLimits.SingleLine,
     inputTransformation: InputTransformation? = null,
     outputTransformation: OutputTransformation? = null,
-    @DrawableRes iconRes: Int? = null,
-    iconContentDescription: String? = null,
+    isShowIcon: Boolean = false,
     onIconClick: () -> Unit = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onKeyboardAction: KeyboardActionHandler? = null,
@@ -92,10 +90,10 @@ fun MomensInput(
                     innerTextField()
                 }
 
-                iconRes?.let { res ->
+                if (isShowIcon) {
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = res),
-                        contentDescription = iconContentDescription,
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_search),
+                        contentDescription = null,
                         tint = MomensTheme.colors.gray600,
                         modifier = Modifier
                             .size(20.dp)
@@ -135,16 +133,14 @@ private fun MomensInputPreview() {
             MomensInput(
                 state = searchEmptyState,
                 placeholder = "Search",
-                iconRes = R.drawable.ic_search,
-                iconContentDescription = "검색",
+                isShowIcon = true,
                 onIconClick = {},
             )
 
             MomensInput(
                 state = searchFilledState,
                 placeholder = "Search",
-                iconRes = R.drawable.ic_search,
-                iconContentDescription = "검색",
+                isShowIcon = true,
                 onIconClick = {},
             )
         }
