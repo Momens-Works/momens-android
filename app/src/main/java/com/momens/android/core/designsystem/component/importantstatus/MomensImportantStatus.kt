@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -27,21 +26,24 @@ fun MomensImportantStatus(
     tone: ImportanceTone,
     modifier: Modifier = Modifier,
 ) {
+    val iconRes = when (tone) {
+        ImportanceTone.GRAY -> level.grayIcon
+        ImportanceTone.BLUE -> level.blueIcon
+    }
+
     Row(
         modifier = modifier
-            .clip(shape = RoundedCornerShape(4.dp))
             .background(
                 color = tone.background(),
+                shape = RoundedCornerShape(4.dp)
             )
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = 10.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Image(
-            painter = painterResource(level.iconFor(tone)),
+            painter = painterResource(id = iconRes),
             contentDescription = null,
-            modifier = Modifier
-                .padding(vertical = 2.dp)
-                .padding(end = 4.dp),
         )
 
         Text(
@@ -54,8 +56,8 @@ fun MomensImportantStatus(
 
 enum class ImportanceLevel(
     val text: String,
-    @DrawableRes val grayIcon: Int,
-    @DrawableRes val blueIcon: Int,
+    @param:DrawableRes val grayIcon: Int,
+    @param:DrawableRes val blueIcon: Int,
 ) {
     LOW(
         text = "낮음",
@@ -91,11 +93,7 @@ enum class ImportanceTone(
     ),
 }
 
-@DrawableRes
-fun ImportanceLevel.iconFor(tone: ImportanceTone): Int = when (tone) {
-    ImportanceTone.GRAY -> grayIcon
-    ImportanceTone.BLUE -> blueIcon
-}
+
 
 @Preview(showBackground = true)
 @Composable
