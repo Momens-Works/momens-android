@@ -41,10 +41,10 @@ enum class TagType(
     val label: String,
     val background: @Composable () -> Color,
 ){
-    RISK("Risk", {MomensTheme.colors.pointRed}),
-    DECISION("Decision", {MomensTheme.colors.pointPurple}),
-    CHANGE("Change", {MomensTheme.colors.pointYellow}),
-    QUESTION("Question", {MomensTheme.colors.pointMint}),
+    RISK(label = "Risk", background = {MomensTheme.colors.pointRed}),
+    DECISION(label = "Decision", background = {MomensTheme.colors.pointPurple}),
+    CHANGE(label = "Change", background = {MomensTheme.colors.pointYellow}),
+    QUESTION(label = "Question", background = {MomensTheme.colors.pointMint}),
 }
 
 
