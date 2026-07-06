@@ -71,7 +71,7 @@ fun MomensCompletionRuleBox(
                 Box(
                     modifier = Modifier
                         .width(2.dp)
-                        .height(16.dp)
+                        .height(18.dp)
                         .background(
                             color = MomensTheme.colors.gray400,
                             shape = RoundedCornerShape(6.dp),
@@ -93,7 +93,7 @@ fun MomensCompletionRuleBox(
 
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_cancel),
-                    contentDescription = "삭제",
+                    contentDescription = null,
                     tint = if (isEmpty) MomensTheme.colors.gray500 else contentColor,
                     modifier = Modifier
                         .size(14.dp)
