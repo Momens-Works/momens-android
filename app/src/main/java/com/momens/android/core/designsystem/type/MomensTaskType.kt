@@ -6,7 +6,7 @@ import com.momens.android.R
 
 enum class MomensTaskType(
     val label : String,
-    @DrawableRes val iconRes: Int
+    @param: DrawableRes val iconRes: Int
 ){
     TODO(
         label = "투두",
