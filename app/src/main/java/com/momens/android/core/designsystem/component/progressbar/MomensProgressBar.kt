@@ -28,7 +28,6 @@ fun MomensProgressBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(12.dp)
             .background(
                 color = MomensTheme.colors.primary50,
                 shape = CircleShape
@@ -38,7 +37,6 @@ fun MomensProgressBar(
             modifier = Modifier
                 .fillMaxWidth(fraction = fraction)
                 .widthIn(min = 14.dp)
-                .fillMaxHeight()
                 .background(
                     color = MomensTheme.colors.white,
                     shape = CircleShape
