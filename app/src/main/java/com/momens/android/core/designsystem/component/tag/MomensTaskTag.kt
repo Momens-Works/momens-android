@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,8 +31,10 @@ fun MomensTaskTag(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
             .background(MomensTheme.colors.primary10)
-            .border(border = BorderStroke(1.dp, color = MomensTheme.colors.primary50),
-                shape = RoundedCornerShape(20.dp))
+            .border(
+                border = BorderStroke(width = 1.dp, color = MomensTheme.colors.primary50),
+                shape = RoundedCornerShape(20.dp),
+            )
             .padding(horizontal = 8.dp, vertical = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -54,8 +57,27 @@ fun MomensTaskTag(
 @Composable
 private fun MomensTaskTagPreview() {
     MomensTheme {
-        MomensTaskTag(
-            type = MomensTaskType.TODO,
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            MomensTaskTag(
+                type = MomensTaskType.TODO,
+            )
+
+            MomensTaskTag(
+                type = MomensTaskType.IN_PROGRESS,
+            )
+            MomensTaskTag(
+                type = MomensTaskType.DONE,
+            )
+            MomensTaskTag(
+                type = MomensTaskType.CANCELED,
+            )
+            MomensTaskTag(
+                type = MomensTaskType.BACKLOG,
+            )
+
+        }
     }
 }
