@@ -33,7 +33,8 @@ fun MomensCheckBox(
     enabled: Boolean = true,
 ) {
     val iconRes = if (isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
-    val iconTint = if (isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
+    val iconTint = if (isChecked && enabled) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
+    val labelColor = if (enabled) MomensTheme.colors.gray800 else MomensTheme.colors.gray300
 
     Row(
         modifier = modifier
@@ -57,7 +58,7 @@ fun MomensCheckBox(
         Text(
             text = label,
             style = MomensTheme.typography.bodyM12,
-            color = MomensTheme.colors.gray800,
+            color = labelColor,
         )
     }
 }
@@ -83,6 +84,14 @@ private fun MomensCheckBoxPreview() {
                 isChecked = isSecondChecked,
                 label = "어쩌구어쩌구 반영",
                 onCheckedChange = { isSecondChecked = it },
+            )
+
+            // 체크 기준이 아직 없을 때(default) 상태
+            MomensCheckBox(
+                isChecked = false,
+                label = "어쩌구어쩌구 반영",
+                onCheckedChange = {},
+                enabled = false,
             )
         }
     }
