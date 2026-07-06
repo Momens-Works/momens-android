@@ -27,8 +27,10 @@ fun MomensTaskTag(
 ) {
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(MomensTheme.colors.primary10)
+            .background(
+                color = MomensTheme.colors.primary10,
+                shape = RoundedCornerShape(20.dp),
+                )
             .border(
                 border = BorderStroke(width = 1.dp, color = MomensTheme.colors.primary50),
                 shape = RoundedCornerShape(20.dp),
