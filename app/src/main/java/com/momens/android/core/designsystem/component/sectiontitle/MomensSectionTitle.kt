@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,11 +27,12 @@ fun MomensSectionTitle(
     title: String,
     count: String,
     modifier: Modifier = Modifier,
-    emphasized: Boolean = false,
+    isEmphasized: Boolean = false,
     @DrawableRes iconRes: Int? = null,
+    iconColor: Color = MomensTheme.colors.primary100,
 ) {
-    val textStyle = if (emphasized) MomensTheme.typography.bodyB14 else MomensTheme.typography.bodyM14
-    val contentColor = if (emphasized) MomensTheme.colors.gray900 else MomensTheme.colors.gray700
+    val textStyle = if (isEmphasized) MomensTheme.typography.bodyB14 else MomensTheme.typography.bodyM14
+    val contentColor = if (isEmphasized) MomensTheme.colors.gray900 else MomensTheme.colors.gray700
 
     Row(
         modifier = modifier,
@@ -41,7 +43,7 @@ fun MomensSectionTitle(
             Icon(
                 imageVector = ImageVector.vectorResource(id = res),
                 contentDescription = null,
-                tint = MomensTheme.colors.primary100,
+                tint = iconColor,
                 modifier = Modifier.size(24.dp),
             )
         }
@@ -85,13 +87,13 @@ private fun MomensSectionTitlePreview() {
             MomensSectionTitle(
                 title = "제목",
                 count = "4",
-                emphasized = true,
+                isEmphasized = true,
             )
 
             MomensSectionTitle(
                 title = "제목",
                 count = "4",
-                emphasized = true,
+                isEmphasized = true,
                 iconRes = R.drawable.ic_canceled,
             )
         }
