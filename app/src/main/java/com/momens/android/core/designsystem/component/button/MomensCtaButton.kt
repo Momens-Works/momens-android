@@ -55,12 +55,58 @@ fun MomensCtaButton(
     ) {
         content()
     }
+    
 }
 
 @Preview(widthDp = 320)
 @Composable
 private fun MomensCtaButtonPreview() {
     MomensTheme {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
 
+            MomensCtaButton(onClick = {}) {
+                Text(
+                    text = "text",
+                    color = MomensTheme.colors.white,
+                    style = MomensTheme.typography.bodyB16,
+                )
+            }
+
+            MomensCtaButton(
+                onClick = {},
+                enabled = false,
+            ) {
+                Text(
+                    text = "text",
+                    color = MomensTheme.colors.white,
+                    style = MomensTheme.typography.bodyB16,
+                )
+            }
+
+            MomensCtaButton(
+                onClick = {},
+                type = MomensCtaType.LOGIN,
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_google),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified,
+                    )
+                    Text(
+                        text = "text",
+                        color = MomensTheme.colors.gray700,
+                        style = MomensTheme.typography.bodyB16,
+                    )
+                }
+            }
+        }
     }
 }
