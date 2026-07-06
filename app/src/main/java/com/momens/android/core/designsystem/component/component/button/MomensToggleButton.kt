@@ -28,7 +28,7 @@ fun MomensToggleButton(
 ){
     val backgroundColor = if (isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.white
     val contentColor = if (isSelected) MomensTheme.colors.white else MomensTheme.colors.gray400
-    val dotColor = if (isSelected) MomensTheme.colors.white else MomensTheme.colors.gray400
+    val textStyle = if (isSelected) MomensTheme.typography.bodyB12 else MomensTheme.typography.bodyM12
 
     Surface(
         onClick = { onCheckedChange(!isSelected) },
@@ -43,14 +43,14 @@ fun MomensToggleButton(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ){
-            Text(text = text, style = MomensTheme.typography.bodyB12)
+            Text(text = text, style = textStyle)
 
             Spacer(modifier = Modifier.width(10.dp))
 
             Box(
                 modifier = Modifier
                     .size(7.dp)
-                    .background(color = dotColor, shape = CircleShape)
+                    .background(color = contentColor, shape = CircleShape)
             )
         }
     }
@@ -58,7 +58,7 @@ fun MomensToggleButton(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFE8E8E)
 @Composable
-fun MomensToggleButtonPreview(){
+private fun MomensToggleButtonPreview(){
     MomensTheme{
         Column(
             modifier = Modifier.padding(16.dp),

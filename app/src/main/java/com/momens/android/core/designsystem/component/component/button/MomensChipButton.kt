@@ -69,7 +69,7 @@ fun MomensChipButton(
 
 @Preview(showBackground = true, backgroundColor = 0xFF666E74)
 @Composable
-fun MomensChipButtonPreview(){
+private fun MomensChipButtonPreview(){
     MomensTheme{
         Column(
             modifier = Modifier.padding(16.dp),

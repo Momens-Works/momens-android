@@ -3,6 +3,7 @@ package com.momens.android.core.designsystem.component.component.button
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -53,7 +54,7 @@ fun MomensButton(
             containerColor = backgroundColor,
             contentColor = contentColor
         ),
-        contentPadding = ButtonDefaults.ContentPadding
+        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp)
     ){
       Text(text = text, style = typographyStyle)
     }
