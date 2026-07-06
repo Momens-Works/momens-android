@@ -8,10 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation
-import androidx.compose.foundation.text.input.KeyboardActionHandler
-import androidx.compose.foundation.text.input.OutputTransformation
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
@@ -37,13 +33,7 @@ fun MomensSearchInput(
     onIconClick: () -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
-    enabled: Boolean = true,
-    readOnly: Boolean = false,
     lineLimits: TextFieldLineLimits = TextFieldLineLimits.SingleLine,
-    inputTransformation: InputTransformation? = null,
-    outputTransformation: OutputTransformation? = null,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onKeyboardAction: KeyboardActionHandler? = null,
 ) {
     val textStyle = MomensTheme.typography.bodyM14
     val contentColor = MomensTheme.colors.gray800
@@ -61,15 +51,9 @@ fun MomensSearchInput(
                     strokeWidth = 1.dp.toPx(),
                 )
             },
-        enabled = enabled,
-        readOnly = readOnly,
-        inputTransformation = inputTransformation,
-        outputTransformation = outputTransformation,
         lineLimits = lineLimits,
         textStyle = textStyle.copy(color = contentColor),
         cursorBrush = SolidColor(value = contentColor),
-        keyboardOptions = keyboardOptions,
-        onKeyboardAction = onKeyboardAction,
         decorator = { innerTextField ->
             Row(
                 modifier = Modifier
