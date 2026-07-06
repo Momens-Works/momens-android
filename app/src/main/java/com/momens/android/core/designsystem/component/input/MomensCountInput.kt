@@ -21,11 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-/**
- * 글자수 카운터가 붙은 Input입니다. 카운터가 텍스트와 같은 줄, 트레일링 자리(검색
- * 아이콘이 있던 자리)에 들어가야 해서 검색 때와 마찬가지로 [MomensInput]의 내부 Row에
- * 접근할 방법이 없어 독립적으로 구현했습니다.
- */
 @Composable
 fun MomensCountInput(
     state: TextFieldState,
