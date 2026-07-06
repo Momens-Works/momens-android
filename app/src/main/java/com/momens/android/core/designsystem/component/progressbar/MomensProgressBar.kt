@@ -3,11 +3,12 @@ package com.momens.android.core.designsystem.component.progressbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,32 +24,34 @@ fun MomensProgressBar(
 ) {
     val fraction = progress.coerceIn(0f, 1f)
 
-    Box(
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
             .background(
                 color = MomensTheme.colors.primary50,
-                shape = CircleShape
-            )
+                shape = CircleShape,
+            ),
     ) {
+        val fillWidth = (maxWidth * fraction).coerceAtLeast(14.dp)
+
         Box(
             modifier = Modifier
-                .fillMaxWidth(fraction = fraction)
-                .widthIn(min = 14.dp)
+                .width(fillWidth)
                 .background(
                     color = MomensTheme.colors.white,
-                    shape = CircleShape
+                    shape = CircleShape,
                 ),
             contentAlignment = Alignment.CenterEnd,
         ) {
             Box(
                 Modifier
-                    .padding(horizontal = 4.dp, vertical = 3.dp)
+                    .padding(end = 4.dp)
+                    .padding(vertical = 3.dp)
                     .size(6.dp)
                     .background(
                         color = MomensTheme.colors.primary50,
-                        shape = CircleShape
-                    )
+                        shape = CircleShape,
+                    ),
             )
         }
     }
