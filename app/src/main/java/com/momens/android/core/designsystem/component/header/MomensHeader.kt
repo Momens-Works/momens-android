@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
@@ -43,7 +44,7 @@ fun MomensHeader(
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .scale(scaleX = -1f, scaleY = 1f)
-                .clickable(onClick = onBackClick)
+                .noRippleClickable(onClick = onBackClick)
         )
 
         Text(
@@ -61,7 +62,7 @@ fun MomensHeader(
                 tint = MomensTheme.colors.gray500,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .clickable(onClick = onWriteClick)
+                    .noRippleClickable(onClick = onWriteClick)
             )
         }
     }
