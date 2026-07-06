@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
@@ -14,6 +15,7 @@ import androidx.compose.foundation.text.input.OutputTransformation
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,13 +23,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.R
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensInput(
+fun MomensSearchInput(
     state: TextFieldState,
+    onIconClick: () -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
     enabled: Boolean = true,
@@ -81,6 +88,15 @@ fun MomensInput(
                     }
                     innerTextField()
                 }
+
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_search),
+                    contentDescription = null,
+                    tint = MomensTheme.colors.gray600,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .noRippleClickable(onClick = onIconClick),
+                )
             }
         },
     )
@@ -88,10 +104,10 @@ fun MomensInput(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensInputPreview() {
+private fun MomensSearchInputPreview() {
     MomensTheme {
-        val exampleState = rememberTextFieldState()
-        val writeState = rememberTextFieldState(initialText = "Write")
+        val searchEmptyState = rememberTextFieldState()
+        val searchFilledState = rememberTextFieldState(initialText = "Search")
 
         Column(
             modifier = Modifier
@@ -99,14 +115,16 @@ private fun MomensInputPreview() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            MomensInput(
-                state = exampleState,
-                placeholder = "Example",
+            MomensSearchInput(
+                state = searchEmptyState,
+                placeholder = "Search",
+                onIconClick = {},
             )
 
-            MomensInput(
-                state = writeState,
-                placeholder = "Example",
+            MomensSearchInput(
+                state = searchFilledState,
+                placeholder = "Search",
+                onIconClick = {},
             )
         }
     }
