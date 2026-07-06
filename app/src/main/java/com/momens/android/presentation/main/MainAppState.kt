@@ -71,9 +71,11 @@ class MainAppState(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false,
-        )
+    )
 
     fun navigate(tab: MainTab) {
+        if (currentTab.value == tab) return
+
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
