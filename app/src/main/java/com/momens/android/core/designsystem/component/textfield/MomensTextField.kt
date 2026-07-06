@@ -40,7 +40,6 @@ fun MomensTextField(
 ) {
     val textStyle = MomensTheme.typography.bodyM12
     val shape = RoundedCornerShape(8.dp)
-    val contentColor = MomensTheme.colors.gray800
 
     BasicTextField(
         state = state,
@@ -61,7 +60,7 @@ fun MomensTextField(
         inputTransformation = inputTransformation,
         outputTransformation = outputTransformation,
         lineLimits = lineLimits,
-        textStyle = textStyle.copy(color = contentColor),
+        textStyle = textStyle.copy(color = MomensTheme.colors.gray800),
         cursorBrush = SolidColor(MomensTheme.colors.gray800),
         keyboardOptions = keyboardOptions,
         onKeyboardAction = onKeyboardAction,
