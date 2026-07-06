@@ -15,22 +15,6 @@ permissions:
   contents: read
 
 jobs:
-  title:
-    name: PR Title Check
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    steps:
-      - name: Check PR title
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          if [[ ! "$PR_TITLE" =~ ^\[(FEAT|FIX|REFACTOR|CHORE|DOCS|ADD|DEL|INIT|MERGE)/#[0-9]+\]\ .+ ]]; then
-            echo "Invalid PR title: $PR_TITLE"
-            echo "Expected format: [FEAT/#31] FileListItem 컴포넌트 구현"
-            exit 1
-          fi
-
   lint:
     name: PR Lint Check
     runs-on: ubuntu-latest
