@@ -66,7 +66,7 @@ class MainAppState(
             MainTab.entries.any { tab ->
                 destination?.route == tab.routeName
             }
-        } // 나중에 이렇게 해보는걸로 하자
+        }
         .stateIn(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5_000),
