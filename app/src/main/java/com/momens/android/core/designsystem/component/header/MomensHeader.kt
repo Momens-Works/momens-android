@@ -51,7 +51,6 @@ fun MomensHeader(
             text = text,
             style = MomensTheme.typography.bodyM16,
             color = MomensTheme.colors.black,
-            textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.Center)
         )
 
