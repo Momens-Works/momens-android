@@ -12,19 +12,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.main.type.MomensBottomNavigationBarType
+import com.momens.android.presentation.main.type.MainTab
 
 @Composable
-fun MomensBottomNavigationBar(
-    selectedType: MomensBottomNavigationBarType,
-    onTypeClick: (MomensBottomNavigationBarType) -> Unit,
+fun MomensMainTabBar(
+    selectedTab: MainTab,
+    onTabClick: (MainTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -37,31 +36,31 @@ fun MomensBottomNavigationBar(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        MomensBottomNavigationBarType.entries.forEach { type ->
-            MomensBottomNavigationBarItem(
-                type = type,
-                selected = type == selectedType,
-                onClick = { onTypeClick(type) },
+        MainTab.entries.forEach { tab ->
+            MomensMainTabBarItem(
+                tab = tab,
+                selected = tab == selectedTab,
+                onClick = { onTabClick(tab) },
             )
         }
     }
 }
 
 @Composable
-private fun MomensBottomNavigationBarItem(
-    type: MomensBottomNavigationBarType,
+private fun MomensMainTabBarItem(
+    tab: MainTab,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val contentColor = if (selected) MomensTheme.colors.primary100 else MomensTheme.colors.gray300
     val textStyle = if (selected) MomensTheme.typography.captionB11 else MomensTheme.typography.captionM11
-    val backgroundColor = if(selected) MomensTheme.colors.white else Color.Transparent
+    val backgroundColor = if (selected) MomensTheme.colors.white else Color.Transparent
     Column(
         modifier = modifier
             .background(
                 color = backgroundColor,
-                shape = RoundedCornerShape(40.dp)
+                shape = RoundedCornerShape(40.dp),
             )
             .noRippleClickable(onClick = onClick)
             .padding(
@@ -72,14 +71,14 @@ private fun MomensBottomNavigationBarItem(
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            painter = painterResource(type.iconRes),
-            contentDescription = type.label,
+            painter = painterResource(tab.iconRes),
+            contentDescription = tab.label,
             tint = contentColor,
             modifier = Modifier.size(24.dp),
         )
 
         Text(
-            text = type.label,
+            text = tab.label,
             color = contentColor,
             style = textStyle,
         )
@@ -88,25 +87,25 @@ private fun MomensBottomNavigationBarItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensBottomNavigationBarPreview() {
+private fun MomensMainTabBarPreview() {
     MomensTheme {
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            MomensBottomNavigationBar(
-                selectedType = MomensBottomNavigationBarType.SIGNAL,
-                onTypeClick = {},
+            MomensMainTabBar(
+                selectedTab = MainTab.SIGNAL,
+                onTabClick = {},
             )
 
-            MomensBottomNavigationBar(
-                selectedType = MomensBottomNavigationBarType.BRIEF,
-                onTypeClick = {},
+            MomensMainTabBar(
+                selectedTab = MainTab.BRIEF,
+                onTabClick = {},
             )
 
-            MomensBottomNavigationBar(
-                selectedType = MomensBottomNavigationBarType.TASK,
-                onTypeClick = {},
+            MomensMainTabBar(
+                selectedTab = MainTab.TASK,
+                onTabClick = {},
             )
         }
     }
