@@ -45,7 +45,7 @@ fun MomensProgressBar(
         ) {
             Box(
                 Modifier
-                    .padding(end = 4.dp)
+                    .padding(horizontal = 4.dp, vertical = 3.dp)
                     .size(6.dp)
                     .background(
                         color = MomensTheme.colors.primary50,
