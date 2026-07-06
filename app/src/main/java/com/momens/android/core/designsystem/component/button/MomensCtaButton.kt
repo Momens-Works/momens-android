@@ -26,10 +26,10 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensCtaButton(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     type: MomensCtaType = MomensCtaType.DEFAULT,
     enabled: Boolean = true,
-    onClick: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     val backgroundColor = if (!enabled) {
@@ -44,8 +44,10 @@ fun MomensCtaButton(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(backgroundColor)
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(8.dp)
+            )
             .noRippleClickable(
                 enabled = enabled,
                 onClick = onClick,
@@ -55,7 +57,7 @@ fun MomensCtaButton(
     ) {
         content()
     }
-    
+
 }
 
 @Preview(widthDp = 320)
