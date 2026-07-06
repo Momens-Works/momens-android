@@ -3,8 +3,8 @@ package com.momens.android.core.designsystem.component.list
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,11 +27,12 @@ fun FileListItem(
     role: String,
     category: String,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .noRippleClickable(onClick = onClick)
             .background(
                 color = MomensTheme.colors.gray100,
                 shape = RoundedCornerShape(8.dp),
@@ -45,7 +46,7 @@ fun FileListItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            FileIcon(onClick = onClick)
+            FileIcon()
 
             FileTextContent(
                 title = title,
@@ -53,7 +54,6 @@ fun FileListItem(
                 category = category,
                 modifier = Modifier.weight(1f),
             )
-
         }
 
         Icon(
@@ -62,13 +62,11 @@ fun FileListItem(
             modifier = Modifier.size(24.dp),
             tint = MomensTheme.colors.black,
         )
-
     }
 }
 
 @Composable
 private fun FileIcon(
-    onClick : () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -83,9 +81,7 @@ private fun FileIcon(
         Icon(
             painter = painterResource(id = R.drawable.ic_file),
             contentDescription = null,
-            modifier = Modifier
-                .size(24.dp)
-                .noRippleClickable(onClick = onClick),
+            modifier = Modifier.size(24.dp),
             tint = MomensTheme.colors.primary50,
         )
     }
@@ -140,7 +136,7 @@ private fun FileListItemPreview() {
             title = "회원가입 에러 메시지 정책 초안",
             role = "PM",
             category = "copy policy",
-            onClick = {}
+            onClick = {},
         )
     }
 }
