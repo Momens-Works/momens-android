@@ -22,7 +22,7 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun FileListItem(
+fun MomensFileListItem(
     title: String,
     role: String,
     category: String,
@@ -129,9 +129,9 @@ private fun FileTextContent(
 
 @Preview
 @Composable
-private fun FileListItemPreview() {
+private fun MomensFileListItemPreview() {
     MomensTheme {
-        FileListItem(
+        MomensFileListItem(
             title = "회원가입 에러 메시지 정책 초안",
             role = "PM",
             category = "copy policy",
