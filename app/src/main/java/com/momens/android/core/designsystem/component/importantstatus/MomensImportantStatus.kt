@@ -1,4 +1,4 @@
-package com.momens.android.core.common.importantstatus
+package com.momens.android.core.designsystem.component.importantstatus
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
