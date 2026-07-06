@@ -52,6 +52,22 @@ Use these documents as the source of truth for Compose work:
 - Prefer the design system and `MomensTheme`.
 - Follow ktlint and `.editorconfig` rules.
 
+## Pull Request Rules
+
+When an AI agent writes a PR title, use this format:
+
+```text
+[TYPE/#issue-number] Summary
+```
+
+`TYPE` must be uppercase.
+
+Example:
+
+```text
+[FEAT/#31] FileListItem 컴포넌트 구현
+```
+
 ## Current Project Layout
 
 ```text
