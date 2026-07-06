@@ -44,6 +44,7 @@ fun MomensCompletionRuleBox(
 ) {
     val textStyle = MomensTheme.typography.bodyM12
     val contentColor = MomensTheme.colors.gray800
+    val isEmpty = state.text.isEmpty()
 
     BasicTextField(
         state = state,
@@ -77,8 +78,6 @@ fun MomensCompletionRuleBox(
                             shape = RoundedCornerShape(6.dp),
                         ),
                 )
-
-                val isEmpty = state.text.isEmpty()
 
                 Box(modifier = Modifier.weight(1f)) {
                     if (isEmpty) {
