@@ -27,7 +27,7 @@ fun MomensHeader(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = MomensTheme.colors.white,
-    isWriteVisible: Boolean = true,
+    isWriteVisible: Boolean = false,
     onWriteClick: () -> Unit = {}
 ) {
     Box(
