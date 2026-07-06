@@ -17,7 +17,7 @@ enum class MomensTaskType(
         iconRes = R.drawable.ic_inprogress
     ),
     DONE(
-        label = "투두",
+        label = "완료",
         iconRes = R.drawable.ic_done
     ),
     CANCELED(
