@@ -33,7 +33,6 @@ fun MomensHeader(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp)
             .background(backgroundColor)
             .padding(horizontal = 19.dp, vertical = 12.dp)
     ) {
