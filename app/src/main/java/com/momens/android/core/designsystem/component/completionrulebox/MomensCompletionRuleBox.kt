@@ -96,7 +96,10 @@ fun MomensCompletionRuleBox(
                     tint = if (isEmpty) MomensTheme.colors.gray500 else contentColor,
                     modifier = Modifier
                         .size(14.dp)
-                        .noRippleClickable(enabled = enabled, onClick = onClearClick),
+                        .noRippleClickable(
+                            enabled = enabled,
+                            onClick = onClearClick
+                        ),
                 )
             }
         },
