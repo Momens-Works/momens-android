@@ -14,10 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
 import androidx.compose.ui.graphics.Color
+import com.momens.android.core.designsystem.component.tag.type.SignalTagType
 
 @Composable
-fun MomensTag(
-    type: TagType,
+fun MomensSignalTag(
+    type: SignalTagType,
     modifier: Modifier = Modifier,
 ){
 
@@ -37,17 +38,6 @@ fun MomensTag(
     }
 }
 
-enum class TagType(
-    val label: String,
-    val background: @Composable () -> Color,
-){
-    RISK(label = "Risk", background = {MomensTheme.colors.pointRed}),
-    DECISION(label = "Decision", background = {MomensTheme.colors.pointPurple}),
-    CHANGE(label = "Change", background = {MomensTheme.colors.pointYellow}),
-    QUESTION(label = "Question", background = {MomensTheme.colors.pointMint}),
-}
-
-
 
 @Preview(showBackground = true)
 @Composable
@@ -57,10 +47,10 @@ private fun MomensTagPreview() {
             modifier = Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            MomensTag(type = TagType.RISK)
-            MomensTag(type = TagType.DECISION)
-            MomensTag(type = TagType.CHANGE)
-            MomensTag(type = TagType.QUESTION)
+            MomensSignalTag(type = SignalTagType.RISK)
+            MomensSignalTag(type = SignalTagType.DECISION)
+            MomensSignalTag(type = SignalTagType.CHANGE)
+            MomensSignalTag(type = SignalTagType.QUESTION)
         }
     }
 }
