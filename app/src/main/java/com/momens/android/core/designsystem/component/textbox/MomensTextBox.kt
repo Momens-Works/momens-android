@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
@@ -53,6 +55,7 @@ fun MomensTextBox(
                 Icon(
                     painter = painterResource(id = it),
                     contentDescription = null,
+                    modifier = Modifier.size(24.dp),
                     tint = iconColor,
                 )
             }
@@ -69,7 +72,7 @@ fun MomensTextBox(
                     painter = painterResource(id = R.drawable.ic_arrow),
                     contentDescription = null,
                     tint = MomensTheme.colors.gray500,
-                    modifier = Modifier.clickable(onClick = onArrowClick),
+                    modifier = Modifier.noRippleClickable(onClick = onArrowClick),
                 )
             }
         }
