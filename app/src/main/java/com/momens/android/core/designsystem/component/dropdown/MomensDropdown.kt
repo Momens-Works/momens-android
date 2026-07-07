@@ -123,6 +123,7 @@ fun MomensDropdown(
             ) {
                 Text(
                     text = if (expanded) "접기" else "더보기",
+                    style = MomensTheme.typography.captionB11,
                     color = MomensTheme.colors.gray400
                 )
 
@@ -147,10 +148,11 @@ private fun MomensDropdownRow(
     modifier: Modifier = Modifier
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .size(6.dp)
                 .background(
                     color = item.type.color(),
