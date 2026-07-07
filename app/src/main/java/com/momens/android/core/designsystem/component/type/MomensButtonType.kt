@@ -27,7 +27,7 @@ enum class MomensButtonType(
     ),
     WHITE(
         textStyle = { MomensTheme.typography.bodyM12 },
-        textColor = { MomensTheme.colors.gray500 },
+        textColor = { MomensTheme.colors.gray700 },
         background = { MomensTheme.colors.white },
     ),
 }
