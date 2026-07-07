@@ -69,7 +69,8 @@ fun MomensToast(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                Icon( //해당 ICON부분은 추후에 갑유 버튼 merge하고 교체 예정
+                Icon(
+                    //해당 ICON부분은 추후에 갑유 버튼 merge하고 교체 예정
                     painter = painterResource(R.drawable.ic_next),
                     contentDescription = null,
                     modifier = Modifier.noRippleClickable(onClick = onActionClick),
@@ -84,8 +85,9 @@ fun MomensToast(
 private fun MomensToastTextColumn(
     title: String,
     description: String,
+    modifier: Modifier = Modifier,
 ) {
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = title,
             style = MomensTheme.typography.bodyB14,
@@ -117,7 +119,7 @@ private fun MomensToastPreview() {
                 modifier = Modifier.align(alignment = Alignment.Center),
             ) {
                 MomensToast(
-                    title = "토스트 메시지"
+                    title = "토스트 메시지",
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
