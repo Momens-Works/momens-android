@@ -21,47 +21,56 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.noRippleClickable
+import com.momens.android.core.designsystem.component.button.MomensButton
+import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun PeopleListItem(
-    text : String ,
+    text: String,
     onClick: () -> Unit,
-    modifier : Modifier = Modifier,
-    isSelected: Boolean = false
-){
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+) {
     val backgroundColor =
         if (isSelected) MomensTheme.colors.primary10 else MomensTheme.colors.white
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(backgroundColor)
+            .noRippleClickable(onClick = onClick)
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(8.dp),
+            )
             .padding(horizontal = 10.dp, vertical = 12.dp),
-
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ){
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         PeopleIcon()
 
         Text(
             text = text,
             modifier = Modifier.weight(1f),
             color = MomensTheme.colors.black,
-            style = MomensTheme.typography.bodyB14
+            style = MomensTheme.typography.bodyB14,
         )
-        if(isSelected){
-          //  TODO() isSelected가 true일 때 버튼 보이기
+
+        if (isSelected) {
+            MomensButton(
+                text = "삭제",
+                onClick = onClick,
+                type = MomensButtonType.WHITE,
+            )
         }
-        // 삭제 버튼 머지되면 가져와서 쓸 예정
     }
 }
 
 @Composable
 private fun PeopleIcon(
-    modifier : Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+) {
     Box(
         modifier = modifier
             .size(34.dp)
@@ -82,22 +91,19 @@ private fun PeopleIcon(
 
 @Preview
 @Composable
-private fun PeopleListItemPreview(){
+private fun PeopleListItemPreview() {
     MomensTheme {
-        Column(verticalArrangement = Arrangement.spacedBy(17.dp)){
+        Column(verticalArrangement = Arrangement.spacedBy(17.dp)) {
             PeopleListItem(
                 text = "강채원",
                 onClick = {},
-                isSelected =  true
+                isSelected = true,
             )
 
             PeopleListItem(
                 text = "강채원",
-                onClick = {}
+                onClick = {},
             )
-
-
         }
-
     }
 }
