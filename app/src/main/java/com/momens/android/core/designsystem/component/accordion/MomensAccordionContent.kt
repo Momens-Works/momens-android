@@ -44,10 +44,11 @@ fun MomensAccordionContent(
 
 @Composable
 private fun MomensAccordionRow(
-    item: MomensAccordionItem
+    item: MomensAccordionItem,
+    modifier: Modifier = Modifier
 ) {
 
-    Row {
+    Row(modifier = modifier) {
 
         Text(
             text = item.title,
