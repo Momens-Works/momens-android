@@ -11,12 +11,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.momens.android.presentation.brief.navigation.navigateToBrief
 import com.momens.android.presentation.main.type.MainTab
-import com.momens.android.presentation.project.navigation.navigateToProject
-import com.momens.android.presentation.project.task.detail.navigation.navigateToTaskDetail
 import com.momens.android.presentation.signal.navigation.Signal
 import com.momens.android.presentation.signal.navigation.navigateToSignal
 import com.momens.android.presentation.signin.navigation.navigateToSignIn
 import com.momens.android.presentation.splash.navigation.navigateToSplash
+import com.momens.android.presentation.task.detail.navigation.navigateToTaskDetail
+import com.momens.android.presentation.task.navigation.navigateToTask
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -61,18 +61,6 @@ class MainAppState(
             initialValue = null,
         )
 
-    val isBottomBarVisible: StateFlow<Boolean> = currentDestination
-        .map { destination ->
-            MainTab.entries.any { tab ->
-                destination?.route == tab.routeName
-            }
-        }
-        .stateIn(
-            scope = coroutineScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false,
-    )
-
     fun navigate(tab: MainTab) {
         if (currentTab.value == tab) return
 
@@ -87,7 +75,7 @@ class MainAppState(
         when (tab) {
             MainTab.SIGNAL -> navController.navigateToSignal(navOptions = navOptions)
             MainTab.BRIEF -> navController.navigateToBrief(navOptions = navOptions)
-            MainTab.TASK -> navController.navigateToProject(navOptions = navOptions)
+            MainTab.TASK -> navController.navigateToTask(navOptions = navOptions)
         }
     }
 
@@ -107,8 +95,8 @@ class MainAppState(
         navController.navigateToSignal(navOptions = navOptions)
     }
 
-    fun navigateToProject(navOptions: NavOptions? = clearStackNavOptions) {
-        navController.navigateToProject(navOptions = navOptions)
+    fun navigateToTask(navOptions: NavOptions? = clearStackNavOptions) {
+        navController.navigateToTask(navOptions = navOptions)
     }
 
     fun navigateToTaskDetail(navOptions: NavOptions? = keepStackNavOptions) {

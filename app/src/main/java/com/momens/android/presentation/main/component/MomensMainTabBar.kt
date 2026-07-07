@@ -19,9 +19,12 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.main.type.MainTab
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun MomensMainTabBar(
+    tabs: ImmutableList<MainTab>,
     selectedTab: MainTab,
     onTabClick: (MainTab) -> Unit,
     modifier: Modifier = Modifier,
@@ -29,14 +32,14 @@ fun MomensMainTabBar(
     Row(
         modifier = modifier
             .background(
-                color = MomensTheme.colors.navGray,
+                 color = MomensTheme.colors.navGray,
                 shape = RoundedCornerShape(40.dp),
             )
             .padding(6.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        MainTab.entries.forEach { tab ->
+        tabs.forEach { tab ->
             MomensMainTabBarItem(
                 tab = tab,
                 selected = tab == selectedTab,
@@ -88,22 +91,27 @@ private fun MomensMainTabBarItem(
 @Preview(showBackground = true)
 @Composable
 private fun MomensMainTabBarPreview() {
+    val tabs = MainTab.entries.toImmutableList()
+
     MomensTheme {
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             MomensMainTabBar(
+                tabs = tabs,
                 selectedTab = MainTab.SIGNAL,
                 onTabClick = {},
             )
 
             MomensMainTabBar(
+                tabs = tabs,
                 selectedTab = MainTab.BRIEF,
                 onTabClick = {},
             )
 
             MomensMainTabBar(
+                tabs = tabs,
                 selectedTab = MainTab.TASK,
                 onTabClick = {},
             )

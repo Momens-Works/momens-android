@@ -4,8 +4,8 @@ import androidx.annotation.DrawableRes
 import com.momens.android.R
 import com.momens.android.core.common.navigation.Route
 import com.momens.android.presentation.brief.navigation.Brief
-import com.momens.android.presentation.project.navigation.Project
 import com.momens.android.presentation.signal.navigation.Signal
+import com.momens.android.presentation.task.navigation.Task
 
 enum class MainTab(
     val label: String,
@@ -27,7 +27,7 @@ enum class MainTab(
     TASK(
         label = "태스크",
         iconRes = R.drawable.ic_task,
-        route = Project,
+        route = Task,
     );
 
     val routeName: String = route::class.qualifiedName.orEmpty()

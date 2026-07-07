@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,22 +17,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.main.component.MomensMainTabBar
-import com.momens.android.presentation.project.navigation.projectNavGraph
-import com.momens.android.presentation.project.task.detail.navigation.taskDetailNavGraph
+import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.signal.navigation.signalNavGraph
 import com.momens.android.presentation.signin.navigation.signInNavGraph
 import com.momens.android.presentation.splash.navigation.splashNavGraph
+import com.momens.android.presentation.task.detail.navigation.taskDetailNavGraph
+import com.momens.android.presentation.task.navigation.taskNavGraph
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun MainScreen(
     appState: MainAppState = rememberMainAppState(),
 ) {
-    val isBottomBarVisible by appState.isBottomBarVisible.collectAsStateWithLifecycle()
     val currentTab by appState.currentTab.collectAsStateWithLifecycle()
+    val tabs = remember { MainTab.entries.toImmutableList() }
 
     Scaffold(
         bottomBar = {
-            currentTab?.takeIf { isBottomBarVisible }?.let { tab ->
+            currentTab?.let { tab ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -40,6 +43,7 @@ fun MainScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     MomensMainTabBar(
+                        tabs = tabs,
                         selectedTab = tab,
                         onTabClick = appState::navigate,
                     )
@@ -57,7 +61,7 @@ fun MainScreen(
         ) {
             signalNavGraph(paddingValues = innerPadding)
             briefNavGraph(paddingValues = innerPadding)
-            projectNavGraph(paddingValues = innerPadding)
+            taskNavGraph(paddingValues = innerPadding)
             taskDetailNavGraph(paddingValues = innerPadding)
             signInNavGraph(paddingValues = innerPadding)
             splashNavGraph(paddingValues = innerPadding)

@@ -5,12 +5,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.momens.android.core.common.navigation.MainTabRoute
 import com.momens.android.core.common.navigation.Route
 import com.momens.android.presentation.brief.BriefRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Brief : Route
+data object Brief : MainTabRoute
 
 fun NavController.navigateToBrief(
     navOptions: NavOptions? = null,
