@@ -19,11 +19,12 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MomensAccordionContent(
-    items: ImmutableList<MomensAccordionItem>
+    items: ImmutableList<MomensAccordionItem>,
+    modifier: Modifier = Modifier
 ) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(
                 color = MomensTheme.colors.gray100,
