@@ -32,13 +32,9 @@ fun MomensImportantStatus(
 
     Row(
         modifier = modifier
-            .then(
-                tone.background?.let { bg ->
-                    Modifier.background(
-                        color = bg(),
-                        shape = RoundedCornerShape(4.dp),
-                    )
-                } ?: Modifier
+            .background(
+                color = tone.background(),
+                shape = RoundedCornerShape(4.dp),
             )
             .padding(horizontal = 10.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
