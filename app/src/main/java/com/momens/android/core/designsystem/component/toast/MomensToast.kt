@@ -26,8 +26,8 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun MomensToast(
     title: String,
-    type: MomensToastType = MomensToastType.DEFAULT,
     modifier: Modifier = Modifier,
+    type: MomensToastType = MomensToastType.DEFAULT,
     description: String = "",
     onActionClick: () -> Unit = {},
 ) {
