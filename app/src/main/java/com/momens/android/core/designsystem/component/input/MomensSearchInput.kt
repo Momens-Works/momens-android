@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
@@ -21,6 +23,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
@@ -30,7 +33,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun MomensSearchInput(
     state: TextFieldState,
-    onIconClick: () -> Unit,
+    onSearch: () -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
     lineLimits: TextFieldLineLimits = TextFieldLineLimits.SingleLine,
@@ -54,6 +57,8 @@ fun MomensSearchInput(
         lineLimits = lineLimits,
         textStyle = textStyle.copy(color = contentColor),
         cursorBrush = SolidColor(value = contentColor),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        onKeyboardAction = KeyboardActionHandler { onSearch() },
         decorator = { innerTextField ->
             Row(
                 modifier = Modifier
@@ -79,7 +84,7 @@ fun MomensSearchInput(
                     tint = MomensTheme.colors.gray600,
                     modifier = Modifier
                         .size(20.dp)
-                        .noRippleClickable(onClick = onIconClick),
+                        .noRippleClickable(onClick = onSearch),
                 )
             }
         },
@@ -102,13 +107,13 @@ private fun MomensSearchInputPreview() {
             MomensSearchInput(
                 state = searchEmptyState,
                 placeholder = "Search",
-                onIconClick = {},
+                onSearch = {},
             )
 
             MomensSearchInput(
                 state = searchFilledState,
                 placeholder = "Search",
-                onIconClick = {},
+                onSearch = {},
             )
         }
     }
