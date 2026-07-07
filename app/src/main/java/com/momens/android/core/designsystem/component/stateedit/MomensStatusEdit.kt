@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.componentstatus
+package com.momens.android.core.designsystem.component.stateedit
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
