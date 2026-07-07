@@ -89,7 +89,7 @@ private fun PeopleIcon(
     }
 }
 
-@Preview
+@Preview(widthDp = 320)
 @Composable
 private fun PeopleListItemPreview() {
     MomensTheme {
