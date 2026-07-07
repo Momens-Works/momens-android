@@ -1,11 +1,11 @@
 package com.momens.android.core.designsystem.component.accordion
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,16 +32,11 @@ internal fun MomensAccordionContent(
                     bottomEnd = 16.dp
                 )
             )
-            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .padding(horizontal = 20.dp, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
-        items.forEachIndexed { index, item ->
-
+        items.forEach { item ->
             MomensAccordionRow(item)
-
-            if (index != items.lastIndex) {
-                Spacer(modifier = Modifier.height(12.dp))
-            }
         }
     }
 }
