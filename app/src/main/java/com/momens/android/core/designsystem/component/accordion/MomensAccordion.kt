@@ -78,18 +78,19 @@ private fun MomensAccordionHeader(
     expanded: Boolean,
     @DrawableRes iconResId: Int,
     onClick: () -> Unit,
-) {
+    modifier: Modifier = Modifier
+    ) {
 
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 90f else -90f
     )
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(
-                MomensTheme.colors.gray200,
-                RoundedCornerShape(
+                color = MomensTheme.colors.gray200,
+                shape = RoundedCornerShape(
                     topStart = 8.dp,
                     topEnd = 8.dp,
                     bottomStart = if (expanded) 0.dp else 8.dp,
