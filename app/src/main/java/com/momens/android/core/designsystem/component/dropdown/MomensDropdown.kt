@@ -30,7 +30,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,13 +65,15 @@ fun MomensDropdown(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
             .border(
                 width = 1.dp,
                 color = MomensTheme.colors.gray100,
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(8.dp)
             )
-            .background(MomensTheme.colors.white),
+            .background(
+                color = MomensTheme.colors.white,
+                shape = RoundedCornerShape(8.dp),
+            ),
     ) {
         Column(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -122,6 +123,7 @@ fun MomensDropdown(
             ) {
                 Text(
                     text = if (expanded) "접기" else "더보기",
+                    color = MomensTheme.colors.gray400
                 )
 
                 Spacer(
@@ -132,7 +134,7 @@ fun MomensDropdown(
                     painter = painterResource(R.drawable.ic_next),
                     contentDescription = null,
                     modifier = Modifier.rotate(rotation),
-                    tint = MomensTheme.colors.gray100
+                    tint = MomensTheme.colors.gray400
                 )
             }
         }
@@ -178,50 +180,52 @@ private fun MomensSignalType.color() =
 @Preview(showBackground = true)
 @Composable
 private fun MomensDropdownPreview() {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-    ) {
-        MomensDropdown(
-            items = persistentListOf(
-                MomensSignalItem(
-                    MomensSignalType.DECISION,
-                    "소셜 로그인은 MVP 범위에서 제외",
+    MomensTheme{
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+        ) {
+            MomensDropdown(
+                items = persistentListOf(
+                    MomensSignalItem(
+                        MomensSignalType.DECISION,
+                        "소셜 로그인은 MVP 범위에서 제외",
+                    ),
+                    MomensSignalItem(
+                        MomensSignalType.DECISION,
+                        "회원가입 MVP 범위 1차 확정",
+                    ),
+                    MomensSignalItem(
+                        MomensSignalType.RISK,
+                        "Android13+ 권한 요청 플로우 이탈 가능성",
+                    ),
                 ),
-                MomensSignalItem(
-                    MomensSignalType.DECISION,
-                    "회원가입 MVP 범위 1차 확정",
-                ),
-                MomensSignalItem(
-                    MomensSignalType.RISK,
-                    "Android13+ 권한 요청 플로우 이탈 가능성",
-                ),
-            ),
-        )
+            )
 
-        MomensDropdown(
-            items = persistentListOf(
-                MomensSignalItem(
-                    MomensSignalType.DECISION,
-                    "소셜 로그인은 MVP 범위에서 제외",
+            MomensDropdown(
+                items = persistentListOf(
+                    MomensSignalItem(
+                        MomensSignalType.DECISION,
+                        "소셜 로그인은 MVP 범위에서 제외",
+                    ),
+                    MomensSignalItem(
+                        MomensSignalType.DECISION,
+                        "회원가입 MVP 범위 1차 확정",
+                    ),
+                    MomensSignalItem(
+                        MomensSignalType.RISK,
+                        "Android13+ 권한 요청 플로우 이탈 가능성",
+                    ),
+                    MomensSignalItem(
+                        MomensSignalType.QUESTION,
+                        "푸시 알림 정책 논의 필요",
+                    ),
+                    MomensSignalItem(
+                        MomensSignalType.QUESTION,
+                        "로그인 유지 기간 결정 필요",
+                    ),
                 ),
-                MomensSignalItem(
-                    MomensSignalType.DECISION,
-                    "회원가입 MVP 범위 1차 확정",
-                ),
-                MomensSignalItem(
-                    MomensSignalType.RISK,
-                    "Android13+ 권한 요청 플로우 이탈 가능성",
-                ),
-                MomensSignalItem(
-                    MomensSignalType.QUESTION,
-                    "푸시 알림 정책 논의 필요",
-                ),
-                MomensSignalItem(
-                    MomensSignalType.QUESTION,
-                    "로그인 유지 기간 결정 필요",
-                ),
-            ),
-        )
+            )
+        }
     }
 }
