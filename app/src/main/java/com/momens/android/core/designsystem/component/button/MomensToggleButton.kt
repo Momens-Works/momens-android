@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.component.button
+package com.momens.android.core.designsystem.component.button
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
