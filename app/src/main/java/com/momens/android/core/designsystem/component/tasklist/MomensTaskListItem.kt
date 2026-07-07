@@ -37,7 +37,7 @@ fun MomensTaskListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .momensUiShadow(shape = RoundedCornerShape(8.dp))
+            .momensUiShadow()
             .background(
                 color = MomensTheme.colors.white,
                 shape = RoundedCornerShape(8.dp),
