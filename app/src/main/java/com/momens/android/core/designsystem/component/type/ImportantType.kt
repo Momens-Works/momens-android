@@ -32,7 +32,7 @@ enum class ImportantLevel(
 enum class ImportantTone(
     val textStyle: @Composable () -> TextStyle,
     val textColor: @Composable () -> Color,
-    val background: (@Composable () -> Color)?,
+    val background: @Composable () -> Color,
 ) {
     GRAY(
         textStyle = { MomensTheme.typography.bodyM12 },
@@ -47,6 +47,6 @@ enum class ImportantTone(
     CLEAR(
         textStyle = { MomensTheme.typography.bodyM12 },
         textColor = { MomensTheme.colors.gray600 },
-        background = null,
+        background = { Color.Unspecified },
     ),
 }
