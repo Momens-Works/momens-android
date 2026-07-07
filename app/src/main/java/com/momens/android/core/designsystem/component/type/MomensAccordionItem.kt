@@ -12,7 +12,7 @@ data class MomensAccordionItem(
 
 enum class MomensAccordionType(
     val text: String,
-    @DrawableRes val icon: Int
+    @param: DrawableRes val icon: Int
 ) {
     SLACK(
         text = "슬랙",

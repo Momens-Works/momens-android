@@ -18,7 +18,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-internal fun MomensAccordionContent(
+fun MomensAccordionContent(
     items: ImmutableList<MomensAccordionItem>
 ) {
 
