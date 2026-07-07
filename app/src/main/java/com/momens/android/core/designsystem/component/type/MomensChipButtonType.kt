@@ -6,9 +6,9 @@ import androidx.compose.ui.text.TextStyle
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 enum class MomensChipButtonType(
-    val textStyle: @Composable () -> TextStyle = { MomensTheme.typography.captionM10 },
     val textColor: @Composable () -> Color,
     val background: @Composable () -> Color,
+    val textStyle: @Composable () -> TextStyle = { MomensTheme.typography.captionM10 },
 ) {
     PURPLE(
         textColor = { MomensTheme.colors.white },
