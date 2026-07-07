@@ -40,12 +40,14 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensSignalItem
 import com.momens.android.core.designsystem.component.type.MomensSignalType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 private const val MAX_VISIBLE_COUNT = 3
 
 @Composable
 fun MomensDropdown(
-    items: List<MomensSignalItem>,
+    items: ImmutableList<MomensSignalItem>,
     modifier: Modifier = Modifier,
 ) {
     var expanded by rememberSaveable {
@@ -130,6 +132,7 @@ fun MomensDropdown(
                     painter = painterResource(R.drawable.ic_next),
                     contentDescription = null,
                     modifier = Modifier.rotate(rotation),
+                    tint = MomensTheme.colors.gray100
                 )
             }
         }
@@ -180,7 +183,7 @@ private fun MomensDropdownPreview() {
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         MomensDropdown(
-            items = listOf(
+            items = persistentListOf(
                 MomensSignalItem(
                     MomensSignalType.DECISION,
                     "소셜 로그인은 MVP 범위에서 제외",
@@ -197,7 +200,7 @@ private fun MomensDropdownPreview() {
         )
 
         MomensDropdown(
-            items = listOf(
+            items = persistentListOf(
                 MomensSignalItem(
                     MomensSignalType.DECISION,
                     "소셜 로그인은 MVP 범위에서 제외",
