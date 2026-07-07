@@ -30,16 +30,16 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensAccordionItem
+import com.momens.android.core.designsystem.component.type.MomensAccordionType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun MomensAccordion(
-    title: String,
+    type: MomensAccordionType,
     time: String,
     items: ImmutableList<MomensAccordionItem>,
-    @DrawableRes iconResId: Int,
     modifier: Modifier = Modifier,
     initiallyExpanded: Boolean = false
     ) {
@@ -54,10 +54,10 @@ fun MomensAccordion(
     ) {
 
         MomensAccordionHeader(
-            title = title,
+            title = type.text,
             time = time,
             expanded = expanded,
-            iconResId = iconResId,
+            iconResId = type.icon,
             onClick = {
                 expanded = !expanded
             }
@@ -148,26 +148,24 @@ private fun MomensAccordionPreview() {
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             MomensAccordion(
-                title = "Text",
+                type = MomensAccordionType.FIGMA,
                 time = "30분 전",
                 items = persistentListOf(
                     MomensAccordionItem("text", "text"),
                     MomensAccordionItem("text", "text"),
                     MomensAccordionItem("text", "text"),
                 ),
-                iconResId = R.drawable.ic_figma
             )
 
             MomensAccordion(
-                title = "Text",
                 time = "12분 전",
+                type = MomensAccordionType.SLACK,
                 initiallyExpanded = true,
                 items = persistentListOf(
                     MomensAccordionItem("text", "text"),
                     MomensAccordionItem("text", "text"),
                     MomensAccordionItem("text", "text"),
                 ),
-                iconResId = R.drawable.ic_github
             )
         }
     }
