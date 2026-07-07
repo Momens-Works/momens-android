@@ -30,12 +30,14 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensAccordionItem
 import com.momens.android.core.designsystem.theme.MomensTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun MomensAccordion(
     title: String,
     time: String,
-    items: List<MomensAccordionItem>,
+    items: ImmutableList<MomensAccordionItem>,
     @DrawableRes iconResId: Int,
     modifier: Modifier = Modifier,
     initiallyExpanded: Boolean = false
@@ -108,7 +110,7 @@ private fun MomensAccordionHeader(
             tint = MomensTheme.colors.black,
         )
 
-        Spacer(Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(4.dp))
 
         Text(
             text = title,
@@ -147,10 +149,10 @@ private fun MomensAccordionPreview() {
         MomensAccordion(
             title = "Text",
             time = "30분 전",
-            items = listOf(
+            items = persistentListOf(
                 MomensAccordionItem("text", "text"),
                 MomensAccordionItem("text", "text"),
-                MomensAccordionItem("text", "text")
+                MomensAccordionItem("text", "text"),
             ),
             iconResId = R.drawable.ic_figma
         )
@@ -159,10 +161,10 @@ private fun MomensAccordionPreview() {
             title = "Text",
             time = "12분 전",
             initiallyExpanded = true,
-            items = listOf(
+            items = persistentListOf(
                 MomensAccordionItem("text", "text"),
                 MomensAccordionItem("text", "text"),
-                MomensAccordionItem("text", "text")
+                MomensAccordionItem("text", "text"),
             ),
             iconResId = R.drawable.ic_github
         )

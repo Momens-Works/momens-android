@@ -15,10 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.type.MomensAccordionItem
 import com.momens.android.core.designsystem.theme.MomensTheme
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun MomensAccordionContent(
-    items: List<MomensAccordionItem>
+    items: ImmutableList<MomensAccordionItem>
 ) {
 
     Column(
