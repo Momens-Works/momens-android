@@ -42,8 +42,8 @@ fun MomensTaskListItem(
                 color = MomensTheme.colors.white,
                 shape = RoundedCornerShape(8.dp),
             )
-            .padding(horizontal = 12.dp, vertical = 10.dp)
-            .noRippleClickable(onClick = onClick),
+            .noRippleClickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
