@@ -144,12 +144,13 @@ fun MomensDropdown(
 @Composable
 private fun MomensDropdownRow(
     item: MomensSignalItem,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .size(6.dp)
                 .background(
                     color = item.type.color(),
