@@ -8,6 +8,5 @@ data class MomensSignalItem(
 enum class MomensSignalType {
     RISK,
     QUESTION,
-    DECISION,
-    UNKNOWN,
+    DECISION
 }

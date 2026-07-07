@@ -42,7 +42,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-private const val MAX_VISIBLE_COUNT = 3
+private const val MAX_VISIBLE_COUNT = 2
 
 @Composable
 fun MomensDropdown(
@@ -175,7 +175,6 @@ private fun MomensSignalType.color() =
         MomensSignalType.RISK -> MomensTheme.colors.pointRed
         MomensSignalType.QUESTION -> MomensTheme.colors.pointMint
         MomensSignalType.DECISION -> MomensTheme.colors.pointPurple
-        MomensSignalType.UNKNOWN -> MomensTheme.colors.gray400 // 협의 필요. UNKNOWN도 처리할지? 하면 무슨색?
     }
 
 @Preview(showBackground = true)
