@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +19,7 @@ import androidx.compose.ui.layout.findRootCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 
 @Composable
 inline fun Modifier.noRippleClickable(
@@ -29,6 +31,23 @@ inline fun Modifier.noRippleClickable(
         interactionSource = remember { MutableInteractionSource() },
         onClick = { onClick() },
         enabled = enabled
+    )
+}
+
+@Composable
+inline fun Modifier.noRippleToggleable(
+    value: Boolean,
+    enabled: Boolean = true,
+    role: Role? = null,
+    crossinline onValueChange: (Boolean) -> Unit,
+): Modifier {
+    return toggleable(
+        value = value,
+        interactionSource = remember { MutableInteractionSource() },
+        indication = null,
+        enabled = enabled,
+        role = role,
+        onValueChange = { onValueChange(it) },
     )
 }
 
