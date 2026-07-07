@@ -27,17 +27,18 @@ fun MomensButton(
     val contentColor = type.textColor()
     val typographyStyle = type.textStyle()
 
-    Button(
+   Surface(
         onClick = onClick,
         modifier = modifier,
         shape = RoundedCornerShape(4.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = contentColor,
-        ),
-        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+        color = backgroundColor,
+        contentColor = contentColor,
     ) {
-        Text(text = text, style = typographyStyle)
+        Text(
+            text = text,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+            style = typographyStyle,
+        )
     }
 }
 
