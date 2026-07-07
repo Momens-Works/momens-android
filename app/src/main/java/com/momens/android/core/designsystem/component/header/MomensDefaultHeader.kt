@@ -35,6 +35,7 @@ fun MomensDefaultHeader(
             painter = painterResource(id = R.drawable.ic_momens_logo),
             contentDescription = null,
             modifier = Modifier.align(Alignment.CenterStart),
+            tint = Color.Unspecified
         )
 
         Box(
