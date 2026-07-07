@@ -1,5 +1,7 @@
 package com.momens.android.core.designsystem.component.componentstatus
 
+import android.R.attr.contentDescription
+import android.R.attr.textColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,11 +25,11 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun MomensStatusEdit(
     status: String,
-    isSelected: Boolean = false,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
 ) {
     val backgroundColor = if (isSelected) MomensTheme.colors.primary10 else MomensTheme.colors.white
-    val textColor = if (isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.gray500
+    val contentColor = if (isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.gray500
 
     Row(
         modifier = modifier
@@ -40,13 +42,13 @@ fun MomensStatusEdit(
         Icon(
             modifier = Modifier.size(24.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_backlog),
-            tint = MomensTheme.colors.primary100,
+            tint = contentColor,
             contentDescription = null,
         )
 
         Text(
             text = status,
-            color = textColor,
+            color = contentColor,
             style = MomensTheme.typography.captionM11,
         )
     }
