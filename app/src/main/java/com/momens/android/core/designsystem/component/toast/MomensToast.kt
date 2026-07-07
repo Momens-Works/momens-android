@@ -20,16 +20,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
-import com.momens.android.core.designsystem.component.divider.MomensDivider
+import com.momens.android.core.designsystem.component.type.MomensToastType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-@Suppress("UNUSED_PARAMETER")
 @Composable
 fun MomensToast(
     title: String,
-    description: String,
-    onActionClick: () -> Unit,
+    type: MomensToastType = MomensToastType.DEFAULT,
     modifier: Modifier = Modifier,
+    description: String = "",
+    onActionClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -45,35 +45,59 @@ fun MomensToast(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_checkbox_fill),
+            painter = painterResource(type.iconRes),
             contentDescription = null,
-            modifier = Modifier.noRippleClickable(onClick = {}),
             tint = MomensTheme.colors.gray400,
         )
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        Column {
-            Text(
-                text = title,
-                style = MomensTheme.typography.bodyB14,
-                color = MomensTheme.colors.white,
-            )
+        when (type) {
+            MomensToastType.DEFAULT -> {
+                Text(
+                    text = title,
+                    style = MomensTheme.typography.bodyB14,
+                    color = MomensTheme.colors.white,
+                )
+            }
 
-            Spacer(modifier = Modifier.height(2.dp))
+            MomensToastType.BUTTON -> {
+                MomensToastTextColumn(
+                    title = title,
+                    description = description,
+                )
 
-            Text(
-                text = description,
-                style = MomensTheme.typography.captionM11,
-                color = MomensTheme.colors.gray300,
-            )
+                Spacer(modifier = Modifier.weight(1f))
+
+                Icon( //해당 ICON부분은 추후에 갑유 버튼 merge하고 교체 예정
+                    painter = painterResource(R.drawable.ic_next),
+                    contentDescription = null,
+                    modifier = Modifier.noRippleClickable(onClick = onActionClick),
+                    tint = MomensTheme.colors.gray300,
+                )
+            }
         }
+    }
+}
 
-        Spacer(modifier = Modifier.weight(1f))
+@Composable
+private fun MomensToastTextColumn(
+    title: String,
+    description: String,
+) {
+    Column {
+        Text(
+            text = title,
+            style = MomensTheme.typography.bodyB14,
+            color = MomensTheme.colors.white,
+        )
 
-        Icon(
-            painter = painterResource(R.drawable.ic_checkbox_empty),
-            contentDescription = null
+        Spacer(modifier = Modifier.height(2.dp))
+
+        Text(
+            text = description,
+            style = MomensTheme.typography.captionM11,
+            color = MomensTheme.colors.gray300,
         )
     }
 }
@@ -87,14 +111,24 @@ private fun MomensToastPreview() {
                 .height(720.dp)
                 .width(360.dp)
                 .padding(top = 50.dp)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         ) {
-            MomensToast(
+            Column(
                 modifier = Modifier.align(alignment = Alignment.Center),
-                title = "우사기",
-                description = "우나 야하~!",
-                onActionClick = { }
-            )
+            ) {
+                MomensToast(
+                    title = "토스트 메시지"
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                MomensToast(
+                    title = "우사기",
+                    description = "우나 야하~!",
+                    type = MomensToastType.BUTTON,
+                    onActionClick = {},
+                )
+            }
         }
     }
 }
