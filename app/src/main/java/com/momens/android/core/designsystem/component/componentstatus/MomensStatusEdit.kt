@@ -1,7 +1,4 @@
 package com.momens.android.core.designsystem.component.componentstatus
-
-import android.R.attr.contentDescription
-import android.R.attr.textColor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,12 +16,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.R
+import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensStatusEdit(
-    status: String,
+    type: MomensStatusEditType,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
 ) {
@@ -41,13 +38,13 @@ fun MomensStatusEdit(
     ) {
         Icon(
             modifier = Modifier.size(24.dp),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_backlog),
+            imageVector = ImageVector.vectorResource(id = type.iconRes),
             tint = contentColor,
             contentDescription = null,
         )
 
         Text(
-            text = status,
+            text = type.label,
             color = contentColor,
             style = MomensTheme.typography.captionM11,
         )
@@ -63,12 +60,48 @@ private fun MomensStatusEditPreview() {
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             MomensStatusEdit(
-                status = "백로그",
+                type = MomensStatusEditType.BACKLOG,
                 isSelected = true,
             )
 
             MomensStatusEdit(
-                status = "백로그",
+                type = MomensStatusEditType.BACKLOG,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.TODO,
+                isSelected = true,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.TODO,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.INPROGRESS,
+                isSelected = true,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.INPROGRESS,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.DONE,
+                isSelected = true,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.DONE,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.CANCELED,
+                isSelected = true,
+            )
+
+            MomensStatusEdit(
+                type = MomensStatusEditType.CANCELED,
             )
         }
     }
