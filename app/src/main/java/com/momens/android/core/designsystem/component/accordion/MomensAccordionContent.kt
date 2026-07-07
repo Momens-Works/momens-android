@@ -26,8 +26,8 @@ internal fun MomensAccordionContent(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                MomensTheme.colors.gray100,
-                RoundedCornerShape(
+                color = MomensTheme.colors.gray100,
+                shape = RoundedCornerShape(
                     bottomStart = 16.dp,
                     bottomEnd = 16.dp
                 )
@@ -40,7 +40,7 @@ internal fun MomensAccordionContent(
             MomensAccordionRow(item)
 
             if (index != items.lastIndex) {
-                Spacer(Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
