@@ -121,7 +121,7 @@ private fun MomensAccordionHeader(
             style = MomensTheme.typography.bodyB14
         )
 
-        Spacer(Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(1f))
 
         Text(
             text = time,
@@ -129,7 +129,7 @@ private fun MomensAccordionHeader(
             style = MomensTheme.typography.bodyB12,
         )
 
-        Spacer(Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(12.dp))
 
         Icon(
             painter = painterResource(R.drawable.ic_next),
