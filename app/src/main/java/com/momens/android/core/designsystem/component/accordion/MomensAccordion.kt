@@ -142,33 +142,33 @@ private fun MomensAccordionHeader(
 @Preview(showBackground = true)
 @Composable
 private fun MomensAccordionPreview() {
+    MomensTheme{
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            MomensAccordion(
+                title = "Text",
+                time = "30분 전",
+                items = persistentListOf(
+                    MomensAccordionItem("text", "text"),
+                    MomensAccordionItem("text", "text"),
+                    MomensAccordionItem("text", "text"),
+                ),
+                iconResId = R.drawable.ic_figma
+            )
 
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
-
-        MomensAccordion(
-            title = "Text",
-            time = "30분 전",
-            items = persistentListOf(
-                MomensAccordionItem("text", "text"),
-                MomensAccordionItem("text", "text"),
-                MomensAccordionItem("text", "text"),
-            ),
-            iconResId = R.drawable.ic_figma
-        )
-
-        MomensAccordion(
-            title = "Text",
-            time = "12분 전",
-            initiallyExpanded = true,
-            items = persistentListOf(
-                MomensAccordionItem("text", "text"),
-                MomensAccordionItem("text", "text"),
-                MomensAccordionItem("text", "text"),
-            ),
-            iconResId = R.drawable.ic_github
-        )
+            MomensAccordion(
+                title = "Text",
+                time = "12분 전",
+                initiallyExpanded = true,
+                items = persistentListOf(
+                    MomensAccordionItem("text", "text"),
+                    MomensAccordionItem("text", "text"),
+                    MomensAccordionItem("text", "text"),
+                ),
+                iconResId = R.drawable.ic_github
+            )
+        }
     }
 }
