@@ -81,21 +81,17 @@ private fun TaskListItemLabel(
     label: String,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Text(
+        text = label,
         modifier = modifier
             .background(
                 color = MomensTheme.colors.primary10,
                 shape = RoundedCornerShape(4.dp),
             )
             .padding(horizontal = 10.dp, vertical = 4.dp),
-
-        ) {
-        Text(
-            text = label,
-            color = MomensTheme.colors.gray700,
-            style = MomensTheme.typography.bodyM12,
-        )
-    }
+        color = MomensTheme.colors.gray700,
+        style = MomensTheme.typography.bodyM12,
+    )
 }
 
 @Composable
