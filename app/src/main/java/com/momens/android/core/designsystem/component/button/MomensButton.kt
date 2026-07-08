@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
@@ -30,14 +29,18 @@ fun MomensButton(
 
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(4.dp))
-            .background(backgroundColor)
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(4.dp),
+            )
             .noRippleClickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+            modifier = Modifier.padding(
+                horizontal = 10.dp,
+                vertical = 4.dp,
+            ),
             color = contentColor,
             style = typographyStyle,
         )
@@ -50,7 +53,7 @@ private fun MomensButtonPreview() {
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MomensButton(text = "버튼", type = MomensButtonType.GRAY, onClick = {})
             MomensButton(text = "버튼", type = MomensButtonType.PRIMARY, onClick = {})
