@@ -84,7 +84,7 @@ fun MomensDropdown(
                 )
 
                 if (index != defaultItems.lastIndex) {
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
             }
 
@@ -95,7 +95,7 @@ fun MomensDropdown(
             ) {
                 Column(
                     modifier = Modifier.padding(top = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     expandableItems.forEach {
                         MomensDropdownRow(
@@ -128,7 +128,7 @@ fun MomensDropdown(
                 )
 
                 Spacer(
-                    modifier = Modifier.width(4.dp),
+                    modifier = Modifier.width(2.dp),
                 )
 
                 Icon(
