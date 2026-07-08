@@ -1,6 +1,5 @@
 package com.momens.android.presentation.main.component
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,18 +29,11 @@ import com.momens.android.presentation.main.type.MainTab
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
-@Immutable
-data class MomensMainTabBarItemUiModel<T>(
-    val key: T,
-    val label: String,
-    @param:DrawableRes val iconRes: Int,
-    val isSelected: Boolean,
-)
-
 @Composable
-fun <T> MomensMainTabBar(
-    tabs: ImmutableList<MomensMainTabBarItemUiModel<T>>,
-    onTabClick: (T) -> Unit,
+fun MomensMainTabBar(
+    tabs: ImmutableList<MainTab>,
+    selectedTab: MainTab,
+    onTabClick: (MainTab) -> Unit,
     modifier: Modifier = Modifier,
     navBlurState: MomensNavBlurState? = null,
 ) {
@@ -75,7 +66,8 @@ fun <T> MomensMainTabBar(
             tabs.forEach { tab ->
                 MomensMainTabBarItem(
                     tab = tab,
-                    onClick = { onTabClick(tab.key) },
+                    isSelected = tab == selectedTab,
+                    onClick = { onTabClick(tab) },
                 )
             }
         }
@@ -85,13 +77,14 @@ fun <T> MomensMainTabBar(
 
 @Composable
 private fun MomensMainTabBarItem(
-    tab: MomensMainTabBarItemUiModel<*>,
+    tab: MainTab,
+    isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val contentColor = if (tab.isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.gray300
-    val textStyle = if (tab.isSelected) MomensTheme.typography.captionB11 else MomensTheme.typography.captionM11
-    val backgroundColor = if (tab.isSelected) MomensTheme.colors.white else Color.Transparent
+    val contentColor = if (isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.gray300
+    val textStyle = if (isSelected) MomensTheme.typography.captionB11 else MomensTheme.typography.captionM11
+    val backgroundColor = if (isSelected) MomensTheme.colors.white else Color.Transparent
 
     Column(
         modifier = modifier
@@ -102,7 +95,7 @@ private fun MomensMainTabBarItem(
             .noRippleClickable(onClick = onClick)
             .padding(
                 horizontal = 20.dp,
-                vertical = if (tab.isSelected) 4.dp else 2.dp,
+                vertical = if (isSelected) 4.dp else 2.dp,
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -124,7 +117,7 @@ private fun MomensMainTabBarItem(
 
 @Composable
 private fun MomensMainTabBarPreviewItem(
-    tabs: ImmutableList<MomensMainTabBarItemUiModel<MainTab>>,
+    tabs: ImmutableList<MainTab>,
     selectedTab: MainTab,
     navBlurState: MomensNavBlurState,
 ) {
@@ -156,7 +149,8 @@ private fun MomensMainTabBarPreviewItem(
         }
 
         MomensMainTabBar(
-            tabs = tabs.mapSelected(selectedTab = selectedTab),
+            tabs = tabs,
+            selectedTab = selectedTab,
             onTabClick = { },
             navBlurState = navBlurState,
         )
@@ -166,16 +160,7 @@ private fun MomensMainTabBarPreviewItem(
 @Preview(showBackground = true)
 @Composable
 private fun MomensMainTabBarPreview() {
-    val tabs = MainTab.entries
-        .map { tab ->
-            MomensMainTabBarItemUiModel(
-                key = tab,
-                label = tab.label,
-                iconRes = tab.iconRes,
-                isSelected = false,
-            )
-        }
-        .toImmutableList()
+    val tabs = MainTab.entries.toImmutableList()
     val signalNavBlurState = rememberMomensNavBlurState()
     val briefNavBlurState = rememberMomensNavBlurState()
     val taskNavBlurState = rememberMomensNavBlurState()
@@ -205,9 +190,3 @@ private fun MomensMainTabBarPreview() {
         }
     }
 }
-
-private fun ImmutableList<MomensMainTabBarItemUiModel<MainTab>>.mapSelected(
-    selectedTab: MainTab,
-): ImmutableList<MomensMainTabBarItemUiModel<MainTab>> = map { tab ->
-    tab.copy(isSelected = tab.key == selectedTab)
-}.toImmutableList()

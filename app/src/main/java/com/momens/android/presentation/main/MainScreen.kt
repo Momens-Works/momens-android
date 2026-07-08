@@ -20,7 +20,6 @@ import com.momens.android.core.designsystem.effect.momensNavBlurSource
 import com.momens.android.core.designsystem.effect.rememberMomensNavBlurState
 import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.main.component.MomensMainTabBar
-import com.momens.android.presentation.main.component.MomensMainTabBarItemUiModel
 import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.signal.navigation.signalNavGraph
 import com.momens.android.presentation.signin.navigation.signInNavGraph
@@ -59,17 +58,6 @@ fun MainScreen(
         }
 
         currentTab?.let { tab ->
-            val tabItems = remember(tabs, tab) {
-                tabs.map { mainTab ->
-                    MomensMainTabBarItemUiModel(
-                        key = mainTab,
-                        label = mainTab.label,
-                        iconRes = mainTab.iconRes,
-                        isSelected = mainTab == tab,
-                    )
-                }.toImmutableList()
-            }
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -79,7 +67,8 @@ fun MainScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 MomensMainTabBar(
-                    tabs = tabItems,
+                    tabs = tabs,
+                    selectedTab = tab,
                     onTabClick = appState::navigate,
                     navBlurState = navBlurState,
                 )

@@ -51,8 +51,8 @@ class MainAppState(
 
     val currentTab: StateFlow<MainTab?> = currentDestination
         .map { destination ->
-            MainTab.entries.find { tab ->
-                destination?.route == tab.routeName
+            MainTab.find { route ->
+                destination?.route == route::class.qualifiedName
             }
         }
         .stateIn(

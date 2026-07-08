@@ -2,7 +2,7 @@ package com.momens.android.presentation.main.type
 
 import androidx.annotation.DrawableRes
 import com.momens.android.R
-import com.momens.android.core.common.navigation.Route
+import com.momens.android.core.common.navigation.MainTabRoute
 import com.momens.android.presentation.brief.navigation.Brief
 import com.momens.android.presentation.signal.navigation.Signal
 import com.momens.android.presentation.task.navigation.Task
@@ -10,7 +10,7 @@ import com.momens.android.presentation.task.navigation.Task
 enum class MainTab(
     val label: String,
     @param:DrawableRes val iconRes: Int,
-    val route: Route,
+    val route: MainTabRoute,
 ) {
     SIGNAL(
         label = "시그널",
@@ -30,5 +30,13 @@ enum class MainTab(
         route = Task,
     );
 
-    val routeName: String = route::class.qualifiedName.orEmpty()
+    companion object {
+        fun find(predicate: (MainTabRoute) -> Boolean): MainTab? {
+            return entries.find { predicate(it.route) }
+        }
+
+        fun contains(predicate: (MainTabRoute) -> Boolean): Boolean {
+            return entries.any { predicate(it.route) }
+        }
+    }
 }
