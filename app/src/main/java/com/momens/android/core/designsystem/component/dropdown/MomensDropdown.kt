@@ -171,14 +171,6 @@ private fun MomensDropdownRow(
     }
 }
 
-@Composable
-private fun MomensSignalType.color() =
-    when (this) {
-        MomensSignalType.RISK -> MomensTheme.colors.pointRed
-        MomensSignalType.QUESTION -> MomensTheme.colors.pointMint
-        MomensSignalType.DECISION -> MomensTheme.colors.pointPurple
-    }
-
 @Preview(showBackground = true)
 @Composable
 private fun MomensDropdownPreview() {
