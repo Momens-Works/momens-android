@@ -5,12 +5,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.momens.android.core.common.navigation.MainTabRoute
 import com.momens.android.core.common.navigation.Route
 import com.momens.android.presentation.signal.SignalRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Signal : Route
+data object Signal :  MainTabRoute
 
 fun NavController.navigateToSignal(
     navOptions: NavOptions? = null,

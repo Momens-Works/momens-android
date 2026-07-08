@@ -6,11 +6,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.momens.android.core.common.navigation.MainTabRoute
+import com.momens.android.core.common.navigation.Route
 import com.momens.android.presentation.task.detail.TaskDetailRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TaskDetail : MainTabRoute
+data object TaskDetail : Route
 
 fun NavController.navigateToTaskDetail(
     navOptions: NavOptions? = null,
