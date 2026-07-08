@@ -53,10 +53,10 @@ private fun MomensAccordionRow(
         Text(
             text = item.title,
             style = MomensTheme.typography.bodyB12,
-            color = MomensTheme.colors.black
+            color = MomensTheme.colors.gray900
         )
 
-        Spacer(Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(20.dp))
 
         Text(
             text = item.value,
