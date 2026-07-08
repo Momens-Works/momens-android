@@ -3,6 +3,7 @@ package com.momens.android.presentation.main
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
+import com.momens.android.core.designsystem.effect.momensNavBlurSource
+import com.momens.android.core.designsystem.effect.rememberMomensNavBlurState
 import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.main.component.MomensMainTabBar
 import com.momens.android.presentation.main.type.MainTab
@@ -31,40 +34,45 @@ fun MainScreen(
 ) {
     val currentTab by appState.currentTab.collectAsStateWithLifecycle()
     val tabs = remember { MainTab.entries.toImmutableList() }
+    val navBlurState = rememberMomensNavBlurState()
 
-    Scaffold(
-        bottomBar = {
-            currentTab?.let { tab ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .navigationBarsPadding()
-                        .padding(bottom = 16.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    MomensMainTabBar(
-                        tabs = tabs,
-                        selectedTab = tab,
-                        onTabClick = appState::navigate,
-                    )
-                }
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            modifier = Modifier.momensNavBlurSource(state = navBlurState),
+        ) { innerPadding ->
+            NavHost(
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+                popEnterTransition = { EnterTransition.None },
+                popExitTransition = { ExitTransition.None },
+                navController = appState.navController,
+                startDestination = appState.startDestination,
+            ) {
+                signalNavGraph(paddingValues = innerPadding)
+                briefNavGraph(paddingValues = innerPadding)
+                taskNavGraph(paddingValues = innerPadding)
+                taskDetailNavGraph(paddingValues = innerPadding)
+                signInNavGraph(paddingValues = innerPadding)
+                splashNavGraph(paddingValues = innerPadding)
             }
-        },
-    ) { innerPadding ->
-        NavHost(
-            enterTransition = { EnterTransition.None },
-            exitTransition = { ExitTransition.None },
-            popEnterTransition = { EnterTransition.None },
-            popExitTransition = { ExitTransition.None },
-            navController = appState.navController,
-            startDestination = appState.startDestination,
-        ) {
-            signalNavGraph(paddingValues = innerPadding)
-            briefNavGraph(paddingValues = innerPadding)
-            taskNavGraph(paddingValues = innerPadding)
-            taskDetailNavGraph(paddingValues = innerPadding)
-            signInNavGraph(paddingValues = innerPadding)
-            splashNavGraph(paddingValues = innerPadding)
+        }
+
+        currentTab?.let { tab ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .navigationBarsPadding()
+                    .padding(bottom = 16.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                MomensMainTabBar(
+                    tabs = tabs,
+                    selectedTab = tab,
+                    onTabClick = appState::navigate,
+                    navBlurState = navBlurState,
+                )
+            }
         }
     }
 }

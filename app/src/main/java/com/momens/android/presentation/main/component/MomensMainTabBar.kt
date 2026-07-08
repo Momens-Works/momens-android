@@ -14,14 +14,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
+import com.momens.android.core.designsystem.effect.MomensNavBlurState
 import com.momens.android.core.designsystem.effect.momensNavBlur
+import com.momens.android.core.designsystem.effect.momensNavBlurSource
+import com.momens.android.core.designsystem.effect.rememberMomensNavBlurState
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.main.type.MainTab
 import kotlinx.collections.immutable.ImmutableList
@@ -33,8 +35,10 @@ fun MomensMainTabBar(
     selectedTab: MainTab,
     onTabClick: (MainTab) -> Unit,
     modifier: Modifier = Modifier,
+    navBlurState: MomensNavBlurState? = null,
 ) {
     val navShape = RoundedCornerShape(40.dp)
+    val navBackgroundColor = if (navBlurState == null) MomensTheme.colors.navGray else Color.Transparent
 
     Box(
         modifier = modifier
@@ -44,9 +48,9 @@ fun MomensMainTabBar(
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .momensNavBlur()
+                .momensNavBlur(state = navBlurState)
                 .background(
-                    color = MomensTheme.colors.navGray,
+                    color = navBackgroundColor,
                     shape = navShape,
                 ),
         )
@@ -75,6 +79,7 @@ fun MomensMainTabBar(
 private fun MomensMainTabBarPreviewItem(
     tabs: ImmutableList<MainTab>,
     selectedTab: MainTab,
+    navBlurState: MomensNavBlurState,
 ) {
     Box(
         modifier = Modifier.size(
@@ -86,7 +91,8 @@ private fun MomensMainTabBarPreviewItem(
         Column(
             modifier = Modifier
                 .matchParentSize()
-              //  .background(MomensTheme.colors.uiBg)
+                .momensNavBlurSource(state = navBlurState)
+                .background(MomensTheme.colors.uiBg)
                 .padding(
                     horizontal = 16.dp,
                     vertical = 10.dp,
@@ -106,6 +112,7 @@ private fun MomensMainTabBarPreviewItem(
             tabs = tabs,
             selectedTab = selectedTab,
             onTabClick = {},
+            navBlurState = navBlurState,
         )
     }
 }
@@ -155,6 +162,9 @@ private fun MomensMainTabBarItem(
 @Composable
 private fun MomensMainTabBarPreview() {
     val tabs = MainTab.entries.toImmutableList()
+    val signalNavBlurState = rememberMomensNavBlurState()
+    val briefNavBlurState = rememberMomensNavBlurState()
+    val taskNavBlurState = rememberMomensNavBlurState()
 
     MomensTheme {
         Column(
@@ -164,16 +174,19 @@ private fun MomensMainTabBarPreview() {
             MomensMainTabBarPreviewItem(
                 tabs = tabs,
                 selectedTab = MainTab.SIGNAL,
+                navBlurState = signalNavBlurState,
             )
 
             MomensMainTabBarPreviewItem(
                 tabs = tabs,
                 selectedTab = MainTab.BRIEF,
+                navBlurState = briefNavBlurState,
             )
 
             MomensMainTabBarPreviewItem(
                 tabs = tabs,
                 selectedTab = MainTab.TASK,
+                navBlurState = taskNavBlurState,
             )
         }
     }
