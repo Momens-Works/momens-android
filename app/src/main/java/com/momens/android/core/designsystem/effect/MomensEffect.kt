@@ -51,7 +51,7 @@ fun Modifier.momensBottomSheetShadow(
     spread = 0.dp,
 )
 
-fun Modifier.momensNavBlur(): Modifier = customBlur(4.dp)
+fun Modifier.momensNavBlur(): Modifier = customBlur(0.dp)
 
 fun Modifier.dropShadow(
     shape: Shape,
