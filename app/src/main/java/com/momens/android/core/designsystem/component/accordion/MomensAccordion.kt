@@ -42,8 +42,8 @@ fun MomensAccordion(
     time: String,
     items: ImmutableList<MomensAccordionItem>,
     modifier: Modifier = Modifier,
-    initiallyExpanded: Boolean = false
-    ) {
+    initiallyExpanded: Boolean = false,
+) {
     var expanded by rememberSaveable {
         mutableStateOf(initiallyExpanded)
     }
@@ -61,13 +61,13 @@ fun MomensAccordion(
             iconResId = type.icon,
             onClick = {
                 expanded = !expanded
-            }
+            },
         )
 
         AnimatedVisibility(expanded) {
 
             MomensAccordionContent(
-                items = items
+                items = items,
             )
         }
     }
@@ -80,11 +80,11 @@ private fun MomensAccordionHeader(
     expanded: Boolean,
     @DrawableRes iconResId: Int,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
-    ) {
+    modifier: Modifier = Modifier,
+) {
 
     val rotation by animateFloatAsState(
-        targetValue = if (expanded) 90f else -90f
+        targetValue = if (expanded) 90f else -90f,
     )
 
     Row(
@@ -118,7 +118,7 @@ private fun MomensAccordionHeader(
         Text(
             text = title,
             color = MomensTheme.colors.gray900,
-            style = MomensTheme.typography.bodyB14
+            style = MomensTheme.typography.bodyB14,
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -134,7 +134,9 @@ private fun MomensAccordionHeader(
         Icon(
             painter = painterResource(R.drawable.ic_next),
             contentDescription = null,
-            modifier = Modifier.size(20.dp).rotate(rotation),
+            modifier = Modifier
+                .size(20.dp)
+                .rotate(rotation),
             tint = MomensTheme.colors.black,
         )
     }
@@ -143,10 +145,10 @@ private fun MomensAccordionHeader(
 @Preview(showBackground = true)
 @Composable
 private fun MomensAccordionPreview() {
-    MomensTheme{
+    MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             MomensAccordion(
                 type = MomensAccordionType.FIGMA,

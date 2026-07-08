@@ -20,7 +20,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun MomensAccordionContent(
     items: ImmutableList<MomensAccordionItem>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     Column(
@@ -30,11 +30,11 @@ fun MomensAccordionContent(
                 color = MomensTheme.colors.gray100,
                 shape = RoundedCornerShape(
                     bottomStart = 16.dp,
-                    bottomEnd = 16.dp
-                )
+                    bottomEnd = 16.dp,
+                ),
             )
             .padding(horizontal = 20.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items.forEach { item ->
             MomensAccordionRow(item)
@@ -45,7 +45,7 @@ fun MomensAccordionContent(
 @Composable
 private fun MomensAccordionRow(
     item: MomensAccordionItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     Row(modifier = modifier) {
@@ -53,7 +53,7 @@ private fun MomensAccordionRow(
         Text(
             text = item.title,
             style = MomensTheme.typography.bodyB12,
-            color = MomensTheme.colors.gray900
+            color = MomensTheme.colors.gray900,
         )
 
         Spacer(modifier = Modifier.width(20.dp))
@@ -61,7 +61,7 @@ private fun MomensAccordionRow(
         Text(
             text = item.value,
             style = MomensTheme.typography.bodyM12,
-            color = MomensTheme.colors.gray500
+            color = MomensTheme.colors.gray500,
         )
     }
 }
