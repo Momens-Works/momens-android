@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
@@ -52,7 +53,7 @@ class MainAppState(
     val currentTab: StateFlow<MainTab?> = currentDestination
         .map { destination ->
             MainTab.find { route ->
-                destination?.route == route::class.qualifiedName
+                destination?.hasRoute(route::class) == true
             }
         }
         .stateIn(
