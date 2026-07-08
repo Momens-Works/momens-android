@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component
+package com.momens.android.core.designsystem.component.bottomsheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,8 +37,8 @@ fun MomensBottomSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    dragHandle: @Composable (() -> Unit)? = { MomensDragHandle() },
     containerColor: Color = MomensTheme.colors.white,
+    dragHandle: @Composable (() -> Unit)? = { MomensDragHandle() },
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val shape = RoundedCornerShape(
