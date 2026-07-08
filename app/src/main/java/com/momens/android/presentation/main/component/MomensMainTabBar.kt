@@ -42,7 +42,6 @@ fun MomensMainTabBar(
 
     Box(
         modifier = modifier
-            .height(60.dp)
             .clip(navShape),
     ) {
         Box(
@@ -67,11 +66,52 @@ fun MomensMainTabBar(
             tabs.forEach { tab ->
                 MomensMainTabBarItem(
                     tab = tab,
-                    selected = tab == selectedTab,
+                    isSelected = tab == selectedTab,
                     onClick = { onTabClick(tab) },
                 )
             }
         }
+    }
+}
+
+
+@Composable
+private fun MomensMainTabBarItem(
+    tab: MainTab,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val contentColor = if (isSelected) MomensTheme.colors.primary100 else MomensTheme.colors.gray300
+    val textStyle = if (isSelected) MomensTheme.typography.captionB11 else MomensTheme.typography.captionM11
+    val backgroundColor = if (isSelected) MomensTheme.colors.white else Color.Transparent
+
+    Column(
+        modifier = modifier
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(40.dp),
+            )
+            .noRippleClickable(onClick = onClick)
+            .padding(
+                horizontal = 20.dp,
+                vertical = if (isSelected) 4.dp else 2.dp,
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Icon(
+            painter = painterResource(tab.iconRes),
+            contentDescription = tab.label,
+            tint = contentColor,
+            modifier = Modifier.size(24.dp),
+        )
+
+        Text(
+            text = tab.label,
+            color = contentColor,
+            style = textStyle,
+        )
     }
 }
 
@@ -113,47 +153,6 @@ private fun MomensMainTabBarPreviewItem(
             selectedTab = selectedTab,
             onTabClick = {},
             navBlurState = navBlurState,
-        )
-    }
-}
-
-@Composable
-private fun MomensMainTabBarItem(
-    tab: MainTab,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val contentColor = if (selected) MomensTheme.colors.primary100 else MomensTheme.colors.gray300
-    val textStyle = if (selected) MomensTheme.typography.captionB11 else MomensTheme.typography.captionM11
-//    val backgroundColor = if (selected) MomensTheme.colors.white else MomensTheme.colors.navGray
-    val backgroundColor = if (selected) MomensTheme.colors.white else Color.Transparent
-
-    Column(
-        modifier = modifier
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(40.dp),
-            )
-            .noRippleClickable(onClick = onClick)
-            .padding(
-                horizontal = 20.dp,
-                vertical = if (selected) 4.dp else 2.dp,
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Icon(
-            painter = painterResource(tab.iconRes),
-            contentDescription = tab.label,
-            tint = contentColor,
-            modifier = Modifier.size(24.dp),
-        )
-
-        Text(
-            text = tab.label,
-            color = contentColor,
-            style = textStyle,
         )
     }
 }
