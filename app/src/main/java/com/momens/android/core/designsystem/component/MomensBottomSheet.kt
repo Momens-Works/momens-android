@@ -23,8 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
@@ -41,22 +41,30 @@ fun MomensBottomSheet(
     containerColor: Color = MomensTheme.colors.white,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val shape = RoundedCornerShape(
+        topStart = 20.dp,
+        topEnd = 20.dp,
+    )
+
     ModalBottomSheet(
-        modifier = modifier
-            .momensBottomSheetShadow(
-                shape = RoundedCornerShape(8.dp),
-            ),
+        modifier = modifier,
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        sheetMaxWidth = Dp.Unspecified,
-        shape = RoundedCornerShape(
-            topStart = 20.dp,
-            topEnd = 20.dp,
-        ),
-        containerColor = containerColor,
-        dragHandle = dragHandle,
-        content = content,
-    )
+        shape = RectangleShape,
+        containerColor = Color.Transparent,
+        dragHandle = null,
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(top = 22.dp)
+                .momensBottomSheetShadow(shape = shape)
+                .background(color = containerColor, shape = shape),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            dragHandle?.invoke()
+            content()
+        }
+    }
 }
 
 @Composable
