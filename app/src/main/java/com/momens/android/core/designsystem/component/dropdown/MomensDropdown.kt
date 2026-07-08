@@ -68,7 +68,7 @@ fun MomensDropdown(
             .border(
                 width = 1.dp,
                 color = MomensTheme.colors.gray100,
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
             )
             .background(
                 color = MomensTheme.colors.white,
@@ -124,7 +124,7 @@ fun MomensDropdown(
                 Text(
                     text = if (expanded) "접기" else "더보기",
                     style = MomensTheme.typography.captionB11,
-                    color = MomensTheme.colors.gray400
+                    color = MomensTheme.colors.gray400,
                 )
 
                 Spacer(
@@ -135,7 +135,7 @@ fun MomensDropdown(
                     painter = painterResource(R.drawable.ic_next),
                     contentDescription = null,
                     modifier = Modifier.rotate(rotation),
-                    tint = MomensTheme.colors.gray400
+                    tint = MomensTheme.colors.gray400,
                 )
             }
         }
@@ -145,11 +145,11 @@ fun MomensDropdown(
 @Composable
 private fun MomensDropdownRow(
     item: MomensSignalItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
@@ -174,7 +174,7 @@ private fun MomensDropdownRow(
 @Preview(showBackground = true)
 @Composable
 private fun MomensDropdownPreview() {
-    MomensTheme{
+    MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
