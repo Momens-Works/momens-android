@@ -1,17 +1,19 @@
 package com.momens.android.core.designsystem.component.button
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.theme.MomensTheme
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensButtonType
+import com.momens.android.core.designsystem.theme.MomensTheme
 
 
 @Composable
@@ -25,16 +27,21 @@ fun MomensButton(
     val contentColor = type.textColor()
     val typographyStyle = type.textStyle()
 
-   Surface(
-        onClick = onClick,
-        modifier = modifier,
-        shape = RoundedCornerShape(4.dp),
-        color = backgroundColor,
-        contentColor = contentColor,
+    Box(
+        modifier = modifier
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(4.dp),
+            )
+            .noRippleClickable(onClick = onClick),
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+            modifier = Modifier.padding(
+                horizontal = 10.dp,
+                vertical = 4.dp,
+            ),
+            color = contentColor,
             style = typographyStyle,
         )
     }
@@ -46,7 +53,7 @@ private fun MomensButtonPreview() {
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MomensButton(text = "버튼", type = MomensButtonType.GRAY, onClick = {})
             MomensButton(text = "버튼", type = MomensButtonType.PRIMARY, onClick = {})
