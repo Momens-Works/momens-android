@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
+import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
@@ -36,7 +37,10 @@ fun MomensToggleButton(
                 color = backgroundColor,
                 shape = CircleShape,
             )
-            .noRippleClickable { onCheckedChange(!isSelected) },
+            .noRippleToggleable(
+            value = isSelected,
+            onValueChange = onCheckedChange,
+        ),
     ) {
         Row(
             modifier = Modifier.padding(
