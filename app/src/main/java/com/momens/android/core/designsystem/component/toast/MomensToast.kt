@@ -64,9 +64,8 @@ fun MomensToast(
                 MomensToastTextColumn(
                     title = title,
                     description = description,
+                    modifier = Modifier.weight(1f)
                 )
-
-                Spacer(modifier = Modifier.weight(1f))
 
                 MomensButton(
                     text = "바로보기",
@@ -111,8 +110,8 @@ private fun MomensToastPreview() {
                 .padding(horizontal = 20.dp),
         ) {
             MomensToast(
-                title = "우사기",
-                description = "우나 야하~!",
+                title = "text",
+                description = "text",
                 type = MomensToastType.BUTTON,
                 onActionClick = {},
             )
@@ -120,7 +119,7 @@ private fun MomensToastPreview() {
             Spacer(modifier = Modifier.height(12.dp))
 
             MomensToast(
-                title = "토스트 메시지",
+                title = "text",
             )
         }
     }
