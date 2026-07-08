@@ -1,17 +1,19 @@
 package com.momens.android.core.designsystem.component.button
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensChipButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
@@ -27,25 +29,30 @@ fun MomensChipButton(
     val contentColor = type.textColor()
     val typographyStyle = type.textStyle()
 
-    Surface(
-        onClick = onClick,
-        modifier = modifier,
-        shape = CircleShape,
-        color = backgroundColor,
-        contentColor = contentColor,
+    Box(
+        modifier = modifier
+            .background(
+                color = backgroundColor,
+                shape = CircleShape,
+            )
+            .noRippleClickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text(
                 text = label,
                 style = typographyStyle,
+                color = contentColor
             )
             Text(
                 text = count.toString(),
                 style = typographyStyle,
+                color = contentColor
             )
         }
     }
@@ -57,7 +64,7 @@ private fun MomensChipButtonPreview() {
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             MomensChipButton(
                 label = "All",
