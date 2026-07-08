@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 fun SignInRoute(
     paddingValues: PaddingValues,
 ) {
+    // TODO: 구글 로그인 성공 콜백이 연결되면 Signal로 clear stack 이동합니다.
+    // onGoogleSignInSuccess -> navigateToSignal(clearStack)
     SignInScreen(paddingValues = paddingValues)
 }
 
