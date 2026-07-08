@@ -189,10 +189,6 @@ private fun MomensDropdownPreview() {
                         MomensSignalType.DECISION,
                         "회원가입 MVP 범위 1차 확정",
                     ),
-                    MomensSignalItem(
-                        MomensSignalType.RISK,
-                        "Android13+ 권한 요청 플로우 이탈 가능성",
-                    ),
                 ),
             )
 
