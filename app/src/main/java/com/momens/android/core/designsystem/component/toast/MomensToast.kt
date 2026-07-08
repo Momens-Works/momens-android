@@ -1,7 +1,6 @@
 package com.momens.android.core.designsystem.component.toast
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.R
-import com.momens.android.core.common.extension.noRippleClickable
+import com.momens.android.core.designsystem.component.button.MomensButton
+import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.component.type.MomensToastType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
@@ -69,12 +68,10 @@ fun MomensToast(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                Icon(
-                    //해당 ICON부분은 추후에 갑유 버튼 merge하고 교체 예정
-                    painter = painterResource(R.drawable.ic_next),
-                    contentDescription = null,
-                    modifier = Modifier.noRippleClickable(onClick = onActionClick),
-                    tint = MomensTheme.colors.gray300,
+                MomensButton(
+                    text = "바로보기",
+                    onClick = onActionClick,
+                    type = MomensButtonType.PRIMARY,
                 )
             }
         }
@@ -108,29 +105,23 @@ private fun MomensToastTextColumn(
 @Composable
 private fun MomensToastPreview() {
     MomensTheme {
-        Box(
+        Column(
             modifier = Modifier
-                .height(720.dp)
-                .width(360.dp)
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp),
         ) {
-            Column(
-                modifier = Modifier.align(alignment = Alignment.Center),
-            ) {
-                MomensToast(
-                    title = "토스트 메시지",
-                )
+            MomensToast(
+                title = "우사기",
+                description = "우나 야하~!",
+                type = MomensToastType.BUTTON,
+                onActionClick = {},
+            )
 
-                Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-                MomensToast(
-                    title = "우사기",
-                    description = "우나 야하~!",
-                    type = MomensToastType.BUTTON,
-                    onActionClick = {},
-                )
-            }
+            MomensToast(
+                title = "토스트 메시지",
+            )
         }
     }
 }
