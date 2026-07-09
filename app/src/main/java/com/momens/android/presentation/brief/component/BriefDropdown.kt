@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.dropdown
+package com.momens.android.presentation.brief.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -45,7 +45,7 @@ import kotlinx.collections.immutable.persistentListOf
 private const val MAX_VISIBLE_COUNT = 3
 
 @Composable
-fun MomensDropdown(
+fun BriefDropdown(
     items: ImmutableList<MomensSignalItem>,
     modifier: Modifier = Modifier,
 ) {
@@ -79,7 +79,7 @@ fun MomensDropdown(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
         ) {
             defaultItems.forEachIndexed { index, item ->
-                MomensDropdownRow(
+                BriefDropdownRow(
                     item = item,
                 )
 
@@ -98,7 +98,7 @@ fun MomensDropdown(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     expandableItems.forEach {
-                        MomensDropdownRow(
+                        BriefDropdownRow(
                             item = it,
                         )
                     }
@@ -143,7 +143,7 @@ fun MomensDropdown(
 }
 
 @Composable
-private fun MomensDropdownRow(
+private fun BriefDropdownRow(
     item: MomensSignalItem,
     modifier: Modifier = Modifier,
 ) {
@@ -173,13 +173,13 @@ private fun MomensDropdownRow(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensDropdownPreview() {
+private fun BriefDropdownPreview() {
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            MomensDropdown(
+            BriefDropdown(
                 items = persistentListOf(
                     MomensSignalItem(
                         MomensSignalType.DECISION,
@@ -192,7 +192,7 @@ private fun MomensDropdownPreview() {
                 ),
             )
 
-            MomensDropdown(
+            BriefDropdown(
                 items = persistentListOf(
                     MomensSignalItem(
                         MomensSignalType.DECISION,
