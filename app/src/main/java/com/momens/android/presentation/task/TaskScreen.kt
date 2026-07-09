@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.detail
+package com.momens.android.presentation.task
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -7,19 +7,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TaskDetailRoute(
+fun TaskRoute(
     paddingValues: PaddingValues,
 ) {
-    TaskDetailScreen(paddingValues = paddingValues)
+    TaskScreen(paddingValues = paddingValues)
 }
 
 @Composable
-private fun TaskDetailScreen(
+private fun TaskScreen(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = "Task Detail",
+        text = "Task",
         modifier = modifier.padding(paddingValues),
     )
 }
