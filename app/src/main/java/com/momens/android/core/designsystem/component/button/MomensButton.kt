@@ -15,7 +15,6 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-
 @Composable
 fun MomensButton(
     text: String,
@@ -62,7 +61,3 @@ private fun MomensButtonPreview() {
         }
     }
 }
-
-
-
-
