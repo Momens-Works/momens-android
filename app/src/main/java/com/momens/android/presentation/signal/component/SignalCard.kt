@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
@@ -29,7 +30,7 @@ fun SignalCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = RoundedCornerShape(20.dp)
+    val shape = RoundedCornerShape(8.dp)
 
     Column(
         modifier = modifier
@@ -50,6 +51,8 @@ fun SignalCard(
             text = title,
             style = MomensTheme.typography.bodyB16,
             color = MomensTheme.colors.black,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(2.dp))
@@ -58,6 +61,8 @@ fun SignalCard(
             text = description,
             style = MomensTheme.typography.bodyM12,
             color = MomensTheme.colors.gray500,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
