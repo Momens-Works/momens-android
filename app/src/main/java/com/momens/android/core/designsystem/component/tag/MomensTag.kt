@@ -19,16 +19,15 @@ import com.momens.android.core.designsystem.type.SignalTagType
 fun MomensSignalTag(
     type: SignalTagType,
     modifier: Modifier = Modifier,
-){
-
+) {
     Box(
         modifier = modifier
             .background(
                 color = type.background(),
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(4.dp),
             )
-            .padding(horizontal = 12.dp, vertical = 1.dp)
-    ){
+            .padding(horizontal = 12.dp, vertical = 1.dp),
+    ) {
         Text(
             text = type.label,
             color = MomensTheme.colors.white,
