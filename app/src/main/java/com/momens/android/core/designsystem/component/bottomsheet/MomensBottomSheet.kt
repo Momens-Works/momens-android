@@ -37,8 +37,8 @@ fun MomensBottomSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-    dragHandle: @Composable (() -> Unit)? = { MomensDragHandle() },
     containerColor: Color = MomensTheme.colors.white,
+    dragHandle: @Composable (() -> Unit)? = { MomensDragHandle() },
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val shape = RoundedCornerShape(
@@ -47,8 +47,8 @@ fun MomensBottomSheet(
     )
 
     ModalBottomSheet(
-        modifier = modifier,
         onDismissRequest = onDismiss,
+        modifier = modifier,
         sheetState = sheetState,
         shape = RectangleShape,
         containerColor = Color.Transparent,
