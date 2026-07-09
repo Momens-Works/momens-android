@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.tag.MomensSignalTag
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.effect.momensUiShadow
@@ -26,6 +27,7 @@ fun SignalCard(
     title: String,
     description: String,
     insightText: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(20.dp)
@@ -38,6 +40,7 @@ fun SignalCard(
                 color = MomensTheme.colors.white,
                 shape = shape
             )
+            .noRippleClickable(onClick = onClick)
             .padding(all = 16.dp),
         verticalArrangement = Arrangement.Center,
     ) {
@@ -77,6 +80,7 @@ private fun SignalCardPreview() {
             title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
             description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
             insightText = "내용이 들어갈 공간입니다",
+            onClick = {},
             modifier = Modifier.padding(16.dp),
         )
     }
