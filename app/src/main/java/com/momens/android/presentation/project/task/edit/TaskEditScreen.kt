@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun TaskEditRoute(
@@ -22,4 +24,14 @@ private fun TaskEditScreen(
         text = "Task Edit",
         modifier = modifier.padding(paddingValues),
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TaskEditScreenPreview() {
+    MomensTheme {
+        TaskEditScreen(
+            paddingValues = PaddingValues(),
+        )
+    }
 }
