@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +37,8 @@ fun PeopleListItem(
 ) {
     val backgroundColor =
         if (isSelected) MomensTheme.colors.primary10 else MomensTheme.colors.white
+    val iconBackgroundColor =
+        if (isSelected) MomensTheme.colors.white else MomensTheme.colors.primary10
 
     Row(
         modifier = modifier
@@ -48,9 +51,11 @@ fun PeopleListItem(
             .padding(horizontal = 10.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        PeopleIcon()
+        PeopleIcon(
+            backgroundColor = iconBackgroundColor,
+        )
 
-        Spacer(modifier= Modifier.width(10.dp))
+        Spacer(modifier = Modifier.width(10.dp))
 
         Text(
             text = text,
@@ -71,13 +76,14 @@ fun PeopleListItem(
 
 @Composable
 private fun PeopleIcon(
+    backgroundColor: Color,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .size(34.dp)
             .background(
-                color = MomensTheme.colors.white,
+                color = backgroundColor,
                 shape = CircleShape,
             ),
         contentAlignment = Alignment.Center,
