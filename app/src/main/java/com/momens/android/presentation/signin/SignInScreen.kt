@@ -22,7 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.R
+import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.button.MomensCtaButton
 import com.momens.android.core.designsystem.component.type.MomensCtaType
 import com.momens.android.core.designsystem.theme.MomensTheme
@@ -30,15 +33,23 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun SignInRoute(
     paddingValues: PaddingValues,
+    navigateToSignal: () -> Unit,
+    viewModel: SignInViewModel = hiltViewModel(),
 ) {
-    // TODO: 구글 로그인 성공 콜백이 연결되면 Signal로 clear stack 이동합니다.
-    // onGoogleSignInSuccess -> navigateToSignal(clearStack)
-    SignInScreen(paddingValues = paddingValues)
+    val signInState = viewModel.signInState.collectAsStateWithLifecycle()
+
+    SignInScreen(
+        paddingValues = paddingValues,
+        isGoogleLoginEnabled = signInState.value !is UiState.Loading,
+        onGoogleLoginClick = { viewModel.signInWithGoogle() }
+    )
 }
 
 @Composable
 private fun SignInScreen(
     paddingValues: PaddingValues,
+    isGoogleLoginEnabled: Boolean,
+    onGoogleLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -58,7 +69,8 @@ private fun SignInScreen(
                 .align(Alignment.BottomCenter)
                 .padding(horizontal = 20.dp)
                 .padding(bottom = 22.dp),
-            onGoogleLoginClick = {},
+            isGoogleLoginEnabled = isGoogleLoginEnabled,
+            onGoogleLoginClick = onGoogleLoginClick,
         )
     }
 }
@@ -86,6 +98,7 @@ private fun SignInTopContent(
 
 @Composable
 private fun SignInBottomContent(
+    isGoogleLoginEnabled: Boolean,
     onGoogleLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -97,6 +110,7 @@ private fun SignInBottomContent(
         MomensCtaButton(
             onClick = onGoogleLoginClick,
             type = MomensCtaType.LOGIN,
+            enabled = isGoogleLoginEnabled,
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -129,6 +143,8 @@ private fun SignInScreenPreview() {
         Scaffold { innerPadding ->
             SignInScreen(
                 paddingValues = innerPadding,
+                isGoogleLoginEnabled = true,
+                onGoogleLoginClick = {},
             )
         }
     }
