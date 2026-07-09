@@ -42,7 +42,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-private const val MAX_VISIBLE_COUNT = 2
+private const val MAX_VISIBLE_COUNT = 3
 
 @Composable
 fun MomensDropdown(
