@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.completionrulebox.MomensCompletionRuleBox
-import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
+
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.task.edit.model.CompletionRuleModel
@@ -73,11 +73,11 @@ fun TaskEditCompleteSection(
         }
 
         if (rules.isEmpty()) {
-            MomensEmptyView(
-                text = "완료기준이 등록되지 않았어요",
-                iconColor = MomensTheme.colors.gray100,
-                textColor = MomensTheme.colors.gray200,
-            )
+//            MomensEmptyView(
+//                text = "완료기준이 등록되지 않았어요",
+//                iconColor = MomensTheme.colors.gray100,
+//                textColor = MomensTheme.colors.gray200,
+//            )
         } else {
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
