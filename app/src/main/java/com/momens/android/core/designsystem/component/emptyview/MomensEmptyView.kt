@@ -20,8 +20,8 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensEmptyView(
+    text: String,
     modifier: Modifier = Modifier,
-    text: String = "시그널을 다 확인했어요",
     iconColor: Color = MomensTheme.colors.gray200,
     textColor: Color = MomensTheme.colors.gray300,
 ) {
@@ -52,6 +52,8 @@ fun MomensEmptyView(
 @Composable
 private fun MomensEmptyViewPreview() {
     MomensTheme {
-        MomensEmptyView()
+        MomensEmptyView(
+            text = "시그널을 다 확인했어요.",
+        )
     }
 }
