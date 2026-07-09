@@ -53,17 +53,22 @@ fun BriefSignalFilterButton(
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val visibleFilters = filters.filter { filter ->
+        filter.type == BriefSignalSummaryFilterType.ALL || filter.count > 0
+    }
+
+    val selectedVisibleFilterType =
+        visibleFilters.find { filter -> filter.type == selectedFilterType }?.type
+            ?: BriefSignalSummaryFilterType.ALL
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        filters
-            .filter { filter ->
-                filter.type == BriefSignalSummaryFilterType.ALL || filter.count > 0
-            }
+        visibleFilters
             .forEach { filter ->
-                val type = if (filter.type == selectedFilterType) {
+                val type = if (filter.type == selectedVisibleFilterType) {
                     filter.type.chipButtonType
                 } else {
                     MomensChipButtonType.WHITE
@@ -83,7 +88,7 @@ fun BriefSignalFilterButton(
 @Composable
 private fun BriefSignalSummarySectionPreview() {
     var selectedFilterType by rememberSaveable {
-        mutableStateOf(BriefSignalSummaryFilterType.DECISIONS)
+        mutableStateOf(BriefSignalSummaryFilterType.ALL)
     }
 
     val filters = persistentListOf(
