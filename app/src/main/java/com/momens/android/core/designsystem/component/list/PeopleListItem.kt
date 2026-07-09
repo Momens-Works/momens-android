@@ -17,11 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.button.MomensButton
@@ -29,11 +32,12 @@ import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun PeopleListItem(
+fun MomensPeopleListItem(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
+    profileImageUrl: String? = null,
 ) {
     val backgroundColor =
         if (isSelected) MomensTheme.colors.primary10 else MomensTheme.colors.white
@@ -53,6 +57,7 @@ fun PeopleListItem(
     ) {
         PeopleIcon(
             backgroundColor = iconBackgroundColor,
+            imageUrl = profileImageUrl,
         )
 
         Spacer(modifier = Modifier.width(10.dp))
@@ -77,6 +82,7 @@ fun PeopleListItem(
 @Composable
 private fun PeopleIcon(
     backgroundColor: Color,
+    imageUrl: String?,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -88,12 +94,23 @@ private fun PeopleIcon(
             ),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_person),
-            contentDescription = null,
-            tint = MomensTheme.colors.primary50,
-            modifier = Modifier.size(24.dp),
-        )
+        if (imageUrl.isNullOrBlank()) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_person),
+                contentDescription = null,
+                tint = MomensTheme.colors.primary50,
+                modifier = Modifier.size(24.dp),
+            )
+        } else {
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .matchParentSize()
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop,
+            )
+        }
     }
 }
 
@@ -102,13 +119,20 @@ private fun PeopleIcon(
 private fun PeopleListItemPreview() {
     MomensTheme {
         Column(verticalArrangement = Arrangement.spacedBy(17.dp)) {
-            PeopleListItem(
+            MomensPeopleListItem(
                 text = "강채원",
                 onClick = {},
                 isSelected = true,
+                profileImageUrl = "https://lh3.googleusercontent.com/a/example",
             )
 
-            PeopleListItem(
+            MomensPeopleListItem(
+                text = "강채원",
+                onClick = {},
+                isSelected = false,
+            )
+
+            MomensPeopleListItem(
                 text = "강채원",
                 onClick = {},
             )
