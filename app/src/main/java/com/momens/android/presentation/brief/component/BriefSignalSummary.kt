@@ -43,6 +43,7 @@ private fun BriefSignalSummaryContent(
     Text(
         text = content,
         modifier = modifier
+            .fillMaxWidth()
             .background(
                 color = MomensTheme.colors.white,
                 shape = RoundedCornerShape(8.dp),
