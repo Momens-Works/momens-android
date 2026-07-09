@@ -1,0 +1,13 @@
+package com.momens.android.presentation.signal.model
+
+import androidx.compose.runtime.Immutable
+import com.momens.android.core.designsystem.type.SignalTagType
+
+@Immutable
+data class SignalCardUiModel(
+    val id: Long,
+    val type: SignalTagType,
+    val title: String,
+    val description: String,
+    val insightText: String,
+)
