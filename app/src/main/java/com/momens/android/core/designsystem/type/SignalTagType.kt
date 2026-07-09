@@ -7,9 +7,26 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 enum class SignalTagType(
     val label: String,
     val background: @Composable () -> Color,
-){
-    RISK(label = "Risk", background = { MomensTheme.colors.pointRed}),
-    DECISION(label = "Decision", background = { MomensTheme.colors.pointPurple}),
-    CHANGE(label = "Change", background = { MomensTheme.colors.pointYellow}),
-    QUESTION(label = "Question", background = { MomensTheme.colors.pointMint}),
+    val statusText: String,
+) {
+    RISK(
+        label = "Risk",
+        background = { MomensTheme.colors.pointRed },
+        statusText = "Needs action",
+    ),
+    DECISION(
+        label = "Decision",
+        background = { MomensTheme.colors.pointPurple },
+        statusText = "Needs review",
+    ),
+    CHANGE(
+        label = "Change",
+        background = { MomensTheme.colors.pointYellow },
+        statusText = "Needs action",
+    ),
+    QUESTION(
+        label = "Question",
+        background = { MomensTheme.colors.pointMint },
+        statusText = "Needs decision",
+    ),
 }
