@@ -1,7 +1,6 @@
 package com.momens.android.presentation.signal.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,11 +37,10 @@ fun SignalCard(
             .momensUiShadow(shape = shape)
             .background(
                 color = MomensTheme.colors.white,
-                shape = shape
+                shape = shape,
             )
             .noRippleClickable(onClick = onClick)
             .padding(all = 16.dp),
-        verticalArrangement = Arrangement.Center,
     ) {
         MomensSignalTag(type = type)
 
@@ -66,7 +64,7 @@ fun SignalCard(
 
         MomensTextBox(
             text = insightText,
-            iconResId = R.drawable.ic_minsu
+            iconResId = R.drawable.ic_minsu,
         )
     }
 }
