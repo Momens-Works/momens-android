@@ -105,25 +105,25 @@ private fun MomensBottomSheetPreview() {
                         modifier = Modifier
                             .align(Alignment.Start),
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
                         Text(
                             text = "PM",
                             color = MomensTheme.colors.gray400,
-                            style = MomensTheme.typography.captionM11
+                            style = MomensTheme.typography.captionM11,
                         )
 
                         Box(
                             modifier = Modifier
                                 .size(2.dp)
                                 .clip(CircleShape)
-                                .background(color = MomensTheme.colors.gray500)
+                                .background(color = MomensTheme.colors.gray500),
                         )
 
                         Text(
                             text = "Copy policy",
                             color = MomensTheme.colors.gray400,
-                            style = MomensTheme.typography.captionM11
+                            style = MomensTheme.typography.captionM11,
                         )
                     }
                     Text(
@@ -141,14 +141,14 @@ private fun MomensBottomSheetPreview() {
                         modifier = Modifier
                             .align(Alignment.Start),
                         color = MomensTheme.colors.gray400,
-                        style = MomensTheme.typography.bodyM12
+                        style = MomensTheme.typography.bodyM12,
                     )
                     Text(
                         text = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
                         modifier = Modifier
                             .align(Alignment.Start),
                         color = MomensTheme.colors.gray400,
-                        style = MomensTheme.typography.bodyM12
+                        style = MomensTheme.typography.bodyM12,
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -159,7 +159,7 @@ private fun MomensBottomSheetPreview() {
                         iconResId = R.drawable.ic_file,
                         iconColor = MomensTheme.colors.primary50,
                         textColor = MomensTheme.colors.gray500,
-                        isArrowVisible = true
+                        isArrowVisible = true,
                     )
                 }
             }

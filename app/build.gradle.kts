@@ -106,6 +106,8 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.timber)
     implementation(libs.lottie)
+    implementation(libs.haze)
+    implementation(libs.haze.blur)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
