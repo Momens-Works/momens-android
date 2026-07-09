@@ -14,7 +14,8 @@ data class MomensSignalItem(
 enum class MomensSignalType(
     val color: @Composable () -> Color
 ) {
+    DECISION(color = { MomensTheme.colors.pointPurple }),
     RISK(color = { MomensTheme.colors.pointRed }),
     QUESTION(color = { MomensTheme.colors.pointMint }),
-    DECISION(color = { MomensTheme.colors.pointPurple }),
+    CHANGE(color = { MomensTheme.colors.pointYellow }),
 }
