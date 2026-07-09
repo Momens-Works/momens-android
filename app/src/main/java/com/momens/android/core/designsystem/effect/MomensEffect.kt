@@ -4,10 +4,7 @@ import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.RenderEffect
 import android.graphics.RectF
-import android.graphics.Shader
-import android.os.Build
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,15 +14,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asAndroidPath
-import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.blur.HazeColorEffect
+import dev.chrisbanes.haze.blur.blurEffect
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 
+class MomensNavBlurState internal constructor(
+    internal val hazeState: HazeState,
+)
 
 @Composable
 fun Modifier.momensUiShadow(
@@ -41,7 +45,7 @@ fun Modifier.momensUiShadow(
 
 @Composable
 fun Modifier.momensBottomSheetShadow(
-    shape: Shape
+    shape: Shape,
 ): Modifier = dropShadow(
     shape = shape,
     color = MomensTheme.colors.black.copy(alpha = 0.25f),
@@ -51,7 +55,33 @@ fun Modifier.momensBottomSheetShadow(
     spread = 0.dp,
 )
 
-fun Modifier.momensNavBlur(): Modifier = customBlur(4.dp)
+@Composable
+fun rememberMomensNavBlurState(): MomensNavBlurState = MomensNavBlurState(
+    hazeState = rememberHazeState(),
+)
+
+fun Modifier.momensNavBlurSource(
+    state: MomensNavBlurState,
+): Modifier = hazeSource(state = state.hazeState)
+
+@Composable
+fun Modifier.momensNavBlur(
+    state: MomensNavBlurState? = null,
+): Modifier {
+    val navColor = MomensTheme.colors.navGray
+
+    return if (state != null) {
+        hazeEffect(state = state.hazeState) {
+            blurEffect {
+                blurRadius = 4.dp
+                colorEffects = listOf(HazeColorEffect.tint(navColor))
+                noiseFactor = 0f
+            }
+        }
+    } else {
+        this
+    }
+}
 
 fun Modifier.dropShadow(
     shape: Shape,
@@ -95,22 +125,6 @@ fun Modifier.dropShadow(
             canvas.nativeCanvas.drawOutline(shadowOutline, shadowPath, paint)
             canvas.restore()
         }
-    }
-}
-
-fun Modifier.customBlur(
-    radius: Dp,
-): Modifier = graphicsLayer {
-    val radiusPx = radius.toPx()
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && radiusPx > 0f) {
-        renderEffect = RenderEffect
-            .createBlurEffect(
-                radiusPx,
-                radiusPx,
-                Shader.TileMode.CLAMP,
-            )
-            .asComposeRenderEffect()
     }
 }
 

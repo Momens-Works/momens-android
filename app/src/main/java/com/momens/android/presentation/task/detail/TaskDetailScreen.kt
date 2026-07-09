@@ -1,4 +1,4 @@
-package com.momens.android.presentation.splash
+package com.momens.android.presentation.task.detail
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -7,21 +7,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SplashRoute(
+fun TaskDetailRoute(
     paddingValues: PaddingValues,
 ) {
-    // TODO: 로그인 세션 확인 로직이 연결되면 상태에 따라 SignIn 또는 Signal로 이동합니다.
-    // 로그인됨: navigateToSignal(clearStack), 미로그인: navigateToSignIn(clearStack)
-    SplashScreen(paddingValues = paddingValues)
+    TaskDetailScreen(paddingValues = paddingValues)
 }
 
 @Composable
-private fun SplashScreen(
+private fun TaskDetailScreen(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = "Splash",
+        text = "Task Detail",
         modifier = modifier.padding(paddingValues),
     )
 }
