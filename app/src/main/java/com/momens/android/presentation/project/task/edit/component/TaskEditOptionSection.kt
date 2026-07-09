@@ -110,7 +110,7 @@ fun TaskEditOptionSection(
     }
 }
 
-@Preview(showBackground = true, widthDp = 250)
+@Preview(showBackground = true)
 @Composable
 private fun TaskEditOptionSectionPreview() {
     MomensTheme {
