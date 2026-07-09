@@ -2,13 +2,9 @@ package com.momens.android.presentation.brief.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-
 @Composable
-fun BriefSignalSummarySection(
+fun BriefSignalSummary(
     title: String,
     count: Int,
     content: String,
@@ -30,46 +25,13 @@ fun BriefSignalSummarySection(
         modifier = modifier,
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(10.dp),
-
-        ) {
-        BriefSignalSummaryTitle(title = title, count = count)
-        BriefSignalSummaryContent(content = content)
-    }
-
-}
-
-@Composable
-private fun BriefSignalSummaryTitle(
-    title: String,
-    count: Int,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = title,
-            color = MomensTheme.colors.gray900,
-            style = MomensTheme.typography.bodyB14,
+        BriefTitle(
+            title = title,
+            count = count,
+            modifier = Modifier.fillMaxWidth(),
         )
-
-        Box(
-            modifier = Modifier
-                .size(2.dp)
-                .background(
-                    color = MomensTheme.colors.gray900,
-                    shape = CircleShape,
-                ),
-        )
-
-        Text(
-            text = count.toString(),
-            color = MomensTheme.colors.gray900,
-            style = MomensTheme.typography.bodyB14,
-        )
-
+        BriefSignalSummaryContent(content = content)
     }
 }
 
@@ -94,13 +56,11 @@ private fun BriefSignalSummaryContent(
     )
 }
 
-@Preview(showBackground = true, widthDp = 320)
+@Preview(showBackground = true, backgroundColor = 0xFFEDF0F4, widthDp = 320)
 @Composable
-fun BriefSignalSummaryCardPreview(
-    modifier: Modifier = Modifier,
-) {
+private fun BriefSignalSummaryPreview() {
     MomensTheme {
-        BriefSignalSummarySection(
+        BriefSignalSummary(
             title = "시그널 요약",
             count = 5,
             content = "Android 권한 요청 이슈가 발견되었으며, 소셜 로그인은 MVP 범위에서 제외되었습니다. 이메일 회원가입과 온보딩 \n" +
