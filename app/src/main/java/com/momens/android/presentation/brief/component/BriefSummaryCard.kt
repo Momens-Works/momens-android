@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.progressbar.MomensProgressBar
-import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlin.math.roundToInt
 
@@ -75,11 +74,34 @@ fun BriefSummaryCard(
                 modifier = Modifier.fillMaxWidth(),
             )
         }
-// 디썜들에게 물어보기 !
-        MomensTextBox(
+
+        BriefSummaryTextBox(
             text = summary,
         )
     }
+}
+
+@Composable
+private fun BriefSummaryTextBox(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                color = MomensTheme.colors.primary10,
+                shape = RoundedCornerShape(8.dp),
+            )
+            .padding(vertical = 8.dp)
+            .padding(
+               start = 8.dp,
+                end = 24.dp,
+            ),
+        color = MomensTheme.colors.primary100,
+        style = MomensTheme.typography.bodyM12,
+    )
 }
 
 @Composable

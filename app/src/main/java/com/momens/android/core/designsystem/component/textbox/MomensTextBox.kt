@@ -63,7 +63,6 @@ fun MomensTextBox(
             Text(
                 text = text,
                 style = MomensTheme.typography.captionM11,
-                // 이거 bodyM12
                 color = textColor,
                 modifier = Modifier.weight(1f),
             )
