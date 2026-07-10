@@ -33,6 +33,7 @@ import com.momens.android.core.designsystem.component.importantstatus.MomensImpo
 import com.momens.android.core.designsystem.component.input.MomensCountInput
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
+import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.coroutines.launch
 
@@ -119,8 +120,11 @@ fun TaskBottomSheet(
                 ){
                     roles.forEach { role ->
                         val isSelected = selectedRole == role
+                        val type = if (isSelected) MomensButtonType.PRIMARY else MomensButtonType.GRAY
+
                         MomensButton(
                             text = role,
+                            type = type,
                             onClick = { selectedRole = role }
                         )
                     }
