@@ -21,12 +21,13 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.task.edit.model.CompletionRuleModel
+import kotlinx.collections.immutable.ImmutableList
 
 
 @Composable
 fun TaskEditCompleteSection(
     count: String,
-    rules: List<CompletionRuleModel>,
+    rules: ImmutableList<CompletionRuleModel>,
     onAddClick: () -> Unit,
     onRuleCheckedChange: (id: Long, checked: Boolean) -> Unit,
     onRuleClear: (id: Long) -> Unit,
