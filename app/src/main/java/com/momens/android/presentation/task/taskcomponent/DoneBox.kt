@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.taskcomponent
+package com.momens.android.presentation.task.taskcomponent
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
