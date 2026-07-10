@@ -37,8 +37,6 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val TOAST_DURATION_MILLIS = 2500L
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskBottomSheet(
@@ -65,7 +63,6 @@ fun TaskBottomSheet(
 
     LaunchedEffect(showToast) {
         if (showToast) {
-            delay(TOAST_DURATION_MILLIS)
             showToast = false
         }
     }
