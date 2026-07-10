@@ -1,4 +1,4 @@
-package com.momens.android.presentation.task.taskcomponent
+package com.momens.android.presentation.task.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,27 +9,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.R
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.component.tasklist.MomensTaskListItem
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.core.designsystem.type.MomensTaskType
 
 @Composable
-fun TodoBox() {
-    val count = "2"
-    val text = "text"
-    val label = "Android"
-    val level = ImportantLevel.LOW
-    val tone = ImportantTone.CLEAR
-
-    Column() {
+fun TaskStatusBox(
+    type: MomensTaskType,
+    count: Int,
+    text: String,
+    label: String,
+    level: ImportantLevel,
+    tone: ImportantTone,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
         MomensSectionTitle(
-            title = "투두",
+            title = type.label,
             count = count,
             isEmphasized = true,
-            iconRes = R.drawable.ic_todo,
+            iconRes = type.iconRes,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -58,7 +62,7 @@ fun TodoBox() {
 
 @Preview(showBackground = true)
 @Composable
-fun TodoBoxPreview() {
+private fun TaskStatusBoxPreview() {
     MomensTheme {
         Box(
             modifier = Modifier
@@ -67,7 +71,38 @@ fun TodoBoxPreview() {
                     vertical = 10.dp,
                 ),
         ) {
-            TodoBox()
+            Column {
+                TaskStatusBox(
+                    type = MomensTaskType.TODO,
+                    count = 2,
+                    text = "text",
+                    label = "Android",
+                    level = ImportantLevel.LOW,
+                    tone = ImportantTone.GRAY,
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                TaskStatusBox(
+                    type = MomensTaskType.IN_PROGRESS,
+                    count = 2,
+                    text = "text",
+                    label = "Android",
+                    level = ImportantLevel.LOW,
+                    tone = ImportantTone.GRAY,
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                TaskStatusBox(
+                    type = MomensTaskType.DONE,
+                    count = 2,
+                    text = "text",
+                    label = "Android",
+                    level = ImportantLevel.LOW,
+                    tone = ImportantTone.GRAY,
+                )
+            }
         }
     }
 }

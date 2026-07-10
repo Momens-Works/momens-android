@@ -31,7 +31,7 @@ fun MomensTaskListItem(
     label: String,
     level: ImportantLevel,
     tone: ImportantTone,
-    count: String,
+    count: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -65,7 +65,7 @@ fun MomensTaskListItem(
 
                 MomensImportantStatus(level = level, tone = tone)
 
-                TaskListItemCount(count = count)
+                TaskListItemCount(count = count.toString())
             }
         }
         Icon(
@@ -138,7 +138,7 @@ private fun MomensTaskListItemPreview() {
                 label = "Android",
                 level = ImportantLevel.LOW,
                 tone = ImportantTone.CLEAR,
-                count = "2",
+                count = 2,
                 onClick = {},
             )
         }
