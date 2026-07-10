@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,7 @@ fun MomensPageTitle(
     subtitle: String,
     modifier: Modifier = Modifier,
     titleStyle: TextStyle = MomensTheme.typography.titleB24,
+    subtitleColor: Color = MomensTheme.colors.gray500
 ) {
     Column(
         modifier = modifier
@@ -32,7 +34,7 @@ fun MomensPageTitle(
         Text(
             text = subtitle,
             style = MomensTheme.typography.bodyM14,
-            color = MomensTheme.colors.gray500,
+            color = subtitleColor,
         )
     }
 }
