@@ -38,7 +38,7 @@ fun MomensLogo(
 
 @Preview(showBackground = true)
 @Composable
-private fun SignInScreenPreview() {
+private fun MomensLogoPreview() {
     MomensTheme {
         Column(modifier = Modifier.background(color = MomensTheme.colors.primary100)) {
             MomensLogo()
