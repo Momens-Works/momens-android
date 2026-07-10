@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.statusedit
+package com.momens.android.presentation.project.task.edit.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
