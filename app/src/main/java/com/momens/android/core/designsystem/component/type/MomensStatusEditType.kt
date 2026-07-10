@@ -15,7 +15,7 @@ enum class MomensStatusEditType(
         label = "투두",
         iconRes = R.drawable.ic_todo,
     ),
-    INPROGRESS(
+    IN_PROGRESS(
         label = "진행중",
         iconRes = R.drawable.ic_inprogress,
     ),

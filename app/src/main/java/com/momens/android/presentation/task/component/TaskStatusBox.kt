@@ -13,12 +13,12 @@ import com.momens.android.core.designsystem.component.sectiontitle.MomensSection
 import com.momens.android.core.designsystem.component.tasklist.MomensTaskListItem
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
+import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.core.designsystem.type.MomensTaskType
 
 @Composable
 fun TaskStatusBox(
-    type: MomensTaskType,
+    type: MomensStatusEditType,
     count: Int,
     text: String,
     label: String,
@@ -73,7 +73,7 @@ private fun TaskStatusBoxPreview() {
         ) {
             Column {
                 TaskStatusBox(
-                    type = MomensTaskType.TODO,
+                    type = MomensStatusEditType.TODO,
                     count = 2,
                     text = "text",
                     label = "Android",
@@ -84,7 +84,7 @@ private fun TaskStatusBoxPreview() {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 TaskStatusBox(
-                    type = MomensTaskType.IN_PROGRESS,
+                    type = MomensStatusEditType.IN_PROGRESS,
                     count = 2,
                     text = "text",
                     label = "Android",
@@ -95,7 +95,7 @@ private fun TaskStatusBoxPreview() {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 TaskStatusBox(
-                    type = MomensTaskType.DONE,
+                    type = MomensStatusEditType.DONE,
                     count = 2,
                     text = "text",
                     label = "Android",
