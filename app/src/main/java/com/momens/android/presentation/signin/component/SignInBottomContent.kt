@@ -10,12 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.designsystem.component.button.MomensCtaButton
 import com.momens.android.core.designsystem.component.type.MomensCtaType
 import com.momens.android.core.designsystem.theme.MomensTheme
-
 
 @Composable
 fun SignInBottomContent(
@@ -53,6 +53,17 @@ fun SignInBottomContent(
             text = "계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다.",
             color = MomensTheme.colors.gray200,
             style = MomensTheme.typography.captionM10,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SignInBottomContentPreview() {
+    MomensTheme {
+        SignInBottomContent(
+            isGoogleLoginEnabled = true,
+            onGoogleLoginClick = {},
         )
     }
 }

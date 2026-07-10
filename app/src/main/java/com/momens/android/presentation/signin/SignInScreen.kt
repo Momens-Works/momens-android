@@ -1,14 +1,14 @@
 package com.momens.android.presentation.signin
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,26 +41,29 @@ private fun SignInScreen(
     onGoogleLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MomensTheme.colors.primary100)
+            .background(color = MomensTheme.colors.primary100)
             .padding(paddingValues),
     ) {
+        Spacer(modifier = Modifier.weight(145f))
+
         MomensLogo(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 145.dp),
+                .fillMaxWidth(),
         )
+
+        Spacer(modifier = Modifier.weight(273f))
 
         SignInBottomContent(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 22.dp),
+                .padding(horizontal = 20.dp),
             isGoogleLoginEnabled = isGoogleLoginEnabled,
             onGoogleLoginClick = onGoogleLoginClick,
         )
+
+        Spacer(modifier = Modifier.weight(22f))
     }
 }
 
