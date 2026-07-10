@@ -22,6 +22,7 @@ import com.momens.android.core.designsystem.component.sectiontitle.MomensSection
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.task.edit.model.CompletionRuleModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 
 @Composable
@@ -104,7 +105,7 @@ private fun TaskEditCompleteSectionPreview() {
         TaskEditCompleteSection(
             count = "2/4",
             modifier = Modifier.padding(10.dp),
-            rules = listOf(
+            rules = persistentListOf(
                 CompletionRuleModel(id = 1, label = "어쩌구어쩌구 반영", completed = false, enabled = false),
                 CompletionRuleModel(id = 2, label = "어쩌구어쩌구 반영", completed = true, enabled = true),
                 CompletionRuleModel(id = 3, label = "어쩌구어쩌구 반영", completed = false, enabled = true),
@@ -124,7 +125,7 @@ private fun TaskEditCompleteSectionEmptyPreview() {
         TaskEditCompleteSection(
             count = "0/0",
             modifier = Modifier.padding(10.dp),
-            rules = emptyList(),
+            rules = persistentListOf(),
             onAddClick = {},
             onRuleCheckedChange = { _, _ -> },
             onRuleClear = {},

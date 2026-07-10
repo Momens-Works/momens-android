@@ -14,7 +14,7 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun EditProgressSection(
+fun EditProgressContent(
     status: MomensStatusEditType,
     onStatusClick: (MomensStatusEditType) -> Unit,
     modifier: Modifier = Modifier,
@@ -26,7 +26,7 @@ fun EditProgressSection(
             text = "진행사항 수정",
             modifier = Modifier.padding(bottom = 20.dp),
             color = MomensTheme.colors.black,
-            style = MomensTheme.typography.bodyB12, // 나오면 변경하기
+            style = MomensTheme.typography.bodyB16,
         )
 
         Column(
@@ -45,12 +45,12 @@ fun EditProgressSection(
 
 @Preview(showBackground = true)
 @Composable
-private fun EditProgressSectionPreview(){
+private fun EditProgressContentPreview(){
     MomensTheme{
         Box(
             modifier = Modifier.padding(10.dp)
         ){
-            EditProgressSection(
+            EditProgressContent(
                 status = MomensStatusEditType.TODO,
                 onStatusClick = {}
             )

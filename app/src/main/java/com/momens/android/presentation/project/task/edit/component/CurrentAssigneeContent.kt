@@ -15,7 +15,7 @@ import com.momens.android.presentation.project.task.edit.model.AssigneeInfo
 
 
 @Composable
-fun CurrentAssignee(
+fun CurrentAssigneeContent(
     assignee: AssigneeInfo?,
     onDeleteClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -26,7 +26,7 @@ fun CurrentAssignee(
         Text(
             text = "현재 담당자",
             style = MomensTheme.typography.bodyB14,
-            color = MomensTheme.colors.gray700 // 이후 수정
+            color = MomensTheme.colors.black,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -51,19 +51,19 @@ fun CurrentAssignee(
 
 @Preview(showBackground = true)
 @Composable
-private fun CurrentAssigneePreview(){
+private fun CurrentAssigneeContentPreview(){
     MomensTheme{
         Column(
             modifier = Modifier.padding(all = 20.dp)
         ){
-            CurrentAssignee(
+            CurrentAssigneeContent(
                 assignee = AssigneeInfo(id = "1", name = "강채원", url = null),
                 onDeleteClick = {},
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            CurrentAssignee(
+            CurrentAssigneeContent(
                 assignee = null,
                 onDeleteClick = {},
             )

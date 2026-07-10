@@ -20,6 +20,7 @@ fun TaskEditTitleSection(
     titleState: TextFieldState,
     status: MomensTaskType,
     modifier: Modifier = Modifier,
+    maxLength: Int = 15,
 ) {
     Row(
         modifier = modifier
@@ -29,7 +30,7 @@ fun TaskEditTitleSection(
         MomensCountInput(
             state = titleState,
             placeholder = "태스크 제목을 입력해주세요",
-            maxLength = 15,
+            maxLength = maxLength,
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 12.dp),

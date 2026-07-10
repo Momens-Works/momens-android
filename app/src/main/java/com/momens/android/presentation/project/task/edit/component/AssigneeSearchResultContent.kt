@@ -16,7 +16,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.task.edit.model.AssigneeInfo
 
 @Composable
-fun AssigneeSearchResult(
+fun AssigneeSearchResultContent(
     assignees: List<AssigneeInfo>,
     onAssigneeClick: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -27,7 +27,7 @@ fun AssigneeSearchResult(
         Text(
             text = "검색 결과",
             style = MomensTheme.typography.bodyB14,
-            color = MomensTheme.colors.gray700 // 이후 수정
+            color = MomensTheme.colors.black,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -51,9 +51,9 @@ fun AssigneeSearchResult(
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewAssigneeSearchResult() {
+private fun AssigneeSearchResultContentPreview() {
     MomensTheme {
-        AssigneeSearchResult(
+        AssigneeSearchResultContent(
             assignees = listOf(
                 AssigneeInfo(id = "1", name = "강채원", url = null),
                 AssigneeInfo(id = "2", name = "강채원", url = null),

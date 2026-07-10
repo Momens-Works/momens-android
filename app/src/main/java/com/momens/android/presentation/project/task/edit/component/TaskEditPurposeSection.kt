@@ -15,13 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.textfield.MomensTextField
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-private const val PURPOSE_MAX_LENGTH = 300
-
 @Composable
 fun TaskEditPurposeSection(
     state: TextFieldState,
     placeholder: String,
     modifier: Modifier = Modifier,
+    maxLength: Int = 300,
 ) {
     Column(
         modifier = modifier,
@@ -37,7 +36,7 @@ fun TaskEditPurposeSection(
             state = state,
             placeholder = placeholder,
             lineLimits = TextFieldLineLimits.MultiLine(),
-            maxLength = PURPOSE_MAX_LENGTH,
+            maxLength = maxLength,
         )
     }
 }
