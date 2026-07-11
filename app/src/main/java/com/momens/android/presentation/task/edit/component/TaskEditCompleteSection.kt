@@ -84,7 +84,7 @@ fun TaskEditCompleteSection(
             ){
                 rules.forEach { rule ->
                     key(rule.id) {
-                        MomensCompletionRuleBox(
+                        TaskEditCompletionRuleBox(
                             label = rule.label,
                             isChecked = rule.completed,
                             onCheckedChange = { checked -> onRuleCheckedChange(rule.id, checked) },

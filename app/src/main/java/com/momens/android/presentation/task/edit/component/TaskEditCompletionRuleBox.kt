@@ -27,7 +27,7 @@ import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensCompletionRuleBox(
+fun TaskEditCompletionRuleBox(
     label: String,
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
@@ -102,14 +102,14 @@ fun MomensCompletionRuleBox(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensCompletionRuleBoxPreview() {
+private fun TaskEditCompletionRuleBoxPreview() {
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             // entered + checked
-            MomensCompletionRuleBox(
+            TaskEditCompletionRuleBox(
                 label = "어쩌구어쩌구 반영",
                 isChecked = true,
                 onCheckedChange = {},
@@ -117,7 +117,7 @@ private fun MomensCompletionRuleBoxPreview() {
             )
 
             // entered + unchecked (텍스트는 여전히 진한 색)
-            MomensCompletionRuleBox(
+            TaskEditCompletionRuleBox(
                 label = "어쩌구어쩌구 반영",
                 isChecked = false,
                 onCheckedChange = {},
@@ -125,7 +125,7 @@ private fun MomensCompletionRuleBoxPreview() {
             )
 
             // not entered (이때만 텍스트/아이콘이 흐려짐)
-            MomensCompletionRuleBox(
+            TaskEditCompletionRuleBox(
                 label = "어쩌구어쩌구 반영",
                 isChecked = false,
                 onCheckedChange = {},

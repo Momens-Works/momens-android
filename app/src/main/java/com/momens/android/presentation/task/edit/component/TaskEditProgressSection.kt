@@ -15,7 +15,7 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun EditProgressContent(
+fun TaskEditProgressSection(
     status: MomensStatusEditType,
     onStatusClick: (MomensStatusEditType) -> Unit,
     modifier: Modifier = Modifier,
@@ -34,7 +34,7 @@ fun EditProgressContent(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ){
             MomensStatusEditType.entries.forEach { type ->
-                MomensStatusEdit(
+                TaskEditStatusEdit(
                     type = type,
                     modifier = Modifier.noRippleClickable(onClick = {onStatusClick(type)}),
                     isSelected = status == type,
@@ -46,12 +46,12 @@ fun EditProgressContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun EditProgressContentPreview(){
+private fun TaskEditProgressSectionPreview(){
     MomensTheme{
         Box(
             modifier = Modifier.padding(10.dp)
         ){
-            EditProgressContent(
+            TaskEditProgressSection(
                 status = MomensStatusEditType.TODO,
                 onStatusClick = {}
             )

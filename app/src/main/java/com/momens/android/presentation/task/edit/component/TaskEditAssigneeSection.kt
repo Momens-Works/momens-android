@@ -10,13 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.component.list.MomensPeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.task.edit.model.AssigneeInfo
 
 
 @Composable
-fun CurrentAssigneeContent(
+fun TaskEditAssigneeSection(
     assignee: AssigneeInfo?,
     onDeleteClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -33,7 +32,7 @@ fun CurrentAssigneeContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         if (assignee != null) {
-            MomensPeopleListItem(
+            TaskEditPeopleListItem(
                 text = assignee.name,
                 onClick = {onDeleteClick(assignee.id)},
                 onDeleteClick = {onDeleteClick(assignee.id)},
@@ -53,19 +52,19 @@ fun CurrentAssigneeContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun CurrentAssigneeContentPreview(){
+private fun TaskEditAssigneeSectionPreview(){
     MomensTheme{
         Column(
             modifier = Modifier.padding(all = 20.dp)
         ){
-            CurrentAssigneeContent(
+            TaskEditAssigneeSection(
                 assignee = AssigneeInfo(id = "1", name = "강채원", url = null),
                 onDeleteClick = {},
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            CurrentAssigneeContent(
+            TaskEditAssigneeSection(
                 assignee = null,
                 onDeleteClick = {},
             )

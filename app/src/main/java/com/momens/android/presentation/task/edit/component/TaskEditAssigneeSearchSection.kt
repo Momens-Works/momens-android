@@ -12,14 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.component.list.MomensPeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.task.edit.model.AssigneeInfo
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun AssigneeSearchResultContent(
+fun TaskEditAssigneeSearchSection(
     assignees: ImmutableList<AssigneeInfo>,
     onAssigneeClick: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -43,7 +42,7 @@ fun AssigneeSearchResultContent(
                 items = assignees,
                 key = { it.id }
             ){ assignee ->
-                MomensPeopleListItem(
+                TaskEditPeopleListItem(
                     text = assignee.name,
                     onClick = { onAssigneeClick(assignee.id) },
                     onDeleteClick = { onAssigneeClick(assignee.id) },
@@ -55,9 +54,9 @@ fun AssigneeSearchResultContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun AssigneeSearchResultContentPreview() {
+private fun TaskEditAssigneeSearchSectionPreview() {
     MomensTheme {
-        AssigneeSearchResultContent(
+        TaskEditAssigneeSearchSection(
             assignees = persistentListOf(
                 AssigneeInfo(id = "1", name = "강채원", url = null),
                 AssigneeInfo(id = "2", name = "강채원", url = null),
