@@ -36,7 +36,8 @@ fun BriefSummaryCard(
                 color = MomensTheme.colors.primary100,
                 shape = RoundedCornerShape(8.dp),
             )
-            .padding(16.dp),
+            .padding(horizontal = 16.dp)
+            .padding(top = 16.dp, bottom = 18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
@@ -95,10 +96,7 @@ private fun BriefSummaryTextBox(
                 shape = RoundedCornerShape(8.dp),
             )
             .padding(vertical = 8.dp)
-            .padding(
-               start = 8.dp,
-                end = 24.dp,
-            ),
+            .padding(start = 12.dp, end = 24.dp),
         color = MomensTheme.colors.primary100,
         style = MomensTheme.typography.bodyM12,
     )
