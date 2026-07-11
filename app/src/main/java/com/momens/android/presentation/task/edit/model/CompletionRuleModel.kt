@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.edit.model
+package com.momens.android.presentation.task.edit.model
 
 import androidx.compose.runtime.Immutable
 

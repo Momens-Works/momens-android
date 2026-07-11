@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.edit.model
+package com.momens.android.presentation.task.edit.model
 
 enum class TaskRole(val label: String) {
     PM("PM"),

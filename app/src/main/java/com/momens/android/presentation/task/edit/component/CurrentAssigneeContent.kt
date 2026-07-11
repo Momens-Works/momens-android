@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.edit.component
+package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.list.PeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.task.edit.model.AssigneeInfo
+import com.momens.android.presentation.task.edit.model.AssigneeInfo
 
 
 @Composable

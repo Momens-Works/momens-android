@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.edit.component
+package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,11 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.list.PeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.task.edit.model.AssigneeInfo
+import com.momens.android.presentation.task.edit.model.AssigneeInfo
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun AssigneeSearchResultContent(
-    assignees: List<AssigneeInfo>,
+    assignees: ImmutableList<AssigneeInfo>,
     onAssigneeClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -54,7 +56,7 @@ fun AssigneeSearchResultContent(
 private fun AssigneeSearchResultContentPreview() {
     MomensTheme {
         AssigneeSearchResultContent(
-            assignees = listOf(
+            assignees = persistentListOf(
                 AssigneeInfo(id = "1", name = "강채원", url = null),
                 AssigneeInfo(id = "2", name = "강채원", url = null),
                 AssigneeInfo(id = "3", name = "강채원", url = null),

@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.edit.component
+package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -22,7 +22,7 @@ import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.task.edit.model.TaskRole
+import com.momens.android.presentation.task.edit.model.TaskRole
 
 
 @Composable

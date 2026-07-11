@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.task.edit.component
+package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.task.edit.model.CompletionRuleModel
+import com.momens.android.presentation.task.edit.model.CompletionRuleModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -106,7 +106,12 @@ private fun TaskEditCompleteSectionPreview() {
             count = "2/4",
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(
-                CompletionRuleModel(id = 1, label = "어쩌구어쩌구 반영", completed = false, enabled = false),
+                CompletionRuleModel(
+                    id = 1,
+                    label = "어쩌구어쩌구 반영",
+                    completed = false,
+                    enabled = false
+                ),
                 CompletionRuleModel(id = 2, label = "어쩌구어쩌구 반영", completed = true, enabled = true),
                 CompletionRuleModel(id = 3, label = "어쩌구어쩌구 반영", completed = false, enabled = true),
                 CompletionRuleModel(id = 4, label = "어쩌구어쩌구 반영", completed = true, enabled = true),
