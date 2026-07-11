@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,17 +16,22 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-
 @Composable
 fun MomensButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    type: MomensButtonType = MomensButtonType.GRAY,
+    isSelected: Boolean = false,
+    type: MomensButtonType? = null,
 ) {
-    val backgroundColor = type.background()
-    val contentColor = type.textColor()
-    val typographyStyle = type.textStyle()
+    val buttonType = type ?: if (isSelected) {
+        MomensButtonType.PRIMARY
+    } else {
+        MomensButtonType.GRAY
+    }
+    val backgroundColor = buttonType.background()
+    val contentColor = buttonType.textColor()
+    val typographyStyle = buttonType.textStyle()
 
     Box(
         modifier = modifier
@@ -55,6 +61,8 @@ private fun MomensButtonPreview() {
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            MomensButton(text = "버튼", onClick = {})
+            MomensButton(text = "선택", isSelected = true, onClick = {})
             MomensButton(text = "버튼", type = MomensButtonType.GRAY, onClick = {})
             MomensButton(text = "버튼", type = MomensButtonType.PRIMARY, onClick = {})
             MomensButton(text = "버튼", type = MomensButtonType.BLACK, onClick = {})
@@ -62,7 +70,3 @@ private fun MomensButtonPreview() {
         }
     }
 }
-
-
-
-

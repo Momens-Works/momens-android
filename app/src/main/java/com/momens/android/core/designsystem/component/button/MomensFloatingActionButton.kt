@@ -9,6 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.designsystem.effect.momensFabShadow
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
@@ -18,7 +19,9 @@ fun MomensFloatingActionButton(
 ){
     FloatingActionButton(
         onClick = onClick,
-        modifier = modifier.size(50.dp),
+        modifier = modifier
+            .size(50.dp)
+            .momensFabShadow(),
         containerColor = MomensTheme.colors.primary100,
         contentColor = MomensTheme.colors.white,
         shape = CircleShape
@@ -40,4 +43,3 @@ private fun MomensFloatingActionButtonPreview(){
         )
     }
 }
-
