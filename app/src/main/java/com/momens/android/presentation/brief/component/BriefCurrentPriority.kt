@@ -14,23 +14,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun BriefCurrentPriority(
-    count: Int,
     priorities: ImmutableList<String>,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        BriefTitle(
+        MomensSectionTitle(
             title = "현재 우선순위",
-            count = count,
+            count = 4.toString(),
+            isEmphasized = true
         )
 
         BriefCurrentPriorityContent(
@@ -78,7 +79,7 @@ private fun BriefCurrentPriorityItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = order.toString().padStart(length = 2, padChar = '0'),
+            text = "0$order",
             color = MomensTheme.colors.gray800,
             style = MomensTheme.typography.bodyB12,
             maxLines = 1,
@@ -105,7 +106,6 @@ private fun BriefCurrentPriorityPreview() {
                 "이메일 회원가입 완료율 개선",
                 "이메일 회원가입 완료율 개선",
             ),
-            count = 4,
         )
     }
 }

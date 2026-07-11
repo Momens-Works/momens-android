@@ -12,25 +12,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun BriefSignalSummary(
-    title: String,
     count: Int,
     content: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        BriefTitle(
-            title = title,
-            count = count,
-            modifier = Modifier.fillMaxWidth(),
+        MomensSectionTitle(
+            title = "시그널 요약",
+            count = count.toString(),
+            isEmphasized = true
         )
+
         BriefSignalSummaryContent(content = content)
     }
 }
@@ -62,7 +63,6 @@ private fun BriefSignalSummaryContent(
 private fun BriefSignalSummaryPreview() {
     MomensTheme {
         BriefSignalSummary(
-            title = "시그널 요약",
             count = 5,
             content = "Android 권한 요청 이슈가 발견되었으며, 소셜 로그인은 MVP 범위에서 제외되었습니다. 이메일 회원가입과 온보딩 \n" +
                 "이탈 개선이 우선적으로 필요합니다.",

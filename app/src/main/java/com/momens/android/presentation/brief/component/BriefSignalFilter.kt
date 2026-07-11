@@ -47,7 +47,7 @@ fun BriefSignalFilterSummary(
 }
 
 @Composable
-fun BriefSignalFilterButton(
+private fun BriefSignalFilterButton(
     selectedFilterType: BriefSignalSummaryFilterType,
     filters: ImmutableList<BriefSignalSummaryFilter>,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
