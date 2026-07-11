@@ -3,6 +3,7 @@ package com.momens.android.presentation.task.edit.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.component.list.PeopleListItem
+import com.momens.android.core.designsystem.component.list.MomensPeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.task.edit.model.AssigneeInfo
 import kotlinx.collections.immutable.ImmutableList
@@ -24,12 +25,12 @@ fun AssigneeSearchResultContent(
     modifier: Modifier = Modifier,
 ){
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ){
         Text(
             text = "검색 결과",
             style = MomensTheme.typography.bodyB14,
-            color = MomensTheme.colors.black,
+            color = MomensTheme.colors.gray700,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -42,9 +43,10 @@ fun AssigneeSearchResultContent(
                 items = assignees,
                 key = { it.id }
             ){ assignee ->
-                PeopleListItem(
+                MomensPeopleListItem(
                     text = assignee.name,
                     onClick = { onAssigneeClick(assignee.id) },
+                    onDeleteClick = { onAssigneeClick(assignee.id) },
                 )
             }
         }

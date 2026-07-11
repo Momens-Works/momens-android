@@ -2,6 +2,7 @@ package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -9,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.component.list.PeopleListItem
+import com.momens.android.core.designsystem.component.list.MomensPeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.task.edit.model.AssigneeInfo
 
@@ -21,7 +22,7 @@ fun CurrentAssigneeContent(
     modifier: Modifier = Modifier
 ){
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ){
         Text(
             text = "현재 담당자",
@@ -32,9 +33,10 @@ fun CurrentAssigneeContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         if (assignee != null) {
-            PeopleListItem(
+            MomensPeopleListItem(
                 text = assignee.name,
                 onClick = {onDeleteClick(assignee.id)},
+                onDeleteClick = {onDeleteClick(assignee.id)},
                 modifier = Modifier.padding(bottom = 16.dp),
                 isSelected = true,
             )

@@ -35,6 +35,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 fun MomensPeopleListItem(
     text: String,
     onClick: () -> Unit,
+    onDeleteClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     profileImageUrl: String? = null,
@@ -72,7 +73,7 @@ fun MomensPeopleListItem(
         if (isSelected) {
             MomensButton(
                 text = "삭제",
-                onClick = onClick,
+                onClick = {onDeleteClick},
                 type = MomensButtonType.WHITE,
             )
         }
@@ -122,6 +123,7 @@ private fun PeopleListItemPreview() {
             MomensPeopleListItem(
                 text = "강채원",
                 onClick = {},
+                onDeleteClick = {},
                 isSelected = true,
                 profileImageUrl = "https://lh3.googleusercontent.com/a/example",
             )
@@ -129,12 +131,14 @@ private fun PeopleListItemPreview() {
             MomensPeopleListItem(
                 text = "강채원",
                 onClick = {},
+                onDeleteClick = {},
                 isSelected = false,
             )
 
             MomensPeopleListItem(
                 text = "강채원",
                 onClick = {},
+                onDeleteClick = {},
             )
         }
     }

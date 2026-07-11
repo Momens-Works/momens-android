@@ -35,7 +35,7 @@ fun TaskEditCompleteSection(
     modifier: Modifier = Modifier,
 ){
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
     ){
         Row(
             modifier = Modifier

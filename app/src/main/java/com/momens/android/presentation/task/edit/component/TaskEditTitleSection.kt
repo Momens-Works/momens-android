@@ -23,8 +23,7 @@ fun TaskEditTitleSection(
     maxLength: Int = 15,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MomensCountInput(

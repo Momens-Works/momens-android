@@ -35,8 +35,6 @@ fun TaskEditOptionSection(
     onAssigneeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
-
     Column(
         modifier = modifier
             .fillMaxWidth()
