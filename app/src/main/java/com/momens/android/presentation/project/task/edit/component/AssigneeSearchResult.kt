@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.component.list.PeopleListItem
+import com.momens.android.core.designsystem.component.list.MomensPeopleListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.task.edit.model.AssigneeInfo
 
@@ -20,27 +20,27 @@ fun AssigneeSearchResult(
     assignees: List<AssigneeInfo>,
     onAssigneeClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     Column(
-        modifier = modifier
-    ){
+        modifier = modifier,
+    ) {
         Text(
             text = "검색 결과",
             style = MomensTheme.typography.bodyB14,
-            color = MomensTheme.colors.gray700 // 이후 수정
+            color = MomensTheme.colors.gray700, // 이후 수정
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(
             modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(
                 items = assignees,
-                key = { it.id }
-            ){ assignee ->
-                PeopleListItem(
+                key = { it.id },
+            ) { assignee ->
+                MomensPeopleListItem(
                     text = assignee.name,
                     onClick = { onAssigneeClick(assignee.id) },
                 )
