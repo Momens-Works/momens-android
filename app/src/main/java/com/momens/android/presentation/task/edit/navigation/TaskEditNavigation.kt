@@ -1,4 +1,4 @@
-package com.momens.android.presentation.task.detail.navigation
+package com.momens.android.presentation.task.edit.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -26,7 +26,7 @@ fun NavController.navigateToTaskEdit(
 fun NavGraphBuilder.taskEditNavGraph(
     paddingValues: PaddingValues,
 ) {
-    composable<TaskDetail> {
+    composable<TaskEdit> {
         TaskEditRoute(
             paddingValues = paddingValues,
         )
