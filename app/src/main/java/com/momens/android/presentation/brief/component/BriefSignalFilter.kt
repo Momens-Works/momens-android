@@ -27,7 +27,11 @@ fun BriefSignalFilterSummary(
     selectedFilterType: BriefSignalSummaryFilterType,
     filters: ImmutableList<BriefSignalSummaryFilter>,
     summaries: ImmutableList<MomensSignalItem>,
+    hasMoreSummaries: Boolean,
+    isSummaryExpanded: Boolean,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
+    onSummaryMoreClick: () -> Unit,
+    onSummaryFoldClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,6 +46,10 @@ fun BriefSignalFilterSummary(
 
         BriefDropdown(
             items = summaries,
+            hasMore = hasMoreSummaries,
+            expanded = isSummaryExpanded,
+            onMoreClick = onSummaryMoreClick,
+            onFoldClick = onSummaryFoldClick,
         )
     }
 }
@@ -90,6 +98,9 @@ private fun BriefSignalSummarySectionPreview() {
     var selectedFilterType by rememberSaveable {
         mutableStateOf(BriefSignalSummaryFilterType.ALL)
     }
+    var isSummaryExpanded by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     val filters = persistentListOf(
         BriefSignalSummaryFilter(
@@ -119,7 +130,21 @@ private fun BriefSignalSummarySectionPreview() {
         ),
     )
 
-    val summaries = persistentListOf(
+    val initialSummaries = persistentListOf(
+        MomensSignalItem(
+            type = MomensSignalType.DECISION,
+            text = "소셜 로그인은 MVP 범위에서 제외",
+        ),
+        MomensSignalItem(
+            type = MomensSignalType.DECISION,
+            text = "회원가입 MVP 범위 1차 확정",
+        ),
+        MomensSignalItem(
+            type = MomensSignalType.CHANGE,
+            text = "온보딩 문구 정책 변경",
+        ),
+    )
+    val expandedSummaries = persistentListOf(
         MomensSignalItem(
             type = MomensSignalType.DECISION,
             text = "소셜 로그인은 MVP 범위에서 제외",
@@ -146,9 +171,17 @@ private fun BriefSignalSummarySectionPreview() {
         BriefSignalFilterSummary(
             selectedFilterType = selectedFilterType,
             filters = filters,
-            summaries = summaries,
+            summaries = if (isSummaryExpanded) expandedSummaries else initialSummaries,
+            hasMoreSummaries = !isSummaryExpanded,
+            isSummaryExpanded = isSummaryExpanded,
             onFilterClick = { filterType ->
                 selectedFilterType = filterType
+            },
+            onSummaryMoreClick = {
+                isSummaryExpanded = true
+            },
+            onSummaryFoldClick = {
+                isSummaryExpanded = false
             },
         )
     }

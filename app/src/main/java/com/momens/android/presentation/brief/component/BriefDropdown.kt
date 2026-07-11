@@ -47,15 +47,15 @@ private const val MAX_VISIBLE_COUNT = 3
 @Composable
 fun BriefDropdown(
     items: ImmutableList<MomensSignalItem>,
+    hasMore: Boolean,
+    expanded: Boolean,
+    onMoreClick: () -> Unit,
+    onFoldClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var expanded by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     val defaultItems = items.take(MAX_VISIBLE_COUNT)
     val expandableItems = items.drop(MAX_VISIBLE_COUNT)
-    val expandable = expandableItems.isNotEmpty()
+    val showToggleButton = hasMore || expanded || expandableItems.isNotEmpty()
 
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 270f else 90f,
@@ -89,7 +89,7 @@ fun BriefDropdown(
             }
 
             AnimatedVisibility(
-                visible = expanded && expandable,
+                visible = expanded && expandableItems.isNotEmpty(),
                 enter = expandVertically(expandFrom = Alignment.Top) + fadeIn(),
                 exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
             ) {
@@ -106,7 +106,7 @@ fun BriefDropdown(
             }
         }
 
-        if (expandable) {
+        if (showToggleButton) {
             HorizontalDivider(
                 color = MomensTheme.colors.gray100,
             )
@@ -115,7 +115,11 @@ fun BriefDropdown(
                 modifier = Modifier
                     .fillMaxWidth()
                     .noRippleClickable {
-                        expanded = !expanded
+                        if (expanded) {
+                            onFoldClick()
+                        } else {
+                            onMoreClick()
+                        }
                     }
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.Center,
@@ -174,6 +178,13 @@ private fun BriefDropdownRow(
 @Preview(showBackground = true)
 @Composable
 private fun BriefDropdownPreview() {
+    var twoItemExpanded by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var manyItemExpanded by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -190,6 +201,14 @@ private fun BriefDropdownPreview() {
                         "회원가입 MVP 범위 1차 확정",
                     ),
                 ),
+                hasMore = false,
+                expanded = twoItemExpanded,
+                onMoreClick = {
+                    twoItemExpanded = true
+                },
+                onFoldClick = {
+                    twoItemExpanded = false
+                },
             )
 
             BriefDropdown(
@@ -215,6 +234,14 @@ private fun BriefDropdownPreview() {
                         "로그인 유지 기간 결정 필요",
                     ),
                 ),
+                hasMore = true,
+                expanded = manyItemExpanded,
+                onMoreClick = {
+                    manyItemExpanded = true
+                },
+                onFoldClick = {
+                    manyItemExpanded = false
+                },
             )
         }
     }
