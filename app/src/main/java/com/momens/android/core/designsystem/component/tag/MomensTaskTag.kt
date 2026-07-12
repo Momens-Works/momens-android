@@ -13,16 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.core.designsystem.type.MomensTaskType
 
 @Composable
 fun MomensTaskTag(
-    type: MomensTaskType,
+    type: MomensStatusEditType,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -63,23 +62,23 @@ private fun MomensTaskTagPreview() {
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             MomensTaskTag(
-                type = MomensTaskType.TODO,
+                type = MomensStatusEditType.TODO,
             )
 
             MomensTaskTag(
-                type = MomensTaskType.IN_PROGRESS,
+                type = MomensStatusEditType.IN_PROGRESS,
             )
 
             MomensTaskTag(
-                type = MomensTaskType.DONE,
+                type = MomensStatusEditType.DONE,
             )
 
             MomensTaskTag(
-                type = MomensTaskType.CANCELED,
+                type = MomensStatusEditType.CANCELED,
             )
 
             MomensTaskTag(
-                type = MomensTaskType.BACKLOG,
+                type = MomensStatusEditType.BACKLOG,
             )
 
         }
