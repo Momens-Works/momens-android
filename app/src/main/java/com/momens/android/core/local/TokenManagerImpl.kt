@@ -42,12 +42,14 @@ class TokenManagerImpl @Inject constructor(
         accessToken: String,
         refreshToken: String,
     ) {
-        cachedAccessToken = accessToken
-        cachedRefreshToken = refreshToken
         dataStore.edit { preferences ->
             preferences[KEY_ACCESS_TOKEN] = accessToken
             preferences[KEY_REFRESH_TOKEN] = refreshToken
         }
+
+        cachedAccessToken = accessToken
+        cachedRefreshToken = refreshToken
+
     }
 
     override suspend fun getAccessToken(): String? {
