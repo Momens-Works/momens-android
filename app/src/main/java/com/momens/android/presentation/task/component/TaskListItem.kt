@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.tasklist
+package com.momens.android.presentation.task.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,7 @@ import com.momens.android.core.designsystem.effect.momensUiShadow
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensTaskListItem(
+fun TaskListItem(
     text: String,
     label: String,
     level: ImportantLevel,
@@ -125,7 +125,7 @@ private fun TaskListItemCount(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensTaskListItemPreview() {
+private fun TaskListItemPreview() {
     MomensTheme {
         Box(
             modifier = Modifier
@@ -133,7 +133,7 @@ private fun MomensTaskListItemPreview() {
                 .padding(10.dp),
 
             ) {
-            MomensTaskListItem(
+            TaskListItem(
                 text = "text",
                 label = "Android",
                 level = ImportantLevel.LOW,

@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
-import com.momens.android.core.designsystem.component.tasklist.MomensTaskListItem
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
@@ -25,6 +24,7 @@ import kotlin.collections.lastIndex
 fun TaskStatusBox(
     type: MomensStatusEditType,
     tasks: ImmutableList<TaskItemData>,
+    onTaskClick: (TaskItemData) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -40,13 +40,13 @@ fun TaskStatusBox(
         Spacer(modifier = Modifier.height(12.dp))
 
         tasks.forEachIndexed { index, task ->
-            MomensTaskListItem(
+            TaskListItem(
                 text = task.text,
                 label = task.label,
                 level = task.level,
                 tone = task.tone,
                 count = task.count,
-                onClick = {},
+                onClick = { onTaskClick(task) },
             )
 
             if (index < tasks.lastIndex) {
@@ -89,6 +89,7 @@ private fun TaskStatusBoxPreview() {
                 TaskStatusBox(
                     type = MomensStatusEditType.TODO,
                     tasks = dummyTasks,
+                    onTaskClick = {}
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -104,6 +105,7 @@ private fun TaskStatusBoxPreview() {
                             tone = ImportantTone.CLEAR,
                         ),
                     ),
+                    onTaskClick = {},
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -111,6 +113,7 @@ private fun TaskStatusBoxPreview() {
                 TaskStatusBox(
                     type = MomensStatusEditType.DONE,
                     tasks = persistentListOf(),
+                    onTaskClick = {},
                 )
             }
         }
