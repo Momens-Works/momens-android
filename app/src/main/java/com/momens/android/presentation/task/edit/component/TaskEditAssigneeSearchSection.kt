@@ -20,6 +20,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun TaskEditAssigneeSearchSection(
     assignees: ImmutableList<AssigneeInfo>,
+    onClick: () -> Unit,
     onAssigneeClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -44,7 +45,7 @@ fun TaskEditAssigneeSearchSection(
             ){ assignee ->
                 TaskEditPeopleListItem(
                     text = assignee.name,
-                    onClick = { onAssigneeClick(assignee.id) },
+                    onClick = onClick,
                     onDeleteClick = { onAssigneeClick(assignee.id) },
                 )
             }
@@ -62,6 +63,7 @@ private fun TaskEditAssigneeSearchSectionPreview() {
                 AssigneeInfo(id = "2", name = "강채원", url = null),
                 AssigneeInfo(id = "3", name = "강채원", url = null),
             ),
+            onClick = {},
             onAssigneeClick = {},
         )
     }
