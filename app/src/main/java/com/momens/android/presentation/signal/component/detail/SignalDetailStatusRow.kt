@@ -1,4 +1,4 @@
-package com.momens.android.presentation.signal.component
+package com.momens.android.presentation.signal.component.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

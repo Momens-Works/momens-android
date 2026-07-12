@@ -1,18 +1,21 @@
-package com.momens.android.presentation.signal.component
+package com.momens.android.presentation.signal.component.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.component.accordion.MomensAccordion
-import com.momens.android.core.designsystem.component.type.MomensAccordionItem
-import com.momens.android.core.designsystem.component.type.MomensAccordionType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.signal.component.detail.accodion.SignalAccordion
+import com.momens.android.presentation.signal.model.SignalAccordionItem
+import com.momens.android.presentation.signal.model.SignalAccordionType
 import com.momens.android.presentation.signal.model.SignalEvidenceUiModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -24,7 +27,10 @@ fun SignalDetailEvidenceSection(
     evidences: ImmutableList<SignalEvidenceUiModel>,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth(),
+    ) {
         Text(
             text = "근거",
             style = MomensTheme.typography.bodyM12,
@@ -33,7 +39,10 @@ fun SignalDetailEvidenceSection(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        EvidenceAccordionList(evidences = evidences)
+        EvidenceAccordionList(
+            evidences = evidences,
+            modifier = Modifier.weight(1f, fill = false),
+        )
     }
 }
 
@@ -44,25 +53,29 @@ private fun EvidenceAccordionList(
 ) {
     val initiallyExpanded = evidences.size < EVIDENCE_COLLAPSE_THRESHOLD
 
-    Column(
-        modifier = modifier,
+    LazyColumn(
+        modifier = modifier
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        evidences.forEach { evidence ->
-            MomensAccordion(
+        items(
+            items = evidences,
+            key = { it.id },
+        ) { evidence ->
+            SignalAccordion(
                 type = evidence.source,
                 time = evidence.time,
                 initiallyExpanded = initiallyExpanded,
                 items = persistentListOf(
-                    MomensAccordionItem(
+                    SignalAccordionItem(
                         title = "대상",
                         value = evidence.target,
                     ),
-                    MomensAccordionItem(
+                    SignalAccordionItem(
                         title = "변화",
                         value = evidence.change,
                     ),
-                    MomensAccordionItem(
+                    SignalAccordionItem(
                         title = "영향",
                         value = evidence.impact,
                     ),
@@ -80,7 +93,7 @@ private fun SignalDetailEvidenceSectionPreview() {
             evidences = persistentListOf(
                 SignalEvidenceUiModel(
                     id = 1L,
-                    source = MomensAccordionType.FIGMA,
+                    source = SignalAccordionType.FIGMA,
                     time = "00분 전",
                     target = "권한 요청 화면",
                     change = "권한 요청 단계 이탈률이 오른 것으로 보임",
@@ -88,7 +101,7 @@ private fun SignalDetailEvidenceSectionPreview() {
                 ),
                 SignalEvidenceUiModel(
                     id = 2L,
-                    source = MomensAccordionType.FILE,
+                    source = SignalAccordionType.FILE,
                     time = "00분 전",
                     target = "권한 요청 화면 기획서",
                     change = "권한 요청 문구가 변경됨",
