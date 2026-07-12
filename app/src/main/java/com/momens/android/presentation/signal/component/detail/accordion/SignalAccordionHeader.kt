@@ -1,4 +1,4 @@
-package com.momens.android.presentation.signal.component.detail.accodion
+package com.momens.android.presentation.signal.component.detail.accordion
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.signal.component.detail.accodion.SignalAccordion
+import com.momens.android.presentation.signal.component.detail.accordion.SignalAccordion
 import com.momens.android.presentation.signal.model.SignalAccordionItem
 import com.momens.android.presentation.signal.model.SignalAccordionType
 import com.momens.android.presentation.signal.model.SignalEvidenceUiModel

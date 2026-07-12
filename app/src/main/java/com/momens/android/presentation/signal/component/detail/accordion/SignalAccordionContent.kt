@@ -1,4 +1,4 @@
-package com.momens.android.presentation.signal.component.detail.accodion
+package com.momens.android.presentation.signal.component.detail.accordion
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
