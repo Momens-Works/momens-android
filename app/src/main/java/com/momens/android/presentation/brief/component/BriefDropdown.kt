@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.dropdown
+package com.momens.android.presentation.brief.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -42,20 +42,20 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-private const val MAX_VISIBLE_COUNT = 2
+private const val MAX_VISIBLE_COUNT = 3
 
 @Composable
-fun MomensDropdown(
+fun BriefDropdown(
     items: ImmutableList<MomensSignalItem>,
+    hasMore: Boolean,
+    expanded: Boolean,
+    onMoreClick: () -> Unit,
+    onFoldClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var expanded by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     val defaultItems = items.take(MAX_VISIBLE_COUNT)
     val expandableItems = items.drop(MAX_VISIBLE_COUNT)
-    val expandable = expandableItems.isNotEmpty()
+    val showToggleButton = hasMore || expanded || expandableItems.isNotEmpty()
 
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 270f else 90f,
@@ -79,7 +79,7 @@ fun MomensDropdown(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
         ) {
             defaultItems.forEachIndexed { index, item ->
-                MomensDropdownRow(
+                BriefDropdownRow(
                     item = item,
                 )
 
@@ -89,7 +89,7 @@ fun MomensDropdown(
             }
 
             AnimatedVisibility(
-                visible = expanded && expandable,
+                visible = expanded && expandableItems.isNotEmpty(),
                 enter = expandVertically(expandFrom = Alignment.Top) + fadeIn(),
                 exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
             ) {
@@ -98,7 +98,7 @@ fun MomensDropdown(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     expandableItems.forEach {
-                        MomensDropdownRow(
+                        BriefDropdownRow(
                             item = it,
                         )
                     }
@@ -106,7 +106,7 @@ fun MomensDropdown(
             }
         }
 
-        if (expandable) {
+        if (showToggleButton) {
             HorizontalDivider(
                 color = MomensTheme.colors.gray100,
             )
@@ -115,7 +115,11 @@ fun MomensDropdown(
                 modifier = Modifier
                     .fillMaxWidth()
                     .noRippleClickable {
-                        expanded = !expanded
+                        if (expanded) {
+                            onFoldClick()
+                        } else {
+                            onMoreClick()
+                        }
                     }
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.Center,
@@ -143,7 +147,7 @@ fun MomensDropdown(
 }
 
 @Composable
-private fun MomensDropdownRow(
+private fun BriefDropdownRow(
     item: MomensSignalItem,
     modifier: Modifier = Modifier,
 ) {
@@ -173,13 +177,20 @@ private fun MomensDropdownRow(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensDropdownPreview() {
+private fun BriefDropdownPreview() {
+    var twoItemExpanded by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var manyItemExpanded by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     MomensTheme {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            MomensDropdown(
+            BriefDropdown(
                 items = persistentListOf(
                     MomensSignalItem(
                         MomensSignalType.DECISION,
@@ -190,9 +201,17 @@ private fun MomensDropdownPreview() {
                         "회원가입 MVP 범위 1차 확정",
                     ),
                 ),
+                hasMore = false,
+                expanded = twoItemExpanded,
+                onMoreClick = {
+                    twoItemExpanded = true
+                },
+                onFoldClick = {
+                    twoItemExpanded = false
+                },
             )
 
-            MomensDropdown(
+            BriefDropdown(
                 items = persistentListOf(
                     MomensSignalItem(
                         MomensSignalType.DECISION,
@@ -215,6 +234,14 @@ private fun MomensDropdownPreview() {
                         "로그인 유지 기간 결정 필요",
                     ),
                 ),
+                hasMore = true,
+                expanded = manyItemExpanded,
+                onMoreClick = {
+                    manyItemExpanded = true
+                },
+                onFoldClick = {
+                    manyItemExpanded = false
+                },
             )
         }
     }
