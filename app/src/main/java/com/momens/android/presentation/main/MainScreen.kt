@@ -1,7 +1,5 @@
 package com.momens.android.presentation.main
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,21 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.NavHost
 import com.momens.android.core.designsystem.component.snackbar.MomensSnackbar
 import com.momens.android.core.designsystem.effect.momensNavBlurSource
 import com.momens.android.core.designsystem.effect.rememberMomensNavBlurState
 import com.momens.android.core.designsystem.trigger.GlobalUiEventHolder
 import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.rememberGlobalSnackbarController
-import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.main.component.MomensMainTabBar
+import com.momens.android.presentation.main.navigation.MainAppState
+import com.momens.android.presentation.main.navigation.MomensNavHost
+import com.momens.android.presentation.main.navigation.rememberMainAppState
 import com.momens.android.presentation.main.type.MainTab
-import com.momens.android.presentation.signal.navigation.signalNavGraph
-import com.momens.android.presentation.signin.navigation.signInNavGraph
-import com.momens.android.presentation.splash.navigation.splashNavGraph
-import com.momens.android.presentation.task.detail.navigation.taskDetailNavGraph
-import com.momens.android.presentation.task.navigation.taskNavGraph
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -71,21 +65,10 @@ fun MainScreen(
                     }
                 },
             ) { innerPadding ->
-                NavHost(
-                    enterTransition = { EnterTransition.None },
-                    exitTransition = { ExitTransition.None },
-                    popEnterTransition = { EnterTransition.None },
-                    popExitTransition = { ExitTransition.None },
-                    navController = appState.navController,
-                    startDestination = appState.startDestination,
-                ) {
-                    signalNavGraph(paddingValues = innerPadding)
-                    briefNavGraph(paddingValues = innerPadding)
-                    taskNavGraph(paddingValues = innerPadding)
-                    taskDetailNavGraph(paddingValues = innerPadding)
-                    signInNavGraph(paddingValues = innerPadding)
-                    splashNavGraph(paddingValues = innerPadding)
-                }
+                MomensNavHost(
+                    appState = appState,
+                    paddingValues = innerPadding,
+                )
             }
 
             currentTab?.let { tab ->
