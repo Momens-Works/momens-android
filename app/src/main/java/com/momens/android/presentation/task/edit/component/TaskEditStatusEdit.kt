@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.stateedit
+package com.momens.android.presentation.task.edit.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensStatusEdit(
+fun TaskEditStatusEdit(
     type: MomensStatusEditType,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
@@ -53,54 +53,54 @@ fun MomensStatusEdit(
 
 @Preview(showBackground = true, backgroundColor = 0xFE8E8E)
 @Composable
-private fun MomensStatusEditPreview() {
+private fun TaskEditStatusEditPreview() {
     MomensTheme() {
         Column(
             modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.BACKLOG,
                 isSelected = true,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.BACKLOG,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.TODO,
                 isSelected = true,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.TODO,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.IN_PROGRESS,
                 isSelected = true,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.IN_PROGRESS,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.DONE,
                 isSelected = true,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.DONE,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.CANCELED,
                 isSelected = true,
             )
 
-            MomensStatusEdit(
+            TaskEditStatusEdit(
                 type = MomensStatusEditType.CANCELED,
             )
         }
