@@ -16,12 +16,13 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.task.edit.model.AssigneeInfo
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlin.Unit
 
 @Composable
 fun TaskEditAssigneeSearchSection(
     assignees: ImmutableList<AssigneeInfo>,
-    onClick: () -> Unit,
     onAssigneeClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ){
     Column(
@@ -45,8 +46,8 @@ fun TaskEditAssigneeSearchSection(
             ){ assignee ->
                 TaskEditPeopleListItem(
                     text = assignee.name,
-                    onClick = onClick,
-                    onDeleteClick = { onAssigneeClick(assignee.id) },
+                    onClick = { onAssigneeClick(assignee.id) },
+                    onDeleteClick = onDeleteClick,
                 )
             }
         }
@@ -63,8 +64,8 @@ private fun TaskEditAssigneeSearchSectionPreview() {
                 AssigneeInfo(id = "2", name = "강채원", url = null),
                 AssigneeInfo(id = "3", name = "강채원", url = null),
             ),
-            onClick = {},
             onAssigneeClick = {},
+            onDeleteClick = {},
         )
     }
 }
