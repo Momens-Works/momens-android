@@ -38,8 +38,8 @@ import com.momens.android.presentation.task.model.MomensTaskButtonType
 fun TaskBottomSheet(
     titleState: TextFieldState,
     selectedRole: MomensTaskButtonType?,
-    onRoleSelect: (MomensTaskButtonType) -> Unit,
     selectedPriority: ImportantLevel?,
+    onRoleSelect: (MomensTaskButtonType) -> Unit,
     onPrioritySelect: (ImportantLevel) -> Unit,
     onDismiss: () -> Unit,
     onRegisterClick: () -> Unit,
@@ -96,7 +96,6 @@ fun TaskBottomSheet(
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
-                modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 roles.forEach { role ->
@@ -121,7 +120,6 @@ fun TaskBottomSheet(
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
-                modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 priorities.forEach { level ->
