@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -16,8 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
+import com.momens.android.core.designsystem.component.snackbar.MomensSnackbar
 import com.momens.android.core.designsystem.effect.momensNavBlurSource
 import com.momens.android.core.designsystem.effect.rememberMomensNavBlurState
+import com.momens.android.core.designsystem.trigger.GlobalUiEventHolder
+import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
+import com.momens.android.core.designsystem.trigger.rememberGlobalSnackbarController
 import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.main.component.MomensMainTabBar
 import com.momens.android.presentation.main.type.MainTab
@@ -36,42 +42,68 @@ fun MainScreen(
     val tabs = remember { MainTab.entries.toImmutableList() }
     val navBlurState = rememberMomensNavBlurState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Scaffold(
-            modifier = Modifier.momensNavBlurSource(state = navBlurState),
-        ) { innerPadding ->
-            NavHost(
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-                popEnterTransition = { EnterTransition.None },
-                popExitTransition = { ExitTransition.None },
-                navController = appState.navController,
-                startDestination = appState.startDestination,
-            ) {
-                signalNavGraph(paddingValues = innerPadding)
-                briefNavGraph(paddingValues = innerPadding)
-                taskNavGraph(paddingValues = innerPadding)
-                taskDetailNavGraph(paddingValues = innerPadding)
-                signInNavGraph(paddingValues = innerPadding)
-                splashNavGraph(paddingValues = innerPadding)
-            }
-        }
+    val snackbarController = rememberGlobalSnackbarController()
+    val eventHolder = remember(snackbarController) {
+        GlobalUiEventHolder(showSnackbar = snackbarController::show)
+    }
 
-        currentTab?.let { tab ->
-            Box(
+    CompositionLocalProvider(
+        LocalGlobalUiEventTrigger provides eventHolder,
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Scaffold(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .navigationBarsPadding()
-                    .padding(bottom = 16.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                MomensMainTabBar(
-                    tabs = tabs,
-                    selectedTab = tab,
-                    onTabClick = appState::navigate,
-                    navBlurState = navBlurState,
-                )
+                    .momensNavBlurSource(state = navBlurState),
+                snackbarHost = {
+                    SnackbarHost(hostState = snackbarController.snackbarHostState) {
+                        val state = snackbarController.currentState ?: return@SnackbarHost
+
+                        MomensSnackbar(
+                            content = state.content,
+                            modifier = Modifier
+                                .padding(
+                                    start = 20.dp,
+                                    end = 20.dp,
+                                    bottom = state.bottomPadding,
+                                )
+                                .navigationBarsPadding(),
+                        )
+                    }
+                },
+            ) { innerPadding ->
+                NavHost(
+                    enterTransition = { EnterTransition.None },
+                    exitTransition = { ExitTransition.None },
+                    popEnterTransition = { EnterTransition.None },
+                    popExitTransition = { ExitTransition.None },
+                    navController = appState.navController,
+                    startDestination = appState.startDestination,
+                ) {
+                    signalNavGraph(paddingValues = innerPadding)
+                    briefNavGraph(paddingValues = innerPadding)
+                    taskNavGraph(paddingValues = innerPadding)
+                    taskDetailNavGraph(paddingValues = innerPadding)
+                    signInNavGraph(paddingValues = innerPadding)
+                    splashNavGraph(paddingValues = innerPadding)
+                }
+            }
+
+            currentTab?.let { tab ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .navigationBarsPadding()
+                        .padding(bottom = 16.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    MomensMainTabBar(
+                        tabs = tabs,
+                        selectedTab = tab,
+                        onTabClick = appState::navigate,
+                        navBlurState = navBlurState,
+                    )
+                }
             }
         }
     }
