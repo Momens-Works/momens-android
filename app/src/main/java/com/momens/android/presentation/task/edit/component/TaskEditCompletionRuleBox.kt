@@ -11,11 +11,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
@@ -29,17 +36,15 @@ import com.momens.android.presentation.task.edit.model.CompletionIdModel
 
 @Composable
 fun TaskEditCompletionRuleBox(
-    label: String,
     rule: CompletionIdModel,
     isChecked: Boolean,
+    state: TextFieldState,
     onCheckedChange: (CompletionIdModel) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
 ) {
     val iconRes = if (isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
-    val iconTint = if (isChecked && enabled) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
-    val labelColor = if (enabled) MomensTheme.colors.gray800 else MomensTheme.colors.gray300
+    val iconTint = if (isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
 
     Row(
         modifier = modifier
@@ -67,7 +72,6 @@ fun TaskEditCompletionRuleBox(
                 .weight(1f)
                 .noRippleToggleable(
                     value = isChecked,
-                    enabled = enabled,
                     role = Role.Checkbox,
                     onValueChange = { },
                 ),
@@ -82,10 +86,30 @@ fun TaskEditCompletionRuleBox(
                     .noRippleClickable(onClick = {onCheckedChange(rule)})
             )
 
-            Text(
-                text = label,
-                style = MomensTheme.typography.bodyM12,
-                color = labelColor,
+            BasicTextField(
+                state = state,
+                modifier = modifier
+                    .fillMaxWidth(),
+                textStyle = MomensTheme.typography.bodyM12,
+                cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
+                decorator = { innerTextField ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            if (state.text.isEmpty()) {
+                                Text(
+                                    text = "완료기준을 입력해주세요.",
+                                    style = MomensTheme.typography.bodyM12,
+                                    color = MomensTheme.colors.gray300,
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                }
             )
         }
 
@@ -96,7 +120,6 @@ fun TaskEditCompletionRuleBox(
             modifier = Modifier
                 .size(14.dp)
                 .noRippleClickable(
-                    enabled = enabled,
                     onClick = { onClearClick(rule.itemId) },
                 ),
         )
@@ -107,36 +130,27 @@ fun TaskEditCompletionRuleBox(
 @Composable
 private fun TaskEditCompletionRuleBoxPreview() {
     MomensTheme {
+        val exampleState = rememberTextFieldState()
+        val writeState = rememberTextFieldState(initialText = "어쩌구저쩌구")
+
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // entered + checked
             TaskEditCompletionRuleBox(
-                label = "어쩌구어쩌구 반영",
+                state = writeState,
                 rule = CompletionIdModel(taskId = "1", itemId = "1"),
                 isChecked = true,
                 onCheckedChange = {},
                 onClearClick = {},
             )
 
-            // entered + unchecked (텍스트는 여전히 진한 색)
             TaskEditCompletionRuleBox(
-                label = "어쩌구어쩌구 반영",
+                state = exampleState,
                 rule = CompletionIdModel(taskId = "1", itemId = "2"),
                 isChecked = false,
                 onCheckedChange = {},
                 onClearClick = {},
-            )
-
-            // not entered (이때만 텍스트/아이콘이 흐려짐)
-            TaskEditCompletionRuleBox(
-                label = "어쩌구어쩌구 반영",
-                rule = CompletionIdModel(taskId = "1", itemId = "3"),
-                isChecked = false,
-                onCheckedChange = {},
-                onClearClick = {},
-                enabled = false,
             )
         }
     }

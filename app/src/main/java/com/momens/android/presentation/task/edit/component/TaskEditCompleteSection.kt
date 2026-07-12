@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +29,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun TaskEditCompleteSection(
-    count: String,
+    completedCount: Int,
+    totalCount: Int,
     rules: ImmutableList<CompletionRuleModel>,
     onAddClick: () -> Unit,
     onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
@@ -46,7 +48,7 @@ fun TaskEditCompleteSection(
         ){
             MomensSectionTitle(
                 title = "완료기준",
-                count = count,
+                count = "${completedCount}/${totalCount}",
                 isEmphasized = true,
             )
 
@@ -86,12 +88,11 @@ fun TaskEditCompleteSection(
                 rules.forEach { rule ->
                     key(rule.id) {
                         TaskEditCompletionRuleBox(
-                            label = rule.label,
+                            state = rule.state,
                             rule = CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId),
                             isChecked = rule.isChecked,
                             onCheckedChange = { onCheckedChange(CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId), rule.isChecked) },
                             onClearClick = { onClearClick(rule.id.itemId)},
-                            enabled = rule.enabled,
                         )
                     }
                 }
@@ -104,14 +105,18 @@ fun TaskEditCompleteSection(
 @Composable
 private fun TaskEditCompleteSectionPreview() {
     MomensTheme {
+        val exampleState = rememberTextFieldState()
+        val writeState = rememberTextFieldState(initialText = "어쩌구저쩌구")
+
         TaskEditCompleteSection(
-            count = "2/4",
+            completedCount = 2,
+            totalCount = 4,
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영",   isChecked = false, enabled = false),
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영", isChecked = true, enabled = true),
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영", isChecked = false, enabled = true),
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영", isChecked = true, enabled = true),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), state = exampleState,   isChecked = false),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), state = exampleState, isChecked = true),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"),  state = writeState, isChecked = false),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), state = writeState, isChecked = true),
             ),
             onAddClick = {},
             onCheckedChange = { _, _ -> },
@@ -125,7 +130,8 @@ private fun TaskEditCompleteSectionPreview() {
 private fun TaskEditCompleteSectionEmptyPreview() {
     MomensTheme {
         TaskEditCompleteSection(
-            count = "0/0",
+            completedCount = 0,
+            totalCount = 0,
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(),
             onAddClick = {},
