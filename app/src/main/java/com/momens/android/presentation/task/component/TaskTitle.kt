@@ -11,9 +11,11 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun TaskTitle(){
+fun TaskTitle(
+    modifier: Modifier = Modifier,
+){
     Column(
-        modifier = Modifier.padding(horizontal = 20.dp),
+        modifier = modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
@@ -32,7 +34,7 @@ fun TaskTitle(){
 
 @Preview(showBackground = true)
 @Composable
-fun TaskTitlePreview(){
+private fun TaskTitlePreview(){
     MomensTheme {
         TaskTitle()
     }

@@ -16,14 +16,16 @@ import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
+data class TaskItemData(
+    val text: String,
+    val label: String,
+    val level: ImportantLevel,
+    val tone: ImportantTone
+)
 @Composable
 fun TaskStatusBox(
     type: MomensStatusEditType,
-    count: Int,
-    text: String,
-    label: String,
-    level: ImportantLevel,
-    tone: ImportantTone,
+    tasks: List<TaskItemData>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -31,78 +33,85 @@ fun TaskStatusBox(
     ) {
         MomensSectionTitle(
             title = type.label,
-            count = count,
+            count = tasks.size,
             isEmphasized = true,
             iconRes = type.iconRes,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        MomensTaskListItem(
-            text = text,
-            label = label,
-            level = level,
-            tone = tone,
-            count = count,
-            onClick = {},
-        )
+        tasks.forEachIndexed { index, task ->
+            MomensTaskListItem(
+                text = task.text,
+                label = task.label,
+                level = task.level,
+                tone = task.tone,
+                count = tasks.size,
+                onClick = {},
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        MomensTaskListItem(
-            text = text,
-            label = label,
-            level = level,
-            tone = tone,
-            count = count,
-            onClick = {},
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun TaskStatusBoxPreview() {
-    MomensTheme {
-        Box(
-            modifier = Modifier
-                .padding(
-                    horizontal = 20.dp,
-                    vertical = 10.dp,
-                ),
-        ) {
-            Column {
-                TaskStatusBox(
-                    type = MomensStatusEditType.TODO,
-                    count = 2,
-                    text = "text",
-                    label = "Android",
-                    level = ImportantLevel.LOW,
-                    tone = ImportantTone.GRAY,
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                TaskStatusBox(
-                    type = MomensStatusEditType.IN_PROGRESS,
-                    count = 2,
-                    text = "text",
-                    label = "Android",
-                    level = ImportantLevel.LOW,
-                    tone = ImportantTone.GRAY,
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                TaskStatusBox(
-                    type = MomensStatusEditType.DONE,
-                    count = 2,
-                    text = "text",
-                    label = "Android",
-                    level = ImportantLevel.LOW,
-                    tone = ImportantTone.GRAY,
-                )
+            if (index < tasks.lastIndex) {
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
 }
+
+    @Preview(showBackground = true)
+    @Composable
+    private fun TaskStatusBoxPreview() {
+        MomensTheme {
+
+            val dummyTasks = listOf(
+                TaskItemData(
+                    text = "text",
+                    label = "Android",
+                    level = ImportantLevel.LOW,
+                    tone = ImportantTone.CLEAR
+                ),
+                TaskItemData(
+                    text = "text",
+                    label = "Android",
+                    level = ImportantLevel.HIGH,
+                    tone = ImportantTone.CLEAR
+                )
+            )
+
+            Box(
+                modifier = Modifier
+                    .padding(
+                        horizontal = 20.dp,
+                        vertical = 10.dp,
+                    ),
+            ) {
+                Column {
+                    TaskStatusBox(
+                        type = MomensStatusEditType.TODO,
+                        tasks = dummyTasks
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    TaskStatusBox(
+                        type = MomensStatusEditType.IN_PROGRESS,
+                        tasks = listOf(
+                            TaskItemData(
+                                text = "text",
+                                label = "Android",
+                                level = ImportantLevel.MEDIUM,
+                                tone = ImportantTone.CLEAR
+                            )
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    TaskStatusBox(
+                        type = MomensStatusEditType.DONE,
+                        tasks = emptyList()
+                    )
+                }
+            }
+        }
+    }
+
