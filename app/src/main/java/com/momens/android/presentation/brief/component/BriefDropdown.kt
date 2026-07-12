@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.brief.BriefSignalItemUiModel
+import com.momens.android.presentation.brief.model.BriefSignalItemUiModel
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterKey
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -57,9 +57,10 @@ fun BriefDropdown(
     val defaultItems = items.take(MAX_VISIBLE_COUNT)
     val expandableItems = items.drop(MAX_VISIBLE_COUNT)
     val showToggleButton = hasMore || expanded || expandableItems.isNotEmpty()
+    val showMoreButton = hasMore || !expanded
 
     val rotation by animateFloatAsState(
-        targetValue = if (expanded) 270f else 90f,
+        targetValue = if (showMoreButton) 90f else 270f,
         label = "",
     )
 
@@ -116,10 +117,10 @@ fun BriefDropdown(
                 modifier = Modifier
                     .fillMaxWidth()
                     .noRippleClickable {
-                        if (expanded) {
-                            onFoldClick()
-                        } else {
+                        if (showMoreButton) {
                             onMoreClick()
+                        } else {
+                            onFoldClick()
                         }
                     }
                     .padding(vertical = 8.dp),
@@ -127,7 +128,7 @@ fun BriefDropdown(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = if (expanded) "접기" else "더보기",
+                    text = if (showMoreButton) "더보기" else "접기",
                     style = MomensTheme.typography.captionB11,
                     color = MomensTheme.colors.gray400,
                 )

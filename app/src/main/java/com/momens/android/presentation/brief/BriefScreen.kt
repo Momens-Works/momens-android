@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,13 +25,21 @@ import com.momens.android.presentation.brief.component.BriefCurrentPriority
 import com.momens.android.presentation.brief.component.BriefSignalFilterSummary
 import com.momens.android.presentation.brief.component.BriefSignalSummary
 import com.momens.android.presentation.brief.component.BriefSummaryCard
+import com.momens.android.presentation.brief.model.SampleBriefUiState
+
+private const val DEFAULT_PROJECT_ID = "30d9e9fe-f43b-4097-a88e-dc19f0a5b025"
 
 @Composable
 fun BriefRoute(
     paddingValues: PaddingValues,
+    projectId: String = DEFAULT_PROJECT_ID,
     viewModel: BriefViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(projectId) {
+        viewModel.loadBrief(projectId = projectId)
+    }
 
     when (val state = uiState.value) {
         UiState.Empty,

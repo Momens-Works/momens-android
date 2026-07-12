@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.button.MomensChipButton
 import com.momens.android.core.designsystem.component.type.MomensChipButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.brief.BriefSignalItemUiModel
+import com.momens.android.presentation.brief.model.BriefSignalItemUiModel
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilter
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterKey
 import kotlinx.collections.immutable.ImmutableList
