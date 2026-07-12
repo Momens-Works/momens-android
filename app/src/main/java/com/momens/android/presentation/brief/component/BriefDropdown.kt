@@ -31,14 +31,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
-import com.momens.android.core.designsystem.component.type.MomensSignalItem
-import com.momens.android.core.designsystem.component.type.MomensSignalType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.brief.BriefSignalItemUiModel
+import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterKey
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -46,7 +47,7 @@ private const val MAX_VISIBLE_COUNT = 3
 
 @Composable
 fun BriefDropdown(
-    items: ImmutableList<MomensSignalItem>,
+    items: ImmutableList<BriefSignalItemUiModel>,
     hasMore: Boolean,
     expanded: Boolean,
     onMoreClick: () -> Unit,
@@ -148,7 +149,7 @@ fun BriefDropdown(
 
 @Composable
 private fun BriefDropdownRow(
-    item: MomensSignalItem,
+    item: BriefSignalItemUiModel,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -159,7 +160,7 @@ private fun BriefDropdownRow(
             modifier = Modifier
                 .size(6.dp)
                 .background(
-                    color = item.type.color(),
+                    color = item.typeKey.signalColor(),
                     shape = CircleShape,
                 ),
         )
@@ -169,10 +170,19 @@ private fun BriefDropdownRow(
         )
 
         Text(
-            text = item.text,
+            text = item.title,
             modifier = Modifier.weight(1f),
         )
     }
+}
+
+@Composable
+private fun String.signalColor(): Color = when (this) {
+    BriefSignalSummaryFilterKey.CHANGE -> MomensTheme.colors.pointYellow
+    BriefSignalSummaryFilterKey.DECISION -> MomensTheme.colors.pointPurple
+    BriefSignalSummaryFilterKey.QUESTION -> MomensTheme.colors.pointMint
+    BriefSignalSummaryFilterKey.RISK -> MomensTheme.colors.pointRed
+    else -> MomensTheme.colors.gray400
 }
 
 @Preview(showBackground = true)
@@ -192,13 +202,15 @@ private fun BriefDropdownPreview() {
         ) {
             BriefDropdown(
                 items = persistentListOf(
-                    MomensSignalItem(
-                        MomensSignalType.DECISION,
-                        "소셜 로그인은 MVP 범위에서 제외",
+                    BriefSignalItemUiModel(
+                        id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
+                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        title = "소셜 로그인은 MVP 범위에서 제외",
                     ),
-                    MomensSignalItem(
-                        MomensSignalType.DECISION,
-                        "회원가입 MVP 범위 1차 확정",
+                    BriefSignalItemUiModel(
+                        id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        title = "회원가입 MVP 범위 1차 확정",
                     ),
                 ),
                 hasMore = false,
@@ -213,25 +225,30 @@ private fun BriefDropdownPreview() {
 
             BriefDropdown(
                 items = persistentListOf(
-                    MomensSignalItem(
-                        MomensSignalType.DECISION,
-                        "소셜 로그인은 MVP 범위에서 제외",
+                    BriefSignalItemUiModel(
+                        id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
+                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        title = "소셜 로그인은 MVP 범위에서 제외",
                     ),
-                    MomensSignalItem(
-                        MomensSignalType.DECISION,
-                        "회원가입 MVP 범위 1차 확정",
+                    BriefSignalItemUiModel(
+                        id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        title = "회원가입 MVP 범위 1차 확정",
                     ),
-                    MomensSignalItem(
-                        MomensSignalType.RISK,
-                        "Android13+ 권한 요청 플로우 이탈 가능성",
+                    BriefSignalItemUiModel(
+                        id = "3b9e0d12-78f4-4a56-8c01-9d2e3f4a5b6c",
+                        typeKey = BriefSignalSummaryFilterKey.RISK,
+                        title = "Android13+ 권한 요청 플로우 이탈 가능성",
                     ),
-                    MomensSignalItem(
-                        MomensSignalType.QUESTION,
-                        "푸시 알림 정책 논의 필요",
+                    BriefSignalItemUiModel(
+                        id = "9d0a2b34-c678-4d90-8e12-3f4a5b6c7d8e",
+                        typeKey = BriefSignalSummaryFilterKey.QUESTION,
+                        title = "푸시 알림 정책 논의 필요",
                     ),
-                    MomensSignalItem(
-                        MomensSignalType.QUESTION,
-                        "로그인 유지 기간 결정 필요",
+                    BriefSignalItemUiModel(
+                        id = "1e2f3a45-b789-4c01-9d23-4a5b6c7d8e9f",
+                        typeKey = BriefSignalSummaryFilterKey.QUESTION,
+                        title = "로그인 유지 기간 결정 필요",
                     ),
                 ),
                 hasMore = true,

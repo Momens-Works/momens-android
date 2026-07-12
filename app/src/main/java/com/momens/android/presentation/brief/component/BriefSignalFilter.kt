@@ -14,22 +14,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.button.MomensChipButton
 import com.momens.android.core.designsystem.component.type.MomensChipButtonType
-import com.momens.android.core.designsystem.component.type.MomensSignalItem
-import com.momens.android.core.designsystem.component.type.MomensSignalType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.brief.BriefSignalItemUiModel
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilter
-import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
+import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterKey
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun BriefSignalFilterSummary(
-    selectedFilterType: BriefSignalSummaryFilterType,
+    selectedFilterKey: String,
     filters: ImmutableList<BriefSignalSummaryFilter>,
-    summaries: ImmutableList<MomensSignalItem>,
+    summaries: ImmutableList<BriefSignalItemUiModel>,
     hasMoreSummaries: Boolean,
     isSummaryExpanded: Boolean,
-    onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
+    onFilterClick: (String) -> Unit,
     onSummaryMoreClick: () -> Unit,
     onSummaryFoldClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -39,7 +38,7 @@ fun BriefSignalFilterSummary(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         BriefSignalFilterButton(
-            selectedFilterType = selectedFilterType,
+            selectedFilterKey = selectedFilterKey,
             filters = filters,
             onFilterClick = onFilterClick,
         )
@@ -56,18 +55,18 @@ fun BriefSignalFilterSummary(
 
 @Composable
 private fun BriefSignalFilterButton(
-    selectedFilterType: BriefSignalSummaryFilterType,
+    selectedFilterKey: String,
     filters: ImmutableList<BriefSignalSummaryFilter>,
-    onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
+    onFilterClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val visibleFilters = filters.filter { filter ->
-        filter.type == BriefSignalSummaryFilterType.ALL || filter.count > 0
+        filter.key == BriefSignalSummaryFilterKey.ALL || filter.count > 0
     }
 
-    val selectedVisibleFilterType =
-        visibleFilters.find { filter -> filter.type == selectedFilterType }?.type
-            ?: BriefSignalSummaryFilterType.ALL
+    val selectedVisibleFilterKey =
+        visibleFilters.find { filter -> filter.key == selectedFilterKey }?.key
+            ?: BriefSignalSummaryFilterKey.ALL
 
     Row(
         modifier = modifier,
@@ -76,8 +75,8 @@ private fun BriefSignalFilterButton(
     ) {
         visibleFilters
             .forEach { filter ->
-                val type = if (filter.type == selectedVisibleFilterType) {
-                    filter.type.chipButtonType
+                val type = if (filter.key == selectedVisibleFilterKey) {
+                    filter.chipButtonType
                 } else {
                     MomensChipButtonType.WHITE
                 }
@@ -86,7 +85,7 @@ private fun BriefSignalFilterButton(
                     label = filter.label,
                     count = filter.count,
                     type = type,
-                    onClick = { onFilterClick(filter.type) },
+                    onClick = { onFilterClick(filter.key) },
                 )
             }
     }
@@ -95,8 +94,8 @@ private fun BriefSignalFilterButton(
 @Preview(showBackground = true)
 @Composable
 private fun BriefSignalSummarySectionPreview() {
-    var selectedFilterType by rememberSaveable {
-        mutableStateOf(BriefSignalSummaryFilterType.ALL)
+    var selectedFilterKey by rememberSaveable {
+        mutableStateOf(BriefSignalSummaryFilterKey.ALL)
     }
     var isSummaryExpanded by rememberSaveable {
         mutableStateOf(false)
@@ -104,78 +103,86 @@ private fun BriefSignalSummarySectionPreview() {
 
     val filters = persistentListOf(
         BriefSignalSummaryFilter(
-            type = BriefSignalSummaryFilterType.ALL,
+            key = BriefSignalSummaryFilterKey.ALL,
             label = "All",
             count = 0,
         ),
         BriefSignalSummaryFilter(
-            type = BriefSignalSummaryFilterType.DECISIONS,
+            key = BriefSignalSummaryFilterKey.DECISION,
             label = "Decision",
             count = 0,
         ),
         BriefSignalSummaryFilter(
-            type = BriefSignalSummaryFilterType.RISKS,
+            key = BriefSignalSummaryFilterKey.RISK,
             label = "Risk",
             count = 1,
         ),
         BriefSignalSummaryFilter(
-            type = BriefSignalSummaryFilterType.QUESTIONS,
+            key = BriefSignalSummaryFilterKey.QUESTION,
             label = "Question",
             count = 2,
         ),
         BriefSignalSummaryFilter(
-            type = BriefSignalSummaryFilterType.CHANGES,
+            key = BriefSignalSummaryFilterKey.CHANGE,
             label = "Change",
             count = 1,
         ),
     )
 
     val initialSummaries = persistentListOf(
-        MomensSignalItem(
-            type = MomensSignalType.DECISION,
-            text = "소셜 로그인은 MVP 범위에서 제외",
+        BriefSignalItemUiModel(
+            id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
+            typeKey = BriefSignalSummaryFilterKey.DECISION,
+            title = "소셜 로그인은 MVP 범위에서 제외",
         ),
-        MomensSignalItem(
-            type = MomensSignalType.DECISION,
-            text = "회원가입 MVP 범위 1차 확정",
+        BriefSignalItemUiModel(
+            id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+            typeKey = BriefSignalSummaryFilterKey.DECISION,
+            title = "회원가입 MVP 범위 1차 확정",
         ),
-        MomensSignalItem(
-            type = MomensSignalType.CHANGE,
-            text = "온보딩 문구 정책 변경",
+        BriefSignalItemUiModel(
+            id = "5c1a2b34-56d7-4e89-9f01-234a5b6c7d8e",
+            typeKey = BriefSignalSummaryFilterKey.CHANGE,
+            title = "온보딩 문구 정책 변경",
         ),
     )
     val expandedSummaries = persistentListOf(
-        MomensSignalItem(
-            type = MomensSignalType.DECISION,
-            text = "소셜 로그인은 MVP 범위에서 제외",
+        BriefSignalItemUiModel(
+            id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
+            typeKey = BriefSignalSummaryFilterKey.DECISION,
+            title = "소셜 로그인은 MVP 범위에서 제외",
         ),
-        MomensSignalItem(
-            type = MomensSignalType.DECISION,
-            text = "회원가입 MVP 범위 1차 확정",
+        BriefSignalItemUiModel(
+            id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+            typeKey = BriefSignalSummaryFilterKey.DECISION,
+            title = "회원가입 MVP 범위 1차 확정",
         ),
-        MomensSignalItem(
-            type = MomensSignalType.CHANGE,
-            text = "온보딩 문구 정책 변경",
+        BriefSignalItemUiModel(
+            id = "5c1a2b34-56d7-4e89-9f01-234a5b6c7d8e",
+            typeKey = BriefSignalSummaryFilterKey.CHANGE,
+            title = "온보딩 문구 정책 변경",
         ),
-        MomensSignalItem(
-            type = MomensSignalType.QUESTION,
-            text = "Android 13+ 권한 요청 플로우 이탈 가능성",
+        BriefSignalItemUiModel(
+            id = "9d0a2b34-c678-4d90-8e12-3f4a5b6c7d8e",
+            typeKey = BriefSignalSummaryFilterKey.QUESTION,
+            title = "Android 13+ 권한 요청 플로우 이탈 가능성",
         ),
-        MomensSignalItem(
-            type = MomensSignalType.RISK,
-            text = "Android 13+ 권한 요청 플로우 이탈 가능성",
+        BriefSignalItemUiModel(
+            id = "3b9e0d12-78f4-4a56-8c01-9d2e3f4a5b6c",
+            typeKey = BriefSignalSummaryFilterKey.RISK,
+            title = "Android 13+ 권한 요청 플로우 이탈 가능성",
         ),
     )
 
     MomensTheme {
         BriefSignalFilterSummary(
-            selectedFilterType = selectedFilterType,
+            selectedFilterKey = selectedFilterKey,
             filters = filters,
             summaries = if (isSummaryExpanded) expandedSummaries else initialSummaries,
             hasMoreSummaries = !isSummaryExpanded,
             isSummaryExpanded = isSummaryExpanded,
-            onFilterClick = { filterType ->
-                selectedFilterType = filterType
+            onFilterClick = { filterKey ->
+                selectedFilterKey = filterKey
             },
             onSummaryMoreClick = {
                 isSummaryExpanded = true

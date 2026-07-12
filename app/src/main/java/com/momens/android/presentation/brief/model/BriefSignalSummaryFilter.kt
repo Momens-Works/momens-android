@@ -3,35 +3,27 @@ package com.momens.android.presentation.brief.model
 import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.MomensChipButtonType
 
-enum class BriefSignalSummaryFilterType(
-    val key: String,
-    val chipButtonType: MomensChipButtonType,
-) {
-    ALL(
-        key = "all",
-        chipButtonType = MomensChipButtonType.BLACK,
-    ),
-    DECISIONS(
-        key = "decisions",
-        chipButtonType = MomensChipButtonType.PURPLE,
-    ),
-    RISKS(
-        key = "risks",
-        chipButtonType = MomensChipButtonType.RED,
-    ),
-    QUESTIONS(
-        key = "questions",
-        chipButtonType = MomensChipButtonType.MINT,
-    ),
-    CHANGES(
-        key = "changes",
-        chipButtonType = MomensChipButtonType.YELLOW,
-    ),
+object BriefSignalSummaryFilterKey {
+    const val ALL = "all"
+    const val CHANGE = "change"
+    const val DECISION = "decision"
+    const val QUESTION = "question"
+    const val RISK = "risk"
 }
 
 @Immutable
 data class BriefSignalSummaryFilter(
-    val type: BriefSignalSummaryFilterType,
+    val key: String,
     val label: String,
     val count: Int,
-)
+) {
+    val chipButtonType: MomensChipButtonType
+        get() = when (key) {
+            BriefSignalSummaryFilterKey.ALL -> MomensChipButtonType.BLACK
+            BriefSignalSummaryFilterKey.CHANGE -> MomensChipButtonType.YELLOW
+            BriefSignalSummaryFilterKey.DECISION -> MomensChipButtonType.PURPLE
+            BriefSignalSummaryFilterKey.QUESTION -> MomensChipButtonType.MINT
+            BriefSignalSummaryFilterKey.RISK -> MomensChipButtonType.RED
+            else -> MomensChipButtonType.BLACK
+        }
+}
