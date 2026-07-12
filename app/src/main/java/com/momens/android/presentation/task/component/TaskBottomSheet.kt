@@ -32,6 +32,7 @@ import com.momens.android.core.designsystem.component.importantstatus.MomensImpo
 import com.momens.android.core.designsystem.component.input.MomensCountInput
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
+import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.component.type.MomensTaskButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import kotlinx.coroutines.launch
@@ -58,7 +59,7 @@ fun TaskBottomSheet(
     val roles = MomensTaskButtonType.entries
     val priorities = ImportantLevel.entries
 
-    val isButtonEnabled by remember {
+    val isButtonEnabled by remember(selectedRole, selectedPriority) {
         derivedStateOf {
             titleState.text.isNotBlank() && selectedRole != null && selectedPriority != null
         }
@@ -121,9 +122,12 @@ fun TaskBottomSheet(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     roles.forEach { role ->
+                        val isSelected = selectedRole == role
                         MomensButton(
                             text = role.text,
                             onClick = { onRoleSelect(role) },
+                            type = if (isSelected) MomensButtonType.PRIMARY
+                            else MomensButtonType.GRAY,
                         )
                     }
                 }
@@ -194,7 +198,7 @@ private fun TaskBottomSheetPreview() {
             val dummyTitleState = rememberTextFieldState(initialText = "Write")
 
             var previewSelectedRole by remember {
-                mutableStateOf<MomensTaskButtonType?>(MomensTaskButtonType.entries.firstOrNull())
+                mutableStateOf<MomensTaskButtonType?>(null)
             }
             var previewSelectedPriority by remember {
                 mutableStateOf<ImportantLevel?>(null)
@@ -207,7 +211,7 @@ private fun TaskBottomSheetPreview() {
                 selectedPriority = previewSelectedPriority,
                 onPrioritySelect = { previewSelectedPriority = it },
                 onSubmit = {},
-                onDismiss = {}
+                onDismiss = {},
             )
         }
     }
