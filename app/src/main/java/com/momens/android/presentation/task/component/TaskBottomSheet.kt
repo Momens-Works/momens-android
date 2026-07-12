@@ -13,13 +13,10 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,10 +30,8 @@ import com.momens.android.core.designsystem.component.input.MomensCountInput
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensButtonType
-import com.momens.android.presentation.task.model.MomensTaskButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.task.model.TaskCreateRequest
-import kotlinx.coroutines.launch
+import com.momens.android.presentation.task.model.MomensTaskButtonType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,31 +42,25 @@ fun TaskBottomSheet(
     selectedPriority: ImportantLevel?,
     onPrioritySelect: (ImportantLevel) -> Unit,
     onDismiss: () -> Unit,
+    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onSubmit: (TaskCreateRequest) -> Unit,
 ) {
     val roles = MomensTaskButtonType.entries
     val priorities = ImportantLevel.entries
 
-    val isButtonEnabled =
-        titleState.text.isNotBlank() && selectedRole != null && selectedPriority != null
-
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val coroutineScope = rememberCoroutineScope()
+    val isButtonEnabled = titleState.text.isNotBlank() && selectedRole != null && selectedPriority != null
 
     MomensBottomSheet(
         onDismiss = onDismiss,
-        sheetState = sheetState,
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier
-                .padding(
-                    start = 20.dp,
-                    end = 20.dp,
-                    top = 16.dp,
-                    bottom = 32.dp,
-                ),
+            modifier = Modifier.padding(
+                start = 20.dp,
+                end = 20.dp,
+                top = 16.dp,
+                bottom = 32.dp,
+            ),
         ) {
             Text(
                 text = "새 태스크 생성",
@@ -150,20 +139,7 @@ fun TaskBottomSheet(
             Spacer(modifier = Modifier.height(32.dp))
 
             MomensCtaButton(
-                onClick = {
-                    coroutineScope.launch {
-                        sheetState.hide()
-                    }.invokeOnCompletion {
-                        onSubmit(
-                            TaskCreateRequest(
-                                title = titleState.text.toString(),
-                                role = selectedRole!!,
-                                priority = selectedPriority!!,
-                            ),
-                        )
-                        onDismiss()
-                    }
-                },
+                onClick = onRegisterClick,
                 enabled = isButtonEnabled,
             ) {
                 Text(
@@ -174,9 +150,7 @@ fun TaskBottomSheet(
             }
         }
     }
-
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
@@ -199,10 +173,9 @@ private fun TaskBottomSheetPreview() {
                 onRoleSelect = { previewSelectedRole = it },
                 selectedPriority = previewSelectedPriority,
                 onPrioritySelect = { previewSelectedPriority = it },
-                onSubmit = {},
                 onDismiss = {},
+                onRegisterClick = {},
             )
         }
     }
 }
-
