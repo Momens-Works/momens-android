@@ -78,12 +78,12 @@ private fun MomensStatusEditPreview() {
             )
 
             MomensStatusEdit(
-                type = MomensStatusEditType.INPROGRESS,
+                type = MomensStatusEditType.IN_PROGRESS,
                 isSelected = true,
             )
 
             MomensStatusEdit(
-                type = MomensStatusEditType.INPROGRESS,
+                type = MomensStatusEditType.IN_PROGRESS,
             )
 
             MomensStatusEdit(
