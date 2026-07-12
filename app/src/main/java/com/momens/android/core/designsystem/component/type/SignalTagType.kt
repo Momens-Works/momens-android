@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.type
+package com.momens.android.core.designsystem.component.type
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

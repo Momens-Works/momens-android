@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.stateedit
+package com.momens.android.presentation.task.edit.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -78,12 +78,12 @@ private fun MomensStatusEditPreview() {
             )
 
             MomensStatusEdit(
-                type = MomensStatusEditType.INPROGRESS,
+                type = MomensStatusEditType.IN_PROGRESS,
                 isSelected = true,
             )
 
             MomensStatusEdit(
-                type = MomensStatusEditType.INPROGRESS,
+                type = MomensStatusEditType.IN_PROGRESS,
             )
 
             MomensStatusEdit(

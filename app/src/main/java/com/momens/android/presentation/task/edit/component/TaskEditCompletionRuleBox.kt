@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.completionrulebox
+package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
@@ -25,19 +29,19 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.task.edit.model.CompletionIdModel
 
 @Composable
-fun MomensCompletionRuleBox(
-    label: String,
+fun TaskEditCompletionRuleBox(
+    rule: CompletionIdModel,
     isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    onClearClick: () -> Unit,
+    state: TextFieldState,
+    onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
+    onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
 ) {
     val iconRes = if (isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
-    val iconTint = if (isChecked && enabled) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
-    val labelColor = if (enabled) MomensTheme.colors.gray800 else MomensTheme.colors.gray300
+    val iconTint = if (isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
 
     Row(
         modifier = modifier
@@ -65,9 +69,8 @@ fun MomensCompletionRuleBox(
                 .weight(1f)
                 .noRippleToggleable(
                     value = isChecked,
-                    onValueChange = onCheckedChange,
-                    enabled = enabled,
                     role = Role.Checkbox,
+                    onValueChange = { checked -> onCheckedChange(rule, checked) },
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -79,10 +82,30 @@ fun MomensCompletionRuleBox(
                 modifier = Modifier.size(24.dp),
             )
 
-            Text(
-                text = label,
-                style = MomensTheme.typography.bodyM12,
-                color = labelColor,
+            BasicTextField(
+                state = state,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textStyle = MomensTheme.typography.bodyM12,
+                cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
+                decorator = { innerTextField ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            if (state.text.isEmpty()) {
+                                Text(
+                                    text = "완료기준을 입력해주세요.",
+                                    style = MomensTheme.typography.bodyM12,
+                                    color = MomensTheme.colors.gray300,
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                },
             )
         }
 
@@ -93,8 +116,7 @@ fun MomensCompletionRuleBox(
             modifier = Modifier
                 .size(14.dp)
                 .noRippleClickable(
-                    enabled = enabled,
-                    onClick = onClearClick,
+                    onClick = { onClearClick(rule.itemId) },
                 ),
         )
     }
@@ -102,35 +124,29 @@ fun MomensCompletionRuleBox(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensCompletionRuleBoxPreview() {
+private fun TaskEditCompletionRuleBoxPreview() {
     MomensTheme {
+        val exampleState = rememberTextFieldState()
+        val writeState = rememberTextFieldState(initialText = "어쩌구저쩌구")
+
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // entered + checked
-            MomensCompletionRuleBox(
-                label = "어쩌구어쩌구 반영",
+            TaskEditCompletionRuleBox(
+                state = writeState,
+                rule = CompletionIdModel(taskId = "1", itemId = "1"),
                 isChecked = true,
-                onCheckedChange = {},
+                onCheckedChange = { _, _ -> },
                 onClearClick = {},
             )
 
-            // entered + unchecked (텍스트는 여전히 진한 색)
-            MomensCompletionRuleBox(
-                label = "어쩌구어쩌구 반영",
+            TaskEditCompletionRuleBox(
+                state = exampleState,
+                rule = CompletionIdModel(taskId = "1", itemId = "2"),
                 isChecked = false,
-                onCheckedChange = {},
+                onCheckedChange = { _, _ -> },
                 onClearClick = {},
-            )
-
-            // not entered (이때만 텍스트/아이콘이 흐려짐)
-            MomensCompletionRuleBox(
-                label = "어쩌구어쩌구 반영",
-                isChecked = false,
-                onCheckedChange = {},
-                onClearClick = {},
-                enabled = false,
             )
         }
     }
