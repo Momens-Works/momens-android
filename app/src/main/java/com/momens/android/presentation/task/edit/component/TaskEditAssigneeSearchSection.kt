@@ -48,6 +48,7 @@ fun TaskEditAssigneeSearchSection(
                     text = assignee.name,
                     onClick = { onAssigneeClick(assignee.id) },
                     onDeleteClick = onDeleteClick,
+                    profileImageUrl = assignee.url,
                 )
             }
         }
