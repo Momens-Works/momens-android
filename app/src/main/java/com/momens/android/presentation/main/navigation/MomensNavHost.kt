@@ -34,7 +34,7 @@ fun MomensNavHost(
         taskDetailNavGraph(paddingValues = paddingValues)
         signInNavGraph(
             paddingValues = paddingValues,
-            navigateToSignal = appState::navigateToSignIn,
+            navigateToSignal = appState::navigateToSignal,
         )
         splashNavGraph(paddingValues = paddingValues)
     }
