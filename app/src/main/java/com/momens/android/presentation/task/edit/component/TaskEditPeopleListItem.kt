@@ -35,7 +35,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 fun TaskEditPeopleListItem(
     text: String,
     onClick: () -> Unit,
-    onDeleteClick: (String) -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     profileImageUrl: String? = null,
@@ -73,7 +73,7 @@ fun TaskEditPeopleListItem(
         if (isSelected) {
             MomensButton(
                 text = "삭제",
-                onClick = {onDeleteClick},
+                onClick = onDeleteClick,
                 type = MomensButtonType.WHITE,
             )
         }
