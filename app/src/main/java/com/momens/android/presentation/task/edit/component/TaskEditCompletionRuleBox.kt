@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
@@ -20,8 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -39,7 +36,7 @@ fun TaskEditCompletionRuleBox(
     rule: CompletionIdModel,
     isChecked: Boolean,
     state: TextFieldState,
-    onCheckedChange: (CompletionIdModel) -> Unit,
+    onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -73,7 +70,7 @@ fun TaskEditCompletionRuleBox(
                 .noRippleToggleable(
                     value = isChecked,
                     role = Role.Checkbox,
-                    onValueChange = { },
+                    onValueChange = { checked -> onCheckedChange(rule, checked) },
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -82,13 +79,12 @@ fun TaskEditCompletionRuleBox(
                 imageVector = ImageVector.vectorResource(id = iconRes),
                 contentDescription = null,
                 tint = iconTint,
-                modifier = Modifier.size(24.dp)
-                    .noRippleClickable(onClick = {onCheckedChange(rule)})
+                modifier = Modifier.size(24.dp),
             )
 
             BasicTextField(
                 state = state,
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth(),
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
@@ -109,7 +105,7 @@ fun TaskEditCompletionRuleBox(
                             innerTextField()
                         }
                     }
-                }
+                },
             )
         }
 
@@ -141,7 +137,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
                 state = writeState,
                 rule = CompletionIdModel(taskId = "1", itemId = "1"),
                 isChecked = true,
-                onCheckedChange = {},
+                onCheckedChange = { _, _ -> },
                 onClearClick = {},
             )
 
@@ -149,7 +145,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
                 state = exampleState,
                 rule = CompletionIdModel(taskId = "1", itemId = "2"),
                 isChecked = false,
-                onCheckedChange = {},
+                onCheckedChange = { _, _ -> },
                 onClearClick = {},
             )
         }
