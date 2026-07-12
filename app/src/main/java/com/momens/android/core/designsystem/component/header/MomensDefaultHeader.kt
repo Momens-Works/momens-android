@@ -23,7 +23,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 fun MomensDefaultHeader(
     onProfileClick: () -> Unit,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MomensTheme.colors.white,
+    backgroundColor: Color = Color.Transparent,
 ) {
     Box(
         modifier = modifier

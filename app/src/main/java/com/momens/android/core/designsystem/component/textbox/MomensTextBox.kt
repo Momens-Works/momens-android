@@ -2,7 +2,6 @@ package com.momens.android.core.designsystem.component.textbox
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -87,17 +86,17 @@ private fun MomensTextBoxPreview() {
             modifier = Modifier
                 .width(320.dp)
                 .height(720.dp)
-                .padding(top = 50.dp)
+                .padding(top = 50.dp),
         ) {
             MomensTextBox(
-                text = "텍스트 테스트입니다"
+                text = "텍스트 테스트입니다",
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             MomensTextBox(
                 text = "텍스트 테스트입니다",
-                iconResId = R.drawable.ic_minsu
+                iconResId = R.drawable.ic_minsu,
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -107,13 +106,13 @@ private fun MomensTextBoxPreview() {
                 iconResId = R.drawable.ic_minsu,
                 iconColor = MomensTheme.colors.gray500,
                 textColor = MomensTheme.colors.gray500,
-                isArrowVisible = true
+                isArrowVisible = true,
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             MomensTextBox(
-                text = "텍스트테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다"
+                text = "텍스트테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다텍스트 테스트입니다",
             )
         }
     }

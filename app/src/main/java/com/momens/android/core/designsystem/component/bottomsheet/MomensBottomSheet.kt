@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.dragToDismiss
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.effect.momensBottomSheetShadow
 import com.momens.android.core.designsystem.theme.MomensTheme
@@ -48,22 +50,46 @@ fun MomensBottomSheet(
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        modifier = modifier,
         sheetState = sheetState,
         shape = RectangleShape,
         containerColor = Color.Transparent,
         dragHandle = null,
+        sheetGesturesEnabled = false,
     ) {
-        Column(
-            modifier = Modifier
-                .padding(top = 22.dp)
-                .momensBottomSheetShadow(shape = shape)
-                .background(color = containerColor, shape = shape),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            dragHandle?.invoke()
-            content()
-        }
+        MomensBottomSheetContent(
+            shape = shape,
+            sheetState = sheetState,
+            onDismiss = onDismiss,
+            modifier = modifier,
+            containerColor = containerColor,
+            dragHandle = dragHandle,
+            content = content,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MomensBottomSheetContent(
+    shape: RoundedCornerShape,
+    sheetState: SheetState,
+    onDismiss: () -> Unit,
+    containerColor: Color,
+    modifier: Modifier = Modifier,
+    dragHandle: @Composable (() -> Unit)?,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .dragToDismiss(sheetState = sheetState, onDismiss = onDismiss)
+            .fillMaxWidth()
+            .padding(top = 25.dp)
+            .momensBottomSheetShadow(shape = shape)
+            .background(color = containerColor, shape = shape),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        dragHandle?.invoke()
+        content()
     }
 }
 
