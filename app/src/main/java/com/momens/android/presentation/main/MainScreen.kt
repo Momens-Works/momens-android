@@ -52,7 +52,10 @@ fun MainScreen(
                 briefNavGraph(paddingValues = innerPadding)
                 taskNavGraph(paddingValues = innerPadding)
                 taskDetailNavGraph(paddingValues = innerPadding)
-                signInNavGraph(paddingValues = innerPadding)
+                signInNavGraph(
+                    paddingValues = innerPadding,
+                    navigateToSignal = appState::navigateToSignIn
+                )
                 splashNavGraph(paddingValues = innerPadding)
             }
         }
