@@ -69,12 +69,14 @@ class TokenManagerImpl @Inject constructor(
     }
 
     override suspend fun clearTokens() {
-        cachedAccessToken = null
-        cachedRefreshToken = null
+
         dataStore.edit { preferences ->
             preferences.remove(KEY_ACCESS_TOKEN)
             preferences.remove(KEY_REFRESH_TOKEN)
         }
+
+        cachedAccessToken = null
+        cachedRefreshToken = null
     }
 
     companion object {
