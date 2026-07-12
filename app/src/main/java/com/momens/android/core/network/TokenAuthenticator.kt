@@ -4,6 +4,8 @@ import com.momens.android.core.local.TokenManager
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -22,6 +24,8 @@ class TokenAuthenticator @Inject constructor(
     private val tokenRefreshService: TokenRefreshService,
 ) : Authenticator {
 
+    private val refreshMutex = Mutex()
+
     override fun authenticate(route: Route?, response: Response): Request? {
         Timber.d("인증 정보 없음 (401). 토큰 갱신 필요")
 
@@ -32,33 +36,52 @@ class TokenAuthenticator @Inject constructor(
         }
 
         return runBlocking {
-            val refreshToken = tokenManager.getRefreshToken() ?: return@runBlocking null.also {
-                Timber.d("저장된 refresh token 없음")
-                tokenManager.clearTokens()
-            }
+            refreshMutex.withLock {
+                val currentAccessToken = tokenManager.getAccessToken()
+                val requestAccessToken = response.request.header(AUTHORIZATION_HEADER)
 
-            runCatching {
-                val tokenResponse = tokenRefreshService.refreshToken(
-                    request = TokenRefreshRequest(refreshToken = refreshToken)
-                )
-
-                tokenManager.saveTokens(
-                    accessToken = tokenResponse.accessToken,
-                    refreshToken = tokenResponse.refreshToken,
-                )
-
-                response.request.newBuilder()
-                    .header(AUTHORIZATION_HEADER, "$BEARER_PREFIX ${tokenResponse.accessToken}")
-                    .build()
-            }.onFailure { throwable ->
-                when (throwable) {
-                    is HttpException -> Timber.d(throwable, "토큰 갱신 실패: ${throwable.code()}")
-                    else -> Timber.d(throwable, "토큰 갱신 실패")
+                if (
+                    requestAccessToken != null &&
+                    currentAccessToken != null &&
+                    requestAccessToken != "$BEARER_PREFIX $currentAccessToken"
+                ) {
+                    Timber.d("이미 갱신된 access token으로 요청 재시도")
+                    return@withLock response.request.withAccessToken(currentAccessToken)
                 }
-                tokenManager.clearTokens()
-            }.getOrNull()
+
+                val refreshToken = tokenManager.getRefreshToken()
+                if (refreshToken == null) {
+                    Timber.d("저장된 refresh token 없음")
+                    tokenManager.clearTokens()
+                    return@withLock null
+                }
+
+                runCatching {
+                    val tokenResponse = tokenRefreshService.refreshToken(
+                        request = TokenRefreshRequest(refreshToken = refreshToken)
+                    )
+
+                    tokenManager.saveTokens(
+                        accessToken = tokenResponse.accessToken,
+                        refreshToken = tokenResponse.refreshToken,
+                    )
+
+                    response.request.withAccessToken(tokenResponse.accessToken)
+                }.onFailure { throwable ->
+                    when (throwable) {
+                        is HttpException -> Timber.d(throwable, "토큰 갱신 실패: ${throwable.code()}")
+                        else -> Timber.d(throwable, "토큰 갱신 실패")
+                    }
+                    tokenManager.clearTokens()
+                }.getOrNull()
+            }
         }
     }
+
+    private fun Request.withAccessToken(accessToken: String): Request =
+        newBuilder()
+            .header(AUTHORIZATION_HEADER, "$BEARER_PREFIX $accessToken")
+            .build()
 
     private fun Response.retryCount(): Int {
         var currentResponse: Response? = this
