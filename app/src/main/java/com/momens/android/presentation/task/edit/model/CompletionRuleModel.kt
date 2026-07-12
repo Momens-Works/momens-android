@@ -6,6 +6,6 @@ import androidx.compose.runtime.Immutable
 data class CompletionRuleModel(
     val id: CompletionIdModel,
     val label: String,
-    val completed: Boolean,
+    val isChecked: Boolean,
     val enabled: Boolean,
 )

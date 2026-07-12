@@ -113,7 +113,7 @@ fun TaskEditOptionSection(
 private fun TaskEditOptionSectionPreview() {
     MomensTheme {
         Box(
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(40.dp)
         ){
             TaskEditOptionSection(
                 modifier = Modifier,

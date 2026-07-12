@@ -20,6 +20,7 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.task.edit.model.CompletionIdModel
 import com.momens.android.presentation.task.edit.model.CompletionRuleModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -30,8 +31,8 @@ fun TaskEditCompleteSection(
     count: String,
     rules: ImmutableList<CompletionRuleModel>,
     onAddClick: () -> Unit,
-    onRuleCheckedChange: (id: Long, checked: Boolean) -> Unit,
-    onRuleClear: (id: Long) -> Unit,
+    onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
+    onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
     Column(
@@ -86,9 +87,10 @@ fun TaskEditCompleteSection(
                     key(rule.id) {
                         TaskEditCompletionRuleBox(
                             label = rule.label,
-                            isChecked = rule.completed,
-                            onCheckedChange = { checked -> onRuleCheckedChange(rule.id, checked) },
-                            onClearClick = { onRuleClear(rule.id) },
+                            rule = CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId),
+                            isChecked = rule.isChecked,
+                            onCheckedChange = { onCheckedChange(CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId), rule.isChecked) },
+                            onClearClick = { onClearClick(rule.id.itemId)},
                             enabled = rule.enabled,
                         )
                     }
@@ -106,19 +108,14 @@ private fun TaskEditCompleteSectionPreview() {
             count = "2/4",
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(
-                CompletionRuleModel(
-                    id = 1,
-                    label = "어쩌구어쩌구 반영",
-                    completed = false,
-                    enabled = false
-                ),
-                CompletionRuleModel(id = 2, label = "어쩌구어쩌구 반영", completed = true, enabled = true),
-                CompletionRuleModel(id = 3, label = "어쩌구어쩌구 반영", completed = false, enabled = true),
-                CompletionRuleModel(id = 4, label = "어쩌구어쩌구 반영", completed = true, enabled = true),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영",   isChecked = false, enabled = false),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영", isChecked = true, enabled = true),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영", isChecked = false, enabled = true),
+                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), label = "어쩌구어쩌구 반영", isChecked = true, enabled = true),
             ),
             onAddClick = {},
-            onRuleCheckedChange = { _, _ -> },
-            onRuleClear = {},
+            onCheckedChange = { _, _ -> },
+            onClearClick = {},
         )
     }
 }
@@ -132,8 +129,8 @@ private fun TaskEditCompleteSectionEmptyPreview() {
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(),
             onAddClick = {},
-            onRuleCheckedChange = { _, _ -> },
-            onRuleClear = {},
+            onCheckedChange = { _, _ -> },
+            onClearClick = {},
         )
     }
 }

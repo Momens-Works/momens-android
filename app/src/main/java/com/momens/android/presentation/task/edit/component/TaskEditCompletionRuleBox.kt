@@ -25,13 +25,15 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.task.edit.model.CompletionIdModel
 
 @Composable
 fun TaskEditCompletionRuleBox(
     label: String,
+    rule: CompletionIdModel,
     isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    onClearClick: () -> Unit,
+    onCheckedChange: (CompletionIdModel) -> Unit,
+    onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
@@ -65,9 +67,9 @@ fun TaskEditCompletionRuleBox(
                 .weight(1f)
                 .noRippleToggleable(
                     value = isChecked,
-                    onValueChange = onCheckedChange,
                     enabled = enabled,
                     role = Role.Checkbox,
+                    onValueChange = { },
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -76,7 +78,8 @@ fun TaskEditCompletionRuleBox(
                 imageVector = ImageVector.vectorResource(id = iconRes),
                 contentDescription = null,
                 tint = iconTint,
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(24.dp)
+                    .noRippleClickable(onClick = {onCheckedChange(rule)})
             )
 
             Text(
@@ -94,7 +97,7 @@ fun TaskEditCompletionRuleBox(
                 .size(14.dp)
                 .noRippleClickable(
                     enabled = enabled,
-                    onClick = onClearClick,
+                    onClick = { onClearClick(rule.itemId) },
                 ),
         )
     }
@@ -111,6 +114,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
             // entered + checked
             TaskEditCompletionRuleBox(
                 label = "어쩌구어쩌구 반영",
+                rule = CompletionIdModel(taskId = "1", itemId = "1"),
                 isChecked = true,
                 onCheckedChange = {},
                 onClearClick = {},
@@ -119,6 +123,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
             // entered + unchecked (텍스트는 여전히 진한 색)
             TaskEditCompletionRuleBox(
                 label = "어쩌구어쩌구 반영",
+                rule = CompletionIdModel(taskId = "1", itemId = "2"),
                 isChecked = false,
                 onCheckedChange = {},
                 onClearClick = {},
@@ -127,6 +132,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
             // not entered (이때만 텍스트/아이콘이 흐려짐)
             TaskEditCompletionRuleBox(
                 label = "어쩌구어쩌구 반영",
+                rule = CompletionIdModel(taskId = "1", itemId = "3"),
                 isChecked = false,
                 onCheckedChange = {},
                 onClearClick = {},
