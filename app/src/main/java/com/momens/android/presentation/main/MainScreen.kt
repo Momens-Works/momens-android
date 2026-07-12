@@ -10,9 +10,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.designsystem.component.snackbar.MomensSnackbar
@@ -28,6 +33,8 @@ import com.momens.android.presentation.main.navigation.rememberMainAppState
 import com.momens.android.presentation.main.type.MainTab
 import kotlinx.collections.immutable.toImmutableList
 
+private val SNACKBAR_TAB_BAR_SPACING = 8.dp
+
 @Composable
 fun MainScreen(
     appState: MainAppState = rememberMainAppState(),
@@ -35,6 +42,9 @@ fun MainScreen(
     val currentTab by appState.currentTab.collectAsStateWithLifecycle()
     val tabs = remember { MainTab.entries.toImmutableList() }
     val navBlurState = rememberMomensNavBlurState()
+    val density = LocalDensity.current
+
+    var tabBarBoxHeight by remember { mutableStateOf(0.dp) }
 
     val snackbarController = rememberGlobalSnackbarController()
     val eventHolder = remember(snackbarController) {
@@ -49,18 +59,20 @@ fun MainScreen(
                 modifier = Modifier
                     .momensNavBlurSource(state = navBlurState),
                 snackbarHost = {
+                    val snackbarBottomPadding: Dp = if (currentTab != null) {
+                        tabBarBoxHeight + SNACKBAR_TAB_BAR_SPACING
+                    } else {
+                        SNACKBAR_TAB_BAR_SPACING
+                    }
+
                     SnackbarHost(hostState = snackbarController.snackbarHostState) {
                         val state = snackbarController.currentState ?: return@SnackbarHost
 
                         MomensSnackbar(
                             content = state.content,
                             modifier = Modifier
-                                .padding(
-                                    start = 20.dp,
-                                    end = 20.dp,
-                                    bottom = state.bottomPadding,
-                                )
-                                .navigationBarsPadding(),
+                                .padding(horizontal = 20.dp)
+                                .padding(bottom = snackbarBottomPadding),
                         )
                     }
                 },
@@ -77,6 +89,11 @@ fun MainScreen(
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
                         .navigationBarsPadding()
+                        .onGloballyPositioned { coordinates ->
+                            tabBarBoxHeight = with(density) {
+                                coordinates.size.height.toDp()
+                            }
+                        }
                         .padding(bottom = 16.dp),
                     contentAlignment = Alignment.Center,
                 ) {
