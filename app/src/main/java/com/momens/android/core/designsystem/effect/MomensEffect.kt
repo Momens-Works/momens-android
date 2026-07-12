@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -168,3 +169,15 @@ private fun Outline.toAndroidPath(): Path? {
         }
     }
 }
+
+@Composable
+fun Modifier.momensFabShadow(
+    shape: Shape = CircleShape,
+): Modifier = dropShadow(
+    shape = shape,
+    color = MomensTheme.colors.black.copy(alpha = 0.25f),
+    blur = 4.dp,
+    offsetX = (-1).dp,
+    offsetY = 4.dp,
+    spread = 0.dp,
+)
