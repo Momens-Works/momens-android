@@ -91,8 +91,8 @@ fun TaskEditCompleteSection(
                             state = rule.state,
                             rule = CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId),
                             isChecked = rule.isChecked,
-                            onCheckedChange = { onCheckedChange(CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId), rule.isChecked) },
-                            onClearClick = { onClearClick(rule.id.itemId)},
+                            onCheckedChange = { id, checked -> onCheckedChange(id, checked) },
+                            onClearClick = { onClearClick(rule.id.itemId)}
                         )
                     }
                 }

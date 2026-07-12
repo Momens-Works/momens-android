@@ -26,7 +26,7 @@ fun TaskEditAssigneeSection(
         Text(
             text = "현재 담당자",
             style = MomensTheme.typography.bodyB14,
-            color = MomensTheme.colors.black,
+            color = MomensTheme.colors.gray700,
         )
 
         Spacer(modifier = Modifier.height(8.dp))

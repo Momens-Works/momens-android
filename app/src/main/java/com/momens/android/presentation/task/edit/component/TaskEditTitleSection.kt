@@ -32,7 +32,7 @@ fun TaskEditTitleSection(
             maxLength = maxLength,
             modifier = Modifier
                 .weight(1f)
-                .padding(end = 12.dp),
+                .padding(end = 16.dp),
         )
 
         MomensTaskTag(
