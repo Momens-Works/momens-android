@@ -56,18 +56,40 @@ fun MomensBottomSheet(
         dragHandle = null,
         sheetGesturesEnabled = false,
     ) {
-        Column(
-            modifier = Modifier
-                .dragToDismiss(sheetState = sheetState, onDismiss = onDismiss)
-                .fillMaxWidth()
-                .padding(top = 25.dp)
-                .momensBottomSheetShadow(shape = shape)
-                .background(color = containerColor, shape = shape),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            dragHandle?.invoke()
-            content()
-        }
+        MomensBottomSheetContent(
+            shape = shape,
+            sheetState = sheetState,
+            onDismiss = onDismiss,
+            modifier = modifier,
+            containerColor = containerColor,
+            dragHandle = dragHandle,
+            content = content,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun MomensBottomSheetContent(
+    shape: RoundedCornerShape,
+    sheetState: SheetState,
+    onDismiss: () -> Unit,
+    containerColor: Color,
+    modifier: Modifier = Modifier,
+    dragHandle: @Composable (() -> Unit)?,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .dragToDismiss(sheetState = sheetState, onDismiss = onDismiss)
+            .fillMaxWidth()
+            .padding(top = 25.dp)
+            .momensBottomSheetShadow(shape = shape)
+            .background(color = containerColor, shape = shape),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        dragHandle?.invoke()
+        content()
     }
 }
 
