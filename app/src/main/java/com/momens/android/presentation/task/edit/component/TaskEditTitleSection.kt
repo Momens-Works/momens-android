@@ -12,13 +12,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.input.MomensCountInput
 import com.momens.android.core.designsystem.component.tag.MomensTaskTag
+import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.core.designsystem.type.MomensTaskType
+
 
 @Composable
 fun TaskEditTitleSection(
     titleState: TextFieldState,
-    status: MomensTaskType,
+    status: MomensStatusEditType,
     modifier: Modifier = Modifier,
     maxLength: Int = 15,
 ) {
@@ -52,7 +53,7 @@ private fun TaskEditTitleSectionPreview() {
 
         TaskEditTitleSection(
             titleState = normalState,
-            status = MomensTaskType.TODO,
+            status = MomensStatusEditType.TODO,
         )
     }
 }
