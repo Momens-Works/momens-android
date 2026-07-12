@@ -60,6 +60,7 @@ class GlobalSnackbarController(
     }
 
     fun dismiss() {
+        clearCurrent()
         currentState = null
         scope.launch {
             snackbarHostState.currentSnackbarData?.dismiss()
