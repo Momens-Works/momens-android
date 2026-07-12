@@ -66,6 +66,7 @@ class AuthInterceptor @Inject constructor(
         private const val CONTENT_TYPE = "application/json"
         private val AUTHORIZATION_EXCLUDED_PATHS = setOf(
             "/api/auth/google/token",
+            "/api/auth/refresh",
         )
     }
 }

@@ -63,15 +63,17 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): Interceptor = HttpLoggingInterceptor { message ->
-        when {
-            message.isJsonObject() ->
-                Timber.tag(LOGGING_TAG).d(JSONObject(message).toString(4))
-
-            message.isJsonArray() ->
-                Timber.tag(LOGGING_TAG).d(JSONArray(message).toString(4))
-
-            else ->
-                Timber.tag(LOGGING_TAG).d("연결 정보 -> $message")
+        runCatching {
+            when {
+                message.isJsonObject() ->
+                    Timber.tag(LOGGING_TAG).d(JSONObject(message).toString(4))
+                message.isJsonArray() ->
+                    Timber.tag(LOGGING_TAG).d(JSONArray(message).toString(4))
+                else ->
+                    Timber.tag(LOGGING_TAG).d("연결 정보 -> $message")
+            }
+        }.onFailure {
+            Timber.tag(LOGGING_TAG).d(message)
         }
     }.apply {
         level = if (BuildConfig.DEBUG) {
@@ -86,7 +88,7 @@ object NetworkModule {
     fun provideDefaultOkHttpClient(
         loggingInterceptor: Interceptor,
         authInterceptor: AuthInterceptor,
-        tokenAuthenticator: TokenAuthenticator
+        tokenAuthenticator: TokenAuthenticator,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor(authInterceptor)
@@ -97,10 +99,30 @@ object NetworkModule {
     @Singleton
     fun provideDefaultRetrofit(
         client: OkHttpClient,
-        factory: Converter.Factory
+        factory: Converter.Factory,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(factory)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideTokenRefreshService(
+        loggingInterceptor: Interceptor,
+        authInterceptor: AuthInterceptor,
+        factory: Converter.Factory,
+    ): TokenRefreshService {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(factory)
+            .build()
+            .create(TokenRefreshService::class.java)
+    }
 }

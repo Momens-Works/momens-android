@@ -8,37 +8,73 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import retrofit2.HttpException
 import timber.log.Timber
 
 /**
  * 서버가 401을 반환했을 때 호출되는 OkHttp Authenticator입니다.
  *
- * 현재 구현은 저장된 토큰을 삭제하고 요청을 재시도하지 않습니다. 토큰 갱신 API가 연결되면 이 위치에서
- * refresh token으로 새 토큰을 발급받고, 원래 요청에 새 Authorization 헤더를 붙여 재시도하도록 확장합니다.
- *
- * 예시 - 추후 토큰 갱신 흐름
- * ```
- * val refreshToken = tokenManager.getRefreshToken()
- * val newTokens = authService.refreshToken(refreshToken)
- * tokenManager.saveTokens(newTokens.accessToken, newTokens.refreshToken)
- *
- * return response.request.newBuilder()
- *     .header("Authorization", "Bearer ${newTokens.accessToken}")
- *     .build()
- * ```
+ * refresh token으로 새 토큰을 발급받고, 원래 요청에 새 Authorization 헤더를 붙여 한 번 재시도합니다.
  */
 @Singleton
 class TokenAuthenticator @Inject constructor(
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
+    private val tokenRefreshService: TokenRefreshService,
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
         Timber.d("인증 정보 없음 (401). 토큰 갱신 필요")
 
-        runBlocking {
-            tokenManager.clearTokens()
+        if (response.retryCount() >= MAX_RETRY_COUNT) {
+            Timber.d("토큰 갱신 재시도 횟수 초과")
+            runBlocking { tokenManager.clearTokens() }
+            return null
         }
 
-        return null
+        return runBlocking {
+            val refreshToken = tokenManager.getRefreshToken() ?: return@runBlocking null.also {
+                Timber.d("저장된 refresh token 없음")
+                tokenManager.clearTokens()
+            }
+
+            runCatching {
+                val tokenResponse = tokenRefreshService.refreshToken(
+                    request = TokenRefreshRequest(refreshToken = refreshToken)
+                )
+
+                tokenManager.saveTokens(
+                    accessToken = tokenResponse.accessToken,
+                    refreshToken = tokenResponse.refreshToken,
+                )
+
+                response.request.newBuilder()
+                    .header(AUTHORIZATION_HEADER, "$BEARER_PREFIX ${tokenResponse.accessToken}")
+                    .build()
+            }.onFailure { throwable ->
+                when (throwable) {
+                    is HttpException -> Timber.d(throwable, "토큰 갱신 실패: ${throwable.code()}")
+                    else -> Timber.d(throwable, "토큰 갱신 실패")
+                }
+                tokenManager.clearTokens()
+            }.getOrNull()
+        }
+    }
+
+    private fun Response.retryCount(): Int {
+        var currentResponse: Response? = this
+        var count = 1
+
+        while (currentResponse?.priorResponse != null) {
+            count++
+            currentResponse = currentResponse.priorResponse
+        }
+
+        return count
+    }
+
+    companion object {
+        private const val MAX_RETRY_COUNT = 2
+        private const val AUTHORIZATION_HEADER = "Authorization"
+        private const val BEARER_PREFIX = "Bearer"
     }
 }
