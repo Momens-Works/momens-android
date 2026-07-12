@@ -10,7 +10,7 @@ package com.momens.android.core.network
  * }
  * ```
  */
-fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.endsWith("}")
+fun String?.isJsonObject(): Boolean = this?.trim()?.startsWith("{") == true && this.trim().endsWith("}")
 
 /**
  * OkHttp 로그 메시지가 JSON array인지 확인합니다.
@@ -22,4 +22,4 @@ fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.ends
  * }
  * ```
  */
-fun String?.isJsonArray(): Boolean = this?.startsWith("[") == true && this.endsWith("]")
+fun String?.isJsonArray(): Boolean = this?.trim()?.startsWith("[") == true && this.trim().endsWith("]")
