@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.list
+package com.momens.android.presentation.task.edit.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,9 +32,10 @@ import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensPeopleListItem(
+fun TaskEditPeopleListItem(
     text: String,
     onClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     profileImageUrl: String? = null,
@@ -72,7 +73,7 @@ fun MomensPeopleListItem(
         if (isSelected) {
             MomensButton(
                 text = "삭제",
-                onClick = onClick,
+                onClick = onDeleteClick,
                 type = MomensButtonType.WHITE,
             )
         }
@@ -116,25 +117,28 @@ private fun PeopleIcon(
 
 @Preview(widthDp = 320)
 @Composable
-private fun PeopleListItemPreview() {
+private fun TaskEditPeopleListItemPreview() {
     MomensTheme {
         Column(verticalArrangement = Arrangement.spacedBy(17.dp)) {
-            MomensPeopleListItem(
+            TaskEditPeopleListItem(
                 text = "강채원",
                 onClick = {},
+                onDeleteClick = {},
                 isSelected = true,
                 profileImageUrl = "https://lh3.googleusercontent.com/a/example",
             )
 
-            MomensPeopleListItem(
+            TaskEditPeopleListItem(
                 text = "강채원",
                 onClick = {},
+                onDeleteClick = {},
                 isSelected = false,
             )
 
-            MomensPeopleListItem(
+            TaskEditPeopleListItem(
                 text = "강채원",
                 onClick = {},
+                onDeleteClick = {},
             )
         }
     }

@@ -23,7 +23,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun MomensSectionTitle(
     title: String,
-    count: Int,
+    count: String,
     modifier: Modifier = Modifier,
     isEmphasized: Boolean = false,
     @DrawableRes iconRes: Int? = null,
@@ -74,18 +74,18 @@ private fun MomensSectionTitlePreview() {
         ) {
             MomensSectionTitle(
                 title = "제목",
-                count = 4,
+                count = 4.toString(),
             )
 
             MomensSectionTitle(
                 title = "제목",
-                count = 4,
+                count = 4.toString(),
                 isEmphasized = true,
             )
 
             MomensSectionTitle(
                 title = "제목",
-                count = 4,
+                count = 4.toString(),
                 isEmphasized = true,
                 iconRes = R.drawable.ic_canceled,
             )

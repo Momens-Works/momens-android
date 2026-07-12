@@ -137,7 +137,7 @@ private fun TaskListItemPreview() {
                 text = "text",
                 label = "Android",
                 level = ImportantLevel.LOW,
-                tone = ImportantTone.CLEAR,
+                tone = ImportantTone.WHITE,
                 count = 2,
                 onClick = {},
             )

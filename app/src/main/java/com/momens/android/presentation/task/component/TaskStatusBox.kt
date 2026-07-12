@@ -67,14 +67,14 @@ private fun TaskStatusBoxPreview() {
                 label = "Android",
                 count = 4,
                 level = ImportantLevel.LOW,
-                tone = ImportantTone.CLEAR,
+                tone = ImportantTone.WHITE,
             ),
             TaskItemData(
                 text = "text",
                 label = "Android",
                 count = 3,
                 level = ImportantLevel.HIGH,
-                tone = ImportantTone.CLEAR,
+                tone = ImportantTone.WHITE,
             ),
         )
 
@@ -102,7 +102,7 @@ private fun TaskStatusBoxPreview() {
                             label = "Android",
                             count = 2,
                             level = ImportantLevel.MEDIUM,
-                            tone = ImportantTone.CLEAR,
+                            tone = ImportantTone.WHITE,
                         ),
                     ),
                     onTaskClick = {},
