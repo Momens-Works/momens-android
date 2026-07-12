@@ -20,9 +20,9 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun MomensChipButton(
     label: String,
-    count: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    count: Int? = null,
     type: MomensChipButtonType = MomensChipButtonType.WHITE,
 ) {
     val backgroundColor = type.background()
@@ -47,13 +47,15 @@ fun MomensChipButton(
             Text(
                 text = label,
                 style = typographyStyle,
-                color = contentColor
+                color = contentColor,
             )
-            Text(
-                text = count.toString(),
-                style = typographyStyle,
-                color = contentColor
-            )
+            count?.takeIf { it > 0 }?.let {
+                Text(
+                    text = it.toString(),
+                    style = typographyStyle,
+                    color = contentColor,
+                )
+            }
         }
     }
 }
@@ -68,7 +70,7 @@ private fun MomensChipButtonPreview() {
         ) {
             MomensChipButton(
                 label = "All",
-                count = 2,
+                count = 0,
                 type = MomensChipButtonType.WHITE,
                 onClick = {},
             )
