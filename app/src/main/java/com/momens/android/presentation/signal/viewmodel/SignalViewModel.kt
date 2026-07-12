@@ -23,7 +23,7 @@ class SignalViewModel @Inject constructor(
     private val _sideEffect = MutableSharedFlow<SignalSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
-    fun deleteSignal(signalId: Long) {
+    fun deleteSignal(signalId: String) {
         removeSignal(signalId)
 
         viewModelScope.launch {
@@ -31,7 +31,7 @@ class SignalViewModel @Inject constructor(
         }
     }
 
-    fun registerTask(signalId: Long) {
+    fun registerTask(signalId: String) {
         removeSignal(signalId)
 
         viewModelScope.launch {
@@ -47,7 +47,7 @@ class SignalViewModel @Inject constructor(
         }
     }
 
-    private fun removeSignal(signalId: Long) {
+    private fun removeSignal(signalId: String) {
         _state.update { currentState ->
             currentState.copy(
                 signals = currentState.signals

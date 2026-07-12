@@ -87,8 +87,8 @@ private fun SignalScreen(
     state: SignalState,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
-    onDeleteSignal: (Long) -> Unit = {},
-    onRegisterTask: (Long) -> Unit = {},
+    onDeleteSignal: (String) -> Unit = {},
+    onRegisterTask: (String) -> Unit = {},
 ) {
     var selectedSignal by remember { mutableStateOf<SignalCardUiModel?>(null) }
 
@@ -103,8 +103,8 @@ private fun SignalScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         MomensPageTitle(
-            title = "오늘 확인해야 할 시그널",
-            subtitle = "프로젝트의 의사결정에 영향을 줄 수 있는 변화입니다.",
+            title = state.pageTitle,
+            subtitle = state.pageDescription,
             modifier = Modifier
                 .padding(horizontal = 20.dp),
         )

@@ -12,60 +12,62 @@ import kotlinx.collections.immutable.persistentMapOf
 
 @Immutable
 data class SignalState(
+    val pageTitle: String = "오늘 확인해야 할 시그널",
+    val pageDescription: String = "프로젝트의 의사결정에 영향을 줄 수 있는 변화입니다.",
     val signals: ImmutableList<SignalCardUiModel> = persistentListOf(),
-    val evidencesBySignalId: ImmutableMap<Long, ImmutableList<SignalEvidenceUiModel>> = persistentMapOf(),
+    val evidencesBySignalId: ImmutableMap<String, ImmutableList<SignalEvidenceUiModel>> = persistentMapOf(),
 ) {
     companion object {
         val Fake = SignalState(
             signals = persistentListOf(
                 SignalCardUiModel(
-                    id = 1L,
+                    id = "1",
                     type = SignalTagType.RISK,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
                 SignalCardUiModel(
-                    id = 2L,
+                    id = "2",
                     type = SignalTagType.CHANGE,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
                 SignalCardUiModel(
-                    id = 3L,
+                    id = "3",
                     type = SignalTagType.CHANGE,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
                 SignalCardUiModel(
-                    id = 4L,
+                    id = "4",
                     type = SignalTagType.RISK,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
                 SignalCardUiModel(
-                    id = 5L,
+                    id = "5",
                     type = SignalTagType.CHANGE,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
                 SignalCardUiModel(
-                    id = 6L,
+                    id = "6",
                     type = SignalTagType.CHANGE,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
             ),
             evidencesBySignalId = persistentMapOf(
                 // 근거 3개 이상 -> 아코디언 기본 접힘 상태 확인용 (화면명세서 8-2)
-                1L to persistentListOf(
+                "1" to persistentListOf(
                     SignalEvidenceUiModel(
-                        id = 11L,
+                        sourceRefId = "11",
                         source = SignalAccordionType.FIGMA,
                         time = "00분 전",
                         target = "권한 요청 화면",
@@ -73,7 +75,7 @@ data class SignalState(
                         impact = "회원가입 완료율이 떨어질 수 있음",
                     ),
                     SignalEvidenceUiModel(
-                        id = 12L,
+                        sourceRefId = "12",
                         source = SignalAccordionType.FILE,
                         time = "00분 전",
                         target = "권한 요청 화면 기획서",
@@ -81,26 +83,25 @@ data class SignalState(
                         impact = "요청 이해도에 영향을 줄 수 있음",
                     ),
                     SignalEvidenceUiModel(
-                        id = 13L,
+                        sourceRefId = "13",
                         source = SignalAccordionType.GITHUB,
                         time = "00분 전",
                         target = "권한 요청 PR",
                         change = "런타임 권한 분기 로직 추가됨",
                         impact = "테스트 커버리지 확인 필요",
                     ),
-//                    SignalEvidenceUiModel(
-//                        id = 14L,
-//                        source = SignalAccordionType.GITHUB,
-//                        time = "00분 전",
-//                        target = "권한 요청 PR",
-//                        change = "런타임 권한 분기 로직 추가됨",
-//                        impact = "테스트 커버리지 확인 필요",
-//                    ),
+                    SignalEvidenceUiModel(
+                        sourceRefId = "14",                        source = SignalAccordionType.GITHUB,
+                        time = "00분 전",
+                        target = "권한 요청 PR",
+                        change = "런타임 권한 분기 로직 추가됨",
+                        impact = "테스트 커버리지 확인 필요",
+                    ),
                 ),
                 // 근거 3개 미만 -> 아코디언 기본 펼침 상태 확인용 (화면명세서 8-1)
-                2L to persistentListOf(
+                "2" to persistentListOf(
                     SignalEvidenceUiModel(
-                        id = 21L,
+                        sourceRefId = "21",
                         source = SignalAccordionType.SLACK,
                         time = "12분 전",
                         target = "#release 채널",
@@ -108,7 +109,7 @@ data class SignalState(
                         impact = "QA 일정 조정 필요",
                     ),
                     SignalEvidenceUiModel(
-                        id = 22L,
+                        sourceRefId = "22",
                         source = SignalAccordionType.GITHUB,
                         time = "00분 전",
                         target = "권한 요청 PR",

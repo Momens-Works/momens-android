@@ -54,7 +54,7 @@ fun SignalDetailBottomSheet(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = signal.description,
+                text = signal.impact,
                 style = MomensTheme.typography.bodyM14,
                 color = MomensTheme.colors.gray500,
             )
@@ -69,7 +69,7 @@ fun SignalDetailBottomSheet(
             Spacer(modifier = Modifier.height(24.dp))
 
             MomensTextBox(
-                text = signal.insightText,
+                text = signal.minsuSuggestion,
                 iconResId = R.drawable.ic_minsu,
             )
 
@@ -89,15 +89,15 @@ private fun SignalDetailBottomSheetPreview() {
     MomensTheme {
         SignalDetailBottomSheet(
             signal = SignalCardUiModel(
-                id = 1L,
+                id = "1",
                 type = SignalTagType.RISK,
                 title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                insightText = "내용이 들어갈 공간입니다",
+                impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                minsuSuggestion = "내용이 들어갈 공간입니다",
             ),
             evidences = persistentListOf(
                 SignalEvidenceUiModel(
-                    id = 1L,
+                    sourceRefId = "1",
                     source = SignalAccordionType.FIGMA,
                     time = "00분 전",
                     target = "권한 요청 화면",
@@ -105,7 +105,7 @@ private fun SignalDetailBottomSheetPreview() {
                     impact = "회원가입 완료율이 떨어질 수 있음",
                 ),
                 SignalEvidenceUiModel(
-                    id = 2L,
+                    sourceRefId = "2",
                     source = SignalAccordionType.FILE,
                     time = "00분 전",
                     target = "권한 요청 화면 기획서",
@@ -126,15 +126,15 @@ private fun SignalDetailBottomSheetCollapsedPreview() {
     MomensTheme {
         SignalDetailBottomSheet(
             signal = SignalCardUiModel(
-                id = 1L,
+                id = "1",
                 type = SignalTagType.RISK,
                 title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                insightText = "내용이 들어갈 공간입니다",
+                impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                minsuSuggestion = "내용이 들어갈 공간입니다",
             ),
             evidences = persistentListOf(
                 SignalEvidenceUiModel(
-                    id = 1L,
+                    sourceRefId = "1",
                     source = SignalAccordionType.FIGMA,
                     time = "00분 전",
                     target = "권한 요청 화면",
@@ -142,7 +142,7 @@ private fun SignalDetailBottomSheetCollapsedPreview() {
                     impact = "회원가입 완료율이 떨어질 수 있음",
                 ),
                 SignalEvidenceUiModel(
-                    id = 2L,
+                    sourceRefId = "2",
                     source = SignalAccordionType.FILE,
                     time = "00분 전",
                     target = "권한 요청 화면 기획서",
@@ -150,7 +150,7 @@ private fun SignalDetailBottomSheetCollapsedPreview() {
                     impact = "요청 이해도에 영향을 줄 수 있음",
                 ),
                 SignalEvidenceUiModel(
-                    id = 3L,
+                    sourceRefId = "3",
                     source = SignalAccordionType.GITHUB,
                     time = "00분 전",
                     target = "권한 요청 PR",
