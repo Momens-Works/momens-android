@@ -17,8 +17,6 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.task.model.TaskItemData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.collections.forEachIndexed
-import kotlin.collections.lastIndex
 
 @Composable
 fun TaskStatusBox(
@@ -32,7 +30,7 @@ fun TaskStatusBox(
     ) {
         MomensSectionTitle(
             title = type.label,
-            count = tasks.size,
+            count = tasks.size.toString(),
             isEmphasized = true,
             iconRes = type.iconRes,
         )
@@ -65,14 +63,14 @@ private fun TaskStatusBoxPreview() {
             TaskItemData(
                 text = "text",
                 label = "Android",
-                count = 4,
+                count = "4",
                 level = ImportantLevel.LOW,
                 tone = ImportantTone.WHITE,
             ),
             TaskItemData(
                 text = "text",
                 label = "Android",
-                count = 3,
+                count = "3",
                 level = ImportantLevel.HIGH,
                 tone = ImportantTone.WHITE,
             ),
@@ -100,7 +98,7 @@ private fun TaskStatusBoxPreview() {
                         TaskItemData(
                             text = "text",
                             label = "Android",
-                            count = 2,
+                            count = "2",
                             level = ImportantLevel.MEDIUM,
                             tone = ImportantTone.WHITE,
                         ),

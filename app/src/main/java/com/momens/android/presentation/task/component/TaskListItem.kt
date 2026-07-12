@@ -31,7 +31,7 @@ fun TaskListItem(
     label: String,
     level: ImportantLevel,
     tone: ImportantTone,
-    count: Int,
+    count: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -138,7 +138,7 @@ private fun TaskListItemPreview() {
                 label = "Android",
                 level = ImportantLevel.LOW,
                 tone = ImportantTone.WHITE,
-                count = 2,
+                count = "2",
                 onClick = {},
             )
         }
