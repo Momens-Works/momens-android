@@ -1,4 +1,4 @@
-package com.momens.android.presentation.main
+package com.momens.android.presentation.main.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable

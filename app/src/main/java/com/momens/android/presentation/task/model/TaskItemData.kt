@@ -8,7 +8,7 @@ import com.momens.android.core.designsystem.component.type.ImportantTone
 data class TaskItemData(
     val text: String,
     val label: String,
-    val count: Int,
+    val count: String,
     val level: ImportantLevel,
     val tone: ImportantTone
 )

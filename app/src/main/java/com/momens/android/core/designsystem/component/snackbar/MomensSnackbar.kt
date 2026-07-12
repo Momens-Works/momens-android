@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.toast
+package com.momens.android.core.designsystem.component.snackbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,17 +18,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.button.MomensButton
+import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
 import com.momens.android.core.designsystem.component.type.MomensButtonType
-import com.momens.android.core.designsystem.component.type.MomensToastType
+import com.momens.android.core.designsystem.component.type.MomensSnackbarType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
-fun MomensToast(
-    title: String,
+fun MomensSnackbar(
+    content: MomensSnackbarModel,
     modifier: Modifier = Modifier,
-    type: MomensToastType = MomensToastType.DEFAULT,
-    description: String = "",
-    onActionClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -44,32 +42,32 @@ fun MomensToast(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            painter = painterResource(type.iconRes),
+            painter = painterResource(content.type.iconRes),
             contentDescription = null,
             tint = MomensTheme.colors.gray400,
         )
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        when (type) {
-            MomensToastType.DEFAULT -> {
+        when (content.type) {
+            MomensSnackbarType.DEFAULT -> {
                 Text(
-                    text = title,
+                    text = content.title,
                     style = MomensTheme.typography.bodyB14,
                     color = MomensTheme.colors.white,
                 )
             }
 
-            MomensToastType.BUTTON -> {
-                MomensToastTextColumn(
-                    title = title,
-                    description = description,
-                    modifier = Modifier.weight(1f)
+            MomensSnackbarType.BUTTON -> {
+                MomensSnackbarTextColumn(
+                    title = content.title,
+                    description = content.description,
+                    modifier = Modifier.weight(1f),
                 )
 
                 MomensButton(
                     text = "바로보기",
-                    onClick = onActionClick,
+                    onClick = content.onActionClick,
                     type = MomensButtonType.PRIMARY,
                 )
             }
@@ -78,7 +76,7 @@ fun MomensToast(
 }
 
 @Composable
-private fun MomensToastTextColumn(
+private fun MomensSnackbarTextColumn(
     title: String,
     description: String,
     modifier: Modifier = Modifier,
@@ -102,24 +100,25 @@ private fun MomensToastTextColumn(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensToastPreview() {
+private fun MomensSnackbarPreview() {
     MomensTheme {
         Column(
             modifier = Modifier
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp),
         ) {
-            MomensToast(
-                title = "text",
-                description = "text",
-                type = MomensToastType.BUTTON,
-                onActionClick = {},
+            MomensSnackbar(
+                content = MomensSnackbarModel(
+                    title = "text",
+                    description = "text",
+                    type = MomensSnackbarType.BUTTON,
+                ),
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            MomensToast(
-                title = "text",
+            MomensSnackbar(
+                content = MomensSnackbarModel(title = "text"),
             )
         }
     }

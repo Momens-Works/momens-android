@@ -3,7 +3,7 @@ package com.momens.android.core.designsystem.component.type
 import androidx.annotation.DrawableRes
 import com.momens.android.R
 
-enum class MomensToastType(
+enum class MomensSnackbarType(
     @param:DrawableRes val iconRes: Int
 ) {
     DEFAULT(R.drawable.ic_warning),
