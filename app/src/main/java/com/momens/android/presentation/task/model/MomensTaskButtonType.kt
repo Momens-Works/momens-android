@@ -9,10 +9,10 @@ enum class MomensTaskButtonType(
     DESIGN(
         text = "Design"
     ),
-    BACKEND(
-        text = "Backend"
-    ),
     FRONTEND(
         text = "Frontend"
+    ),
+    BACKEND(
+        text = "Backend"
     ),
 }
