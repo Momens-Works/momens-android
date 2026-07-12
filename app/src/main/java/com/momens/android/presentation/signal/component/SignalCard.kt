@@ -17,9 +17,9 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.tag.MomensSignalTag
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
+import com.momens.android.core.designsystem.component.type.SignalTagType
 import com.momens.android.core.designsystem.effect.momensUiShadow
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.core.designsystem.type.SignalTagType
 
 @Composable
 fun SignalCard(

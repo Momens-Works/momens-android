@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.tag.MomensSignalTag
+import com.momens.android.core.designsystem.component.type.SignalTagType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.core.designsystem.type.SignalTagType
 
 @Composable
 fun SignalDetailStatusRow(

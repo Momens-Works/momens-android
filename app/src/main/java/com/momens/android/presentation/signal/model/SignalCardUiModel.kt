@@ -1,7 +1,7 @@
 package com.momens.android.presentation.signal.model
 
 import androidx.compose.runtime.Immutable
-import com.momens.android.core.designsystem.type.SignalTagType
+import com.momens.android.core.designsystem.component.type.SignalTagType
 
 @Immutable
 data class SignalCardUiModel(
