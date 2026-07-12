@@ -9,9 +9,10 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun TaskToast(
-    modifier: Modifier = Modifier,
     onActionClick: () -> Unit,
-){
+    modifier: Modifier = Modifier,
+
+    ){
     MomensToast(
         modifier = modifier,
         title = "태스크가 등록되었습니다",

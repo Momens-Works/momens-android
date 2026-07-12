@@ -15,7 +15,7 @@ fun TaskTitle(
     modifier: Modifier = Modifier,
 ){
     Column(
-        modifier = modifier.padding(horizontal = 20.dp),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(

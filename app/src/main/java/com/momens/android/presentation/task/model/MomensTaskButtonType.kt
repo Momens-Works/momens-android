@@ -1,4 +1,4 @@
-package com.momens.android.core.designsystem.component.type
+package com.momens.android.presentation.task.model
 
 enum class MomensTaskButtonType(
     val text: String

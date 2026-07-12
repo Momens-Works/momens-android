@@ -33,20 +33,14 @@ import com.momens.android.core.designsystem.component.input.MomensCountInput
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensButtonType
-import com.momens.android.core.designsystem.component.type.MomensTaskButtonType
+import com.momens.android.presentation.task.model.MomensTaskButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.task.model.TaskCreateRequest
 import kotlinx.coroutines.launch
-
-data class TaskCreateRequest(
-    val title: String,
-    val role: MomensTaskButtonType,
-    val priority: ImportantLevel,
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskBottomSheet(
-
     titleState: TextFieldState,
     selectedRole: MomensTaskButtonType?,
     onRoleSelect: (MomensTaskButtonType) -> Unit,
@@ -59,135 +53,130 @@ fun TaskBottomSheet(
     val roles = MomensTaskButtonType.entries
     val priorities = ImportantLevel.entries
 
-    val isButtonEnabled by remember(selectedRole, selectedPriority) {
-        derivedStateOf {
-            titleState.text.isNotBlank() && selectedRole != null && selectedPriority != null
-        }
-    }
+    val isButtonEnabled =
+        titleState.text.isNotBlank() && selectedRole != null && selectedPriority != null
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
 
-
-
-    Box(
+    MomensBottomSheet(
+        onDismiss = onDismiss,
+        sheetState = sheetState,
         modifier = modifier,
     ) {
-        MomensBottomSheet(
-            onDismiss = onDismiss,
-            sheetState = sheetState,
+        Column(
+            modifier = Modifier
+                .padding(
+                    start = 20.dp,
+                    end = 20.dp,
+                    top = 16.dp,
+                    bottom = 32.dp,
+                ),
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 20.dp,
-                        vertical = 32.dp,
-                    ),
+            Text(
+                text = "새 태스크 생성",
+                color = MomensTheme.colors.black,
+                style = MomensTheme.typography.bodyB16,
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "제목",
+                color = MomensTheme.colors.gray600,
+                style = MomensTheme.typography.bodyB14,
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            MomensCountInput(
+                state = titleState,
+                placeholder = "Title",
+                maxLength = 15,
+                lineLimits = TextFieldLineLimits.SingleLine,
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "역할",
+                style = MomensTheme.typography.bodyB14,
+                color = MomensTheme.colors.gray600,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(
-                    text = "새 태스크 생성",
-                    color = MomensTheme.colors.black,
-                    style = MomensTheme.typography.bodyB16,
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Text(
-                    text = "제목",
-                    color = MomensTheme.colors.gray600,
-                    style = MomensTheme.typography.bodyB14,
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                MomensCountInput(
-                    state = titleState,
-                    placeholder = "",
-                    maxLength = 15,
-                    lineLimits = TextFieldLineLimits.SingleLine,
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "역할",
-                    style = MomensTheme.typography.bodyB14,
-                    color = MomensTheme.colors.gray600,
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    modifier = Modifier,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    roles.forEach { role ->
-                        val isSelected = selectedRole == role
-                        MomensButton(
-                            text = role.text,
-                            onClick = { onRoleSelect(role) },
-                            type = if (isSelected) MomensButtonType.PRIMARY
-                            else MomensButtonType.GRAY,
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "우선순위",
-                    style = MomensTheme.typography.bodyB14,
-                    color = MomensTheme.colors.gray600,
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    modifier = Modifier,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    priorities.forEach { level ->
-                        val isSelected = selectedPriority == level
-                        val tone = if (isSelected) ImportantTone.BLUE else ImportantTone.GRAY
-
-                        MomensImportantStatus(
-                            level = level,
-                            tone = tone,
-                            modifier = Modifier.noRippleClickable { onPrioritySelect(level) },
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                MomensCtaButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            sheetState.hide()
-                        }.invokeOnCompletion {
-                            onSubmit(
-                                TaskCreateRequest(
-                                    title = titleState.text.toString(),
-                                    role = selectedRole!!,
-                                    priority = selectedPriority!!,
-                                ),
-                            )
-                            onDismiss()
-                        }
-                    },
-                    enabled = isButtonEnabled,
-                ) {
-                    Text(
-                        text = "태스크 등록",
-                        color = MomensTheme.colors.white,
-                        style = MomensTheme.typography.bodyB16,
+                roles.forEach { role ->
+                    val isSelected = selectedRole == role
+                    MomensButton(
+                        text = role.text,
+                        onClick = { onRoleSelect(role) },
+                        type = if (isSelected) MomensButtonType.PRIMARY
+                        else MomensButtonType.GRAY,
                     )
                 }
             }
-        }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "우선순위",
+                style = MomensTheme.typography.bodyB14,
+                color = MomensTheme.colors.gray600,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                priorities.forEach { level ->
+                    val isSelected = selectedPriority == level
+                    val tone = if (isSelected) ImportantTone.BLUE else ImportantTone.GRAY
+
+                    MomensImportantStatus(
+                        level = level,
+                        tone = tone,
+                        modifier = Modifier.noRippleClickable { onPrioritySelect(level) },
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            MomensCtaButton(
+                onClick = {
+                    coroutineScope.launch {
+                        sheetState.hide()
+                    }.invokeOnCompletion {
+                        onSubmit(
+                            TaskCreateRequest(
+                                title = titleState.text.toString(),
+                                role = selectedRole!!,
+                                priority = selectedPriority!!,
+                            ),
+                        )
+                        onDismiss()
+                    }
+                },
+                enabled = isButtonEnabled,
+            ) {
+                Text(
+                    text = "태스크 등록",
+                    color = MomensTheme.colors.white,
+                    style = MomensTheme.typography.bodyB16,
+                )
+            }
+        }
     }
+
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
@@ -195,7 +184,7 @@ fun TaskBottomSheet(
 private fun TaskBottomSheetPreview() {
     MomensTheme {
         Box(modifier = Modifier.fillMaxSize()) {
-            val dummyTitleState = rememberTextFieldState(initialText = "Write")
+            val dummyTitleState = rememberTextFieldState()
 
             var previewSelectedRole by remember {
                 mutableStateOf<MomensTaskButtonType?>(null)
