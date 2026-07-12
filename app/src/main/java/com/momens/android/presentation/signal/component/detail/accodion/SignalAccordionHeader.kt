@@ -1,8 +1,6 @@
-package com.momens.android.core.designsystem.component.accordion
+package com.momens.android.presentation.signal.component.detail.accodion
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,9 +16,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -30,51 +25,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
-import com.momens.android.core.designsystem.component.type.MomensAccordionItem
-import com.momens.android.core.designsystem.component.type.MomensAccordionType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun MomensAccordion(
-    type: MomensAccordionType,
-    time: String,
-    items: ImmutableList<MomensAccordionItem>,
-    modifier: Modifier = Modifier,
-    initiallyExpanded: Boolean = false,
-) {
-    var expanded by rememberSaveable {
-        mutableStateOf(initiallyExpanded)
-    }
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .animateContentSize(),
-    ) {
-
-        MomensAccordionHeader(
-            title = type.text,
-            time = time,
-            expanded = expanded,
-            iconResId = type.icon,
-            onClick = {
-                expanded = !expanded
-            },
-        )
-
-        AnimatedVisibility(expanded) {
-
-            MomensAccordionContent(
-                items = items,
-            )
-        }
-    }
-}
-
-@Composable
-private fun MomensAccordionHeader(
+fun SignalAccordionHeader(
     title: String,
     time: String,
     expanded: Boolean,
@@ -82,7 +36,6 @@ private fun MomensAccordionHeader(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 90f else -90f,
     )
@@ -106,7 +59,6 @@ private fun MomensAccordionHeader(
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-
         Icon(
             painter = painterResource(iconResId),
             contentDescription = null,
@@ -144,31 +96,23 @@ private fun MomensAccordionHeader(
 
 @Preview(showBackground = true)
 @Composable
-private fun MomensAccordionPreview() {
+private fun SignalAccordionHeaderPreview() {
     MomensTheme {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
-            MomensAccordion(
-                type = MomensAccordionType.FIGMA,
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            SignalAccordionHeader(
+                title = "피그마",
                 time = "30분 전",
-                items = persistentListOf(
-                    MomensAccordionItem("text", "text"),
-                    MomensAccordionItem("text", "text"),
-                    MomensAccordionItem("text", "text"),
-                ),
+                expanded = false,
+                iconResId = R.drawable.ic_figma,
+                onClick = {},
             )
 
-            MomensAccordion(
-                time = "12분 전",
-                type = MomensAccordionType.SLACK,
-                initiallyExpanded = true,
-                items = persistentListOf(
-                    MomensAccordionItem("text", "text"),
-                    MomensAccordionItem("text", "text"),
-                    MomensAccordionItem("text", "text"),
-                ),
+            SignalAccordionHeader(
+                title = "피그마",
+                time = "30분 전",
+                expanded = true,
+                iconResId = R.drawable.ic_figma,
+                onClick = {},
             )
         }
     }
