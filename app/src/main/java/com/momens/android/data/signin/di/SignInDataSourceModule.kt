@@ -3,8 +3,12 @@ package com.momens.android.data.signin.di
 import android.content.Context
 import androidx.credentials.CredentialManager
 import com.momens.android.R
+import com.momens.android.data.signin.remote.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.remote.datasource.SignInDataSource
+import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
 import com.momens.android.data.signin.remote.datasourceimpl.CredentialManagerSignInDataSourceImpl
+import com.momens.android.data.signin.remote.datasourceimpl.DeviceLocalDataSourceImpl
+import com.momens.android.data.signin.remote.datasourceimpl.SignInRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,9 +24,21 @@ abstract class SignInDataSourceModule {
 
     @Binds
     @Singleton
-    abstract fun bindGoogleAuthDataSource(
-        credentialManagerGoogleAuthDataSourceImpl: CredentialManagerSignInDataSourceImpl,
+    abstract fun bindSignInDataSource(
+        credentialManagerSignInDataSourceImpl: CredentialManagerSignInDataSourceImpl,
     ): SignInDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindSignInRemoteDataSource(
+        signInRemoteDataSourceImpl: SignInRemoteDataSourceImpl,
+    ): SignInRemoteDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindDeviceLocalDataSource(
+        deviceLocalDataSourceImpl: DeviceLocalDataSourceImpl,
+    ): DeviceLocalDataSource
 
     companion object {
 
@@ -30,17 +46,13 @@ abstract class SignInDataSourceModule {
         @Singleton
         fun provideCredentialManager(
             @ApplicationContext context: Context,
-        ): CredentialManager {
-            return CredentialManager.create(context)
-        }
+        ): CredentialManager = CredentialManager.create(context)
 
         @Provides
         @Singleton
         @Named("google_server_client_id")
         fun provideGoogleServerClientId(
             @ApplicationContext context: Context,
-        ): String {
-            return context.getString(R.string.google_server_client_id)
-        }
+        ): String = context.getString(R.string.google_server_client_id)
     }
 }
