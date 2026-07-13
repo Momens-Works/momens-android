@@ -18,8 +18,9 @@ import com.momens.android.core.designsystem.component.logo.MomensLogo
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.splash.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
-private const val SPLASH_DELAY_MILLIS = 3_000L
+private const val SPLASH_DELAY_MILLIS = 1_500L
 
 @Composable
 fun SplashRoute(
@@ -29,7 +30,7 @@ fun SplashRoute(
     viewModel: SplashViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
-        delay(SPLASH_DELAY_MILLIS)
+        delay(SPLASH_DELAY_MILLIS.milliseconds)
         navigateToSignIn()
     }
 
