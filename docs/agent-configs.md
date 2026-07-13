@@ -33,7 +33,7 @@ Codex와 Claude 폴더에는 같은 이름의 에이전트 설정이 들어 있�
 | `code_reviewer` | `code-reviewer.toml` | PR 리뷰처럼 correctness, architecture, test risk를 넓게 점검 |
 | `pr_writer` | `pr-writer.toml` | PR 템플릿에 맞춰 현재 변경사항의 PR 본문을 작성 |
 
-세 에이전트는 모두 읽기 전용입니다.
+네 에이전트는 모두 읽기 전용입니다.
 
 파일을 직접 수정하지 않고, 코드 구조를 설명하거나 리뷰 의견을 제공합니다.
 
