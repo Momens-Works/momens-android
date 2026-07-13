@@ -62,42 +62,47 @@ private fun SignInScreen(
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Spacer(modifier = Modifier.weight(273f))
-
-        MomensCtaButton(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            onClick = onGoogleLoginClick,
-            type = MomensCtaType.LOGIN,
-            enabled = isGoogleLoginEnabled,
+        Column(
+            modifier = Modifier.weight(382f),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            Spacer(modifier = Modifier.weight(273f))
+
+            MomensCtaButton(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                onClick = onGoogleLoginClick,
+                type = MomensCtaType.LOGIN,
+                enabled = isGoogleLoginEnabled,
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_google),
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_google),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                    )
 
-                Text(
-                    text = "Continue with Google",
-                    color = MomensTheme.colors.gray700,
-                    style = MomensTheme.typography.bodyB16,
-                )
+                    Text(
+                        text = "Continue with Google",
+                        color = MomensTheme.colors.gray700,
+                        style = MomensTheme.typography.bodyB16,
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.weight(15f))
+
+            Text(
+                text = "계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다.",
+                modifier = Modifier.padding(horizontal = 20.dp),
+                color = MomensTheme.colors.gray200,
+                style = MomensTheme.typography.captionM10,
+            )
+
+            Spacer(modifier = Modifier.weight(22f))
         }
-
-        Spacer(modifier = Modifier.weight(15f))
-
-        Text(
-            text = "계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다.",
-            modifier = Modifier.padding(horizontal = 20.dp),
-            color = MomensTheme.colors.gray200,
-            style = MomensTheme.typography.captionM10,
-        )
-
-        Spacer(modifier = Modifier.weight(22f))
     }
 }
 
