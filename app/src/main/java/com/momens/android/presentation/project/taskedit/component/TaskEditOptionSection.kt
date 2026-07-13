@@ -12,6 +12,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,7 +107,7 @@ fun TaskEditOptionSection(
         MomensButton(
             text = assigneeName,
             onClick = onAssigneeClick,
-            type = MomensButtonType.WHITE,
+            type = MomensButtonType.WHITE
         )
     }
 }
@@ -112,15 +116,18 @@ fun TaskEditOptionSection(
 @Composable
 private fun TaskEditOptionSectionPreview() {
     MomensTheme {
+        var selectedRole by remember { mutableStateOf(TaskRole.BACKEND) }
+        var selectedPriority by remember { mutableStateOf(ImportantLevel.MEDIUM) }
+
         Box(
             modifier = Modifier.padding(40.dp)
         ){
             TaskEditOptionSection(
                 modifier = Modifier,
-                selectedRole = TaskRole.BACKEND,
-                onRoleSelect = {},
-                selectedPriority = ImportantLevel.MEDIUM,
-                onPrioritySelect = {},
+                selectedRole = selectedRole,
+                onRoleSelect = { selectedRole = it },
+                selectedPriority = selectedPriority,
+                onPrioritySelect = { selectedPriority = it },
                 assigneeName = "김민지",
                 onAssigneeClick = {},
             )

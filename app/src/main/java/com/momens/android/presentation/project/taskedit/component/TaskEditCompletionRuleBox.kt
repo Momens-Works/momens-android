@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,19 +28,17 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.taskedit.model.CompletionIdModel
+import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 
 @Composable
 fun TaskEditCompletionRuleBox(
-    rule: CompletionIdModel,
-    isChecked: Boolean,
-    state: TextFieldState,
-    onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
+    rule: ChecklistItemState,
+    onCheckedChange: (String, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val iconRes = if (isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
-    val iconTint = if (isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
+    val iconRes = if (rule.isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
+    val iconTint = if (rule.isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
 
     Row(
         modifier = modifier
@@ -68,9 +65,9 @@ fun TaskEditCompletionRuleBox(
             modifier = Modifier
                 .weight(1f)
                 .noRippleToggleable(
-                    value = isChecked,
+                    value = rule.isChecked,
                     role = Role.Checkbox,
-                    onValueChange = { checked -> onCheckedChange(rule, checked) },
+                    onValueChange = { checked -> onCheckedChange(rule.itemId, checked) },
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -83,7 +80,7 @@ fun TaskEditCompletionRuleBox(
             )
 
             BasicTextField(
-                state = state,
+                state = rule.title,
                 modifier = Modifier
                     .fillMaxWidth(),
                 textStyle = MomensTheme.typography.bodyM12,
@@ -95,7 +92,7 @@ fun TaskEditCompletionRuleBox(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Box(modifier = Modifier.weight(1f)) {
-                            if (state.text.isEmpty()) {
+                            if (rule.title.text.isEmpty()) {
                                 Text(
                                     text = "완료기준을 입력해주세요.",
                                     style = MomensTheme.typography.bodyM12,
@@ -134,17 +131,13 @@ private fun TaskEditCompletionRuleBoxPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             TaskEditCompletionRuleBox(
-                state = writeState,
-                rule = CompletionIdModel(taskId = "1", itemId = "1"),
-                isChecked = true,
+                rule = ChecklistItemState(itemId = "1", title = writeState, isChecked = true),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
             )
 
             TaskEditCompletionRuleBox(
-                state = exampleState,
-                rule = CompletionIdModel(taskId = "1", itemId = "2"),
-                isChecked = false,
+                rule = ChecklistItemState(itemId = "2", title = exampleState, isChecked = false),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
             )

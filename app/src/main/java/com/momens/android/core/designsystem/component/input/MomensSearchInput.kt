@@ -33,7 +33,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun MomensSearchInput(
     state: TextFieldState,
-    onSearch: () -> Unit,
+    onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "",
     lineLimits: TextFieldLineLimits = TextFieldLineLimits.SingleLine,
@@ -58,7 +58,7 @@ fun MomensSearchInput(
         textStyle = textStyle.copy(color = contentColor),
         cursorBrush = SolidColor(value = contentColor),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        onKeyboardAction = KeyboardActionHandler { onSearch() },
+        onKeyboardAction = KeyboardActionHandler { onSearch(state.text.toString()) },
         decorator = { innerTextField ->
             Row(
                 modifier = Modifier
@@ -84,7 +84,7 @@ fun MomensSearchInput(
                     tint = MomensTheme.colors.gray600,
                     modifier = Modifier
                         .size(20.dp)
-                        .noRippleClickable(onClick = onSearch),
+                        .noRippleClickable(onClick = {onSearch(state.text.toString())}),
                 )
             }
         },
