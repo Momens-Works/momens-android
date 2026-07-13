@@ -12,6 +12,8 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun TaskTitle(
+    title: String,
+    description: String,
     modifier: Modifier = Modifier,
 ){
     Column(
@@ -19,13 +21,13 @@ fun TaskTitle(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "프로젝트 태스크",
+            text = title,
             color = MomensTheme.colors.black,
             style = MomensTheme.typography.titleB20
         )
 
         Text(
-            text = "업무를 한눈에 확인하고 상세 내용을 확인하세요.",
+            text = description,
             color = MomensTheme.colors.gray400,
             style = MomensTheme.typography.bodyM14
         )
@@ -36,6 +38,9 @@ fun TaskTitle(
 @Composable
 private fun TaskTitlePreview(){
     MomensTheme {
-        TaskTitle()
+        TaskTitle(
+            title = "프로젝트 태스크",
+            description = "업무를 한눈에 확인하고 상세 내용을 확인하세요.",
+        )
     }
 }

@@ -9,19 +9,22 @@ import androidx.compose.ui.Modifier
 @Composable
 fun TaskDetailRoute(
     paddingValues: PaddingValues,
+    taskId: String,
 ) {
     TaskDetailScreen(
-        paddingValues = paddingValues
+        paddingValues = paddingValues,
+        taskId = taskId,
     )
 }
 
 @Composable
 private fun TaskDetailScreen(
     paddingValues: PaddingValues,
+    taskId: String,
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = "Task Detail",
+        text = "Task Detail: $taskId",
         modifier = modifier.padding(paddingValues),
     )
 }
