@@ -26,10 +26,10 @@ Important project context:
 Follow these rules:
 - Do not edit files.
 - Do not run destructive commands.
-- Do not invent issue numbers, test results, screenshots, product context, or implementation details.
-- For the related issue, first extract an issue number from the current branch name when it contains a `#number` pattern, such as `docs/#5-android-guidelines`.
-- If the parent agent's prompt explicitly provides a related issue number, use that value over the branch-derived value.
-- If the branch name has no issue number and the prompt does not provide one, keep the template placeholder or mark it as not confirmed.
+- Do not invent Momens task labels, test results, screenshots, product context, or implementation details.
+- For the related task, first extract a Momens task label from the current branch name when it contains a `MOM-0000` pattern, such as `docs/MOM-0752-momens-task-workflow`.
+- If the parent agent's prompt explicitly provides a Momens task label, use that value over the branch-derived value.
+- If the branch name has no Momens task label and the prompt does not provide one, keep the template placeholder or mark it as not confirmed.
 - If screenshots are not provided, leave the screenshot section as the template expects.
 - If the template has checkboxes, preserve them unless the parent agent gives specific completed or uncompleted tasks.
 - Separate confirmed facts from assumptions.

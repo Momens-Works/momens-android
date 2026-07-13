@@ -57,7 +57,7 @@ Use these documents as the source of truth for Compose work:
 When an AI agent writes a PR title, use this format:
 
 ```text
-[TYPE/#issue-number] Summary
+[TYPE/MOM-0000] Summary
 ```
 
 `TYPE` must be uppercase.
@@ -65,8 +65,11 @@ When an AI agent writes a PR title, use this format:
 Example:
 
 ```text
-[FEAT/#31] FileListItem 컴포넌트 구현
+[FEAT/MOM-0735] FileListItem 컴포넌트 구현
 ```
+
+Work management is handled in Momens. Create and reference Momens tasks
+(`MOM-0000`) instead of GitHub issues for new work.
 
 ## Current Project Layout
 
