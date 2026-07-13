@@ -10,8 +10,9 @@ import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.signal.navigation.signalNavGraph
 import com.momens.android.presentation.signin.navigation.signInNavGraph
 import com.momens.android.presentation.splash.navigation.splashNavGraph
-import com.momens.android.presentation.task.detail.navigation.taskDetailNavGraph
-import com.momens.android.presentation.task.navigation.taskNavGraph
+import com.momens.android.presentation.project.taskdetail.navigation.taskDetailNavGraph
+import com.momens.android.presentation.project.taskedit.navigation.taskEditNavGraph
+import com.momens.android.presentation.project.task.navigation.taskNavGraph
 
 @Composable
 fun MomensNavHost(
@@ -32,6 +33,7 @@ fun MomensNavHost(
         briefNavGraph(paddingValues = paddingValues)
         taskNavGraph(paddingValues = paddingValues)
         taskDetailNavGraph(paddingValues = paddingValues)
+        taskEditNavGraph(paddingValues = paddingValues)
         signInNavGraph(
             paddingValues = paddingValues,
             navigateToSignal = appState::navigateToSignal,
