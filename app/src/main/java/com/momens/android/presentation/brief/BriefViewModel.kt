@@ -8,9 +8,7 @@ import com.momens.android.data.brief.remote.dto.response.BriefProjectResponse
 import com.momens.android.data.brief.remote.dto.response.BriefResponse
 import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryFilterResponse
 import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryItemResponse
-import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryPageResponse
 import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryResponse
-import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.presentation.brief.model.BriefPriorityUiModel
 import com.momens.android.presentation.brief.model.BriefProjectUiModel
 import com.momens.android.presentation.brief.model.BriefSignalItemUiModel

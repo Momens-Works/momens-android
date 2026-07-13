@@ -1,6 +1,5 @@
 package com.momens.android.data.di
 
-import com.momens.android.data.brief.remote.service.BriefService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,9 +24,5 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
-    @Provides
-    @Singleton
-    fun provideBriefService(
-        retrofit: Retrofit,
-    ): BriefService = retrofit.create(BriefService::class.java)
+
 }

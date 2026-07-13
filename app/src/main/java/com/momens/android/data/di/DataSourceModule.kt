@@ -1,7 +1,5 @@
 package com.momens.android.data.di
 
-import com.momens.android.data.brief.remote.datasource.BriefRemoteDataSource
-import com.momens.android.data.brief.remote.datasourceimpl.BriefRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,9 +24,5 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
-    @Binds
-    @Singleton
-    abstract fun bindBriefRemoteDataSource(
-        briefRemoteDataSourceImpl: BriefRemoteDataSourceImpl,
-    ): BriefRemoteDataSource
+
 }
