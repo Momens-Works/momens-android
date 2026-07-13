@@ -1,0 +1,50 @@
+package com.momens.android.presentation.project.taskdetail.component
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.momens.android.R
+import com.momens.android.core.designsystem.component.textbox.MomensTextBox
+import com.momens.android.core.designsystem.theme.MomensTheme
+
+@Composable
+fun TaskDetailNextActionSection(
+    recommendationText: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Text(
+            text = "다음행동",
+            style = MomensTheme.typography.bodyB14,
+            color = MomensTheme.colors.gray900,
+        )
+
+        MomensTextBox(
+            text = recommendationText,
+            iconResId = R.drawable.ic_minsu,
+            onArrowClick = onClick,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TaskDetailNextActionSectionPreview() {
+    MomensTheme {
+        TaskDetailNextActionSection(
+            modifier = Modifier.padding(16.dp),
+            recommendationText = "민수가 추천해주는 다음행동이에요",
+            onClick = {},
+        )
+    }
+}
