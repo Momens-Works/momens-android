@@ -1,4 +1,4 @@
-package com.momens.android.presentation.brief
+package com.momens.android.presentation.brief.state
 
 import androidx.compose.runtime.Immutable
 import com.momens.android.presentation.brief.model.BriefPriorityUiModel
