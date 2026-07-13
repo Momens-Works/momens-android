@@ -213,3 +213,4 @@ PR 본문을 작성할 때 관련 작업은 브랜치명의 `MOM-0000` 패턴을
 - 파일 수정이 필요하면 구현 작업을 별도로 요청해야 합니다.
 - 리뷰 결과는 권장사항이므로, 실제 반영 여부는 변경 범위와 요구사항에 맞춰 판단합니다.
 - Android/Compose 작업의 최신 기준은 `AGENTS.md`와 `.agents/.skills/momens-android/`를 우선 확인합니다.
+- 작업 관리, 브랜치, 커밋, PR 흐름의 최신 기준은 `AGENTS.md`와 `.agents/.skills/momens-workflow/`를 우선 확인합니다.

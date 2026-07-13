@@ -4,7 +4,9 @@ This project is an Android application built with Jetpack Compose.
 
 When an AI agent writes or modifies Android or Compose-related code, it must follow the Momens conventions documented in this repository.
 
-Codex should use the `momens-android` skill. Other agents, including Claude, should read the same skill and reference files directly.
+Codex should use the `momens-android` skill for Android/Compose work and the
+`momens-workflow` skill for task, branch, commit, and PR workflow. Other agents,
+including Claude, should read the same skill and reference files directly.
 
 ## Project Context
 
@@ -31,6 +33,12 @@ For Android and Compose work, use this guide:
 
 ```text
 .agents/.skills/momens-android/SKILL.md
+```
+
+For Momens task, branch, commit, PR, and GitHub migration workflow, use this guide:
+
+```text
+.agents/.skills/momens-workflow/SKILL.md
 ```
 
 Use these documents as the source of truth for Compose work:
@@ -78,11 +86,13 @@ Momens/
 ├── AGENTS.md
 ├── .agents/
 │   └── .skills/
-│       └── momens-android/
-│           ├── SKILL.md
-│           └── references/
-│               ├── compose-basic-flow.md
-│               └── momens-project-flow.md
+│       ├── momens-android/
+│       │   ├── SKILL.md
+│       │   └── references/
+│       │       ├── compose-basic-flow.md
+│       │       └── momens-project-flow.md
+│       └── momens-workflow/
+│           └── SKILL.md
 ├── .codex/
 │   ├── config.toml
 │   └── agents/
