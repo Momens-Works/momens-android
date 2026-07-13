@@ -31,7 +31,10 @@ fun MomensNavHost(
     ) {
         signalNavGraph(paddingValues = paddingValues)
         briefNavGraph(paddingValues = paddingValues)
-        taskNavGraph(paddingValues = paddingValues)
+        taskNavGraph(
+            paddingValues = paddingValues,
+            navigateToTaskDetail = appState::navigateToTaskDetail,
+        )
         taskDetailNavGraph(paddingValues = paddingValues)
         taskEditNavGraph(paddingValues = paddingValues)
         signInNavGraph(
