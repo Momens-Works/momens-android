@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.maxLength
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +52,7 @@ fun MomensTextField(
                     color = borderColor,
                     shape = shape,
                 ),
+            inputTransformation = maxLength?.let { InputTransformation.maxLength(it) },
             lineLimits = lineLimits,
             textStyle = textStyle.copy(color = MomensTheme.colors.gray800),
             cursorBrush = SolidColor(MomensTheme.colors.gray800),
