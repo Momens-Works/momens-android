@@ -25,7 +25,9 @@ import com.momens.android.presentation.brief.component.BriefCurrentPriority
 import com.momens.android.presentation.brief.component.BriefSignalFilterSummary
 import com.momens.android.presentation.brief.component.BriefSignalSummary
 import com.momens.android.presentation.brief.component.BriefSummaryCard
+import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.SampleBriefUiState
+import com.momens.android.presentation.brief.state.BriefUiState
 
 private const val DEFAULT_PROJECT_ID = "30d9e9fe-f43b-4097-a88e-dc19f0a5b025"
 
@@ -68,7 +70,7 @@ private fun BriefScreen(
     paddingValues: PaddingValues,
     uiState: BriefUiState,
     onProfileClick: () -> Unit,
-    onFilterClick: (String) -> Unit,
+    onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
     onSummaryMoreClick: () -> Unit,
     onSummaryFoldClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -118,7 +120,7 @@ private fun BriefScreen(
             }
 
             BriefSignalFilterSummary(
-                selectedFilterKey = uiState.signalSummary.selectedFilterKey,
+                selectedFilterType = uiState.signalSummary.selectedFilterType,
                 filters = uiState.signalSummary.filters,
                 summaries = uiState.signalSummary.items,
                 hasMoreSummaries = uiState.signalSummary.hasMore,

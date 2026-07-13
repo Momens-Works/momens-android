@@ -39,7 +39,7 @@ import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.brief.model.BriefSignalItemUiModel
-import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterKey
+import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -161,7 +161,7 @@ private fun BriefDropdownRow(
             modifier = Modifier
                 .size(6.dp)
                 .background(
-                    color = item.typeKey.signalColor(),
+                    color = item.type.signalColor(),
                     shape = CircleShape,
                 ),
         )
@@ -180,12 +180,12 @@ private fun BriefDropdownRow(
 }
 
 @Composable
-private fun String.signalColor(): Color = when (this) {
-    BriefSignalSummaryFilterKey.CHANGE -> MomensTheme.colors.pointYellow
-    BriefSignalSummaryFilterKey.DECISION -> MomensTheme.colors.pointPurple
-    BriefSignalSummaryFilterKey.QUESTION -> MomensTheme.colors.pointMint
-    BriefSignalSummaryFilterKey.RISK -> MomensTheme.colors.pointRed
-    else -> MomensTheme.colors.gray400
+private fun BriefSignalSummaryFilterType.signalColor(): Color = when (this) {
+    BriefSignalSummaryFilterType.CHANGE -> MomensTheme.colors.pointYellow
+    BriefSignalSummaryFilterType.DECISION -> MomensTheme.colors.pointPurple
+    BriefSignalSummaryFilterType.QUESTION -> MomensTheme.colors.pointMint
+    BriefSignalSummaryFilterType.RISK -> MomensTheme.colors.pointRed
+    BriefSignalSummaryFilterType.ALL -> MomensTheme.colors.gray400
 }
 
 @Preview(showBackground = true)
@@ -207,12 +207,12 @@ private fun BriefDropdownPreview() {
                 items = persistentListOf(
                     BriefSignalItemUiModel(
                         id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
-                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        type = BriefSignalSummaryFilterType.DECISION,
                         title = "소셜 로그인은 MVP 범위에서 제외",
                     ),
                     BriefSignalItemUiModel(
                         id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
-                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        type = BriefSignalSummaryFilterType.DECISION,
                         title = "회원가입 MVP 범위 1차 확정",
                     ),
                 ),
@@ -230,27 +230,27 @@ private fun BriefDropdownPreview() {
                 items = persistentListOf(
                     BriefSignalItemUiModel(
                         id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
-                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        type = BriefSignalSummaryFilterType.DECISION,
                         title = "소셜 로그인은 MVP 범위에서 제외",
                     ),
                     BriefSignalItemUiModel(
                         id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
-                        typeKey = BriefSignalSummaryFilterKey.DECISION,
+                        type = BriefSignalSummaryFilterType.DECISION,
                         title = "회원가입 MVP 범위 1차 확정",
                     ),
                     BriefSignalItemUiModel(
                         id = "3b9e0d12-78f4-4a56-8c01-9d2e3f4a5b6c",
-                        typeKey = BriefSignalSummaryFilterKey.RISK,
+                        type = BriefSignalSummaryFilterType.RISK,
                         title = "Android13+ 권한 요청 플로우 이탈 가능성",
                     ),
                     BriefSignalItemUiModel(
                         id = "9d0a2b34-c678-4d90-8e12-3f4a5b6c7d8e",
-                        typeKey = BriefSignalSummaryFilterKey.QUESTION,
+                        type = BriefSignalSummaryFilterType.QUESTION,
                         title = "푸시 알림 정책 논의 필요",
                     ),
                     BriefSignalItemUiModel(
                         id = "1e2f3a45-b789-4c01-9d23-4a5b6c7d8e9f",
-                        typeKey = BriefSignalSummaryFilterKey.QUESTION,
+                        type = BriefSignalSummaryFilterType.QUESTION,
                         title = "로그인 유지 기간 결정 필요",
                     ),
                 ),

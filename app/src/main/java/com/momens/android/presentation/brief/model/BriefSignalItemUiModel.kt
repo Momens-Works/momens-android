@@ -5,6 +5,6 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class BriefSignalItemUiModel(
     val id: String,
-    val typeKey: String,
+    val type: BriefSignalSummaryFilterType,
     val title: String,
 )

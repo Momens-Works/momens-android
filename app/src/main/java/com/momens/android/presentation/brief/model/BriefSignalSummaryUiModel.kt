@@ -7,14 +7,14 @@ import kotlinx.collections.immutable.ImmutableList
 data class BriefSignalSummaryUiModel(
     val summary: String?,
     val filters: ImmutableList<BriefSignalSummaryFilter>,
-    val selectedFilterKey: String,
+    val selectedFilterType: BriefSignalSummaryFilterType,
     val items: ImmutableList<BriefSignalItemUiModel>,
     val nextCursor: String?,
     val isExpanded: Boolean,
     val isLoadingMore: Boolean = false,
 ) {
     val totalCount: Int
-        get() = filters.firstOrNull { it.key == BriefSignalSummaryFilterKey.ALL }?.count ?: 0
+        get() = filters.firstOrNull { it.type == BriefSignalSummaryFilterType.ALL }?.count ?: 0
 
     val hasMore: Boolean
         get() = nextCursor != null

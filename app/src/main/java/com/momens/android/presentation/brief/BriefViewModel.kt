@@ -3,6 +3,8 @@ package com.momens.android.presentation.brief
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.state.UiState
+import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
+import com.momens.android.presentation.brief.state.BriefUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -28,7 +30,7 @@ class BriefViewModel @Inject constructor(
         }
     }
 
-    fun selectSignalFilter(filterKey: String) {
+    fun selectSignalFilter(filterType: BriefSignalSummaryFilterType) {
         val currentState = _uiState.value as? UiState.Success ?: return
         val projectId = currentState.data.project.id
 
@@ -89,7 +91,7 @@ class BriefViewModel @Inject constructor(
 
     private fun updateSignalSummaryPage(
         shouldAppend: Boolean,
-        selectedFilterKey: String?,
+        selectedFilterType: BriefSignalSummaryFilterType?,
     ) {
 
     }

@@ -1,6 +1,6 @@
 package com.momens.android.presentation.brief.model
 
-import com.momens.android.presentation.brief.BriefUiState
+import com.momens.android.presentation.brief.state.BriefUiState
 import kotlinx.collections.immutable.persistentListOf
 
 internal val SampleBriefUiState = BriefUiState(
@@ -17,46 +17,46 @@ internal val SampleBriefUiState = BriefUiState(
             "이메일 회원가입과 온보딩 이탈 개선이 우선적으로 필요합니다.",
         filters = persistentListOf(
             BriefSignalSummaryFilter(
-                key = BriefSignalSummaryFilterKey.ALL,
+                type = BriefSignalSummaryFilterType.ALL,
                 label = "All",
                 count = 6,
             ),
             BriefSignalSummaryFilter(
-                key = BriefSignalSummaryFilterKey.CHANGE,
+                type = BriefSignalSummaryFilterType.CHANGE,
                 label = "VOC",
                 count = 1,
             ),
             BriefSignalSummaryFilter(
-                key = BriefSignalSummaryFilterKey.RISK,
+                type = BriefSignalSummaryFilterType.RISK,
                 label = "Risk",
                 count = 1,
             ),
             BriefSignalSummaryFilter(
-                key = BriefSignalSummaryFilterKey.DECISION,
+                type = BriefSignalSummaryFilterType.DECISION,
                 label = "Decision",
                 count = 2,
             ),
             BriefSignalSummaryFilter(
-                key = BriefSignalSummaryFilterKey.QUESTION,
+                type = BriefSignalSummaryFilterType.QUESTION,
                 label = "Question",
                 count = 2,
             ),
         ),
-        selectedFilterKey = BriefSignalSummaryFilterKey.ALL,
+        selectedFilterType = BriefSignalSummaryFilterType.ALL,
         items = persistentListOf(
             BriefSignalItemUiModel(
                 id = "5c1a2b34-56d7-4e89-9f01-234a5b6c7d8e",
-                typeKey = BriefSignalSummaryFilterKey.CHANGE,
+                type = BriefSignalSummaryFilterType.CHANGE,
                 title = "권한 요청 반복 문의",
             ),
             BriefSignalItemUiModel(
                 id = "6f3d8a61-4de7-4c01-9d2b-16fdf182e9a1",
-                typeKey = BriefSignalSummaryFilterKey.DECISION,
+                type = BriefSignalSummaryFilterType.DECISION,
                 title = "소셜 로그인은 MVP 범위에서 제외",
             ),
             BriefSignalItemUiModel(
                 id = "3b9e0d12-78f4-4a56-8c01-9d2e3f4a5b6c",
-                typeKey = BriefSignalSummaryFilterKey.RISK,
+                type = BriefSignalSummaryFilterType.RISK,
                 title = "Android 13+ 권한 요청 플로우 이탈 가능성",
             ),
         ),
