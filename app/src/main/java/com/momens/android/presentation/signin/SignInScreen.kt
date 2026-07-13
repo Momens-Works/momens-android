@@ -110,6 +110,5 @@ private fun SignInScreenPreview() {
             isGoogleLoginEnabled = true,
             onGoogleLoginClick = {},
         )
-
     }
 }

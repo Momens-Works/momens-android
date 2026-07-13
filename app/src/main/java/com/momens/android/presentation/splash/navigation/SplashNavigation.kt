@@ -23,10 +23,14 @@ fun NavController.navigateToSplash(
 
 fun NavGraphBuilder.splashNavGraph(
     paddingValues: PaddingValues,
+    navigateToSignal: () -> Unit,
+    navigateToSignIn: () -> Unit,
 ) {
     composable<Splash> {
         SplashRoute(
             paddingValues = paddingValues,
+            navigateToSignal = navigateToSignal,
+            navigateToSignIn = navigateToSignIn,
         )
     }
 }
