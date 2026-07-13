@@ -27,7 +27,7 @@ fun MomensImportantStatus(
     val iconRes = when (tone) {
         ImportantTone.GRAY -> level.grayIcon
         ImportantTone.BLUE -> level.blueIcon
-        ImportantTone.CLEAR -> level.grayIcon
+        ImportantTone.WHITE -> level.grayIcon
     }
 
     Row(
@@ -68,9 +68,9 @@ private fun MomensImportantStatusPreview() {
             MomensImportantStatus(level = ImportantLevel.LOW, tone = ImportantTone.BLUE)
             MomensImportantStatus(level = ImportantLevel.MEDIUM, tone = ImportantTone.BLUE)
             MomensImportantStatus(level = ImportantLevel.HIGH, tone = ImportantTone.BLUE)
-            MomensImportantStatus(level = ImportantLevel.LOW, tone = ImportantTone.CLEAR)
-            MomensImportantStatus(level = ImportantLevel.MEDIUM, tone = ImportantTone.CLEAR)
-            MomensImportantStatus(level = ImportantLevel.HIGH, tone = ImportantTone.CLEAR)
+            MomensImportantStatus(level = ImportantLevel.LOW, tone = ImportantTone.WHITE)
+            MomensImportantStatus(level = ImportantLevel.MEDIUM, tone = ImportantTone.WHITE)
+            MomensImportantStatus(level = ImportantLevel.HIGH, tone = ImportantTone.WHITE)
         }
     }
 }

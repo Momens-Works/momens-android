@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +37,7 @@ fun MomensCtaButton(
         when (type) {
             MomensCtaType.DEFAULT -> MomensTheme.colors.primary100
             MomensCtaType.LOGIN -> MomensTheme.colors.white
+            MomensCtaType.CANCEL -> MomensTheme.colors.gray300
         }
     }
 
@@ -84,6 +84,17 @@ private fun MomensCtaButtonPreview() {
                 Text(
                     text = "text",
                     color = MomensTheme.colors.white,
+                    style = MomensTheme.typography.bodyB16,
+                )
+            }
+
+            MomensCtaButton(
+                onClick = {},
+                type = MomensCtaType.CANCEL,
+            ) {
+                Text(
+                    text = "text",
+                    color = MomensTheme.colors.gray700,
                     style = MomensTheme.typography.bodyB16,
                 )
             }

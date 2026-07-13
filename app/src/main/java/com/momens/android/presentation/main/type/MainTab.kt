@@ -5,7 +5,7 @@ import com.momens.android.R
 import com.momens.android.core.common.navigation.MainTabRoute
 import com.momens.android.presentation.brief.navigation.Brief
 import com.momens.android.presentation.signal.navigation.Signal
-import com.momens.android.presentation.task.navigation.Task
+import com.momens.android.presentation.project.task.navigation.Task
 
 enum class MainTab(
     val label: String,

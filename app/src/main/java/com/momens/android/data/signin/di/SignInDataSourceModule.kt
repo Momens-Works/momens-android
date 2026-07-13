@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.credentials.CredentialManager
 import com.momens.android.R
 import com.momens.android.data.signin.remote.datasource.SignInDataSource
-import com.momens.android.data.signin.remote.datasourceimpl.CredentialManagerSingnInDataSourceImpl
+import com.momens.android.data.signin.remote.datasourceimpl.CredentialManagerSignInDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ abstract class SignInDataSourceModule {
     @Binds
     @Singleton
     abstract fun bindGoogleAuthDataSource(
-        credentialManagerSingnInDataSourceImpl: CredentialManagerSingnInDataSourceImpl,
+        credentialManagerGoogleAuthDataSourceImpl: CredentialManagerSignInDataSourceImpl,
     ): SignInDataSource
 
     companion object {

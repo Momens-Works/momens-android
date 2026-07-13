@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -20,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
+import com.momens.android.core.designsystem.component.dot.MomensDot
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
@@ -113,13 +113,8 @@ private fun FileTextContent(
                 style = MomensTheme.typography.captionM11,
             )
 
-            Box(
-                modifier = Modifier
-                    .size(2.dp)
-                    .background(
-                        color = MomensTheme.colors.gray400,
-                        shape = CircleShape,
-                    )
+            MomensDot(
+                color = MomensTheme.colors.gray400,
             )
 
             Text(
