@@ -2,15 +2,15 @@ package com.momens.android.data.signin.repositoryimpl
 
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.util.suspendRunCatching
+import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
 import com.momens.android.data.signin.remote.datasource.DeviceLocalDataSource
-import com.momens.android.data.signin.remote.datasource.SignInDataSource
 import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
 import com.momens.android.data.signin.remote.dto.request.GoogleTokenRequest
 import com.momens.android.data.signin.repository.SignInRepository
 import javax.inject.Inject
 
 class SignInRepositoryImpl @Inject constructor(
-    private val signInDataSource: SignInDataSource,
+    private val googleCredentialLocalDataSource: GoogleCredentialLocalDataSource,
     private val signInRemoteDataSource: SignInRemoteDataSource,
     private val deviceLocalDataSource: DeviceLocalDataSource,
     private val tokenManager: TokenManager,
@@ -33,7 +33,7 @@ class SignInRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {
-        signInDataSource.signOut().getOrThrow()
+        googleCredentialLocalDataSource.clearCredentialState().getOrThrow()
         tokenManager.clearTokens()
     }
 }
