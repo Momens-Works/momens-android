@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.maxLength
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +31,10 @@ fun MomensInput(
     modifier: Modifier = Modifier,
     placeholder: String = "",
     lineLimits: TextFieldLineLimits = TextFieldLineLimits.SingleLine,
+    maxLength: Int? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    onKeyboardAction: KeyboardActionHandler? = null,
+    trailingContent: @Composable () -> Unit = {},
 ) {
     val textStyle = MomensTheme.typography.bodyM14
     val contentColor = MomensTheme.colors.gray800
@@ -44,9 +52,12 @@ fun MomensInput(
                     strokeWidth = 1.dp.toPx(),
                 )
             },
+        inputTransformation = maxLength?.let { InputTransformation.maxLength(it) },
         lineLimits = lineLimits,
         textStyle = textStyle.copy(color = contentColor),
         cursorBrush = SolidColor(value = contentColor),
+        keyboardOptions = keyboardOptions,
+        onKeyboardAction = onKeyboardAction,
         decorator = { innerTextField ->
             Row(
                 modifier = Modifier
@@ -65,6 +76,8 @@ fun MomensInput(
                     }
                     innerTextField()
                 }
+
+                trailingContent()
             }
         },
     )
@@ -86,6 +99,7 @@ private fun MomensInputPreview() {
             MomensInput(
                 state = exampleState,
                 placeholder = "Example",
+                maxLength = 6
             )
 
             MomensInput(
