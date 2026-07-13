@@ -39,9 +39,6 @@ class SignalViewModel @Inject constructor(
                 SignalSideEffect.ShowActionSnackbar(
                     message = "태스크가 등록되었습니다",
                     description = "'투두'에 추가됨",
-                    onAction = {
-                        viewModelScope.launch { _sideEffect.emit(SignalSideEffect.NavigateToTask) }
-                    },
                 ),
             )
         }

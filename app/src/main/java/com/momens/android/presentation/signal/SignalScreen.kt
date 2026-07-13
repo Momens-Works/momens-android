@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +37,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun SignalRoute(
     paddingValues: PaddingValues,
-    navigateToTask: () -> Unit = {},
+    navigateToTask: () -> Unit,
     viewModel: SignalViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -53,7 +52,7 @@ fun SignalRoute(
                             title = it.message,
                             description = it.description,
                             type = MomensSnackbarType.BUTTON,
-                            onActionClick = it.onAction,
+                            onActionClick = navigateToTask,
                         ),
                     ),
                 )
@@ -66,10 +65,6 @@ fun SignalRoute(
                     ),
                 )
             }
-
-            is SignalSideEffect.NavigateToTask -> {
-                navigateToTask()
-            }
         }
     }
 
@@ -81,14 +76,16 @@ fun SignalRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+private const val EMPTY_STATE_TOP_WEIGHT = 80f
+private const val EMPTY_STATE_BOTTOM_WEIGHT = 270f
+
 @Composable
 private fun SignalScreen(
     state: SignalState,
     paddingValues: PaddingValues,
+    onDeleteSignal: (String) -> Unit,
+    onRegisterTask: (String) -> Unit,
     modifier: Modifier = Modifier,
-    onDeleteSignal: (String) -> Unit = {},
-    onRegisterTask: (String) -> Unit = {},
 ) {
     var selectedSignal by remember { mutableStateOf<SignalCardUiModel?>(null) }
 
@@ -110,11 +107,11 @@ private fun SignalScreen(
         )
 
         if (state.signals.isEmpty()) {
-            Spacer(modifier = Modifier.weight(80f))
+            Spacer(modifier = Modifier.weight(EMPTY_STATE_TOP_WEIGHT))
 
             MomensEmptyView(text = "시그널을 다 확인했어요.")
 
-            Spacer(modifier = Modifier.weight(270f))
+            Spacer(modifier = Modifier.weight(EMPTY_STATE_BOTTOM_WEIGHT))
         } else {
             SignalList(
                 signals = state.signals,
@@ -148,6 +145,8 @@ private fun SignalScreenPreview() {
         SignalScreen(
             state = SignalState.Fake,
             paddingValues = PaddingValues(),
+            onDeleteSignal = {},
+            onRegisterTask = {},
         )
     }
 }
@@ -159,6 +158,8 @@ private fun SignalScreenEmptyPreview() {
         SignalScreen(
             state = SignalState(),
             paddingValues = PaddingValues(),
+            onDeleteSignal = {},
+            onRegisterTask = {},
         )
     }
 }

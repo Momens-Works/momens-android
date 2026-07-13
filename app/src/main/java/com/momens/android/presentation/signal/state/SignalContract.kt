@@ -64,7 +64,6 @@ data class SignalState(
                 ),
             ),
             evidencesBySignalId = persistentMapOf(
-                // 근거 3개 이상 -> 아코디언 기본 접힘 상태 확인용 (화면명세서 8-2)
                 "1" to persistentListOf(
                     SignalEvidenceUiModel(
                         sourceRefId = "11",
@@ -90,15 +89,7 @@ data class SignalState(
                         change = "런타임 권한 분기 로직 추가됨",
                         impact = "테스트 커버리지 확인 필요",
                     ),
-                    SignalEvidenceUiModel(
-                        sourceRefId = "14",                        source = SignalAccordionType.GITHUB,
-                        time = "00분 전",
-                        target = "권한 요청 PR",
-                        change = "런타임 권한 분기 로직 추가됨",
-                        impact = "테스트 커버리지 확인 필요",
-                    ),
                 ),
-                // 근거 3개 미만 -> 아코디언 기본 펼침 상태 확인용 (화면명세서 8-1)
                 "2" to persistentListOf(
                     SignalEvidenceUiModel(
                         sourceRefId = "21",
@@ -126,10 +117,7 @@ sealed interface SignalSideEffect {
     data class ShowActionSnackbar(
         val message: String,
         val description: String,
-        val onAction: () -> Unit,
     ) : SignalSideEffect
 
     data class ShowSnackbar(val message: String) : SignalSideEffect
-
-    data object NavigateToTask : SignalSideEffect
 }
