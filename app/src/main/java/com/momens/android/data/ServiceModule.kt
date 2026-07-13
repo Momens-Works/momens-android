@@ -1,11 +1,8 @@
-package com.momens.android.data.di
+package com.momens.android.data
 
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-import retrofit2.Retrofit
 
 /**
  * Retrofit Service 인터페이스를 Hilt에 등록하는 모듈입니다.
@@ -23,6 +20,6 @@ import retrofit2.Retrofit
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object ServiceModule {
+object ServiceModule{
 
 }
