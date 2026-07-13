@@ -173,6 +173,8 @@ private fun BriefDropdownRow(
         Text(
             text = item.title,
             modifier = Modifier.weight(1f),
+            color = MomensTheme.colors.gray800,
+            style = MomensTheme.typography.captionB11,
         )
     }
 }
