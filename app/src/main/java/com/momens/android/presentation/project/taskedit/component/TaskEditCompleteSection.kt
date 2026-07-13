@@ -31,9 +31,9 @@ import kotlinx.collections.immutable.persistentListOf
 fun TaskEditCompleteSection(
     completedCount: Int,
     totalCount: Int,
-    rules: ImmutableList<com.momens.android.presentation.project.taskedit.model.CompletionRuleModel>,
+    rules: ImmutableList<CompletionRuleModel>,
     onAddClick: () -> Unit,
-    onCheckedChange: (com.momens.android.presentation.project.taskedit.model.CompletionIdModel, Boolean) -> Unit,
+    onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
