@@ -1,7 +1,9 @@
 package com.momens.android.presentation.project.taskedit.model
 
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.runtime.Immutable
 
+@Immutable
 data class ChecklistItemState(
     val itemId: String,
     val title: TextFieldState,
