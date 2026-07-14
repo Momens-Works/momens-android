@@ -78,6 +78,4 @@ data class TaskDetailState(
 
 sealed interface TaskDetailSideEffect {
     data class ShowSnackbar(val message: String) : TaskDetailSideEffect
-    data object NavigateToTaskEdit : TaskDetailSideEffect
-    data object NavigateUp: TaskDetailSideEffect
 }

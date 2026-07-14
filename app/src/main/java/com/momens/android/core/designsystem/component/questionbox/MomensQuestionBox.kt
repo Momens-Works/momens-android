@@ -48,7 +48,6 @@ fun MomensQuestionBox(
 private fun MomensQuestionBoxPreview() {
     MomensTheme {
         MomensQuestionBox(
-            modifier = Modifier.padding(0.dp),
             text = "약한 비밀번호 기준을 사용자에게 얼마나 구체적으로 알려줘야할 지 결정이 필요해보임",
         )
     }

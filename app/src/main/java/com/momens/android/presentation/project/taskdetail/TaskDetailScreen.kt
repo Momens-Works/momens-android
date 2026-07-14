@@ -57,9 +57,6 @@ fun TaskDetailRoute(
                     SnackbarState(content = MomensSnackbarModel(title = it.message)),
                 )
             }
-
-            is TaskDetailSideEffect.NavigateToTaskEdit -> navigateToTaskEdit()
-            is TaskDetailSideEffect.NavigateUp -> navigateUp()
         }
     }
 

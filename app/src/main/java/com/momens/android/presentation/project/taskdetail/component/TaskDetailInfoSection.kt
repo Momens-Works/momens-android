@@ -58,7 +58,7 @@ fun TaskDetailInfoSection(
             Box(
                 modifier = Modifier
                     .background(
-                        color = MomensTheme.colors.primary10,
+                        color = MomensTheme.colors.white,
                         shape = RoundedCornerShape(4.dp),
                     )
                     .padding(horizontal = 12.dp, vertical = 1.dp)
