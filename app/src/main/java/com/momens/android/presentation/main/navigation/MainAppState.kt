@@ -101,8 +101,8 @@ class MainAppState(
         navController.navigateToTask(navOptions = navOptions)
     }
 
-    fun navigateToTaskDetail(navOptions: NavOptions? = keepStackNavOptions) {
-        navController.navigateToTaskDetail(navOptions = navOptions)
+    fun navigateToTaskDetail(taskId: String, navOptions: NavOptions? = keepStackNavOptions) {
+        navController.navigateToTaskDetail(taskId = taskId, navOptions = navOptions)
     }
 
     fun navigateToTaskEdit(navOptions: NavOptions? = keepStackNavOptions) {
