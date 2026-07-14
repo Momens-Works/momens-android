@@ -2,8 +2,9 @@ package com.momens.android.presentation.brief.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -69,26 +70,28 @@ private fun BriefSignalFilterButton(
         visibleFilters.find { filter -> filter.type == selectedFilterType }?.type
             ?: BriefSignalSummaryFilterType.ALL
 
-    Row(
+    LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        visibleFilters
-            .forEach { filter ->
-                val type = if (filter.type == selectedVisibleFilterType) {
-                    filter.chipButtonType
-                } else {
-                    MomensChipButtonType.WHITE
-                }
-
-                MomensChipButton(
-                    label = filter.label,
-                    count = filter.count,
-                    type = type,
-                    onClick = { onFilterClick(filter.type) },
-                )
+        items(
+            items = visibleFilters,
+            key = { filter -> filter.type },
+        ) { filter ->
+            val type = if (filter.type == selectedVisibleFilterType) {
+                filter.chipButtonType
+            } else {
+                MomensChipButtonType.WHITE
             }
+
+            MomensChipButton(
+                label = filter.label,
+                count = filter.count,
+                type = type,
+                onClick = { onFilterClick(filter.type) },
+            )
+        }
     }
 }
 
