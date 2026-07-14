@@ -3,7 +3,7 @@ package com.momens.android.presentation.brief.model
 import com.momens.android.presentation.brief.state.BriefUiState
 import kotlinx.collections.immutable.persistentListOf
 
-internal val SampleBriefUiState = BriefUiState(
+val SampleBriefUiState = BriefUiState(
     project = BriefProjectUiModel(
         id = "30d9e9fe-f43b-4097-a88e-dc19f0a5b025",
         name = "Q2 Activation Readiness",
