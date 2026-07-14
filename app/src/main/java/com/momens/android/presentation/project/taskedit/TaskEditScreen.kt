@@ -41,7 +41,7 @@ import com.momens.android.presentation.project.taskedit.state.TaskEditState
 @Composable
 fun TaskEditRoute(
     paddingValues: PaddingValues,
-    navigateToTaskDetail: () -> Unit,
+    navigateUp: () -> Unit,
     viewModel: TaskEditViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -56,7 +56,7 @@ fun TaskEditRoute(
                     )
                 }
 
-                is TaskEditSideEffect.NavigateToTaskDetail -> navigateToTaskDetail()
+                is TaskEditSideEffect.NavigateUp -> navigateUp()
             }
         }
     }

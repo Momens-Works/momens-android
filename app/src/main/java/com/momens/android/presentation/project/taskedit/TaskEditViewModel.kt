@@ -116,7 +116,7 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
         // 나중에 API 연결
 
         viewModelScope.launch {
-            _sideEffect.emit(TaskEditSideEffect.NavigateToTaskDetail)
+            _sideEffect.emit(TaskEditSideEffect.NavigateUp)
         }
     }
 }
