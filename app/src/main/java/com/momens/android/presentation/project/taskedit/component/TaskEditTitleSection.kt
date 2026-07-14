@@ -47,7 +47,6 @@ fun TaskEditTitleSection(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 private fun TaskEditTitleSectionPreview() {

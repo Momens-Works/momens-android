@@ -22,8 +22,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskEditViewModel @Inject constructor(
-) : ViewModel() {
+class TaskEditViewModel @Inject constructor() : ViewModel() {
     private val _state = MutableStateFlow(TaskEditState.fake)
     val state = _state.asStateFlow()
 
@@ -94,8 +93,6 @@ class TaskEditViewModel @Inject constructor(
                 ),
             )
         }
-
-        // 나중에 API 연결
     }
 
     fun updateAssignee(assignee: Assignee) {
@@ -117,6 +114,4 @@ class TaskEditViewModel @Inject constructor(
             _sideEffect.emit(TaskEditSideEffect.NavigateToTaskDetail)
         }
     }
-
-
 }

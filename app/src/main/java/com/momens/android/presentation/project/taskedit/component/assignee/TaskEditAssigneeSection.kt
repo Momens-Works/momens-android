@@ -18,7 +18,6 @@ import com.momens.android.presentation.project.taskedit.model.Assignee
 @Composable
 fun TaskEditAssigneeSection(
     assignee: Assignee?,
-    onAssigneeClick: (String) ->  Unit,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -36,7 +35,6 @@ fun TaskEditAssigneeSection(
         if (assignee != null) {
             TaskEditPeopleListItem(
                 text = assignee.name,
-                onClick = { onAssigneeClick(assignee.id) },
                 onDeleteClick = onDeleteClick,
                 modifier = Modifier.padding(bottom = 16.dp),
                 isSelected = true,
@@ -65,7 +63,6 @@ private fun TaskEditAssigneeSectionPreview(){
                     name = "강채원",
                     url = null
                 ),
-                onAssigneeClick = {},
                 onDeleteClick = {},
             )
 
@@ -73,7 +70,6 @@ private fun TaskEditAssigneeSectionPreview(){
 
             TaskEditAssigneeSection(
                 assignee = null,
-                onAssigneeClick = {},
                 onDeleteClick = {},
             )
         }
