@@ -13,6 +13,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,40 +31,28 @@ import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.SampleBriefUiState
 import com.momens.android.presentation.brief.state.BriefUiState
 
-private const val DEFAULT_PROJECT_ID = "30d9e9fe-f43b-4097-a88e-dc19f0a5b025"
 
 @Composable
 fun BriefRoute(
     paddingValues: PaddingValues,
-    projectId: String = DEFAULT_PROJECT_ID,
+    projectId: String,
     viewModel: BriefViewModel = hiltViewModel(),
 ) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
 
     LaunchedEffect(projectId) {
         viewModel.loadBrief(projectId = projectId)
     }
 
-    when (val state = uiState.value) {
-        UiState.Empty,
-        UiState.Loading,
-            -> BriefLoadingScreen(
-            paddingValues = paddingValues,
-        )
-
-        UiState.Failure -> BriefFailureScreen(
-            paddingValues = paddingValues,
-        )
-
-        is UiState.Success -> BriefScreen(
-            paddingValues = paddingValues,
-            uiState = state.data,
-            onProfileClick = {},
-            onFilterClick = viewModel::selectSignalFilter,
-            onSummaryMoreClick = viewModel::loadMoreSignalSummary,
-            onSummaryFoldClick = viewModel::foldSignalSummary,
-        )
-    }
+    BriefScreen(
+        paddingValues = paddingValues,
+        uiState = uiState,
+        onProfileClick = {},
+        onFilterClick = viewModel::selectSignalFilter,
+        onSummaryMoreClick = viewModel::loadMoreSignalSummary,
+        onSummaryFoldClick = viewModel::foldSignalSummary,
+    )
 }
 
 @Composable
@@ -138,46 +128,6 @@ private fun BriefScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
         }
-    }
-}
-
-@Composable
-private fun BriefLoadingScreen(
-    paddingValues: PaddingValues,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MomensTheme.colors.uiBg)
-            .padding(paddingValues),
-    ) {
-        Text(
-            text = "브리프를 불러오는 중입니다.",
-            modifier = Modifier.padding(20.dp),
-            color = MomensTheme.colors.gray700,
-            style = MomensTheme.typography.bodyM14,
-        )
-    }
-}
-
-@Composable
-private fun BriefFailureScreen(
-    paddingValues: PaddingValues,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MomensTheme.colors.uiBg)
-            .padding(paddingValues),
-    ) {
-        Text(
-            text = "브리프를 불러오지 못했습니다.",
-            modifier = Modifier.padding(20.dp),
-            color = MomensTheme.colors.gray700,
-            style = MomensTheme.typography.bodyM14,
-        )
     }
 }
 
