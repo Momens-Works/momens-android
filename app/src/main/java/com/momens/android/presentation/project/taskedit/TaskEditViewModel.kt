@@ -67,7 +67,7 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
             )
             it.copy(
                 task = it.task.copy(
-                    checklist = it.task.checklist.add(newItem)
+                    checklist = it.task.checklist.add(newItem),
                 ),
             )
         }
