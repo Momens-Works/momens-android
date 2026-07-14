@@ -31,7 +31,7 @@ class MainAppState(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = Splash
+    val startDestination = Signal
 
     private val clearStackNavOptions = navOptions {
         popUpTo(0) { inclusive = true }

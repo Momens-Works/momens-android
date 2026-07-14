@@ -13,14 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.designsystem.component.logo.MomensLogo
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.splash.state.SplashSideEffect
 import com.momens.android.presentation.splash.viewmodel.SplashViewModel
-import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.milliseconds
-
-private const val SPLASH_DELAY_MILLIS = 1_500L
 
 @Composable
 fun SplashRoute(
@@ -29,9 +25,15 @@ fun SplashRoute(
     navigateToSignIn: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel(),
 ) {
-    LaunchedEffect(Unit) {
-        delay(SPLASH_DELAY_MILLIS.milliseconds)
-        navigateToSignIn()
+    LaunchedEffect(viewModel) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                SplashSideEffect.NavigateToSignIn ->
+                    navigateToSignIn()
+                SplashSideEffect.NavigateToSignal ->
+                    navigateToSignal()
+            }
+        }
     }
 
     SplashScreen(
