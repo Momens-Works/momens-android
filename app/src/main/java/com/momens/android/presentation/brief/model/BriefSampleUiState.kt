@@ -23,7 +23,7 @@ internal val SampleBriefUiState = BriefUiState(
             ),
             BriefSignalSummaryFilter(
                 type = BriefSignalSummaryFilterType.CHANGE,
-                label = "VOC",
+                label = "Change",
                 count = 1,
             ),
             BriefSignalSummaryFilter(
@@ -59,8 +59,22 @@ internal val SampleBriefUiState = BriefUiState(
                 type = BriefSignalSummaryFilterType.RISK,
                 title = "Android 13+ 권한 요청 플로우 이탈 가능성",
             ),
+            BriefSignalItemUiModel(
+                id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+                type = BriefSignalSummaryFilterType.DECISION,
+                title = "회원가입 MVP 범위 1차 확정",
+            ),
+            BriefSignalItemUiModel(
+                id = "9d0a2b34-c678-4d90-8e12-3f4a5b6c7d8e",
+                type = BriefSignalSummaryFilterType.QUESTION,
+                title = "온보딩 이탈 구간 계측 필요",
+            ),
+            BriefSignalItemUiModel(
+                id = "1e2f3a45-b789-4c01-9d23-4a5b6c7d8e9f",
+                type = BriefSignalSummaryFilterType.QUESTION,
+                title = "권한 요청 전 안내 화면 추가 여부",
+            ),
         ),
-        nextCursor = "MjAyNi0wNy0wM1QwMDowMDowMFp8M2I5ZTBkMTItNzhmNC00YTU2LThjMDEtOWQyZTNmNGE1YjZj",
         isExpanded = false,
     ),
     priorities = persistentListOf(

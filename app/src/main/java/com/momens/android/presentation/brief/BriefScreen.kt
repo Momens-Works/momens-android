@@ -12,15 +12,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.brief.component.BriefCurrentPriority
@@ -31,19 +28,12 @@ import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.SampleBriefUiState
 import com.momens.android.presentation.brief.state.BriefUiState
 
-
 @Composable
 fun BriefRoute(
     paddingValues: PaddingValues,
-    projectId: String,
     viewModel: BriefViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-
-    LaunchedEffect(projectId) {
-        viewModel.loadBrief(projectId = projectId)
-    }
 
     BriefScreen(
         paddingValues = paddingValues,
@@ -78,10 +68,11 @@ private fun BriefScreen(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp),
         ) {
+            Spacer(modifier = Modifier.height(12.dp))
+
             Text(
                 text = "오늘의 브리프",
                 color = MomensTheme.colors.black,
@@ -113,7 +104,7 @@ private fun BriefScreen(
                 selectedFilterType = uiState.signalSummary.selectedFilterType,
                 filters = uiState.signalSummary.filters,
                 summaries = uiState.signalSummary.items,
-                hasMoreSummaries = uiState.signalSummary.hasMore,
+                hasMoreSummaries = uiState.signalSummary.hasMore && !uiState.signalSummary.isExpanded,
                 isSummaryExpanded = uiState.signalSummary.isExpanded,
                 onFilterClick = onFilterClick,
                 onSummaryMoreClick = onSummaryMoreClick,
