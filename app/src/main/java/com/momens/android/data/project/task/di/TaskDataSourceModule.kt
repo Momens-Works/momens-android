@@ -1,8 +1,12 @@
 package com.momens.android.data.project.task.di
 
+import com.momens.android.data.project.task.remote.datasource.TaskRemoteDataSource
+import com.momens.android.data.project.task.remote.datasourceimpl.TaskRemoteDataSourceImpl
+import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /**
  * DataSource 인터페이스와 구현체를 Hilt에 연결하는 모듈입니다.
@@ -22,5 +26,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class TaskDataSourceModule{
-
+    @Binds
+    @Singleton
+    abstract fun bindTaskRemoteDataSource(
+        taskRemoteDataSourceImpl: TaskRemoteDataSourceImpl,
+    ): TaskRemoteDataSource
 }

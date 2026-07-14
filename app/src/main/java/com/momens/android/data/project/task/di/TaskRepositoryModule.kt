@@ -1,8 +1,12 @@
 package com.momens.android.data.project.task.di
 
+import com.momens.android.data.project.task.repository.TaskRepository
+import com.momens.android.data.project.task.repositoryimpl.TaskRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /**
  * Repository 인터페이스와 구현체를 Hilt에 연결하는 모듈입니다.
@@ -22,5 +26,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class TaskRepositoryModule{
-
+    @Binds
+    @Singleton
+    abstract fun bindTaskRepository(
+        taskRepositoryImpl: TaskRepositoryImpl,
+    ): TaskRepository
 }
