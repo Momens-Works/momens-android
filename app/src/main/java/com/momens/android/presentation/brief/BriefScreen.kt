@@ -1,4 +1,3 @@
-
 package com.momens.android.presentation.brief
 
 import androidx.compose.foundation.background
@@ -177,6 +176,7 @@ private fun BriefScreenPreview() {
             paddingValues = PaddingValues(),
             uiState = SampleBriefUiState,
             avatarUrl = null,
+            onProfileClick = {},
             onFilterClick = {},
             onSummaryMoreClick = {},
             onSummaryFoldClick = {},

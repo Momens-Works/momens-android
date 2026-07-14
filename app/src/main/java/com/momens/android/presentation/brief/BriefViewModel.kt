@@ -6,6 +6,10 @@ import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
 import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.core.local.ProjectManager
+import androidx.lifecycle.viewModelScope
+import com.momens.android.core.common.extension.updateSuccess
+import com.momens.android.core.common.state.UiState
+import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.toApiFilter
 import com.momens.android.presentation.brief.model.toUiModel
@@ -20,12 +24,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class BriefViewModel @Inject constructor(
     projectManager: ProjectManager,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<BriefUiState>(SampleBriefUiState)
+class BriefViewModel @Inject constructor(
+    private val briefRepository: BriefRepository,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<UiState<BriefUiState>>(UiState.Loading)
 
     val uiState: StateFlow<UiState<BriefUiState>> = _uiState.asStateFlow()
 
