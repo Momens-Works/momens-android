@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val SPLASH_DELAY_MILLIS = 1_500L
 
@@ -26,7 +27,7 @@ class SplashViewModel @Inject constructor(
 
     private fun checkStoredSession() {
         viewModelScope.launch {
-            delay(SPLASH_DELAY_MILLIS)
+            delay(SPLASH_DELAY_MILLIS.milliseconds)
 
             val refreshToken = tokenManager.getRefreshToken()
 
