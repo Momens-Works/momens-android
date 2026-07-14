@@ -45,7 +45,7 @@ fun TaskEditAssigneeBottomSheet(
 
         Column(
             modifier = Modifier
-                .padding(start = 20.dp, end = 20.dp, top = 17.dp, bottom = 16.dp),
+                .padding(horizontal = 20.dp, vertical = 16.dp),
         ) {
             Text(
                 text = "담당자 수정",
