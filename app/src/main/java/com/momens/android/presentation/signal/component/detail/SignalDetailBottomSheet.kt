@@ -47,8 +47,8 @@ fun SignalDetailBottomSheet(
 
             Text(
                 text = signal.title,
-                style = MomensTheme.typography.bodyB16,
-                color = MomensTheme.colors.gray900,
+                style = MomensTheme.typography.titleB20,
+                color = MomensTheme.colors.black,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
