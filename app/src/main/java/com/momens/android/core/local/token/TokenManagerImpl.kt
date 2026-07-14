@@ -37,7 +37,7 @@ class TokenManagerImpl @Inject constructor(
     private var cachedAccessToken: String? = BuildConfig.DEBUG_ACCESS_TOKEN.takeIf { it.isNotBlank() }
 
     @Volatile
-    private var cachedRefreshToken: String? = null
+    private var cachedRefreshToken: String? = BuildConfig.DEBUG_REFRESH_TOKEN
 
     override suspend fun saveTokens(
         accessToken: String,
