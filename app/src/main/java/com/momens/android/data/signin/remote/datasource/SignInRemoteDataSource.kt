@@ -1,10 +1,10 @@
 package com.momens.android.data.signin.remote.datasource
 
-import com.momens.android.data.signin.remote.dto.request.GoogleTokenRequest
-import com.momens.android.data.signin.remote.dto.response.GoogleTokenResponse
+import com.momens.android.data.signin.remote.dto.request.SignInTokenRequest
+import com.momens.android.data.signin.remote.dto.response.SignInTokenResponse
 
 interface SignInRemoteDataSource {
     suspend fun postGoogleToken(
-        request: GoogleTokenRequest,
-    ): GoogleTokenResponse
+        request: SignInTokenRequest,
+    ): SignInTokenResponse
 }

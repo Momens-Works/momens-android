@@ -5,7 +5,7 @@ import com.momens.android.core.util.suspendRunCatching
 import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
 import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
-import com.momens.android.data.signin.remote.dto.request.GoogleTokenRequest
+import com.momens.android.data.signin.remote.dto.request.SignInTokenRequest
 import com.momens.android.data.signin.repository.SignInRepository
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class SignInRepositoryImpl @Inject constructor(
         idToken: String,
     ): Result<Unit> = suspendRunCatching {
         val response = signInRemoteDataSource.postGoogleToken(
-            request = GoogleTokenRequest(
+            request = SignInTokenRequest(
                 idToken = idToken,
                 device = deviceLocalDataSource.getDeviceModel(),
             ),
