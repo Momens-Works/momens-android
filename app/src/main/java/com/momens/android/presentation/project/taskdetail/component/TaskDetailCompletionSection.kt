@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.checkbox.MomensCheckBox
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.taskdetail.model.TaskDetailCompletionItemModel
+import com.momens.android.presentation.project.model.ChecklistItem
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -28,7 +28,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun TaskDetailCompletionSection(
     completedCount: Int,
     totalCount: Int,
-    items: ImmutableList<TaskDetailCompletionItemModel>,
+    items: ImmutableList<ChecklistItem>,
     onCheckedChange: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -80,22 +80,22 @@ private fun TaskDetailCompletionSectionPreview() {
         var items by remember {
             mutableStateOf(
                 persistentListOf(
-                    TaskDetailCompletionItemModel(
+                    ChecklistItem(
                         id = "1",
                         title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반",
                         completed = true,
                     ),
-                    TaskDetailCompletionItemModel(
+                    ChecklistItem(
                         id = "2",
                         title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반",
                         completed = true,
                     ),
-                    TaskDetailCompletionItemModel(
+                    ChecklistItem(
                         id = "3",
                         title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반",
                         completed = false,
                     ),
-                    TaskDetailCompletionItemModel(
+                    ChecklistItem(
                         id = "4",
                         title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반",
                         completed = false,

@@ -44,7 +44,7 @@ import com.momens.android.presentation.project.taskdetail.viewmodel.TaskDetailVi
 fun TaskDetailRoute(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateToTaskEdit: (String) -> Unit,
+    navigateToTaskEdit: (TaskDetailModel) -> Unit,
     viewModel: TaskDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -64,7 +64,7 @@ fun TaskDetailRoute(
         state = state,
         paddingValues = paddingValues,
         navigateUp = navigateUp,
-        onEditClick = { state.taskDetail?.let { navigateToTaskEdit(it.id) } },
+        onEditClick = { state.taskDetail?.let(navigateToTaskEdit) },
         onCheck = viewModel::toggleChecklistItem,
     )
 }

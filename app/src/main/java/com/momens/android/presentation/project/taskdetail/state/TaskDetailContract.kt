@@ -3,13 +3,13 @@ package com.momens.android.presentation.project.taskdetail.state
 import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.presentation.project.model.ChecklistItem
+import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailAssigneeModel
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailChecklistModel
-import com.momens.android.presentation.project.taskdetail.model.TaskDetailCompletionItemModel
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailFileModel
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailModel
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailQuestionModel
-import com.momens.android.presentation.project.taskedit.model.TaskRole
 import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
@@ -36,10 +36,10 @@ data class TaskDetailState(
                     completedCount = 0,
                     totalCount = 4,
                     items = persistentListOf(
-                        TaskDetailCompletionItemModel(id = "1", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
-                        TaskDetailCompletionItemModel(id = "2", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
-                        TaskDetailCompletionItemModel(id = "3", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
-                        TaskDetailCompletionItemModel(id = "4", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
+                        ChecklistItem(id = "1", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
+                        ChecklistItem(id = "2", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
+                        ChecklistItem(id = "3", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
+                        ChecklistItem(id = "4", title = "어쩌구어쩌구 반영어쩌구어쩌구 반영어쩌구어쩌구 반", completed = false),
                     ),
                 ),
                 materials = persistentListOf(

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.bottomsheet.MomensBottomSheet
 import com.momens.android.core.designsystem.component.input.MomensSearchInput
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.taskedit.model.Assignee
+import com.momens.android.presentation.project.model.Assignee
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

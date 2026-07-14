@@ -14,6 +14,7 @@ import com.momens.android.presentation.brief.navigation.navigateToBrief
 import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.project.task.navigation.navigateToTask
 import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
+import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
 import com.momens.android.presentation.signal.navigation.Signal
 import com.momens.android.presentation.signal.navigation.navigateToSignal
@@ -105,8 +106,8 @@ class MainAppState(
         navController.navigateToTaskDetail(taskId = taskId, navOptions = navOptions)
     }
 
-    fun navigateToTaskEdit(taskId: String, navOptions: NavOptions? = keepStackNavOptions) {
-        navController.navigateToTaskEdit(taskId = taskId, navOptions = navOptions)
+    fun navigateToTaskEdit(taskEdit: TaskEdit, navOptions: NavOptions? = keepStackNavOptions) {
+        navController.navigateToTaskEdit(taskEdit = taskEdit, navOptions = navOptions)
     }
 
     fun navigateUp() {

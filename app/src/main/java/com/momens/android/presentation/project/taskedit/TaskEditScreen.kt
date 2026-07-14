@@ -33,8 +33,8 @@ import com.momens.android.presentation.project.taskedit.component.TaskEditPurpos
 import com.momens.android.presentation.project.taskedit.component.TaskEditTitleSection
 import com.momens.android.presentation.project.taskedit.component.assignee.TaskEditAssigneeBottomSheet
 import com.momens.android.presentation.project.taskedit.component.status.TaskEditStatusBottomSheet
-import com.momens.android.presentation.project.taskedit.model.Assignee
-import com.momens.android.presentation.project.taskedit.model.TaskRole
+import com.momens.android.presentation.project.model.Assignee
+import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import com.momens.android.presentation.project.taskedit.viewmodel.TaskEditViewModel

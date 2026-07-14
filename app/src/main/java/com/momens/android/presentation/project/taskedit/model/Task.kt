@@ -3,9 +3,10 @@ package com.momens.android.presentation.project.taskedit.model
 import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.presentation.project.model.Assignee
+import com.momens.android.presentation.project.model.TaskRole
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.serialization.Serializable
 
 @Immutable
 data class Task(
@@ -36,19 +37,4 @@ data class Task(
             ),
         )
     }
-}
-
-@Serializable
-@Immutable
-data class Assignee(
-    val id: String,
-    val name: String,
-    val url: String?,
-)
-
-enum class TaskRole(val label: String) {
-    PM("PM"),
-    DESIGN("Design"),
-    FRONTEND("Frontend"),
-    BACKEND("Backend"),
 }
