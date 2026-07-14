@@ -135,7 +135,7 @@ private fun TaskDetailContent(
 
                 TaskDetailInfoSection(
                     role = taskDetail.role.label,
-                    assigneeName = taskDetail.assignee?.name ?: "미배정",
+                    assigneeName = taskDetail.assignee?.name ?: "미지정",
                     priority = taskDetail.priority.text,
                 )
             }
