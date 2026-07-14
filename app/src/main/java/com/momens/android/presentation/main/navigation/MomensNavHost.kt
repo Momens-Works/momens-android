@@ -11,6 +11,7 @@ import com.momens.android.presentation.signal.navigation.signalNavGraph
 import com.momens.android.presentation.signin.navigation.signInNavGraph
 import com.momens.android.presentation.splash.navigation.splashNavGraph
 import com.momens.android.presentation.project.taskdetail.navigation.taskDetailNavGraph
+import com.momens.android.presentation.project.taskdetail.navigation.toTaskEditArgs
 import com.momens.android.presentation.project.taskedit.navigation.taskEditNavGraph
 import com.momens.android.presentation.project.task.navigation.taskNavGraph
 
@@ -35,7 +36,7 @@ fun MomensNavHost(
         taskDetailNavGraph(
             paddingValues = paddingValues,
             navigateUp = appState::navigateUp,
-            navigateToTaskEdit = appState::navigateToTaskEdit,
+            navigateToTaskEdit = { taskDetail -> appState.navigateToTaskEdit(taskDetail.toTaskEditArgs()) },
         )
         taskEditNavGraph(paddingValues = paddingValues)
         signInNavGraph(

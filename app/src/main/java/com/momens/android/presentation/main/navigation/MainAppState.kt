@@ -17,6 +17,7 @@ import com.momens.android.presentation.signal.navigation.navigateToSignal
 import com.momens.android.presentation.signin.navigation.navigateToSignIn
 import com.momens.android.presentation.splash.navigation.navigateToSplash
 import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
+import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
 import com.momens.android.presentation.project.task.navigation.navigateToTask
 import kotlinx.coroutines.CoroutineScope
@@ -105,8 +106,8 @@ class MainAppState(
         navController.navigateToTaskDetail(navOptions = navOptions)
     }
 
-    fun navigateToTaskEdit(navOptions: NavOptions? = keepStackNavOptions) {
-        navController.navigateToTaskEdit(navOptions = navOptions)
+    fun navigateToTaskEdit(taskEdit: TaskEdit, navOptions: NavOptions? = keepStackNavOptions) {
+        navController.navigateToTaskEdit(taskEdit = taskEdit, navOptions = navOptions)
     }
 
     fun navigateUp() {

@@ -6,7 +6,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import com.momens.android.R
 import com.momens.android.core.designsystem.theme.MomensTheme
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class ImportantLevel(
     val text: String,
     @param:DrawableRes val grayIcon: Int,
