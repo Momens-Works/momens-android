@@ -1,6 +1,7 @@
 package com.momens.android.data
 
 import com.momens.android.data.project.task.remote.service.TaskService
+import com.momens.android.data.signin.remote.service.SignInService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +25,14 @@ import retrofit2.Retrofit
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object ServiceModule{
+object ServiceModule {
+
+    @Provides
+    @Singleton
+    fun provideSignInService(
+        retrofit: Retrofit,
+    ): SignInService = retrofit.create(SignInService::class.java)
+
     @Provides
     @Singleton
     fun provideTaskService(retrofit: Retrofit): TaskService =

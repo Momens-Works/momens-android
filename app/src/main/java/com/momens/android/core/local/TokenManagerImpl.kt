@@ -34,7 +34,7 @@ class TokenManagerImpl @Inject constructor(
 ) : TokenManager {
 
     @Volatile
-    private var cachedAccessToken: String? = null
+    private var cachedAccessToken: String? = BuildConfig.DEBUG_ACCESS_TOKEN
 
     @Volatile
     private var cachedRefreshToken: String? = BuildConfig.DEBUG_REFRESH_TOKEN
@@ -44,11 +44,11 @@ class TokenManagerImpl @Inject constructor(
         refreshToken: String,
     ) {
         dataStore.edit { preferences ->
-            preferences[KEY_ACCESS_TOKEN] = accessToken
+            preferences[KEY_ACCESS_TOKEN] = BuildConfig.DEBUG_ACCESS_TOKEN
             preferences[KEY_REFRESH_TOKEN] = refreshToken
         }
 
-        cachedAccessToken = accessToken
+        cachedAccessToken = BuildConfig.DEBUG_ACCESS_TOKEN
         cachedRefreshToken = refreshToken
 
     }
