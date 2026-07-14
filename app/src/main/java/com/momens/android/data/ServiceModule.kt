@@ -1,8 +1,12 @@
 package com.momens.android.data
 
+import com.momens.android.data.project.taskedit.remote.service.TaskEditService
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import jakarta.inject.Singleton
+import retrofit2.Retrofit
 
 /**
  * Retrofit Service 인터페이스를 Hilt에 등록하는 모듈입니다.
@@ -21,5 +25,8 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule{
-
+    @Provides
+    @Singleton
+    internal fun provideTaskEditService(retrofit: Retrofit): TaskEditService =
+        retrofit.create(TaskEditService::class.java)
 }
