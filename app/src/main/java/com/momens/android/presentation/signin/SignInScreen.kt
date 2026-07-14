@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.R
+import com.momens.android.core.network.google.rememberGoogleSignInLauncher
+import com.momens.android.core.common.extension.collectSideEffect
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.button.MomensCtaButton
 import com.momens.android.core.designsystem.component.logo.MomensLogo
@@ -33,12 +36,25 @@ fun SignInRoute(
     navigateToSignal: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
-    val signInState = viewModel.signInState.collectAsStateWithLifecycle()
+    val signInState by viewModel.signInState.collectAsStateWithLifecycle()
+    val googleSignInLauncher = rememberGoogleSignInLauncher()
+
+    viewModel.sideEffect.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            SignInSideEffect.LaunchGoogleSignIn -> {
+                viewModel.onGoogleSignInResult(
+                    googleSignInLauncher.launch(),
+                )
+            }
+
+            SignInSideEffect.NavigateToSignal -> navigateToSignal()
+        }
+    }
 
     SignInScreen(
         paddingValues = paddingValues,
-        isGoogleLoginEnabled = signInState.value !is UiState.Loading,
-        onGoogleLoginClick = { viewModel.signInWithGoogle() },
+        isGoogleLoginEnabled = signInState !is UiState.Loading,
+        onGoogleLoginClick = viewModel::onGoogleSignInClick,
     )
 }
 

@@ -38,6 +38,12 @@ android {
                 "BASE_URL",
                 properties.getProperty("debug.base.url"),
             )
+
+            buildConfigField(
+                "String",
+                "DEBUG_ACCESS_TOKEN",
+                "\"${properties.getProperty("debug.access.token", "")}\"",
+            )
         }
 
         release {
@@ -47,6 +53,12 @@ android {
                 "String",
                 "BASE_URL",
                 properties.getProperty("release.base.url"),
+            )
+
+            buildConfigField(
+                "String",
+                "DEBUG_ACCESS_TOKEN",
+                "\"\"",
             )
 
             proguardFiles(
