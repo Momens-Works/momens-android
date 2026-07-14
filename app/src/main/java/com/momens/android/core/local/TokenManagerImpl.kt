@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.momens.android.BuildConfig
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -36,7 +37,7 @@ class TokenManagerImpl @Inject constructor(
     private var cachedAccessToken: String? = null
 
     @Volatile
-    private var cachedRefreshToken: String? = null
+    private var cachedRefreshToken: String? = BuildConfig.DEBUG_REFRESH_TOKEN
 
     override suspend fun saveTokens(
         accessToken: String,

@@ -38,6 +38,12 @@ android {
                 "BASE_URL",
                 properties.getProperty("debug.base.url"),
             )
+
+            buildConfigField(
+                "String",
+                "DEBUG_REFRESH_TOKEN",
+                "\"${properties.getProperty("debug.refresh.token", "")}\"",
+            )
         }
 
         release {
