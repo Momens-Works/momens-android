@@ -71,6 +71,7 @@ fun SignalRoute(
     SignalScreen(
         state = state,
         paddingValues = paddingValues,
+        onSignalClick = viewModel::onSignalClick,
         onDeleteSignal = viewModel::deleteSignal,
         onRegisterTask = viewModel::registerTask,
     )
@@ -83,6 +84,7 @@ private const val EMPTY_STATE_BOTTOM_WEIGHT = 270f
 private fun SignalScreen(
     state: SignalState,
     paddingValues: PaddingValues,
+    onSignalClick: (String) -> Unit,
     onDeleteSignal: (String) -> Unit,
     onRegisterTask: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -115,7 +117,10 @@ private fun SignalScreen(
         } else {
             SignalList(
                 signals = state.signals,
-                onSignalClick = { selectedSignal = it },
+                onSignalClick = {
+                    selectedSignal = it
+                    onSignalClick(it.id)
+                },
                 modifier = Modifier.weight(1f),
             )
         }
@@ -145,6 +150,7 @@ private fun SignalScreenPreview() {
         SignalScreen(
             state = SignalState.Fake,
             paddingValues = PaddingValues(),
+            onSignalClick = {},
             onDeleteSignal = {},
             onRegisterTask = {},
         )
@@ -158,6 +164,7 @@ private fun SignalScreenEmptyPreview() {
         SignalScreen(
             state = SignalState(),
             paddingValues = PaddingValues(),
+            onSignalClick = {},
             onDeleteSignal = {},
             onRegisterTask = {},
         )
