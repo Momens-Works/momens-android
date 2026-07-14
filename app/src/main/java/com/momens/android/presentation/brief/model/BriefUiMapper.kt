@@ -42,7 +42,7 @@ private fun BriefProjectResponse.toUiModel(): BriefProjectUiModel = BriefProject
 private fun BriefSignalSummaryResponse.toUiModel(
     selectedFilterType: BriefSignalSummaryFilterType,
 ): BriefSignalSummaryUiModel = BriefSignalSummaryUiModel(
-    summary = summary,
+    summary = summary.orEmpty(),
     filters = filters.map(BriefSignalSummaryFilterResponse::toUiModel).toImmutableList(),
     selectedFilterType = selectedFilterType,
     items = items.map(BriefSignalSummaryItemResponse::toUiModel).toImmutableList(),
