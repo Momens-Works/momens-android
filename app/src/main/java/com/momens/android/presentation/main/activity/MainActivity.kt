@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.momens.android.R
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.main.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,7 @@ class MainActivity : ComponentActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Momens)
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

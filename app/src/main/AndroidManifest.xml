@@ -19,7 +19,7 @@
             android:name=".presentation.main.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Momens"
+            android:theme="@style/Theme.Momens.Starting"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

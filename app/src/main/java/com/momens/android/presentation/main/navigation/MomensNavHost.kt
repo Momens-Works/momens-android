@@ -44,6 +44,10 @@ fun MomensNavHost(
             paddingValues = paddingValues,
             navigateToSignal = appState::navigateToSignal,
         )
-        splashNavGraph(paddingValues = paddingValues)
+        splashNavGraph(
+            paddingValues = paddingValues,
+            navigateToSignal = appState::navigateToSignal,
+            navigateToSignIn = appState::navigateToSignIn,
+        )
     }
 }
