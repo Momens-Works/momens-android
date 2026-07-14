@@ -2,8 +2,8 @@ package com.momens.android.data.signin.repositoryimpl
 
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.util.suspendRunCatching
+import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
-import com.momens.android.data.signin.remote.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
 import com.momens.android.data.signin.remote.dto.request.GoogleTokenRequest
 import com.momens.android.data.signin.repository.SignInRepository

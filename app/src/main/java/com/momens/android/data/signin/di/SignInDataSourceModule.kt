@@ -3,11 +3,11 @@ package com.momens.android.data.signin.di
 import android.content.Context
 import androidx.credentials.CredentialManager
 import com.momens.android.R
+import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
+import com.momens.android.data.signin.local.datasourceimpl.DeviceLocalDataSourceImpl
 import com.momens.android.data.signin.local.datasourceimpl.GoogleCredentialLocalDataSourceImpl
-import com.momens.android.data.signin.remote.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
-import com.momens.android.data.signin.remote.datasourceimpl.DeviceLocalDataSourceImpl
 import com.momens.android.data.signin.remote.datasourceimpl.SignInRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
