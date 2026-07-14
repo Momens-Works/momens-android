@@ -1,5 +1,6 @@
 package com.momens.android.presentation.project.task.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,18 +39,16 @@ fun TaskStatusBox(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        tasks.forEachIndexed { index, task ->
-            TaskListItem(
-                text = task.title,
-                label = task.role.text,
-                level = task.priority,
-                tone = task.tone,
-                count = task.materialCount.toString(),
-                onClick = { onTaskClick(task) },
-            )
-
-            if (index < tasks.lastIndex) {
-                Spacer(modifier = Modifier.height(8.dp))
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            tasks.forEach { task ->
+                TaskListItem(
+                    text = task.title,
+                    label = task.role.text,
+                    level = task.priority,
+                    tone = task.tone,
+                    count = task.materialCount.toString(),
+                    onClick = { onTaskClick(task) },
+                )
             }
         }
     }
@@ -90,7 +89,7 @@ private fun TaskStatusBoxPreview() {
                 TaskStatusBox(
                     type = MomensStatusEditType.TODO,
                     tasks = dummyTasks,
-                    onTaskClick = {}
+                    onTaskClick = {},
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
