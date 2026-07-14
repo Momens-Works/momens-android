@@ -9,13 +9,14 @@ data class BriefSignalSummaryUiModel(
     val filters: ImmutableList<BriefSignalSummaryFilter>,
     val selectedFilterType: BriefSignalSummaryFilterType,
     val items: ImmutableList<BriefSignalItemUiModel>,
+    val nextCursor: String?,
     val isExpanded: Boolean,
 ) {
     val totalCount: Int
         get() = filters.firstOrNull { it.type == BriefSignalSummaryFilterType.ALL }?.count ?: 0
 
     val hasMore: Boolean
-        get() = items.size > DEFAULT_VISIBLE_COUNT
+        get() = nextCursor != null || items.size > DEFAULT_VISIBLE_COUNT
 }
 
 private const val DEFAULT_VISIBLE_COUNT = 3
