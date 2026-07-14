@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.taskedit.component.mapper
+package com.momens.android.presentation.project.taskedit.mapper
 
 import com.momens.android.data.project.taskedit.remote.dto.request.ChecklistItems
 import com.momens.android.data.project.taskedit.remote.dto.request.TaskEditRequestDto

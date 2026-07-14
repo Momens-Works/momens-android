@@ -10,9 +10,9 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.data.project.taskedit.repository.TaskEditRepository
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
-import com.momens.android.presentation.project.taskedit.component.mapper.toModel
-import com.momens.android.presentation.project.taskedit.component.mapper.toRequestDto
-import com.momens.android.presentation.project.taskedit.component.mapper.toTask
+import com.momens.android.presentation.project.taskedit.mapper.toModel
+import com.momens.android.presentation.project.taskedit.mapper.toRequestDto
+import com.momens.android.presentation.project.taskedit.mapper.toTask
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
