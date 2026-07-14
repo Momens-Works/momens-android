@@ -30,7 +30,7 @@ data class BriefProjectResponse(
 @Serializable
 data class BriefSignalSummaryResponse(
     @SerialName("summary")
-    val summary: String,
+    val summary: String?,
     @SerialName("filters")
     val filters: List<BriefSignalSummaryFilterResponse> = emptyList(),
     @SerialName("items")
