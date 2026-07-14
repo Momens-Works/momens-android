@@ -44,11 +44,11 @@ class TokenManagerImpl @Inject constructor(
         refreshToken: String,
     ) {
         dataStore.edit { preferences ->
-            preferences[KEY_ACCESS_TOKEN] = accessToken
+            preferences[KEY_ACCESS_TOKEN] = BuildConfig.DEBUG_ACCESS_TOKEN
             preferences[KEY_REFRESH_TOKEN] = refreshToken
         }
 
-        cachedAccessToken = accessToken
+        cachedAccessToken = BuildConfig.DEBUG_ACCESS_TOKEN
         cachedRefreshToken = refreshToken
 
     }

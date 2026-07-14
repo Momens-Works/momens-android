@@ -15,9 +15,9 @@ import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.project.task.navigation.navigateToTask
 import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
 import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
+import com.momens.android.presentation.signal.navigation.Signal
 import com.momens.android.presentation.signal.navigation.navigateToSignal
 import com.momens.android.presentation.signin.navigation.navigateToSignIn
-import com.momens.android.presentation.splash.navigation.Splash
 import com.momens.android.presentation.splash.navigation.navigateToSplash
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,7 +30,7 @@ class MainAppState(
     val navController: NavHostController,
     coroutineScope: CoroutineScope,
 ) {
-    val startDestination = Splash
+    val startDestination = Signal
 
     private val clearStackNavOptions = navOptions {
         popUpTo(0) { inclusive = true }
