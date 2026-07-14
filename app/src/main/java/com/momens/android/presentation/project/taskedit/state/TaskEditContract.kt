@@ -1,7 +1,7 @@
 package com.momens.android.presentation.project.taskedit.state
 
 import androidx.compose.runtime.Immutable
-import com.momens.android.presentation.project.taskedit.model.Assignee
+import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.taskedit.model.Task
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

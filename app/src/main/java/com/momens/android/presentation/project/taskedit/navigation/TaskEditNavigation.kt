@@ -6,17 +6,29 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.momens.android.core.common.navigation.Route
+import com.momens.android.core.designsystem.component.type.ImportantLevel
+import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskedit.TaskEditRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TaskEdit : Route
+data class TaskEdit(
+    val taskId: String,
+    val title: String,
+    val role: TaskRole,
+    val priority: ImportantLevel,
+    val status: MomensStatusEditType,
+    val purpose: String? = null,
+    val payloadJson: String = "{}",
+) : Route
 
 fun NavController.navigateToTaskEdit(
+    taskEdit: TaskEdit,
     navOptions: NavOptions? = null,
 ) {
     navigate(
-        route = TaskEdit,
+        route = taskEdit,
         navOptions = navOptions,
     )
 }

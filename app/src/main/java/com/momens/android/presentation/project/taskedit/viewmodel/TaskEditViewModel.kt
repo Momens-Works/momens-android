@@ -1,13 +1,16 @@
-package com.momens.android.presentation.project.taskedit
+package com.momens.android.presentation.project.taskedit.viewmodel
 
-import androidx.compose.foundation.text.input.TextFieldState
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
+import com.momens.android.core.common.extension.toTaskEditPayload
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
-import com.momens.android.presentation.project.taskedit.model.Assignee
+import com.momens.android.presentation.project.model.Assignee
+import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
-import com.momens.android.presentation.project.taskedit.model.TaskRole
+import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +21,25 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskEditViewModel @Inject constructor() : ViewModel() {
+class TaskEditViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+) : ViewModel() {
+    private val args = savedStateHandle.toRoute<TaskEdit>()
+    private val argsPayload = args.payloadJson.toTaskEditPayload()
+
+    init {
+        Timber.d(
+            "TaskEdit args 수신: taskId=${args.taskId}, title=${args.title}, role=${args.role}, " +
+                "priority=${args.priority}, status=${args.status}, purpose=${args.purpose}, " +
+                "assignee=${argsPayload.assignee}, checklist=${argsPayload.checklist}",
+        )
+    }
+
     private val _state = MutableStateFlow(TaskEditState.Fake)
     val state = _state.asStateFlow()
 
@@ -83,14 +100,14 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun updateChecklistTitle(itemId: String, title: String){
+    fun updateChecklistTitle(itemId: String, title: String) {
         _state.update { state ->
             state.copy(
                 task = state.task.copy(
-                    checklist = state.task.checklist.map{
+                    checklist = state.task.checklist.map {
                         if (it.id == itemId) it.copy(title = title) else it
-                    }.toPersistentList()
-                )
+                    }.toPersistentList(),
+                ),
             )
         }
     }

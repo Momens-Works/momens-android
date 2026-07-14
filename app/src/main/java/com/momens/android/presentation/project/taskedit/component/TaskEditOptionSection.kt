@@ -26,8 +26,7 @@ import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.taskedit.model.TaskRole
-
+import com.momens.android.presentation.project.model.TaskRole
 
 @Composable
 fun TaskEditOptionSection(

@@ -2,7 +2,9 @@ package com.momens.android.core.designsystem.component.type
 
 import androidx.annotation.DrawableRes
 import com.momens.android.R
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class MomensStatusEditType(
     val key: String,
     val label: String,

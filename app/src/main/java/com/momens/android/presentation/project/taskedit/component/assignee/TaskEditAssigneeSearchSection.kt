@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.taskedit.component.TaskEditPeopleListItem
-import com.momens.android.presentation.project.taskedit.model.Assignee
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
