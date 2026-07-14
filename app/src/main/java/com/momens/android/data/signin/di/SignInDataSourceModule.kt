@@ -1,26 +1,58 @@
 package com.momens.android.data.signin.di
 
+import android.content.Context
+import androidx.credentials.CredentialManager
+import com.momens.android.R
+import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
+import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
+import com.momens.android.data.signin.local.datasourceimpl.DeviceLocalDataSourceImpl
+import com.momens.android.data.signin.local.datasourceimpl.GoogleCredentialLocalDataSourceImpl
+import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
+import com.momens.android.data.signin.remote.datasourceimpl.SignInRemoteDataSourceImpl
+import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
+import javax.inject.Singleton
 
-/**
- * DataSource 인터페이스와 구현체를 Hilt에 연결하는 모듈입니다.
- *
- * remote/local DataSource 레이어를 둘 때 `remote/datasource`에 인터페이스를 만들고,
- * `remote/datasourceimpl`에 구현체를 만든 뒤 이 모듈에 바인딩을 추가합니다.
- *
- * 예시 - RemoteDataSource 바인딩
- * ```
- * @Binds
- * @Singleton
- * abstract fun bindProjectRemoteDataSource(
- *     projectRemoteDataSourceImpl: ProjectRemoteDataSourceImpl,
- * ): ProjectRemoteDataSource
- * ```
- */
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class SignInDataSourceModule{
+abstract class SignInDataSourceModule {
 
+    @Binds
+    @Singleton
+    abstract fun bindGoogleCredentialLocalDataSource(
+        googleCredentialLocalDataSourceImpl: GoogleCredentialLocalDataSourceImpl,
+    ): GoogleCredentialLocalDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindSignInRemoteDataSource(
+        signInRemoteDataSourceImpl: SignInRemoteDataSourceImpl,
+    ): SignInRemoteDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindDeviceLocalDataSource(
+        deviceLocalDataSourceImpl: DeviceLocalDataSourceImpl,
+    ): DeviceLocalDataSource
+
+    companion object {
+
+        @Provides
+        @Singleton
+        fun provideCredentialManager(
+            @ApplicationContext context: Context,
+        ): CredentialManager = CredentialManager.create(context)
+
+        @Provides
+        @Singleton
+        @Named("google_server_client_id")
+        fun provideGoogleServerClientId(
+            @ApplicationContext context: Context,
+        ): String = context.getString(R.string.google_server_client_id)
+    }
 }
