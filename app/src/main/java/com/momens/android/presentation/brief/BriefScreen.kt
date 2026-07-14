@@ -1,6 +1,7 @@
 package com.momens.android.presentation.brief
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,15 +11,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.state.UiState
+import com.momens.android.core.designsystem.component.button.MomensButton
+import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
+import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.brief.component.BriefCurrentPriority
 import com.momens.android.presentation.brief.component.BriefSignalFilterSummary
@@ -35,14 +42,27 @@ fun BriefRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    BriefScreen(
-        paddingValues = paddingValues,
-        uiState = uiState,
-        onProfileClick = {},
-        onFilterClick = viewModel::selectSignalFilter,
-        onSummaryMoreClick = viewModel::loadMoreSignalSummary,
-        onSummaryFoldClick = viewModel::foldSignalSummary,
-    )
+    when (val state = uiState) {
+        UiState.Empty, UiState.Loading -> BriefLoadingScreen(
+            paddingValues = paddingValues,
+            onProfileClick = {},
+        )
+
+        UiState.Failure -> BriefFailureScreen(
+            paddingValues = paddingValues,
+            onProfileClick = {},
+            onRetryClick = { viewModel.loadBrief() },
+        )
+
+        is UiState.Success -> BriefScreen(
+            paddingValues = paddingValues,
+            uiState = state.data,
+            onProfileClick = {},
+            onFilterClick = viewModel::selectSignalFilter,
+            onSummaryMoreClick = viewModel::loadMoreSignalSummary,
+            onSummaryFoldClick = viewModel::foldSignalSummary,
+        )
+    }
 }
 
 @Composable
@@ -118,6 +138,80 @@ private fun BriefScreen(
             )
 
             Spacer(modifier = Modifier.height(32.dp))
+        }
+    }
+}
+
+@Composable
+private fun BriefLoadingScreen(
+    paddingValues: PaddingValues,
+    onProfileClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    BriefStateScaffold(
+        paddingValues = paddingValues,
+        onProfileClick = onProfileClick,
+        modifier = modifier,
+    ) {
+        CircularProgressIndicator(
+            color = MomensTheme.colors.primary100,
+        )
+    }
+}
+
+@Composable
+private fun BriefFailureScreen(
+    paddingValues: PaddingValues,
+    onProfileClick: () -> Unit,
+    onRetryClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    BriefStateScaffold(
+        paddingValues = paddingValues,
+        onProfileClick = onProfileClick,
+        modifier = modifier,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            MomensEmptyView(text = "브리프를 불러오지 못했어요.")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            MomensButton(
+                text = "다시 시도",
+                type = MomensButtonType.BLACK,
+                onClick = onRetryClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun BriefStateScaffold(
+    paddingValues: PaddingValues,
+    onProfileClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MomensTheme.colors.uiBg)
+            .padding(paddingValues),
+    ) {
+        MomensDefaultHeader(
+            onProfileClick = onProfileClick,
+            backgroundColor = MomensTheme.colors.uiBg,
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            contentAlignment = Alignment.Center,
+        ) {
+            content()
         }
     }
 }
