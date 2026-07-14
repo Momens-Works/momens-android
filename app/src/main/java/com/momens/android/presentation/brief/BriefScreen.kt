@@ -1,3 +1,4 @@
+
 package com.momens.android.presentation.brief
 
 import androidx.compose.foundation.background
@@ -43,21 +44,17 @@ fun BriefRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (val state = uiState) {
-        UiState.Empty, UiState.Loading -> BriefLoadingScreen(
-            paddingValues = paddingValues,
-            onProfileClick = {},
-        )
+        UiState.Empty, UiState.Loading -> {
 
-        UiState.Failure -> BriefFailureScreen(
-            paddingValues = paddingValues,
-            onProfileClick = {},
-            onRetryClick = { viewModel.loadBrief() },
-        )
+        }
+
+        UiState.Failure -> {
+
+        }
 
         is UiState.Success -> BriefScreen(
             paddingValues = paddingValues,
             uiState = state.data,
-            onProfileClick = {},
             onFilterClick = viewModel::selectSignalFilter,
             onSummaryMoreClick = viewModel::loadMoreSignalSummary,
             onSummaryFoldClick = viewModel::foldSignalSummary,
@@ -69,7 +66,6 @@ fun BriefRoute(
 private fun BriefScreen(
     paddingValues: PaddingValues,
     uiState: BriefUiState,
-    onProfileClick: () -> Unit,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
     onSummaryMoreClick: () -> Unit,
     onSummaryFoldClick: () -> Unit,
@@ -82,7 +78,7 @@ private fun BriefScreen(
             .padding(paddingValues),
     ) {
         MomensDefaultHeader(
-            onProfileClick = onProfileClick,
+            onProfileClick = { },
             backgroundColor = MomensTheme.colors.uiBg,
         )
 
@@ -141,51 +137,6 @@ private fun BriefScreen(
 }
 
 @Composable
-private fun BriefLoadingScreen(
-    paddingValues: PaddingValues,
-    onProfileClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    BriefStateScaffold(
-        paddingValues = paddingValues,
-        onProfileClick = onProfileClick,
-        modifier = modifier,
-    ) {
-        CircularProgressIndicator(
-            color = MomensTheme.colors.primary100,
-        )
-    }
-}
-
-@Composable
-private fun BriefFailureScreen(
-    paddingValues: PaddingValues,
-    onProfileClick: () -> Unit,
-    onRetryClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    BriefStateScaffold(
-        paddingValues = paddingValues,
-        onProfileClick = onProfileClick,
-        modifier = modifier,
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            MomensEmptyView(text = "브리프를 불러오지 못했어요.")
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            MomensButton(
-                text = "다시 시도",
-                type = MomensButtonType.BLACK,
-                onClick = onRetryClick,
-            )
-        }
-    }
-}
-
-@Composable
 private fun BriefStateScaffold(
     paddingValues: PaddingValues,
     onProfileClick: () -> Unit,
@@ -221,7 +172,6 @@ private fun BriefScreenPreview() {
         BriefScreen(
             paddingValues = PaddingValues(),
             uiState = SampleBriefUiState,
-            onProfileClick = {},
             onFilterClick = {},
             onSummaryMoreClick = {},
             onSummaryFoldClick = {},
