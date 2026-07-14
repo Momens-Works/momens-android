@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.common.extension.collectSideEffect
+import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
 import com.momens.android.core.designsystem.component.pagetitle.MomensPageTitle
@@ -68,13 +69,23 @@ fun SignalRoute(
         }
     }
 
-    SignalScreen(
-        state = state,
-        paddingValues = paddingValues,
-        onSignalClick = viewModel::onSignalClick,
-        onDeleteSignal = viewModel::deleteSignal,
-        onRegisterTask = viewModel::registerTask,
-    )
+    when (val currentState = state) {
+        UiState.Loading, UiState.Failure -> {
+            // TODO: 로딩 화면 연결 예정
+        }
+
+        is UiState.Success -> {
+            SignalScreen(
+                state = currentState.data,
+                paddingValues = paddingValues,
+                onSignalClick = viewModel::onSignalClick,
+                onDeleteSignal = viewModel::deleteSignal,
+                onRegisterTask = viewModel::registerTask,
+            )
+        }
+
+        UiState.Empty -> Unit
+    }
 }
 
 private const val EMPTY_STATE_TOP_WEIGHT = 80f
