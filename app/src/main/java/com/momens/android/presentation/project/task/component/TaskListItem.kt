@@ -68,7 +68,7 @@ fun TaskListItem(
                 MomensImportantStatus(level = level, tone = tone)
 
                 TaskListItemCount(
-                    count = count.toString()
+                    count = count
                 )
             }
         }

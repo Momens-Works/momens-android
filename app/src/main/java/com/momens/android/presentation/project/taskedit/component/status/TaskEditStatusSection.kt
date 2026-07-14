@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.taskedit.component
+package com.momens.android.presentation.project.taskedit.component.status
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,11 +13,12 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.project.taskedit.component.TaskEditStatusEdit
 
 @Composable
-fun TaskEditProgressSection(
+fun TaskEditStatusSection(
     status: MomensStatusEditType,
-    onStatusClick: (MomensStatusEditType) -> Unit,
+    onStatusChange: (MomensStatusEditType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -36,7 +37,7 @@ fun TaskEditProgressSection(
             MomensStatusEditType.entries.forEach { type ->
                 TaskEditStatusEdit(
                     type = type,
-                    modifier = Modifier.noRippleClickable(onClick = {onStatusClick(type)}),
+                    modifier = Modifier.noRippleClickable(onClick = { onStatusChange(type) }),
                     isSelected = status == type,
                 )
             }
@@ -46,14 +47,14 @@ fun TaskEditProgressSection(
 
 @Preview(showBackground = true)
 @Composable
-private fun TaskEditProgressSectionPreview(){
+private fun TaskEditStatusSectionPreview(){
     MomensTheme{
         Box(
             modifier = Modifier.padding(10.dp)
         ){
-            TaskEditProgressSection(
+            TaskEditStatusSection(
                 status = MomensStatusEditType.TODO,
-                onStatusClick = {}
+                onStatusChange = {}
             )
         }
     }

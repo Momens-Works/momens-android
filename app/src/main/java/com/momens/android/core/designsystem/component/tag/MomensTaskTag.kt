@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -42,6 +43,7 @@ fun MomensTaskTag(
         Icon(
             painter = painterResource(type.iconRes),
             contentDescription = null,
+            modifier = Modifier.size(16.dp),
             tint = MomensTheme.colors.primary100,
         )
 

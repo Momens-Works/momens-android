@@ -34,11 +34,11 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun TaskEditPeopleListItem(
     text: String,
-    onClick: () -> Unit,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     profileImageUrl: String? = null,
+    onClick: () -> Unit = {},
 ) {
     val backgroundColor =
         if (isSelected) MomensTheme.colors.primary10 else MomensTheme.colors.white

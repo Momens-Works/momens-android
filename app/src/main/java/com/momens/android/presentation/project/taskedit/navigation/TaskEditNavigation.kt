@@ -23,10 +23,12 @@ fun NavController.navigateToTaskEdit(
 
 fun NavGraphBuilder.taskEditNavGraph(
     paddingValues: PaddingValues,
+    navigateUp: () -> Unit,
 ) {
     composable<TaskEdit> {
         TaskEditRoute(
             paddingValues = paddingValues,
+            navigateUp = navigateUp,
         )
     }
 }

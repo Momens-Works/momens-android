@@ -57,7 +57,7 @@ fun MomensSectionTitle(
         )
 
         Text(
-            text = count.toString(),
+            text = count,
             style = textStyle,
             color = contentColor,
         )
