@@ -1,5 +1,6 @@
 package com.momens.android.data.signin.repositoryimpl
 
+import com.momens.android.BuildConfig
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.util.suspendRunCatching
 import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
@@ -27,7 +28,7 @@ class SignInRepositoryImpl @Inject constructor(
         )
 
         tokenManager.saveTokens(
-            accessToken = response.accessToken,
+            accessToken = BuildConfig.DEBUG_ACCESS_TOKEN,
             refreshToken = response.refreshToken,
         )
     }
