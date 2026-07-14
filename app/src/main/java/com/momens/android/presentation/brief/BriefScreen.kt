@@ -111,14 +111,12 @@ private fun BriefScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            uiState.signalSummary.summary?.let { summary ->
-                BriefSignalSummary(
-                    count = uiState.signalSummary.totalCount,
-                    content = summary,
-                )
+            BriefSignalSummary(
+                count = uiState.signalSummary.totalCount,
+                content = uiState.signalSummary.summary,
+            )
 
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+            Spacer(modifier = Modifier.height(16.dp))
 
             BriefSignalFilterSummary(
                 selectedFilterType = uiState.signalSummary.selectedFilterType,

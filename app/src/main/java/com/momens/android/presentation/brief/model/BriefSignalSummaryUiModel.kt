@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class BriefSignalSummaryUiModel(
-    val summary: String?,
+    val summary: String,
     val filters: ImmutableList<BriefSignalSummaryFilter>,
     val selectedFilterType: BriefSignalSummaryFilterType,
     val items: ImmutableList<BriefSignalItemUiModel>,
