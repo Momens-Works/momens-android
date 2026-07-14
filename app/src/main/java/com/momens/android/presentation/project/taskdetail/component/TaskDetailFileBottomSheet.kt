@@ -80,7 +80,7 @@ fun TaskDetailFileBottomSheet(
             MomensTextBox(
                 text = file.title,
                 iconResId = R.drawable.ic_file,
-                iconColor = MomensTheme.colors.primary50,
+                iconColor = MomensTheme.colors.primary100,
                 textColor = MomensTheme.colors.gray500,
                 isArrowVisible = true,
                 onArrowClick = onOpenSourceClick,
