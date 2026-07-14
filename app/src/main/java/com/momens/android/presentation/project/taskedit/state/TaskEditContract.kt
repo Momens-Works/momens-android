@@ -11,6 +11,8 @@ data class TaskEditState(
     val pageTitle: String = "태스크 수정",
     val task: Task,
     val assignees: ImmutableList<Assignee>,
+    val isAssigneeSheetVisible: Boolean = false,
+    val isStatusSheetVisible: Boolean = false,
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,
 ) {

@@ -32,7 +32,7 @@ fun TaskEditAssigneeBottomSheet(
     selectedAssignee: Assignee?,
     assignees: ImmutableList<Assignee>,
     onDismiss: () -> Unit,
-    onAssigneeClick: (Assignee) -> Unit,
+    onAssigneeChange: (Assignee) -> Unit,
     onDeleteClick: () -> Unit,
     onSearchClick: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -70,13 +70,12 @@ fun TaskEditAssigneeBottomSheet(
                 TaskEditAssigneeSearchSection(
                     assignees = assignees,
                     selectedAssignee = selectedAssignee,
-                    onAssigneeClick = onAssigneeClick,
+                    onAssigneeClick = onAssigneeChange,
                     onDeleteClick = onDeleteClick,
                 )
             } else {
                 TaskEditAssigneeSection(
                     assignee = selectedAssignee,
-                    onAssigneeClick = {},
                     onDeleteClick = onDeleteClick,
                 )
             }
@@ -102,7 +101,7 @@ private fun TaskEditAssigneeBottomSheetSearchPreview() {
                 selectedAssignee = previewAssignees.first(),
                 assignees = previewAssignees,
                 onDismiss = {},
-                onAssigneeClick = {},
+                onAssigneeChange = {},
                 onDeleteClick = {},
                 onSearchClick = {},
             )
@@ -123,7 +122,7 @@ private fun TaskEditAssigneeBottomSheetSelectedPreview() {
                 selectedAssignee = previewAssignee,
                 assignees = persistentListOf(),
                 onDismiss = {},
-                onAssigneeClick = {},
+                onAssigneeChange = {},
                 onDeleteClick = {},
                 onSearchClick = {},
             )

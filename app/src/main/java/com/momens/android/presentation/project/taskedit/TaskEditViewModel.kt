@@ -29,6 +29,11 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
     private val _sideEffect = MutableSharedFlow<TaskEditSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
+    fun onAssigneeClick() = _state.update { it.copy(isAssigneeSheetVisible = true) }
+    fun onAssigneeDismiss() = _state.update { it.copy(isAssigneeSheetVisible = false) }
+    fun onStatusClick() = _state.update { it.copy(isStatusSheetVisible = true) }
+    fun onStatusDismiss() = _state.update { it.copy(isStatusSheetVisible = false) }
+
     fun changeRole(role: TaskRole) {
         _state.update {
             it.copy(task = it.task.copy(role = role))
