@@ -34,8 +34,7 @@ fun TaskEditStatusBottomSheet(
             status = status,
             onStatusChange = onStatusChange,
             modifier = Modifier
-                .padding(top = 17.dp, bottom = 16.dp)
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 20.dp, vertical = 16.dp),
         )
     }
 }
