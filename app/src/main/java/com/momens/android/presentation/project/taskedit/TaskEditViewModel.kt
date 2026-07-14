@@ -23,16 +23,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskEditViewModel @Inject constructor() : ViewModel() {
-    private val _state = MutableStateFlow(TaskEditState.fake)
+    private val _state = MutableStateFlow(TaskEditState.Fake)
     val state = _state.asStateFlow()
 
     private val _sideEffect = MutableSharedFlow<TaskEditSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
-
-    fun onAssigneeClick() = _state.update { it.copy(isAssigneeSheetVisible = true) }
-    fun onAssigneeDismiss() = _state.update { it.copy(isAssigneeSheetVisible = false) }
-    fun onStatusClick() = _state.update { it.copy(isStatusSheetVisible = true) }
-    fun onStatusDismiss() = _state.update { it.copy(isStatusSheetVisible = false) }
 
     fun changeRole(role: TaskRole) {
         _state.update {
@@ -66,9 +61,9 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
 
         _state.update {
             val newItem = ChecklistItemState(
-                itemId = UUID.randomUUID().toString(),
-                title = TextFieldState(),
-                isChecked = false,
+                id = UUID.randomUUID().toString(),
+                title = "",
+                completed = false,
             )
             it.copy(
                 task = it.task.copy(
@@ -82,8 +77,20 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
         _state.update { state ->
             state.copy(
                 task = state.task.copy(
-                    checklist = state.task.checklist.removeAll { it.itemId == itemId },
+                    checklist = state.task.checklist.removeAll { it.id == itemId },
                 ),
+            )
+        }
+    }
+
+    fun updateChecklistTitle(itemId: String, title: String){
+        _state.update { state ->
+            state.copy(
+                task = state.task.copy(
+                    checklist = state.task.checklist.map{
+                        if (it.id == itemId) it.copy(title = title) else it
+                    }.toPersistentList()
+                )
             )
         }
     }
@@ -93,7 +100,7 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
             state.copy(
                 task = state.task.copy(
                     checklist = state.task.checklist.map {
-                        if (it.itemId == itemId) it.copy(isChecked = checked) else it
+                        if (it.id == itemId) it.copy(completed = checked) else it
                     }.toPersistentList(),
                 ),
             )
@@ -112,7 +119,10 @@ class TaskEditViewModel @Inject constructor() : ViewModel() {
         // 나중에 API 연결
     }
 
-    fun saveTask() {
+    fun saveTask(title: String, purpose: String) {
+        _state.update {
+            it.copy(task = it.task.copy())
+        }
         // 나중에 API 연결
 
         viewModelScope.launch {

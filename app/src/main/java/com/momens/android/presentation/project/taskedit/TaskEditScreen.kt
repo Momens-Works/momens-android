@@ -64,15 +64,12 @@ fun TaskEditRoute(
     TaskEditScreen(
         paddingValues = paddingValues,
         state = state,
-        onStatusClick = viewModel::onStatusClick,
-        onStatusDismiss = viewModel::onStatusDismiss,
         onStatusChange = viewModel::changeStatus,
         onRoleSelect = viewModel::changeRole,
         onPriorityChange = viewModel::changePriority,
-        onAssigneeClick = viewModel::onAssigneeClick,
-        onAssigneeDismiss = viewModel::onAssigneeDismiss,
         onAssigneeChange = viewModel::updateAssignee,
         onAssigneeSearchClick = viewModel::getAssignees,
+        onChecklistTitleChange = viewModel::updateChecklistTitle,
         onChecklistAddClick = viewModel::addChecklistItem,
         onCheckedChange = viewModel::changeCheck,
         onChecklistClearClick = viewModel::clearChecklistItem,
@@ -84,19 +81,16 @@ fun TaskEditRoute(
 @Composable
 private fun TaskEditScreen(
     state: TaskEditState,
-    onStatusClick: () -> Unit,
-    onStatusDismiss: () -> Unit,
     onStatusChange: (MomensStatusEditType) -> Unit,
     onRoleSelect: (TaskRole) -> Unit,
     onPriorityChange: (ImportantLevel) -> Unit,
-    onAssigneeClick: () -> Unit,
-    onAssigneeDismiss: () -> Unit,
     onAssigneeChange: (Assignee) -> Unit,
     onAssigneeSearchClick: (String) -> Unit,
     onChecklistAddClick: () -> Unit,
     onCheckedChange: (String, Boolean) -> Unit,
+    onChecklistTitleChange: (String, String) -> Unit,
     onChecklistClearClick: (String) -> Unit,
-    onSaveClick: () -> Unit,
+    onSaveClick: (String, String) -> Unit,
     onAssigneeDeleteClick: () -> Unit,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
@@ -106,6 +100,9 @@ private fun TaskEditScreen(
 
     val task = state.task
 
+    val titleState = remember { TextFieldState(task.titleState) }
+    val purposeState = remember { TextFieldState(task.purposeState) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -113,7 +110,7 @@ private fun TaskEditScreen(
     ) {
         MomensHeader(
             text = state.pageTitle,
-            onBackClick = onSaveClick,
+            onBackClick = { onSaveClick(titleState.text.toString(), purposeState.text.toString()) },
         )
 
         LazyColumn(
@@ -126,10 +123,10 @@ private fun TaskEditScreen(
 
             item {
                 TaskEditTitleSection(
-                    titleState = task.titleState,
+                    titleState = titleState,
                     status = task.status,
                     maxLength = 15,
-                    onStatusClick = onStatusClick
+                    onStatusClick = { isStatusClicked = true },
                 )
             }
 
@@ -142,7 +139,7 @@ private fun TaskEditScreen(
                     assigneeName = task.assignee?.name ?: "미지정",
                     onRoleSelect = onRoleSelect,
                     onPrioritySelect = onPriorityChange,
-                    onAssigneeClick = onAssigneeClick,
+                    onAssigneeClick = { isAssigneeClicked = true },
                     modifier = Modifier,
                 )
             }
@@ -151,7 +148,7 @@ private fun TaskEditScreen(
 
             item {
                 TaskEditPurposeSection(
-                    state = task.purposeState,
+                    state = purposeState,
                     placeholder = "목적을 입력해주세요.",
                     modifier = Modifier,
                     maxLength = 300,
@@ -166,6 +163,7 @@ private fun TaskEditScreen(
                     totalCount = task.checklistTotalCount,
                     rules = task.checklist,
                     onAddClick = onChecklistAddClick,
+                    onTitleChange = onChecklistTitleChange,
                     onCheckedChange = onCheckedChange,
                     onClearClick = onChecklistClearClick,
                     modifier = Modifier,
@@ -181,8 +179,8 @@ private fun TaskEditScreen(
     if (isStatusClicked) {
         TaskEditStatusBottomSheet(
             status = task.status,
-            onStatusChange =  onStatusChange,
-            onDismiss = onAssigneeDismiss
+            onStatusChange = onStatusChange,
+            onDismiss = { isStatusClicked = false },
         )
     }
 
@@ -193,7 +191,7 @@ private fun TaskEditScreen(
             state = searchState,
             selectedAssignee = task.assignee,
             assignees = state.assignees,
-            onDismiss = onStatusDismiss,
+            onDismiss = { isAssigneeClicked = false },
             onAssigneeChange = onAssigneeChange,
             onDeleteClick = onAssigneeDeleteClick,
             onSearchClick = onAssigneeSearchClick,
@@ -205,7 +203,7 @@ private fun TaskEditScreen(
 @Composable
 private fun TaskEditScreenPreview() {
     MomensTheme {
-        var state by remember { mutableStateOf(TaskEditState.fake) }
+        var state by remember { mutableStateOf(TaskEditState.Fake) }
 
         TaskEditScreen(
             paddingValues = PaddingValues(0.dp),
@@ -217,13 +215,10 @@ private fun TaskEditScreenPreview() {
             onChecklistAddClick = {},
             onCheckedChange = { _, _ -> },
             onChecklistClearClick = {},
-            onSaveClick = {},
+            onSaveClick = { _, _ -> },
             onAssigneeDeleteClick = {},
             onAssigneeSearchClick = {},
-            onStatusClick = {},
-            onStatusDismiss = {},
-            onAssigneeClick = {},
-            onAssigneeDismiss = {}
+            onChecklistTitleChange = { _, _ -> },
         )
     }
 }

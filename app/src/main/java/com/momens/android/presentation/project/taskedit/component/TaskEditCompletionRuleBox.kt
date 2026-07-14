@@ -12,10 +12,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
@@ -33,12 +37,22 @@ import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 @Composable
 fun TaskEditCompletionRuleBox(
     rule: ChecklistItemState,
+    onTitleChange: (String, String) -> Unit,
     onCheckedChange: (String, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val iconRes = if (rule.isChecked) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
-    val iconTint = if (rule.isChecked) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
+    val titleState = remember(rule.id) { TextFieldState(rule.title) }
+
+    LaunchedEffect(titleState) {
+        snapshotFlow { titleState.text.toString() }
+            .collect { text ->
+                onTitleChange(rule.id, text)
+            }
+    }
+
+    val iconRes = if (rule.completed) R.drawable.ic_checkbox_fill else R.drawable.ic_checkbox_empty
+    val iconTint = if (rule.completed) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
 
     Row(
         modifier = modifier
@@ -65,9 +79,9 @@ fun TaskEditCompletionRuleBox(
             modifier = Modifier
                 .weight(1f)
                 .noRippleToggleable(
-                    value = rule.isChecked,
+                    value = rule.completed,
                     role = Role.Checkbox,
-                    onValueChange = { checked -> onCheckedChange(rule.itemId, checked) },
+                    onValueChange = { checked -> onCheckedChange(rule.id, checked) },
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -80,7 +94,7 @@ fun TaskEditCompletionRuleBox(
             )
 
             BasicTextField(
-                state = rule.title,
+                state = titleState,
                 modifier = Modifier
                     .fillMaxWidth(),
                 textStyle = MomensTheme.typography.bodyM12,
@@ -92,7 +106,7 @@ fun TaskEditCompletionRuleBox(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Box(modifier = Modifier.weight(1f)) {
-                            if (rule.title.text.isEmpty()) {
+                            if (rule.title.isEmpty()) {
                                 Text(
                                     text = "완료기준을 입력해주세요.",
                                     style = MomensTheme.typography.bodyM12,
@@ -113,7 +127,7 @@ fun TaskEditCompletionRuleBox(
             modifier = Modifier
                 .size(14.dp)
                 .noRippleClickable(
-                    onClick = { onClearClick(rule.itemId) },
+                    onClick = { onClearClick(rule.id) },
                 ),
         )
     }
@@ -131,15 +145,17 @@ private fun TaskEditCompletionRuleBoxPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(itemId = "1", title = writeState, isChecked = true),
+                rule = ChecklistItemState(id = "1", title = writeState.text.toString(), completed = true),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
+                onTitleChange = { _, _ -> }
             )
 
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(itemId = "2", title = exampleState, isChecked = false),
+                rule = ChecklistItemState(id = "2", title = exampleState.text.toString(), completed = false),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
+                onTitleChange = { _, _ -> }
             )
         }
     }

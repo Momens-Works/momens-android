@@ -17,8 +17,8 @@ data class TaskEditState(
     val isSaving: Boolean = false,
 ) {
     companion object {
-        val fake = TaskEditState(
-            task = Task.fake,
+        val Fake = TaskEditState(
+            task = Task.Fake,
             assignees = persistentListOf(
                 Assignee(id = "1", name = "강채원", url = null),
                 Assignee(id = "2", name = "김민지", url = null),
