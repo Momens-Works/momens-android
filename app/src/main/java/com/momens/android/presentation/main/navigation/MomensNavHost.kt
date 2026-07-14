@@ -34,13 +34,20 @@ fun MomensNavHost(
             navigateToTask = appState::navigateToTask,
         )
         briefNavGraph(paddingValues = paddingValues)
-        taskNavGraph(paddingValues = paddingValues)
+        taskNavGraph(
+            paddingValues = paddingValues,
+            navigateToTaskDetail = appState::navigateToTaskDetail,
+        )
         taskDetailNavGraph(paddingValues = paddingValues)
         taskEditNavGraph(paddingValues = paddingValues)
         signInNavGraph(
             paddingValues = paddingValues,
             navigateToSignal = appState::navigateToSignal,
         )
-        splashNavGraph(paddingValues = paddingValues)
+        splashNavGraph(
+            paddingValues = paddingValues,
+            navigateToSignal = appState::navigateToSignal,
+            navigateToSignIn = appState::navigateToSignIn,
+        )
     }
 }

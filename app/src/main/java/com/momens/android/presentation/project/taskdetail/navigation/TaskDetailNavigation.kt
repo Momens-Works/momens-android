@@ -10,13 +10,16 @@ import com.momens.android.presentation.project.taskdetail.TaskDetailRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TaskDetail : Route
+data class TaskDetail(
+    val taskId: String,
+) : Route
 
 fun NavController.navigateToTaskDetail(
+    taskId: String,
     navOptions: NavOptions? = null,
 ) {
     navigate(
-        route = TaskDetail,
+        route = TaskDetail(taskId = taskId),
         navOptions = navOptions,
     )
 }
@@ -25,8 +28,6 @@ fun NavGraphBuilder.taskDetailNavGraph(
     paddingValues: PaddingValues,
 ) {
     composable<TaskDetail> {
-        TaskDetailRoute(
-            paddingValues = paddingValues,
-        )
+        TaskDetailRoute(paddingValues = paddingValues)
     }
 }

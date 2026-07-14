@@ -23,10 +23,12 @@ fun NavController.navigateToTask(
 
 fun NavGraphBuilder.taskNavGraph(
     paddingValues: PaddingValues,
+    navigateToTaskDetail: (String) -> Unit,
 ) {
     composable<Task> {
         TaskRoute(
             paddingValues = paddingValues,
+            navigateToTaskDetail = navigateToTaskDetail,
         )
     }
 }

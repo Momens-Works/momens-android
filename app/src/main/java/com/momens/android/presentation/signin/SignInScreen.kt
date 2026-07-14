@@ -1,26 +1,34 @@
 package com.momens.android.presentation.signin
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.R
 import com.momens.android.core.auth.google.rememberGoogleSignInLauncher
 import com.momens.android.core.common.extension.collectSideEffect
 import com.momens.android.core.common.state.UiState
+import com.momens.android.core.designsystem.component.button.MomensCtaButton
 import com.momens.android.core.designsystem.component.logo.MomensLogo
+import com.momens.android.core.designsystem.component.type.MomensCtaType
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.signin.component.SignInBottomContent
 
 @Composable
 fun SignInRoute(
@@ -62,24 +70,55 @@ private fun SignInScreen(
             .fillMaxSize()
             .background(color = MomensTheme.colors.primary100)
             .padding(paddingValues),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.weight(145f))
 
         MomensLogo(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
         )
 
-        Spacer(modifier = Modifier.weight(273f))
+        Column(
+            modifier = Modifier.weight(382f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.weight(273f))
 
-        SignInBottomContent(
-            modifier = Modifier
-                .padding(horizontal = 20.dp),
-            isGoogleLoginEnabled = isGoogleLoginEnabled,
-            onGoogleLoginClick = onGoogleLoginClick,
-        )
+            MomensCtaButton(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                onClick = onGoogleLoginClick,
+                type = MomensCtaType.LOGIN,
+                enabled = isGoogleLoginEnabled,
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_google),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                    )
 
-        Spacer(modifier = Modifier.weight(22f))
+                    Text(
+                        text = "Continue with Google",
+                        color = MomensTheme.colors.gray700,
+                        style = MomensTheme.typography.bodyB16,
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.weight(15f))
+
+            Text(
+                text = "계속하면 서비스 약관과 개인정보 처리방침에 동의하게 됩니다.",
+                modifier = Modifier.padding(horizontal = 20.dp),
+                color = MomensTheme.colors.gray200,
+                style = MomensTheme.typography.captionM10,
+            )
+
+            Spacer(modifier = Modifier.weight(22f))
+        }
     }
 }
 
@@ -87,12 +126,10 @@ private fun SignInScreen(
 @Composable
 private fun SignInScreenPreview() {
     MomensTheme {
-        Scaffold { innerPadding ->
-            SignInScreen(
-                paddingValues = innerPadding,
-                isGoogleLoginEnabled = true,
-                onGoogleLoginClick = {},
-            )
-        }
+        SignInScreen(
+            paddingValues = PaddingValues(),
+            isGoogleLoginEnabled = true,
+            onGoogleLoginClick = {},
+        )
     }
 }
