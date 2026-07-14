@@ -15,9 +15,9 @@ Your job:
 Important project context:
 - This is an Android Jetpack Compose project.
 - The project uses Kotlin, MVVM, Hilt, ViewModel, StateFlow, and MomensTheme.
-- Compose work should follow the momens-compose skill.
-- General Compose rules are documented in `.agents/skills/momens-compose/references/compose-basic-flow.md`.
-- Momens-specific rules are documented in `.agents/skills/momens-compose/references/momens-project-flow.md`.
+- Compose work should follow the Momens Android guide in `.agents/.skills/momens-android/`.
+- General Compose rules are documented in `.agents/.skills/momens-android/references/compose-basic-flow.md`.
+- Momens-specific rules are documented in `.agents/.skills/momens-android/references/momens-project-flow.md`.
 
 Review checklist:
 - Is state owned by ViewModel rather than Composable?

@@ -4,7 +4,9 @@ This project is an Android application built with Jetpack Compose.
 
 When an AI agent writes or modifies Android or Compose-related code, it must follow the Momens conventions documented in this repository.
 
-Codex should use the `momens-android` skill. Other agents, including Claude, should read the same skill and reference files directly.
+Codex should use the `momens-android` skill for Android/Compose work and the
+`momens-workflow` skill for task, branch, commit, and PR workflow. Other agents,
+including Claude, should read the same skill and reference files directly.
 
 ## Project Context
 
@@ -33,6 +35,12 @@ For Android and Compose work, use this guide:
 .agents/.skills/momens-android/SKILL.md
 ```
 
+For Momens task, branch, commit, PR, and GitHub migration workflow, use this guide:
+
+```text
+.agents/.skills/momens-workflow/SKILL.md
+```
+
 Use these documents as the source of truth for Compose work:
 
 ```text
@@ -57,7 +65,7 @@ Use these documents as the source of truth for Compose work:
 When an AI agent writes a PR title, use this format:
 
 ```text
-[TYPE/#issue-number] Summary
+[TYPE/MOM-0000] Summary
 ```
 
 `TYPE` must be uppercase.
@@ -65,8 +73,11 @@ When an AI agent writes a PR title, use this format:
 Example:
 
 ```text
-[FEAT/#31] FileListItem 컴포넌트 구현
+[FEAT/MOM-0735] FileListItem 컴포넌트 구현
 ```
+
+Work management is handled in Momens. Create and reference Momens tasks
+(`MOM-0000`) instead of GitHub issues for new work.
 
 ## Current Project Layout
 
@@ -75,21 +86,27 @@ Momens/
 ├── AGENTS.md
 ├── .agents/
 │   └── .skills/
-│       └── momens-android/
-│           ├── SKILL.md
-│           └── references/
-│               ├── compose-basic-flow.md
-│               └── momens-project-flow.md
+│       ├── momens-android/
+│       │   ├── SKILL.md
+│       │   └── references/
+│       │       ├── compose-basic-flow.md
+│       │       └── momens-project-flow.md
+│       └── momens-workflow/
+│           └── SKILL.md
 ├── .codex/
 │   ├── config.toml
 │   └── agents/
 │       ├── momens-explorer.toml
-│       └── momens-reviewer.toml
+│       ├── momens-reviewer.toml
+│       ├── code-reviewer.toml
+│       └── pr-writer.toml
 ├── .claude/
 │   ├── config.toml
 │   └── agents/
 │       ├── momens-explorer.toml
-│       └── momens-reviewer.toml
+│       ├── momens-reviewer.toml
+│       ├── code-reviewer.toml
+│       └── pr-writer.toml
 │
 ├── app/
 │   └── src/main/java/com/momens/android/
