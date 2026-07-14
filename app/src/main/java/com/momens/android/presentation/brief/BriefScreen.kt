@@ -139,35 +139,6 @@ private fun BriefScreen(
     }
 }
 
-@Composable
-private fun BriefStateScaffold(
-    paddingValues: PaddingValues,
-    onProfileClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MomensTheme.colors.uiBg)
-            .padding(paddingValues),
-    ) {
-        MomensDefaultHeader(
-            onProfileClick = onProfileClick,
-            backgroundColor = MomensTheme.colors.uiBg,
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            contentAlignment = Alignment.Center,
-        ) {
-            content()
-        }
-    }
-}
-
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
 private fun BriefScreenPreview() {
@@ -176,7 +147,6 @@ private fun BriefScreenPreview() {
             paddingValues = PaddingValues(),
             uiState = SampleBriefUiState,
             avatarUrl = null,
-            onProfileClick = {},
             onFilterClick = {},
             onSummaryMoreClick = {},
             onSummaryFoldClick = {},
