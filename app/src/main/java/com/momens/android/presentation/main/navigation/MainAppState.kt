@@ -12,14 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.momens.android.presentation.brief.navigation.navigateToBrief
 import com.momens.android.presentation.main.type.MainTab
+import com.momens.android.presentation.project.task.navigation.navigateToTask
+import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
+import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
 import com.momens.android.presentation.signal.navigation.Signal
 import com.momens.android.presentation.signal.navigation.navigateToSignal
 import com.momens.android.presentation.signin.navigation.navigateToSignIn
 import com.momens.android.presentation.splash.navigation.navigateToSplash
-import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
-import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
-import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
-import com.momens.android.presentation.project.task.navigation.navigateToTask
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -102,12 +101,12 @@ class MainAppState(
         navController.navigateToTask(navOptions = navOptions)
     }
 
-    fun navigateToTaskDetail(navOptions: NavOptions? = keepStackNavOptions) {
-        navController.navigateToTaskDetail(navOptions = navOptions)
+    fun navigateToTaskDetail(taskId: String, navOptions: NavOptions? = keepStackNavOptions) {
+        navController.navigateToTaskDetail(taskId = taskId, navOptions = navOptions)
     }
 
-    fun navigateToTaskEdit(taskEdit: TaskEdit, navOptions: NavOptions? = keepStackNavOptions) {
-        navController.navigateToTaskEdit(taskEdit = taskEdit, navOptions = navOptions)
+    fun navigateToTaskEdit(taskId: String, navOptions: NavOptions? = keepStackNavOptions) {
+        navController.navigateToTaskEdit(taskId = taskId, navOptions = navOptions)
     }
 
     fun navigateUp() {

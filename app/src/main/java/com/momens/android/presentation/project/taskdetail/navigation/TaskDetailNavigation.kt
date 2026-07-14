@@ -7,20 +7,19 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.momens.android.core.common.navigation.Route
 import com.momens.android.presentation.project.taskdetail.TaskDetailRoute
-import com.momens.android.presentation.project.taskdetail.model.TaskDetailModel
-import com.momens.android.presentation.project.taskedit.model.AssigneeInfo
-import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
-import com.momens.android.presentation.project.taskedit.navigation.TaskEditChecklistItem
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object TaskDetail : Route
+data class TaskDetail(
+    val taskId: String,
+) : Route
 
 fun NavController.navigateToTaskDetail(
+    taskId: String,
     navOptions: NavOptions? = null,
 ) {
     navigate(
-        route = TaskDetail,
+        route = TaskDetail(taskId = taskId),
         navOptions = navOptions,
     )
 }
@@ -28,7 +27,7 @@ fun NavController.navigateToTaskDetail(
 fun NavGraphBuilder.taskDetailNavGraph(
     paddingValues: PaddingValues,
     navigateUp: () -> Unit,
-    navigateToTaskEdit: (TaskDetailModel) -> Unit,
+    navigateToTaskEdit: (String) -> Unit,
 ) {
     composable<TaskDetail> {
         TaskDetailRoute(
@@ -38,16 +37,3 @@ fun NavGraphBuilder.taskDetailNavGraph(
         )
     }
 }
-
-fun TaskDetailModel.toTaskEditArgs(): TaskEdit = TaskEdit(
-    taskId = id,
-    title = title,
-    role = role,
-    assignee = assignee?.let { AssigneeInfo(id = it.id, name = it.name, url = it.avatarUrl) },
-    priority = priority,
-    status = status,
-    purpose = purpose,
-    checklist = checklist.items.map { item ->
-        TaskEditChecklistItem(itemId = item.id, title = item.title, isChecked = item.completed)
-    },
-)

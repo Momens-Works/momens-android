@@ -6,9 +6,10 @@ import com.momens.android.core.designsystem.component.type.ImportantTone
 
 @Immutable
 data class TaskItemData(
-    val text: String,
-    val label: String,
-    val count: String,
-    val level: ImportantLevel,
-    val tone: ImportantTone
+    val id: String,
+    val title: String,
+    val role: MomensTaskButtonType,
+    val priority: ImportantLevel,
+    val materialCount: Int,
+    val tone: ImportantTone,
 )

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.input.MomensCountInput
 import com.momens.android.core.designsystem.component.tag.MomensTaskTag
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
@@ -22,6 +23,7 @@ fun TaskEditTitleSection(
     status: MomensStatusEditType,
     modifier: Modifier = Modifier,
     maxLength: Int = 15,
+    onStatusClick: () -> Unit,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -39,13 +41,13 @@ fun TaskEditTitleSection(
         MomensTaskTag(
             type = status,
             modifier = Modifier
-                .padding(vertical = 4.dp),
+                .padding(vertical = 4.dp)
+                .noRippleClickable(onClick = onStatusClick),
         )
     }
 }
 
-
-@Preview(showBackground = true, heightDp = 33)
+@Preview(showBackground = true)
 @Composable
 private fun TaskEditTitleSectionPreview() {
     MomensTheme {
@@ -54,6 +56,7 @@ private fun TaskEditTitleSectionPreview() {
         TaskEditTitleSection(
             titleState = normalState,
             status = MomensStatusEditType.TODO,
+            onStatusClick = {},
         )
     }
 }

@@ -1,6 +1,9 @@
 package com.momens.android.presentation.project.taskdetail.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.navigation.toRoute
+import com.momens.android.presentation.project.taskdetail.navigation.TaskDetail
 import com.momens.android.presentation.project.taskdetail.state.TaskDetailSideEffect
 import com.momens.android.presentation.project.taskdetail.state.TaskDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +17,10 @@ import kotlinx.coroutines.flow.update
 
 @HiltViewModel
 class TaskDetailViewModel @Inject constructor(
-) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    ) : ViewModel() {
+    val taskId: String = savedStateHandle.toRoute<TaskDetail>().taskId
+
     private val _state = MutableStateFlow(TaskDetailState.Fake)
     val state = _state.asStateFlow()
 

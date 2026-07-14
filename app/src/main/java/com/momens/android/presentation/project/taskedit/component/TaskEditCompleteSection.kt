@@ -19,10 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
+import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.taskedit.model.CompletionIdModel
-import com.momens.android.presentation.project.taskedit.model.CompletionRuleModel
+import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -31,9 +31,10 @@ import kotlinx.collections.immutable.persistentListOf
 fun TaskEditCompleteSection(
     completedCount: Int,
     totalCount: Int,
-    rules: ImmutableList<CompletionRuleModel>,
+    rules: ImmutableList<ChecklistItemState>,
     onAddClick: () -> Unit,
-    onCheckedChange: (CompletionIdModel, Boolean) -> Unit,
+    onTitleChange: (String, String) -> Unit,
+    onCheckedChange: (String, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -76,11 +77,11 @@ fun TaskEditCompleteSection(
         }
 
         if (rules.isEmpty()) {
-//            MomensEmptyView(
-//                text = "완료기준이 등록되지 않았어요",
-//                iconColor = MomensTheme.colors.gray100,
-//                textColor = MomensTheme.colors.gray200,
-//            )
+            MomensEmptyView(
+                text = "완료기준이 등록되지 않았어요",
+                iconColor = MomensTheme.colors.gray100,
+                textColor = MomensTheme.colors.gray200,
+            )
         } else {
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -88,11 +89,10 @@ fun TaskEditCompleteSection(
                 rules.forEach { rule ->
                     key(rule.id) {
                         TaskEditCompletionRuleBox(
-                            state = rule.state,
-                            rule = CompletionIdModel(taskId = rule.id.taskId, itemId = rule.id.itemId),
-                            isChecked = rule.isChecked,
-                            onCheckedChange = { id, checked -> onCheckedChange(id, checked) },
-                            onClearClick = { onClearClick(rule.id.itemId)}
+                            rule = rule,
+                            onTitleChange = onTitleChange,
+                            onCheckedChange = { itemId, checked -> onCheckedChange(itemId, checked) },
+                            onClearClick = { onClearClick(rule.id) },
                         )
                     }
                 }
@@ -113,14 +113,15 @@ private fun TaskEditCompleteSectionPreview() {
             totalCount = 4,
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), state = exampleState,   isChecked = false),
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), state = exampleState, isChecked = true),
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"),  state = writeState, isChecked = false),
-                CompletionRuleModel(id = CompletionIdModel(taskId = "1", itemId = "2"), state = writeState, isChecked = true),
+                ChecklistItemState(id = "1", title = exampleState.text.toString(), completed = false),
+                ChecklistItemState(id = "2", title = exampleState.text.toString(), completed = true),
+                ChecklistItemState(id = "3", title = writeState.text.toString(), completed = false),
+                ChecklistItemState(id = "4", title = writeState.text.toString(), completed = true),
             ),
             onAddClick = {},
             onCheckedChange = { _, _ -> },
             onClearClick = {},
+            onTitleChange = { _, _ -> },
         )
     }
 }
@@ -136,6 +137,7 @@ private fun TaskEditCompleteSectionEmptyPreview() {
             rules = persistentListOf(),
             onAddClick = {},
             onCheckedChange = { _, _ -> },
+            onTitleChange = { _, _ -> },
             onClearClick = {},
         )
     }

@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.Momens" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Momens.Starting" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
 </resources>

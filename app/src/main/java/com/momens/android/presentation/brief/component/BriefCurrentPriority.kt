@@ -16,12 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.sectiontitle.MomensSectionTitle
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.brief.model.BriefPriorityUiModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun BriefCurrentPriority(
-    priorities: ImmutableList<String>,
+    priorities: ImmutableList<BriefPriorityUiModel>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -30,8 +31,8 @@ fun BriefCurrentPriority(
     ) {
         MomensSectionTitle(
             title = "현재 우선순위",
-            count = 4.toString(),
-            isEmphasized = true
+            count = priorities.size.toString(),
+            isEmphasized = true,
         )
 
         BriefCurrentPriorityContent(
@@ -42,7 +43,7 @@ fun BriefCurrentPriority(
 
 @Composable
 private fun BriefCurrentPriorityContent(
-    priorities: ImmutableList<String>,
+    priorities: ImmutableList<BriefPriorityUiModel>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -57,9 +58,9 @@ private fun BriefCurrentPriorityContent(
             ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        priorities.forEachIndexed { index, priority ->
+        priorities.forEach { priority ->
             BriefCurrentPriorityItem(
-                order = index + 1,
+                order = priority.rank,
                 priority = priority,
             )
         }
@@ -69,7 +70,7 @@ private fun BriefCurrentPriorityContent(
 @Composable
 private fun BriefCurrentPriorityItem(
     order: Int,
-    priority: String,
+    priority: BriefPriorityUiModel,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -86,7 +87,7 @@ private fun BriefCurrentPriorityItem(
         )
 
         Text(
-            text = priority,
+            text = priority.title,
             color = MomensTheme.colors.gray600,
             style = MomensTheme.typography.bodyM12,
             maxLines = 1,
@@ -101,10 +102,26 @@ private fun BriefCurrentPriorityPreview() {
     MomensTheme {
         BriefCurrentPriority(
             priorities = persistentListOf(
-                "이메일 회원가입 완료율 개선",
-                "이메일 회원가입 완료율 개선",
-                "이메일 회원가입 완료율 개선",
-                "이메일 회원가입 완료율 개선",
+                BriefPriorityUiModel(
+                    rank = 1,
+                    title = "이메일 회원가입 완료율 개선",
+                    taskId = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+                ),
+                BriefPriorityUiModel(
+                    rank = 2,
+                    title = "Android 13+ 권한 요청 플로우 정비",
+                    taskId = "4c8e1f23-a567-4b89-9c01-2d3e4f5a6b7c",
+                ),
+                BriefPriorityUiModel(
+                    rank = 3,
+                    title = "온보딩 이탈 구간 계측 추가",
+                    taskId = "9d0a2b34-c678-4d90-8e12-3f4a5b6c7d8e",
+                ),
+                BriefPriorityUiModel(
+                    rank = 4,
+                    title = "소셜 로그인 제외 범위 QA",
+                    taskId = "1e2f3a45-b789-4c01-9d23-4a5b6c7d8e9f",
+                ),
             ),
         )
     }

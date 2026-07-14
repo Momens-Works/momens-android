@@ -7,13 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.momens.android.presentation.brief.navigation.briefNavGraph
+import com.momens.android.presentation.project.task.navigation.taskNavGraph
+import com.momens.android.presentation.project.taskdetail.navigation.taskDetailNavGraph
+import com.momens.android.presentation.project.taskedit.navigation.taskEditNavGraph
 import com.momens.android.presentation.signal.navigation.signalNavGraph
 import com.momens.android.presentation.signin.navigation.signInNavGraph
 import com.momens.android.presentation.splash.navigation.splashNavGraph
-import com.momens.android.presentation.project.taskdetail.navigation.taskDetailNavGraph
-import com.momens.android.presentation.project.taskdetail.navigation.toTaskEditArgs
-import com.momens.android.presentation.project.taskedit.navigation.taskEditNavGraph
-import com.momens.android.presentation.project.task.navigation.taskNavGraph
 
 @Composable
 fun MomensNavHost(
@@ -30,19 +29,32 @@ fun MomensNavHost(
         startDestination = appState.startDestination,
         modifier = modifier,
     ) {
-        signalNavGraph(paddingValues = paddingValues)
+        signalNavGraph(
+            paddingValues = paddingValues,
+            navigateToTask = appState::navigateToTask,
+        )
         briefNavGraph(paddingValues = paddingValues)
-        taskNavGraph(paddingValues = paddingValues)
+        taskNavGraph(
+            paddingValues = paddingValues,
+            navigateToTaskDetail = appState::navigateToTaskDetail,
+        )
+        taskEditNavGraph(
+            paddingValues = paddingValues,
+            navigateUp = appState::navigateUp,
+        )
         taskDetailNavGraph(
             paddingValues = paddingValues,
             navigateUp = appState::navigateUp,
-            navigateToTaskEdit = { taskDetail -> appState.navigateToTaskEdit(taskDetail.toTaskEditArgs()) },
+            navigateToTaskEdit = { taskId -> appState.navigateToTaskEdit(taskId) },
         )
-        taskEditNavGraph(paddingValues = paddingValues)
         signInNavGraph(
             paddingValues = paddingValues,
             navigateToSignal = appState::navigateToSignal,
         )
-        splashNavGraph(paddingValues = paddingValues)
+        splashNavGraph(
+            paddingValues = paddingValues,
+            navigateToSignal = appState::navigateToSignal,
+            navigateToSignIn = appState::navigateToSignIn,
+        )
     }
 }

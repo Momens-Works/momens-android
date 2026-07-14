@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.taskedit.component
+package com.momens.android.presentation.project.taskedit.component.assignee
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.project.taskedit.model.AssigneeInfo
+import com.momens.android.presentation.project.taskedit.component.TaskEditPeopleListItem
+import com.momens.android.presentation.project.taskedit.model.Assignee
 
 
 @Composable
 fun TaskEditAssigneeSection(
-    assignee: AssigneeInfo?,
-    onDeleteClick: (String) -> Unit,
+    assignee: Assignee?,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Column(
@@ -34,8 +35,7 @@ fun TaskEditAssigneeSection(
         if (assignee != null) {
             TaskEditPeopleListItem(
                 text = assignee.name,
-                onClick = { onDeleteClick(assignee.id) },
-                onDeleteClick = { onDeleteClick(assignee.id) },
+                onDeleteClick = onDeleteClick,
                 modifier = Modifier.padding(bottom = 16.dp),
                 isSelected = true,
             )
@@ -58,7 +58,7 @@ private fun TaskEditAssigneeSectionPreview(){
             modifier = Modifier.padding(all = 20.dp)
         ){
             TaskEditAssigneeSection(
-                assignee = AssigneeInfo(
+                assignee = Assignee(
                     id = "1",
                     name = "강채원",
                     url = null

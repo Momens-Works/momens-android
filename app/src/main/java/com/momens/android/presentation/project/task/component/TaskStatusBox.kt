@@ -1,5 +1,6 @@
 package com.momens.android.presentation.project.task.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.project.task.model.MomensTaskButtonType
 import com.momens.android.presentation.project.task.model.TaskItemData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -37,18 +39,16 @@ fun TaskStatusBox(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        tasks.forEachIndexed { index, task ->
-            TaskListItem(
-                text = task.text,
-                label = task.label,
-                level = task.level,
-                tone = task.tone,
-                count = task.count,
-                onClick = { onTaskClick(task) },
-            )
-
-            if (index < tasks.lastIndex) {
-                Spacer(modifier = Modifier.height(8.dp))
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            tasks.forEach { task ->
+                TaskListItem(
+                    text = task.title,
+                    label = task.role.text,
+                    level = task.priority,
+                    tone = task.tone,
+                    count = task.materialCount.toString(),
+                    onClick = { onTaskClick(task) },
+                )
             }
         }
     }
@@ -61,17 +61,19 @@ private fun TaskStatusBoxPreview() {
 
         val dummyTasks = persistentListOf(
             TaskItemData(
-                text = "text",
-                label = "Android",
-                count = "4",
-                level = ImportantLevel.LOW,
+                id = "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                title = "text",
+                role = MomensTaskButtonType.FRONTEND,
+                priority = ImportantLevel.LOW,
+                materialCount = 4,
                 tone = ImportantTone.WHITE,
             ),
             TaskItemData(
-                text = "text",
-                label = "Android",
-                count = "3",
-                level = ImportantLevel.HIGH,
+                id = "6f9c1a2b-8e3d-4f5a-9b1c-1d2e3f4a5b6c",
+                title = "text",
+                role = MomensTaskButtonType.FRONTEND,
+                priority = ImportantLevel.HIGH,
+                materialCount = 3,
                 tone = ImportantTone.WHITE,
             ),
         )
@@ -87,7 +89,7 @@ private fun TaskStatusBoxPreview() {
                 TaskStatusBox(
                     type = MomensStatusEditType.TODO,
                     tasks = dummyTasks,
-                    onTaskClick = {}
+                    onTaskClick = {},
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -96,10 +98,11 @@ private fun TaskStatusBoxPreview() {
                     type = MomensStatusEditType.IN_PROGRESS,
                     tasks = persistentListOf(
                         TaskItemData(
-                            text = "text",
-                            label = "Android",
-                            count = "2",
-                            level = ImportantLevel.MEDIUM,
+                            id = "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+                            title = "text",
+                            role = MomensTaskButtonType.FRONTEND,
+                            priority = ImportantLevel.MEDIUM,
+                            materialCount = 2,
                             tone = ImportantTone.WHITE,
                         ),
                     ),
