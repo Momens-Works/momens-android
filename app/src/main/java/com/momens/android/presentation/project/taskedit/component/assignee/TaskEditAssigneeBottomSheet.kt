@@ -57,9 +57,9 @@ fun TaskEditAssigneeBottomSheet(
 
             MomensSearchInput(
                 state = state,
-                onSearch = { query ->
+                onSearch = {
                     isSearched = true
-                    onSearchClick(query)
+                    onSearchClick(state.text.toString())
                 },
                 placeholder = "Search",
             )
