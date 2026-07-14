@@ -24,16 +24,16 @@ fun SignalSummaryModel.toUiModel(): SignalCardUiModel = SignalCardUiModel(
     id = id,
     type = type.toUiType(),
     title = title,
-    impact = impact,
-    minsuSuggestion = minsuSuggestion,
+    impact = impact ?: "-",
+    minsuSuggestion = minsuSuggestion ?: "-",
 )
 
 fun SignalDetailModel.toUiModel(): SignalCardUiModel = SignalCardUiModel(
     id = id,
     type = type.toUiType(),
     title = title,
-    impact = impact,
-    minsuSuggestion = minsuSuggestion,
+    impact = impact ?: "-",
+    minsuSuggestion = minsuSuggestion ?: "-",
 )
 
 private fun SignalTypeModel.toUiType(): SignalTagType = when (this) {

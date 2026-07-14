@@ -29,19 +29,12 @@ class SignalViewModel @Inject constructor(
     val sideEffect = _sideEffect.asSharedFlow()
 
     init {
-        viewModelScope.launch {
-            // TODO: 로그인 연동 붙으면 제거. 로그인 API가 아직 없어 Signal API만 임시 토큰으로 호출 확인하는 용도.
-            tokenManager.saveTokens(
-                accessToken = TEMP_ACCESS_TOKEN,
-                refreshToken = TEMP_REFRESH_TOKEN,
-            )
-            loadSignals()
-        }
+        loadSignals()
     }
 
     private fun loadSignals() {
         viewModelScope.launch {
-            signalRepository.getSignals(projectId = TEMP_PROJECT_ID)
+            signalRepository.getSignals(projectId = "a0000000-0000-4000-8000-000000000003")
                 .onSuccess { signalList ->
                     _state.update { currentState ->
                         currentState.copy(
@@ -106,14 +99,5 @@ class SignalViewModel @Inject constructor(
                     _sideEffect.emit(SignalSideEffect.ShowSnackbar(message = "태스크 등록에 실패했습니다."))
                 }
         }
-    }
-
-    private companion object {
-        // TODO: 프로젝트 선택/세션 기능이 붙으면 실제 현재 프로젝트 id로 교체
-        const val TEMP_PROJECT_ID = "a0000000-0000-4000-8000-000000000003"
-
-        // TODO: 실제 로그인 붙으면 제거. 테스트용 accessToken/refreshToken을 여기에 채워서 사용.
-        const val TEMP_ACCESS_TOKEN = "PUT_TEST_ACCESS_TOKEN_HERE"
-        const val TEMP_REFRESH_TOKEN = "PUT_TEST_REFRESH_TOKEN_HERE"
     }
 }
