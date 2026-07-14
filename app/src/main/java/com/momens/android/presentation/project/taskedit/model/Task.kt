@@ -17,7 +17,7 @@ data class Task(
     val priority: ImportantLevel,
     val purposeState: TextFieldState,
     val checklist: PersistentList<ChecklistItemState>,
-){
+) {
     val checklistTotalCount: Int get() = checklist.size
     val checklistCompletedCount: Int get() = checklist.count { it.isChecked }
 
@@ -31,8 +31,16 @@ data class Task(
             priority = ImportantLevel.MEDIUM,
             purposeState = TextFieldState("사용자 인증 플로우 완성"),
             checklist = persistentListOf(
-                ChecklistItemState(itemId = "1", title = TextFieldState(initialText = "로그인 API 연동 완료"), isChecked = true),
-                ChecklistItemState(itemId = "2", title = TextFieldState(initialText = "에러 핸들링 처리"), isChecked = false),
+                ChecklistItemState(
+                    itemId = "1",
+                    title = TextFieldState(initialText = "로그인 API 연동 완료"),
+                    isChecked = true,
+                ),
+                ChecklistItemState(
+                    itemId = "2",
+                    title = TextFieldState(initialText = "에러 핸들링 처리"),
+                    isChecked = false,
+                ),
             ),
         )
     }

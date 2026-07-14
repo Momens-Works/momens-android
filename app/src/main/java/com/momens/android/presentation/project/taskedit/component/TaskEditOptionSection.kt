@@ -28,7 +28,6 @@ import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskedit.model.TaskRole
 
-
 @Composable
 fun TaskEditOptionSection(
     selectedRole: TaskRole,
@@ -90,9 +89,8 @@ fun TaskEditOptionSection(
             ImportantLevel.entries.forEach { priority ->
                 MomensImportantStatus(
                     level = priority,
-                    tone = if (priority == selectedPriority) {ImportantTone.BLUE}
-                        else {ImportantTone.WHITE},
-                    modifier = Modifier.noRippleClickable(onClick = {onPrioritySelect(priority)})
+                    tone = if (priority == selectedPriority) ImportantTone.BLUE else ImportantTone.WHITE,
+                    modifier = Modifier.noRippleClickable(onClick = { onPrioritySelect(priority) }),
                 )
             }
         }
@@ -107,7 +105,7 @@ fun TaskEditOptionSection(
         MomensButton(
             text = assigneeName,
             onClick = onAssigneeClick,
-            type = MomensButtonType.WHITE
+            type = MomensButtonType.WHITE,
         )
     }
 }
@@ -120,8 +118,8 @@ private fun TaskEditOptionSectionPreview() {
         var selectedPriority by remember { mutableStateOf(ImportantLevel.MEDIUM) }
 
         Box(
-            modifier = Modifier.padding(40.dp)
-        ){
+            modifier = Modifier.padding(40.dp),
+        ) {
             TaskEditOptionSection(
                 modifier = Modifier,
                 selectedRole = selectedRole,

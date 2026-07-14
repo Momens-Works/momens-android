@@ -84,7 +84,7 @@ fun MomensSearchInput(
                     tint = MomensTheme.colors.gray600,
                     modifier = Modifier
                         .size(20.dp)
-                        .noRippleClickable(onClick = {onSearch(state.text.toString())}),
+                        .noRippleClickable(onClick = { onSearch(state.text.toString()) }),
                 )
             }
         },

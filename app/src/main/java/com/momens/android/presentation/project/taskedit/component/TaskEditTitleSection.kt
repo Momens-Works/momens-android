@@ -16,7 +16,6 @@ import com.momens.android.core.designsystem.component.tag.MomensTaskTag
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
-
 @Composable
 fun TaskEditTitleSection(
     titleState: TextFieldState,

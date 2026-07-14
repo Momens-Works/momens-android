@@ -121,7 +121,7 @@ private fun TaskEditScreen(
                     titleState = task.titleState,
                     status = task.status,
                     maxLength = 15,
-                    onStatusClick = { isStatusClicked = true }
+                    onStatusClick = { isStatusClicked = true },
                 )
             }
 
@@ -166,15 +166,13 @@ private fun TaskEditScreen(
 
             item { Spacer(modifier = Modifier.height(6.dp)) }
         }
-
     }
-
 
     if (isStatusClicked) {
         TaskEditStatusBottomSheet(
             status = task.status,
-            onStatusChange =  onStatusChange,
-            onDismiss = { isStatusClicked = false }
+            onStatusChange = onStatusChange,
+            onDismiss = { isStatusClicked = false },
         )
     }
 

@@ -30,7 +30,7 @@ fun MomensTaskTag(
             .background(
                 color = MomensTheme.colors.primary10,
                 shape = RoundedCornerShape(20.dp),
-                )
+            )
             .border(
                 border = BorderStroke(width = 1.dp, color = MomensTheme.colors.primary50),
                 shape = RoundedCornerShape(20.dp),
@@ -39,7 +39,6 @@ fun MomensTaskTag(
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-
         Icon(
             painter = painterResource(type.iconRes),
             contentDescription = null,
@@ -82,7 +81,6 @@ private fun MomensTaskTagPreview() {
             MomensTaskTag(
                 type = MomensStatusEditType.BACKLOG,
             )
-
         }
     }
 }

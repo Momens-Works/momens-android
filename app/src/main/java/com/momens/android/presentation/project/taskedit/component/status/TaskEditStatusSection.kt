@@ -33,7 +33,7 @@ fun TaskEditStatusSection(
 
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-        ){
+        ) {
             MomensStatusEditType.entries.forEach { type ->
                 TaskEditStatusEdit(
                     type = type,
@@ -47,14 +47,14 @@ fun TaskEditStatusSection(
 
 @Preview(showBackground = true)
 @Composable
-private fun TaskEditStatusSectionPreview(){
-    MomensTheme{
+private fun TaskEditStatusSectionPreview() {
+    MomensTheme {
         Box(
-            modifier = Modifier.padding(10.dp)
-        ){
+            modifier = Modifier.padding(10.dp),
+        ) {
             TaskEditStatusSection(
                 status = MomensStatusEditType.TODO,
-                onStatusChange = {}
+                onStatusChange = {},
             )
         }
     }

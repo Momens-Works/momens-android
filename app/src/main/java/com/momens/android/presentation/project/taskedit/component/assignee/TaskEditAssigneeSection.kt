@@ -14,16 +14,15 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskedit.component.TaskEditPeopleListItem
 import com.momens.android.presentation.project.taskedit.model.Assignee
 
-
 @Composable
 fun TaskEditAssigneeSection(
     assignee: Assignee?,
     onDeleteClick: () -> Unit,
-    modifier: Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = modifier.fillMaxWidth()
-    ){
+        modifier = modifier.fillMaxWidth(),
+    ) {
         Text(
             text = "현재 담당자",
             style = MomensTheme.typography.bodyB14,
@@ -39,12 +38,12 @@ fun TaskEditAssigneeSection(
                 modifier = Modifier.padding(bottom = 16.dp),
                 isSelected = true,
             )
-        } else{
+        } else {
             Text(
                 text = "현재 담당자가 지정되어있지 않습니다.",
                 style = MomensTheme.typography.bodyM14,
                 color = MomensTheme.colors.gray300,
-                modifier = Modifier.padding(bottom = 20.dp)
+                modifier = Modifier.padding(bottom = 20.dp),
             )
         }
     }
@@ -52,16 +51,16 @@ fun TaskEditAssigneeSection(
 
 @Preview(showBackground = true)
 @Composable
-private fun TaskEditAssigneeSectionPreview(){
-    MomensTheme{
+private fun TaskEditAssigneeSectionPreview() {
+    MomensTheme {
         Column(
-            modifier = Modifier.padding(all = 20.dp)
-        ){
+            modifier = Modifier.padding(all = 20.dp),
+        ) {
             TaskEditAssigneeSection(
                 assignee = Assignee(
                     id = "1",
                     name = "강채원",
-                    url = null
+                    url = null,
                 ),
                 onDeleteClick = {},
             )
@@ -73,6 +72,5 @@ private fun TaskEditAssigneeSectionPreview(){
                 onDeleteClick = {},
             )
         }
-
     }
 }

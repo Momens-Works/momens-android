@@ -28,7 +28,7 @@ fun TaskEditStatusBottomSheet(
 ) {
     MomensBottomSheet(
         onDismiss = onDismiss,
-        modifier = modifier
+        modifier = modifier,
     ) {
         TaskEditStatusSection(
             status = status,

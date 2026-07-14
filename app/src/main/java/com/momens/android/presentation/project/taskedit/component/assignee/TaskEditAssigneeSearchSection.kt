@@ -25,10 +25,10 @@ fun TaskEditAssigneeSearchSection(
     onAssigneeClick: (Assignee) -> Unit,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     Column(
-        modifier = modifier.fillMaxWidth()
-    ){
+        modifier = modifier.fillMaxWidth(),
+    ) {
         Text(
             text = "검색 결과",
             style = MomensTheme.typography.bodyB14,
@@ -39,13 +39,13 @@ fun TaskEditAssigneeSearchSection(
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            if (assignees.isNotEmpty()){
+            if (assignees.isNotEmpty()) {
                 items(
                     items = assignees,
-                    key = { it.id }
-                ){ assignee ->
+                    key = { it.id },
+                ) { assignee ->
                     TaskEditPeopleListItem(
                         text = assignee.name,
                         onClick = { onAssigneeClick(assignee) },
@@ -54,17 +54,16 @@ fun TaskEditAssigneeSearchSection(
                         profileImageUrl = assignee.url,
                     )
                 }
-            }
-            else {
-                item{
+            } else {
+                item {
                     Text(
                         text = "검색결과가 없습니다.",
                         style = MomensTheme.typography.bodyM14,
-                        color = MomensTheme.colors.gray300
+                        color = MomensTheme.colors.gray300,
                     )
                 }
 
-                item{
+                item {
                     Spacer(modifier = Modifier.height(178.dp))
                 }
             }
@@ -81,17 +80,17 @@ private fun TaskEditAssigneeSearchSectionPreview() {
                 Assignee(
                     id = "1",
                     name = "강채원",
-                    url = null
+                    url = null,
                 ),
                 Assignee(
                     id = "2",
                     name = "강채원",
-                    url = null
+                    url = null,
                 ),
                 Assignee(
                     id = "3",
                     name = "강채원",
-                    url = null
+                    url = null,
                 ),
             ),
             selectedAssignee = null,

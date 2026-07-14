@@ -26,7 +26,6 @@ import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-
 @Composable
 fun TaskEditCompleteSection(
     completedCount: Int,
@@ -36,19 +35,19 @@ fun TaskEditCompleteSection(
     onCheckedChange: (String, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     Column(
         modifier = modifier.fillMaxWidth(),
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             MomensSectionTitle(
                 title = "완료기준",
-                count = "${completedCount}/${totalCount}",
+                count = "$completedCount/$totalCount",
                 isEmphasized = true,
             )
 
@@ -57,20 +56,19 @@ fun TaskEditCompleteSection(
             Row(
                 modifier = Modifier.noRippleClickable(onClick = onAddClick),
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_plus),
                     contentDescription = null,
                     tint = MomensTheme.colors.black,
-                    modifier = Modifier.size(16.dp)
-
+                    modifier = Modifier.size(16.dp),
                 )
 
                 Text(
                     text = "기준 추가",
                     style = MomensTheme.typography.bodyM14,
-                    color = MomensTheme.colors.gray800
+                    color = MomensTheme.colors.gray800,
                 )
             }
         }
@@ -83,8 +81,8 @@ fun TaskEditCompleteSection(
             )
         } else {
             Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ){
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
                 rules.forEach { rule ->
                     key(rule.itemId) {
                         TaskEditCompletionRuleBox(
