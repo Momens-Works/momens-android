@@ -15,6 +15,9 @@ data class TaskUiState(
     val title: String = "",
     val description: String = "",
     val sections: ImmutableList<TaskSectionUiModel> = persistentListOf(),
+    val isBottomSheetVisible: Boolean = false,
+    val selectedRole: MomensTaskButtonType? = null,
+    val selectedPriority: ImportantLevel? = null,
 ) {
     companion object {
         private val fakeTasks = persistentListOf(
@@ -70,7 +73,7 @@ sealed interface TaskSideEffect {
     data class ShowActionSnackbar(
         val message: String,
         val description: String,
-        val onAction: () -> Unit,
+        val taskId: String,
     ) : TaskSideEffect
 
     data class ShowSnackbar(val message: String) : TaskSideEffect
