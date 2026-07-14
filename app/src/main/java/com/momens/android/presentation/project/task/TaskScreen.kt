@@ -83,7 +83,8 @@ fun TaskRoute(
 private fun TaskScreen(
     paddingValues: PaddingValues,
     uiState: TaskUiState,
-    onTaskClick: (String) -> Unit,
+   onTaskClick = navigateToTaskDetail,
+      onShowBottomSheet = viewModel::onShowBottomSheet,
     onRegisterClick: (title: String, role: MomensTaskButtonType, priority: ImportantLevel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
