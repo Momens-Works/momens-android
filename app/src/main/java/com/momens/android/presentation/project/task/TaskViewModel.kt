@@ -1,7 +1,5 @@
 package com.momens.android.presentation.project.task
 
-import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.clearText
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.designsystem.component.type.ImportantLevel
@@ -29,45 +27,7 @@ class TaskViewModel @Inject constructor() : ViewModel() {
     private val _sideEffect = MutableSharedFlow<TaskSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
-    val titleState = TextFieldState()
-
-    fun onBottomSheetOpen() {
-        _uiState.update { it.copy(isBottomSheetVisible = true) }
-    }
-
-    fun onBottomSheetDismiss() {
-        titleState.clearText()
-        _uiState.update {
-            it.copy(
-                isBottomSheetVisible = false,
-                selectedRole = null,
-                selectedPriority = null,
-            )
-        }
-    }
-
-    fun onRoleSelect(role: MomensTaskButtonType) {
-        _uiState.update { it.copy(selectedRole = role) }
-    }
-
-    fun onPrioritySelect(priority: ImportantLevel) {
-        _uiState.update { it.copy(selectedPriority = priority) }
-    }
-
-    fun onRegisterClick() {
-        val role = _uiState.value.selectedRole ?: return
-        val priority = _uiState.value.selectedPriority ?: return
-
-        addTask(
-            title = titleState.text.toString(),
-            role = role,
-            priority = priority,
-        )
-
-        onBottomSheetDismiss()
-    }
-
-    private fun addTask(
+    fun addTask(
         title: String,
         role: MomensTaskButtonType,
         priority: ImportantLevel,

@@ -15,9 +15,6 @@ data class TaskUiState(
     val title: String = "",
     val description: String = "",
     val sections: ImmutableList<TaskSectionUiModel> = persistentListOf(),
-    val isBottomSheetVisible: Boolean = false,
-    val selectedRole: MomensTaskButtonType? = null,
-    val selectedPriority: ImportantLevel? = null,
 ) {
     companion object {
         private val fakeTasks = persistentListOf(

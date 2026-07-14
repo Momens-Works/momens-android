@@ -8,11 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,14 +74,9 @@ fun TaskRoute(
 
     TaskScreen(
         paddingValues = paddingValues,
-        uiState = uiState,
-        titleState = viewModel.titleState,
         onTaskClick = navigateToTaskDetail,
-        onBottomSheetOpen = viewModel::onBottomSheetOpen,
-        onBottomSheetDismiss = viewModel::onBottomSheetDismiss,
-        onRoleSelect = viewModel::onRoleSelect,
-        onPrioritySelect = viewModel::onPrioritySelect,
-        onRegisterClick = viewModel::onRegisterClick,
+        uiState = uiState,
+        onRegisterClick = viewModel::addTask,
     )
 }
 
@@ -85,28 +84,28 @@ fun TaskRoute(
 private fun TaskScreen(
     paddingValues: PaddingValues,
     uiState: TaskUiState,
-    titleState: TextFieldState,
     onTaskClick: (String) -> Unit,
-    onBottomSheetOpen: () -> Unit,
-    onBottomSheetDismiss: () -> Unit,
-    onRoleSelect: (MomensTaskButtonType) -> Unit,
-    onPrioritySelect: (ImportantLevel) -> Unit,
-    onRegisterClick: () -> Unit,
+    onRegisterClick: (title: String, role: MomensTaskButtonType, priority: ImportantLevel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var showTaskBottomSheet by remember { mutableStateOf(false) }
+    val titleState = rememberTextFieldState()
+    var selectedRole by remember { mutableStateOf<MomensTaskButtonType?>(null) }
+    var selectedPriority by remember { mutableStateOf<ImportantLevel?>(null) }
+
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(MomensTheme.colors.uiBg)
             .padding(paddingValues),
     ) {
-        Column() {
+        Column {
             MomensDefaultHeader(
                 onProfileClick = {},
                 modifier = Modifier.padding(bottom = 12.dp),
             )
 
-            LazyColumn {
+            LazyColumn(modifier = Modifier.weight(1f)) {
                 item {
                     TaskTitle(
                         title = uiState.title,
@@ -134,23 +133,29 @@ private fun TaskScreen(
         }
 
         MomensFloatingActionButton(
-            onClick = onBottomSheetOpen,
+            onClick = { showTaskBottomSheet = true },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 20.dp, bottom = 80.dp),
         )
+    }
 
-        if (uiState.isBottomSheetVisible) {
-            TaskBottomSheet(
-                titleState = titleState,
-                selectedRole = uiState.selectedRole,
-                selectedPriority = uiState.selectedPriority,
-                onRoleSelect = onRoleSelect,
-                onPrioritySelect = onPrioritySelect,
-                onDismiss = onBottomSheetDismiss,
-                onRegisterClick = onRegisterClick,
-            )
-        }
+    if (showTaskBottomSheet) {
+        TaskBottomSheet(
+            titleState = titleState,
+            selectedRole = selectedRole,
+            selectedPriority = selectedPriority,
+            onRoleSelect = { selectedRole = it },
+            onPrioritySelect = { selectedPriority = it },
+            onDismiss = { showTaskBottomSheet = false },
+            onRegisterClick = {
+                onRegisterClick(titleState.text.toString(), requireNotNull(selectedRole), requireNotNull(selectedPriority))
+                titleState.clearText()
+                selectedRole = null
+                selectedPriority = null
+                showTaskBottomSheet = false
+            },
+        )
     }
 }
 
@@ -158,17 +163,14 @@ private fun TaskScreen(
 @Composable
 private fun TaskScreenPreview() {
     MomensTheme {
-        TaskScreen(
-            paddingValues = PaddingValues(),
-            uiState = TaskUiState.Fake,
-            titleState = rememberTextFieldState(),
-            onTaskClick = {},
-            onBottomSheetOpen = {},
-            onBottomSheetDismiss = {},
-            onRoleSelect = {},
-            onPrioritySelect = {},
-            onRegisterClick = {},
-        )
+        Scaffold { innerPadding ->
+            TaskScreen(
+                paddingValues = innerPadding,
+                uiState = TaskUiState.Fake,
+                onTaskClick = {},
+                onRegisterClick = { _, _, _ -> },
+            )
+        }
     }
 }
 
@@ -176,17 +178,14 @@ private fun TaskScreenPreview() {
 @Composable
 private fun TaskScreenEmptyPreview() {
     MomensTheme {
-        TaskScreen(
-            paddingValues = PaddingValues(),
-            uiState = TaskUiState.FakeEmpty,
-            titleState = rememberTextFieldState(),
-            onTaskClick = {},
-            onBottomSheetOpen = {},
-            onBottomSheetDismiss = {},
-            onRoleSelect = {},
-            onPrioritySelect = {},
-            onRegisterClick = {},
-        )
+        Scaffold { innerPadding ->
+            TaskScreen(
+                paddingValues = innerPadding,
+                uiState = TaskUiState.FakeEmpty,
+                onTaskClick = {},
+                onRegisterClick = { _, _, _ -> },
+            )
+        }
     }
 }
 
