@@ -35,8 +35,8 @@ fun SignalList(
             SignalCard(
                 type = signal.type,
                 title = signal.title,
-                description = signal.description,
-                insightText = signal.insightText,
+                impact = signal.impact,
+                minsuSuggestion = signal.minsuSuggestion,
                 onClick = { onSignalClick(signal) },
             )
         }
@@ -50,18 +50,18 @@ private fun SignalListPreview() {
         SignalList(
             signals = persistentListOf(
                 SignalCardUiModel(
-                    id = 1L,
+                    id = "1",
                     type = SignalTagType.RISK,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
                 SignalCardUiModel(
-                    id = 2L,
+                    id = "2",
                     type = SignalTagType.CHANGE,
                     title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-                    description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    insightText = "내용이 들어갈 공간입니다",
+                    impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+                    minsuSuggestion = "내용이 들어갈 공간입니다",
                 ),
             ),
             onSignalClick = {},
