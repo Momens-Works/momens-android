@@ -1,4 +1,4 @@
-package com.momens.android.core.auth.google
+package com.momens.android.core.network.google
 
 class GoogleSignInCancelledException : Exception("Google login cancelled")
 

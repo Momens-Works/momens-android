@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.R
-import com.momens.android.core.auth.google.rememberGoogleSignInLauncher
+import com.momens.android.core.network.google.rememberGoogleSignInLauncher
 import com.momens.android.core.common.extension.collectSideEffect
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.button.MomensCtaButton
