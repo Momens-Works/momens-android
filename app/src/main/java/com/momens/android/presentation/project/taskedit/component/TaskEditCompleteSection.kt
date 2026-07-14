@@ -87,12 +87,12 @@ fun TaskEditCompleteSection(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ){
                 rules.forEach { rule ->
-                    key(rule.id) {
+                    key(rule.localId) {
                         TaskEditCompletionRuleBox(
                             rule = rule,
                             onTitleChange = onTitleChange,
-                            onCheckedChange = { itemId, checked -> onCheckedChange(itemId, checked) },
-                            onClearClick = { onClearClick(rule.id) },
+                            onCheckedChange = { localId, checked -> onCheckedChange(localId, checked) },
+                            onClearClick = { onClearClick(rule.localId) },
                         )
                     }
                 }
@@ -113,10 +113,10 @@ private fun TaskEditCompleteSectionPreview() {
             totalCount = 4,
             modifier = Modifier.padding(10.dp),
             rules = persistentListOf(
-                ChecklistItemState(id = "1", title = exampleState.text.toString(), completed = false),
-                ChecklistItemState(id = "2", title = exampleState.text.toString(), completed = true),
-                ChecklistItemState(id = "3", title = writeState.text.toString(), completed = false),
-                ChecklistItemState(id = "4", title = writeState.text.toString(), completed = true),
+                ChecklistItemState(id = "1", localId = "1", title = exampleState.text.toString(), completed = false),
+                ChecklistItemState(id = "2", localId = "2", title = exampleState.text.toString(), completed = true),
+                ChecklistItemState(id = "3", localId = "3", title = writeState.text.toString(), completed = false),
+                ChecklistItemState(id = "4", localId = "4", title = writeState.text.toString(), completed = true),
             ),
             onAddClick = {},
             onCheckedChange = { _, _ -> },

@@ -4,7 +4,8 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class ChecklistItemState(
-    val id: String,
+    val id: String?,
+    val localId: String,
     val title: String,
     val completed: Boolean,
 )

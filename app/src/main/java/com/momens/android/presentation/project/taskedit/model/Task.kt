@@ -32,8 +32,8 @@ data class Task(
             priority = ImportantLevel.MEDIUM,
             purposeState = "사용자 인증 플로우 완성",
             checklist = persistentListOf(
-                ChecklistItemState(id = "1", title = "로그인 API 연동 완료", completed = true),
-                ChecklistItemState(id = "2", title = "에러 핸들링 처리", completed = false),
+                ChecklistItemState(id = "1", localId = "1", title = "로그인 API 연동 완료", completed = true),
+                ChecklistItemState(id = "2", localId = "2", title = "에러 핸들링 처리", completed = false),
             ),
         )
     }
