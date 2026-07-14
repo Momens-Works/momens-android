@@ -25,8 +25,8 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 fun SignalCard(
     type: SignalTagType,
     title: String,
-    description: String,
-    insightText: String,
+    impact: String,
+    minsuSuggestion: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -58,7 +58,7 @@ fun SignalCard(
         Spacer(modifier = Modifier.height(2.dp))
 
         Text(
-            text = description,
+            text = impact,
             style = MomensTheme.typography.bodyM12,
             color = MomensTheme.colors.gray500,
             maxLines = 2,
@@ -68,7 +68,7 @@ fun SignalCard(
         Spacer(modifier = Modifier.height(16.dp))
 
         MomensTextBox(
-            text = insightText,
+            text = minsuSuggestion,
             iconResId = R.drawable.ic_minsu,
         )
     }
@@ -81,8 +81,8 @@ private fun SignalCardPreview() {
         SignalCard(
             type = SignalTagType.RISK,
             title = "Android 13+ 권한 요청 플로우에서 이탈 가능성 발견",
-            description = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-            insightText = "내용이 들어갈 공간입니다",
+            impact = "MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
+            minsuSuggestion = "내용이 들어갈 공간입니다",
             onClick = {},
             modifier = Modifier.padding(16.dp),
         )
