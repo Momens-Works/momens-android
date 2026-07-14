@@ -5,9 +5,9 @@ import com.momens.android.core.designsystem.component.type.SignalTagType
 
 @Immutable
 data class SignalCardUiModel(
-    val id: Long,
+    val id: String,
     val type: SignalTagType,
     val title: String,
-    val description: String,
-    val insightText: String,
+    val impact: String,
+    val minsuSuggestion: String,
 )

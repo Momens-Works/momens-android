@@ -60,7 +60,7 @@ private fun EvidenceAccordionList(
     ) {
         items(
             items = evidences,
-            key = { it.id },
+            key = { it.sourceRefId },
         ) { evidence ->
             SignalAccordion(
                 type = evidence.source,
@@ -92,7 +92,7 @@ private fun SignalDetailEvidenceSectionPreview() {
         SignalDetailEvidenceSection(
             evidences = persistentListOf(
                 SignalEvidenceUiModel(
-                    id = 1L,
+                    sourceRefId = "1",
                     source = SignalAccordionType.FIGMA,
                     time = "00분 전",
                     target = "권한 요청 화면",
@@ -100,7 +100,7 @@ private fun SignalDetailEvidenceSectionPreview() {
                     impact = "회원가입 완료율이 떨어질 수 있음",
                 ),
                 SignalEvidenceUiModel(
-                    id = 2L,
+                    sourceRefId = "2",
                     source = SignalAccordionType.FILE,
                     time = "00분 전",
                     target = "권한 요청 화면 기획서",

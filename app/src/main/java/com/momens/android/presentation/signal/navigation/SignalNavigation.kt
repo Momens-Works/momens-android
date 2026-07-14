@@ -6,12 +6,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.momens.android.core.common.navigation.MainTabRoute
-import com.momens.android.core.common.navigation.Route
 import com.momens.android.presentation.signal.SignalRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object Signal :  MainTabRoute
+data object Signal : MainTabRoute
 
 fun NavController.navigateToSignal(
     navOptions: NavOptions? = null,
@@ -24,10 +23,12 @@ fun NavController.navigateToSignal(
 
 fun NavGraphBuilder.signalNavGraph(
     paddingValues: PaddingValues,
+    navigateToTask: () -> Unit,
 ) {
     composable<Signal> {
         SignalRoute(
             paddingValues = paddingValues,
+            navigateToTask = navigateToTask,
         )
     }
 }
