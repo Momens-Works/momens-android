@@ -20,6 +20,6 @@ class SignInRemoteDataSourceImpl @Inject constructor(
     override suspend fun refreshToken(
         request: TokenRefreshRequest,
     ): TokenResponse {
-        return signInService.refreshToken(request)
+        return signInService.getNewAccessToken(request)
     }
 }

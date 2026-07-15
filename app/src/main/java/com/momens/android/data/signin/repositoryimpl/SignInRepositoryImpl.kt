@@ -1,7 +1,5 @@
 package com.momens.android.data.signin.repositoryimpl
 
-import android.util.Log
-import com.momens.android.BuildConfig
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.util.suspendRunCatching
 import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
@@ -11,6 +9,7 @@ import com.momens.android.data.signin.remote.dto.request.SignInTokenRequest
 import com.momens.android.data.signin.remote.dto.request.TokenRefreshRequest
 import com.momens.android.data.signin.repository.SignInRepository
 import javax.inject.Inject
+import retrofit2.HttpException
 
 class SignInRepositoryImpl @Inject constructor(
     private val googleCredentialLocalDataSource: GoogleCredentialLocalDataSource,
@@ -36,11 +35,14 @@ class SignInRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshSession(): Result<Unit> {
-        val result = suspendRunCatching {
-            val refreshToken = requireNotNull(tokenManager.getRefreshToken()) {
-                "저장된 refresh token이 없습니다."
-            }
+        val refreshToken = tokenManager.getRefreshToken()
 
+        if (refreshToken.isNullOrBlank()) {
+            tokenManager.clearTokens()
+            return Result.failure(MissingRefreshTokenException())
+        }
+
+        val result = suspendRunCatching {
             val response = signInRemoteDataSource.refreshToken(
                 request = TokenRefreshRequest(refreshToken = refreshToken),
             )
@@ -51,7 +53,8 @@ class SignInRepositoryImpl @Inject constructor(
             )
         }
 
-        if (result.isFailure) {
+        val failure = result.exceptionOrNull()
+        if (failure is HttpException && failure.code() == HTTP_UNAUTHORIZED) {
             tokenManager.clearTokens()
         }
 
@@ -62,4 +65,12 @@ class SignInRepositoryImpl @Inject constructor(
         googleCredentialLocalDataSource.clearCredentialState().getOrThrow()
         tokenManager.clearTokens()
     }
+
+    private companion object {
+        private const val HTTP_UNAUTHORIZED = 401
+    }
 }
+
+private class MissingRefreshTokenException : IllegalStateException(
+    "저장된 refresh token이 없습니다.",
+)

@@ -14,7 +14,7 @@ interface SignInService {
     ): TokenResponse
 
     @POST("/api/auth/refresh")
-    suspend fun refreshToken(
+    suspend fun getNewAccessToken(
         @Body request: TokenRefreshRequest,
     ): TokenResponse
 }
