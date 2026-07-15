@@ -5,7 +5,7 @@ import com.momens.android.data.signal.remote.dto.response.SignalEvidenceDetailsR
 data class SignalEvidenceDetailsModel(
     val target: String,
     val change: String,
-    val impact: String,
+    val impact: String?,
 )
 
 fun SignalEvidenceDetailsResponse.toModel(): SignalEvidenceDetailsModel = SignalEvidenceDetailsModel(

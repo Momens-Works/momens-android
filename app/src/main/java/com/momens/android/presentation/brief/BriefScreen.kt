@@ -1,6 +1,7 @@
 package com.momens.android.presentation.brief
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,15 +11,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.state.UiState
+import com.momens.android.core.designsystem.component.button.MomensButton
+import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
+import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.brief.component.BriefCurrentPriority
 import com.momens.android.presentation.brief.component.BriefSignalFilterSummary
@@ -36,15 +44,28 @@ fun BriefRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
 
-    BriefScreen(
-        paddingValues = paddingValues,
-        uiState = uiState,
-        avatarUrl = projectContext.avatarUrl,
-        onProfileClick = {},
-        onFilterClick = viewModel::selectSignalFilter,
-        onSummaryMoreClick = viewModel::loadMoreSignalSummary,
-        onSummaryFoldClick = viewModel::foldSignalSummary,
-    )
+    LaunchedEffect(Unit) {
+        viewModel.loadBrief()
+    }
+
+    when (val state = uiState) {
+        UiState.Empty, UiState.Loading -> {
+
+        }
+
+        UiState.Failure -> {
+
+        }
+
+        is UiState.Success -> BriefScreen(
+            paddingValues = paddingValues,
+            uiState = state.data,
+            avatarUrl = projectContext.avatarUrl,
+            onFilterClick = viewModel::selectSignalFilter,
+            onSummaryMoreClick = viewModel::loadMoreSignalSummary,
+            onSummaryFoldClick = viewModel::foldSignalSummary,
+        )
+    }
 }
 
 @Composable
@@ -52,7 +73,6 @@ private fun BriefScreen(
     paddingValues: PaddingValues,
     uiState: BriefUiState,
     avatarUrl: String?,
-    onProfileClick: () -> Unit,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
     onSummaryMoreClick: () -> Unit,
     onSummaryFoldClick: () -> Unit,
@@ -65,7 +85,7 @@ private fun BriefScreen(
             .padding(paddingValues),
     ) {
         MomensDefaultHeader(
-            onProfileClick = onProfileClick,
+            onProfileClick = { },
             backgroundColor = MomensTheme.colors.uiBg,
             avatarUrl = avatarUrl,
         )
@@ -95,14 +115,12 @@ private fun BriefScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            uiState.signalSummary.summary?.let { summary ->
-                BriefSignalSummary(
-                    count = uiState.signalSummary.totalCount,
-                    content = summary,
-                )
+            BriefSignalSummary(
+                count = uiState.signalSummary.totalCount,
+                content = uiState.signalSummary.summary,
+            )
 
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+            Spacer(modifier = Modifier.height(16.dp))
 
             BriefSignalFilterSummary(
                 selectedFilterType = uiState.signalSummary.selectedFilterType,
@@ -134,7 +152,6 @@ private fun BriefScreenPreview() {
             paddingValues = PaddingValues(),
             uiState = SampleBriefUiState,
             avatarUrl = null,
-            onProfileClick = {},
             onFilterClick = {},
             onSummaryMoreClick = {},
             onSummaryFoldClick = {},

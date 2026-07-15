@@ -1,6 +1,7 @@
 package com.momens.android.data
 
 import com.momens.android.data.signal.remote.service.SignalService
+import com.momens.android.data.brief.remote.service.BriefService
 import com.momens.android.data.signin.remote.service.SignInService
 import dagger.Module
 import dagger.Provides
@@ -38,4 +39,10 @@ object ServiceModule {
     fun provideSignalService(
         retrofit: Retrofit,
     ): SignalService = retrofit.create(SignalService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideBriefService(
+        retrofit: Retrofit,
+    ): BriefService = retrofit.create(BriefService::class.java)
 }

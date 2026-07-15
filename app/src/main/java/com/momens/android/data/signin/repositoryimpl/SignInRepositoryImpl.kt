@@ -37,13 +37,7 @@ class SignInRepositoryImpl @Inject constructor(
         )
 
         runCatching {
-            val bootstrapResponse = signInRemoteDataSource.getMobileBootstrap()
-            projectManager.saveProjectContext(
-                projectContext = ProjectContextModel(
-                    projectId = bootstrapResponse.defaultProjectId,
-                    avatarUrl = bootstrapResponse.me.avatarUrl,
-                    ),
-            )
+            syncProjectContext()
         }.onFailure {
             tokenManager.clearTokens()
             projectManager.clearProjectContext()
@@ -68,6 +62,11 @@ class SignInRepositoryImpl @Inject constructor(
                 accessToken = response.accessToken,
                 refreshToken = response.refreshToken,
             )
+
+            // 예전 세션 등으로 projectId가 비어있을 수 있어, 토큰 갱신 시점에도 채워지도록 보장합니다.
+            if (projectManager.currentProjectContext.projectId == null) {
+                syncProjectContext()
+            }
         }
 
         val failure = result.exceptionOrNull()
@@ -76,6 +75,16 @@ class SignInRepositoryImpl @Inject constructor(
         }
 
         return result
+    }
+
+    private suspend fun syncProjectContext() {
+        val bootstrapResponse = signInRemoteDataSource.getMobileBootstrap()
+        projectManager.saveProjectContext(
+            projectContext = ProjectContextModel(
+                projectId = bootstrapResponse.defaultProjectId,
+                avatarUrl = bootstrapResponse.me.avatarUrl,
+            ),
+        )
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {

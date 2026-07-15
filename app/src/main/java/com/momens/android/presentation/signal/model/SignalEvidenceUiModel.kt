@@ -27,7 +27,7 @@ fun SignalEvidenceModel.toUiModel(): SignalEvidenceUiModel = SignalEvidenceUiMod
     time = occurredAt.toRelativeTimeText(),
     target = details.target,
     change = details.change,
-    impact = details.impact,
+    impact = details.impact.orEmpty(),
     sourceUrl = sourceUrl,
 )
 
