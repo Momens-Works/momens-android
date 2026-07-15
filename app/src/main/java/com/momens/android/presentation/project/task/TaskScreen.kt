@@ -43,6 +43,7 @@ fun TaskRoute(
     viewModel: TaskViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
     val globalUiEvent = LocalGlobalUiEventTrigger.current
 
     LaunchedEffect(viewModel) {
@@ -76,6 +77,7 @@ fun TaskRoute(
         paddingValues = paddingValues,
         onTaskClick = navigateToTaskDetail,
         uiState = uiState,
+        avatarUrl = projectContext.avatarUrl,
         onRegisterClick = viewModel::addTask,
     )
 }
@@ -84,6 +86,7 @@ fun TaskRoute(
 private fun TaskScreen(
     paddingValues: PaddingValues,
     uiState: TaskUiState,
+    avatarUrl: String?,
     onTaskClick: (String) -> Unit,
     onRegisterClick: (title: String, role: MomensTaskButtonType, priority: ImportantLevel) -> Unit,
     modifier: Modifier = Modifier,
@@ -102,6 +105,7 @@ private fun TaskScreen(
         Column {
             MomensDefaultHeader(
                 onProfileClick = {},
+                avatarUrl = avatarUrl,
                 modifier = Modifier.padding(bottom = 12.dp),
             )
 
@@ -167,6 +171,7 @@ private fun TaskScreenPreview() {
             TaskScreen(
                 paddingValues = innerPadding,
                 uiState = TaskUiState.Fake,
+                avatarUrl = null,
                 onTaskClick = {},
                 onRegisterClick = { _, _, _ -> },
             )
@@ -182,6 +187,7 @@ private fun TaskScreenEmptyPreview() {
             TaskScreen(
                 paddingValues = innerPadding,
                 uiState = TaskUiState.FakeEmpty,
+                avatarUrl = null,
                 onTaskClick = {},
                 onRegisterClick = { _, _, _ -> },
             )

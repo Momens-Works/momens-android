@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
-import com.momens.android.core.local.TokenManager
+import com.momens.android.core.local.ProjectManager
 import com.momens.android.core.util.successData
 import com.momens.android.data.signal.repository.SignalRepository
 import com.momens.android.presentation.signal.model.toUiModels
@@ -15,22 +15,30 @@ import jakarta.inject.Inject
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SignalViewModel @Inject constructor(
     private val signalRepository: SignalRepository,
-    private val tokenManager: TokenManager,
+    projectManager: ProjectManager,
 ) : ViewModel() {
     private val _state = MutableStateFlow<UiState<SignalState>>(UiState.Loading)
     val state: StateFlow<UiState<SignalState>> = _state.asStateFlow()
 
     private val _sideEffect = MutableSharedFlow<SignalSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
+
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
 
     fun loadSignals() {
         _state.value = UiState.Loading

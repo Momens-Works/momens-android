@@ -62,6 +62,7 @@ Hilt는 Google에서 공식 지원하는 DI 라이브러리이기 때문에 Andr
 🪾 [Git & Branch Convention](https://app.notion.com/p/564ac442a85782e1bc1d0157a2e3695a?source=copy_link)<br/>
 ✍️ [Code Convention](https://app.notion.com/p/844ac442a8578304946101d3459701e5?source=copy_link)<br/>
 📂 [Packaging Convention](https://app.notion.com/p/ffeac442a8578227b59d810fa687e8a5?source=copy_link)<br/>
+🔐 [Debug Keystore Setup](docs/debug-keystore.md)<br/>
 
 <br/>
 
