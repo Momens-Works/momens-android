@@ -4,7 +4,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.momens.android.BuildConfig
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -30,11 +29,11 @@ import kotlinx.coroutines.flow.map
  * ```
  */
 class TokenManagerImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : TokenManager {
 
     @Volatile
-    private var cachedAccessToken: String? = BuildConfig.DEBUG_ACCESS_TOKEN
+    private var cachedAccessToken: String? = null
 
     @Volatile
     private var cachedRefreshToken: String? = BuildConfig.DEBUG_REFRESH_TOKEN
@@ -44,13 +43,12 @@ class TokenManagerImpl @Inject constructor(
         refreshToken: String,
     ) {
         dataStore.edit { preferences ->
-            preferences[KEY_ACCESS_TOKEN] = BuildConfig.DEBUG_ACCESS_TOKEN
+            preferences[KEY_ACCESS_TOKEN] = accessToken
             preferences[KEY_REFRESH_TOKEN] = refreshToken
         }
 
-        cachedAccessToken = BuildConfig.DEBUG_ACCESS_TOKEN
+        cachedAccessToken = accessToken
         cachedRefreshToken = refreshToken
-
     }
 
     override suspend fun getAccessToken(): String? {
@@ -70,7 +68,6 @@ class TokenManagerImpl @Inject constructor(
     }
 
     override suspend fun clearTokens() {
-
         dataStore.edit { preferences ->
             preferences.remove(KEY_ACCESS_TOKEN)
             preferences.remove(KEY_REFRESH_TOKEN)
