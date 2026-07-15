@@ -5,8 +5,10 @@ import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
+import com.momens.android.presentation.project.taskdetail.model.TaskDetailModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Immutable
 data class Task(
@@ -38,3 +40,16 @@ data class Task(
         )
     }
 }
+
+fun TaskDetailModel.toEditTask(): Task = Task(
+    taskId = id,
+    titleState = title,
+    status = status,
+    role = role,
+    assignee = assignee?.let { Assignee(id = it.id, name = it.name, url = it.avatarUrl) },
+    priority = priority,
+    purposeState = purpose ?: "",
+    checklist = checklist.items.map {
+        ChecklistItemState(id = it.id, title = it.title, completed = it.completed)
+    }.toPersistentList(),
+)
