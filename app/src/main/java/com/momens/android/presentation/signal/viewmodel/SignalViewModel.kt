@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.momens.android.presentation.signal.state.SignalSideEffect
 import com.momens.android.presentation.signal.state.SignalState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import javax.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

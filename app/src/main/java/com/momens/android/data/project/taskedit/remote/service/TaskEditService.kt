@@ -1,7 +1,7 @@
 package com.momens.android.data.project.taskedit.remote.service
 
 import com.momens.android.data.project.taskedit.remote.dto.request.TaskEditRequestDto
-import com.momens.android.data.project.taskedit.remote.dto.response.TaskEditMembersResponseDto
+import com.momens.android.data.project.taskedit.remote.dto.response.TaskEditMemberlistResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,5 +20,5 @@ internal interface TaskEditService {
     suspend fun getTaskEditMembers(
         @Path("projectId") projectId: String,
         @Query("query") query: String?,
-    ): TaskEditMembersResponseDto
+    ): TaskEditMemberlistResponseDto
 }

@@ -1,8 +1,9 @@
 package com.momens.android.presentation.project.taskedit.mapper
 
+import com.momens.android.data.project.taskedit.model.Member
 import com.momens.android.data.project.taskedit.remote.dto.request.ChecklistItems
 import com.momens.android.data.project.taskedit.remote.dto.request.TaskEditRequestDto
-import com.momens.android.data.project.taskedit.remote.dto.response.TaskEditMembersResponseDto
+import com.momens.android.data.project.taskedit.remote.dto.response.TaskEditMemberlistResponseDto
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.ChecklistItem
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
@@ -12,7 +13,7 @@ import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import kotlinx.collections.immutable.toPersistentList
 import java.util.UUID
 
-fun TaskEditMembersResponseDto.toModel(): List<Assignee> =
+fun TaskEditMemberlistResponseDto.toModel(): List<Assignee> =
     members.map { member ->
         Assignee(
             id = member.id,
@@ -50,3 +51,5 @@ fun Task.toRequestDto(): TaskEditRequestDto = TaskEditRequestDto(
         ChecklistItems(id = it.id, title = it.title, completed = it.completed)
     },
 )
+
+fun Member.toAssignee(): Assignee = Assignee(id = id, name = name, url = avatarUrl)

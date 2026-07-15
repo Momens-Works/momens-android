@@ -10,7 +10,7 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.data.project.taskedit.repository.TaskEditRepository
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
-import com.momens.android.presentation.project.taskedit.mapper.toModel
+import com.momens.android.presentation.project.taskedit.mapper.toAssignee
 import com.momens.android.presentation.project.taskedit.mapper.toRequestDto
 import com.momens.android.presentation.project.taskedit.mapper.toTask
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
@@ -151,7 +151,17 @@ class TaskEditViewModel @Inject constructor(
                 projectId = "a0000000-0000-4000-8000-000000000003",
                 query = search.ifBlank { null },
             ).onSuccess { response ->
-                _state.update { it.copy(assignees = response.toModel().toImmutableList()) }
+                _state.update {
+                    it.copy(
+                        assignees = response.map { member ->
+                            member.toAssignee()
+                        }.toImmutableList(),
+                    )
+                }
+            }.onFailure { throwable ->
+                _sideEffect.emit(
+                    TaskEditSideEffect.ShowSnackBar(message = throwable.message ?: "담당자 검색에 실패했습니다."),
+                )
             }
         }
     }
@@ -171,7 +181,7 @@ class TaskEditViewModel @Inject constructor(
                 _sideEffect.emit(
                     TaskEditSideEffect.ShowSnackBar(
                         message = "저장에 실패했습니다.",
-                    )
+                    ),
                 )
             }
         }

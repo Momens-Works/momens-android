@@ -8,7 +8,7 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.presentation.project.task.model.MomensTaskButtonType
 import com.momens.android.presentation.project.task.model.TaskItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import javax.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

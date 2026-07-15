@@ -2,7 +2,7 @@ package com.momens.android.data.project.taskedit.remote.datasourceimpl
 
 import com.momens.android.data.project.taskedit.remote.datasource.TaskEditRemoteDataSource
 import com.momens.android.data.project.taskedit.remote.dto.request.TaskEditRequestDto
-import com.momens.android.data.project.taskedit.remote.dto.response.TaskEditMembersResponseDto
+import com.momens.android.data.project.taskedit.remote.dto.response.TaskEditMemberlistResponseDto
 import com.momens.android.data.project.taskedit.remote.service.TaskEditService
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -19,7 +19,7 @@ internal class TaskEditRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTaskEditMembers(projectId: String, query: String?): TaskEditMembersResponseDto {
+    override suspend fun getTaskEditMembers(projectId: String, query: String?): TaskEditMemberlistResponseDto {
         return service.getTaskEditMembers(projectId = projectId, query = query)
     }
 }

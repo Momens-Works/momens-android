@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.momens.android.core.local.TokenManager
 import com.momens.android.presentation.splash.state.SplashSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

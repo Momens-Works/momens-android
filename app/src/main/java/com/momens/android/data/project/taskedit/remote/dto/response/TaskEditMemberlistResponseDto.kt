@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TaskEditMembersResponseDto(
+data class TaskEditMemberlistResponseDto(
     @SerialName("members")
     val members: List<MembersDto>
 )

@@ -6,7 +6,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import jakarta.inject.Singleton
+import javax.inject.Singleton
+
 
 /**
  * DataSource 인터페이스와 구현체를 Hilt에 연결하는 모듈입니다.
