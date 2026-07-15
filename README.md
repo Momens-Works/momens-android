@@ -4,7 +4,7 @@
 > 프로젝트 → 마일스톤 → 작업으로 이어지는 하나의 실행 흐름 위에 결정·리스크·질문·소스 같은 컨텍스트를 함께 연결해, "이 작업이 왜 존재하는지"를 팀 전체가 놓치지 않게 만드는 프로젝트 실행 인터페이스
 
 
-  
+
 <br/>
 
 ## Momens 주요 기능
@@ -12,16 +12,15 @@
 - 담당자 공백·기한 임박·차단 자동 감지 및 위험 배너
 - Signal 기반 이슈 확인, 민수 AI의 요약·액션 제안
 - 결정·리스크·질문·소스 메모리 축적
-- ⌘K 커맨드 팔레트로 빠른 이동/생성
 
 <br/>
 
 ## Contributors
 
-| 🤴남궁혜민<br/>[@hyeminililo](https://github.com/hyeminililo) | 🖌️ 최승재<br/>[@seungjae708](https://github.com/seungjae708) | 🖌️ 안태훈<br/>[@taehoon-An](https://github.com/taehoon-An) | 🖌️ 윤갑유<br/>[@gahbyu](https://github.com/gahbyu) | 🖌️ 최은지<br/>[@chldmswll](https://github.com/chldmswll) |
-| :---: | :---: | :---: | :---: | :---: |
+| 🤴남궁혜민<br/>[@hyeminililo](https://github.com/hyeminililo) |                                           🖌️ 최승재<br/>[@seungjae708](https://github.com/seungjae708)                                            | 🖌️ 안태훈<br/>[@taehoon-An](https://github.com/taehoon-An) |                                                🖌️ 윤갑유<br/>[@gahbyu](https://github.com/gahbyu)                                                 |                                             🖌️ 최은지<br/>[@chldmswll](https://github.com/chldmswll)                                              |
+| :---: |:-----------------------------------------------------------------------------------------------------------------------------------------------:| :---: |:-----------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------:|
 | <img width="170" alt="KakaoTalk_20260715_232638689_02" src="https://github.com/user-attachments/assets/d543130f-4f56-47f5-8bf5-e49b36e1caea" /> | <img width="170" alt="KakaoTalk_20260715_232638689_05" src="https://github.com/user-attachments/assets/6d14f758-a517-45ed-8c09-d0c8fd7e2c55" /> | <img width="170" alt="KakaoTalk_20260715_232638689_01" src="https://github.com/user-attachments/assets/4bb3a702-9483-4bf4-a702-8f648566d4f0" /> | <img width="170" alt="KakaoTalk_20260715_232638689_04" src="https://github.com/user-attachments/assets/e38a6c8e-6fce-4379-af09-125b768c64e2" /> | <img width="170" alt="KakaoTalk_20260715_232638689_03" src="https://github.com/user-attachments/assets/131c7a02-edd0-423e-ae68-c91e4e0c367f" /> |
-| `브리프` `온보딩`| `시그널` `태스크 상세` | `로그인` | `태스크` | `태스크 수정` |
+| `브리프` `온보딩`|                                                                 `시그널` `테스크 상세`                                                                  | `로그인` |                                                                      `테스크`                                                                      |                                                                    `테스크 수정`                                                                     |
 
 
 <br/>
