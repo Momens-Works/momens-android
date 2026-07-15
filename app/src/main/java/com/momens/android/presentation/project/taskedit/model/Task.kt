@@ -3,10 +3,14 @@ package com.momens.android.presentation.project.taskedit.model
 import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.data.project.taskedit.model.ChecklistItemsModel
+import com.momens.android.data.project.taskedit.model.TaskEditModel
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
+import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Immutable
 data class Task(
@@ -38,3 +42,26 @@ data class Task(
         )
     }
 }
+
+fun TaskEdit.toTask(payload: TaskEditPayload): Task = Task(
+    taskId = taskId,
+    titleState = title,
+    status = status,
+    role = role,
+    assignee = payload.assignee,
+    priority = priority,
+    purposeState = purpose.orEmpty(),
+    checklist = payload.checklist.map { it.toChecklistItemState() }.toPersistentList(),
+)
+
+fun Task.toTaskEditModel(): TaskEditModel = TaskEditModel(
+    title = titleState,
+    role = role.name,
+    assigneeId = assignee?.id,
+    priority = priority.name,
+    status = status.name,
+    purpose = purposeState,
+    checklistItems = checklist.map {
+        ChecklistItemsModel(id = it.id, title = it.title, completed = it.completed)
+    },
+)

@@ -25,10 +25,10 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class TaskEditRepositoryModule{
+abstract class TaskEditRepositoryModule{
     @Binds
     @Singleton
-    abstract fun bindTaskEditRepository(
+    internal abstract fun bindTaskEditRepository(
         taskEditRepositoryImpl: TaskEditRepositoryImpl,
     ) : TaskEditRepository
 }

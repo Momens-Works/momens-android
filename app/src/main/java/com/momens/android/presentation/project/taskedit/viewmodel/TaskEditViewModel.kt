@@ -10,10 +10,10 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.data.project.taskedit.repository.TaskEditRepository
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
-import com.momens.android.presentation.project.taskedit.mapper.toAssignee
-import com.momens.android.presentation.project.taskedit.mapper.toRequestDto
-import com.momens.android.presentation.project.taskedit.mapper.toTask
+import com.momens.android.presentation.project.model.toAssignee
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
+import com.momens.android.presentation.project.taskedit.model.toTask
+import com.momens.android.presentation.project.taskedit.model.toTaskEditModel
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
@@ -174,7 +174,7 @@ class TaskEditViewModel @Inject constructor(
         viewModelScope.launch {
             taskEditRepository.patchTaskEdit(
                 taskId = args.taskId,
-                request = _state.value.task.toRequestDto(),
+                request = _state.value.task.toTaskEditModel(),
             ).onSuccess {
                 _sideEffect.emit(TaskEditSideEffect.NavigateUp)
             }.onFailure {

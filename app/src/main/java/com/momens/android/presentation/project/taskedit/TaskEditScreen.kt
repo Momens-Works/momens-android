@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,14 +28,14 @@ import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.SnackbarState
+import com.momens.android.presentation.project.model.Assignee
+import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskedit.component.TaskEditCompleteSection
 import com.momens.android.presentation.project.taskedit.component.TaskEditOptionSection
 import com.momens.android.presentation.project.taskedit.component.TaskEditPurposeSection
 import com.momens.android.presentation.project.taskedit.component.TaskEditTitleSection
 import com.momens.android.presentation.project.taskedit.component.assignee.TaskEditAssigneeBottomSheet
 import com.momens.android.presentation.project.taskedit.component.status.TaskEditStatusBottomSheet
-import com.momens.android.presentation.project.model.Assignee
-import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import com.momens.android.presentation.project.taskedit.viewmodel.TaskEditViewModel
