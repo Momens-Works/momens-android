@@ -31,7 +31,7 @@ enum class MomensStatusEditType(
         iconRes = R.drawable.ic_done,
     ),
     CANCELED(
-        key = "canceled",
+        key = "cancelled",
         label = "취소",
         iconRes = R.drawable.ic_canceled,
     ),

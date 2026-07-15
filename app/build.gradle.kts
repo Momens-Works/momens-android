@@ -57,6 +57,12 @@ android {
                 "BASE_URL",
                 properties.getProperty("debug.base.url"),
             )
+
+            buildConfigField(
+                "String",
+                "DEBUG_ACCESS_TOKEN",
+                "\"${properties.getProperty("debug.access.token", "")}\"",
+            )
         }
 
         release {
@@ -95,6 +101,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.androidx.room.ktx)
     implementation(libs.bundles.androidx.core)
 
     implementation(platform(libs.androidx.compose.bom))
