@@ -15,16 +15,29 @@ class ProjectManagerImpl @Inject constructor(
     @Volatile
     private var cachedProjectId: String? = null
 
-    override suspend fun saveProjectId(projectId: String?) {
+    @Volatile
+    private var cachedAvatarUrl: String? = null
+
+    override suspend fun saveProjectContext(
+        projectId: String?,
+        avatarUrl: String?,
+    ) {
         dataStore.edit { preferences ->
             if (projectId == null) {
                 preferences.remove(KEY_PROJECT_ID)
             } else {
                 preferences[KEY_PROJECT_ID] = projectId
             }
+
+            if (avatarUrl == null) {
+                preferences.remove(KEY_AVATAR_URL)
+            } else {
+                preferences[KEY_AVATAR_URL] = avatarUrl
+            }
         }
 
         cachedProjectId = projectId
+        cachedAvatarUrl = avatarUrl
     }
 
     override suspend fun getProjectId(): String? {
@@ -35,15 +48,26 @@ class ProjectManagerImpl @Inject constructor(
         }
     }
 
-    override suspend fun clearProjectId() {
+    override suspend fun getAvatarUrl(): String? {
+        return cachedAvatarUrl ?: dataStore.data.map { preferences ->
+            preferences[KEY_AVATAR_URL]
+        }.first().also {
+            cachedAvatarUrl = it
+        }
+    }
+
+    override suspend fun clearProjectContext() {
         dataStore.edit { preferences ->
             preferences.remove(KEY_PROJECT_ID)
+            preferences.remove(KEY_AVATAR_URL)
         }
 
         cachedProjectId = null
+        cachedAvatarUrl = null
     }
 
     companion object {
         private val KEY_PROJECT_ID = stringPreferencesKey("Project_Id")
+        private val KEY_AVATAR_URL = stringPreferencesKey("avatar_url")
     }
 }

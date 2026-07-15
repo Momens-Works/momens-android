@@ -34,12 +34,15 @@ class SignInRepositoryImpl @Inject constructor(
         )
 
         val bootstrapResponse = signInRemoteDataSource.getMobileBootstrap()
-        projectManager.saveProjectId(bootstrapResponse.defaultProjectId)
+        projectManager.saveProjectContext(
+            projectId = bootstrapResponse.defaultProjectId,
+            avatarUrl = bootstrapResponse.me.user.avatarUrl,
+        )
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {
         googleCredentialLocalDataSource.clearCredentialState().getOrThrow()
         tokenManager.clearTokens()
-        projectManager.clearProjectId()
+        projectManager.clearProjectContext()
     }
 }
