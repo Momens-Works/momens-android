@@ -3,6 +3,7 @@ package com.momens.android.presentation.brief.model
 import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.MomensChipButtonType
 import com.momens.android.data.brief.model.BriefSignalSummaryFilterModel
+import com.momens.android.presentation.brief.extension.toFilterType
 
 enum class BriefSignalSummaryFilterType(
     val chipButtonType: MomensChipButtonType,

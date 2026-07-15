@@ -2,6 +2,7 @@ package com.momens.android.presentation.brief.model
 
 import androidx.compose.runtime.Immutable
 import com.momens.android.data.brief.model.BriefProjectModel
+import com.momens.android.presentation.brief.extension.toProgressFraction
 
 @Immutable
 data class BriefProjectUiModel(

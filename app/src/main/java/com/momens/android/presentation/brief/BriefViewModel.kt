@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
-import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.core.local.ProjectManager
+import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.toApiFilter
 import com.momens.android.presentation.brief.model.toUiModel
@@ -26,16 +26,11 @@ import timber.log.Timber
 @HiltViewModel
 class BriefViewModel @Inject constructor(
     projectManager: ProjectManager,
-   private val briefRepository: BriefRepository,
+    private val briefRepository: BriefRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<BriefUiState>>(UiState.Loading)
 
     val uiState: StateFlow<UiState<BriefUiState>> = _uiState.asStateFlow()
-
-    init {
-        Timber.tag(BRIEF_LOG_TAG).i("BriefViewModel init")
-        loadBrief()
-    }
 
     fun loadBrief(projectId: String = DEFAULT_PROJECT_ID) {
         _uiState.value = UiState.Loading

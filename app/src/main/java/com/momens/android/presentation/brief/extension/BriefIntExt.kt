@@ -1,4 +1,4 @@
-package com.momens.android.presentation.brief.model
+package com.momens.android.presentation.brief.extension
 
 fun Int.toProgressFraction(): Float {
     return if (this > 1) {

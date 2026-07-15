@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +44,10 @@ fun BriefRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadBrief()
+    }
+
     when (val state = uiState) {
         UiState.Empty, UiState.Loading -> {
 
@@ -55,7 +60,7 @@ fun BriefRoute(
         is UiState.Success -> BriefScreen(
             paddingValues = paddingValues,
             uiState = state.data,
-           avatarUrl = projectContext.avatarUrl,
+            avatarUrl = projectContext.avatarUrl,
             onFilterClick = viewModel::selectSignalFilter,
             onSummaryMoreClick = viewModel::loadMoreSignalSummary,
             onSummaryFoldClick = viewModel::foldSignalSummary,
@@ -138,7 +143,6 @@ private fun BriefScreen(
         }
     }
 }
-
 
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
