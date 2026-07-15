@@ -32,9 +32,14 @@ class BriefViewModel @Inject constructor(
 
     val uiState: StateFlow<UiState<BriefUiState>> = _uiState.asStateFlow()
 
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
+
     fun loadBrief(projectId: String = DEFAULT_PROJECT_ID) {
         _uiState.value = UiState.Loading
-        Timber.tag(BRIEF_LOG_TAG).i("getBrief 요청 시작: projectId=$projectId")
 
         viewModelScope.launch {
             briefRepository.getBrief(projectId = projectId)
@@ -54,20 +59,10 @@ class BriefViewModel @Inject constructor(
         }
     }
 
-    val projectContext = projectManager.observeProjectContext().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
-        initialValue = projectManager.currentProjectContext,
-    )
-
     fun selectSignalFilter(filterType: BriefSignalSummaryFilterType) {
         val currentState = (_uiState.value as? UiState.Success)?.data ?: return
         val filter = filterType.toApiFilter()
 
-        Timber.tag(BRIEF_LOG_TAG).i(
-            "getSignalSummary 요청 시작: projectId=${currentState.project.id}, " +
-                "filter=$filter, cursor=null",
-        )
 
         viewModelScope.launch {
             briefRepository.getSignalSummary(
