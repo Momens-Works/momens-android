@@ -1,6 +1,8 @@
 package com.momens.android.presentation.brief.model
 
 import androidx.compose.runtime.Immutable
+import com.momens.android.data.brief.model.BriefProjectModel
+import com.momens.android.presentation.brief.extension.toProgressFraction
 
 @Immutable
 data class BriefProjectUiModel(
@@ -9,4 +11,12 @@ data class BriefProjectUiModel(
     val targetDate: String,
     val progress: Float,
     val summary: String,
+)
+
+fun BriefProjectModel.toUiModel(): BriefProjectUiModel = BriefProjectUiModel(
+    id = id,
+    name = name,
+    targetDate = targetDate.orEmpty(),
+    progress = progress.toProgressFraction(),
+    summary = summary.orEmpty(),
 )

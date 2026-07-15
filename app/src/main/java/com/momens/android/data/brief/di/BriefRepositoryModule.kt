@@ -1,8 +1,12 @@
 package com.momens.android.data.brief.di
 
+import com.momens.android.data.brief.repository.BriefRepository
+import com.momens.android.data.brief.repositoryimpl.BriefRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import jakarta.inject.Singleton
 
 /**
  * Repository 인터페이스와 구현체를 Hilt에 연결하는 모듈입니다.
@@ -21,4 +25,10 @@ import dagger.hilt.components.SingletonComponent
  */
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class BriefRepositoryModule
+abstract class BriefRepositoryModule {
+    @Binds
+    @Singleton
+    abstract fun bindBriefRepository(
+        briefRepositoryImpl: BriefRepositoryImpl,
+    ): BriefRepository
+}
