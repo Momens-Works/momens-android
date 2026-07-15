@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -51,7 +52,8 @@ class SignInViewModel @Inject constructor(
                     _signInState.value = UiState.Success(Unit)
                     _sideEffect.emit(SignInSideEffect.NavigateToSignal)
                 }
-                .onFailure {
+                .onFailure { throwable ->
+                    Timber.e(throwable, "Google 로그인 또는 bootstrap 처리 실패")
                     _signInState.value = UiState.Failure
                 }
         }
