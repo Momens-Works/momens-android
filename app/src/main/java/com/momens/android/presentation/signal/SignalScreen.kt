@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.common.extension.collectSideEffect
+import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
 import com.momens.android.core.designsystem.component.pagetitle.MomensPageTitle
@@ -44,6 +46,10 @@ fun SignalRoute(
     val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
     val globalTrigger = LocalGlobalUiEventTrigger.current
 
+    LaunchedEffect(Unit) {
+        viewModel.loadSignals()
+    }
+
     viewModel.sideEffect.collectSideEffect {
         when (it) {
             is SignalSideEffect.ShowActionSnackbar -> {
@@ -69,13 +75,24 @@ fun SignalRoute(
         }
     }
 
-    SignalScreen(
-        state = state,
-        avatarUrl = projectContext.avatarUrl,
-        paddingValues = paddingValues,
-        onDeleteSignal = viewModel::deleteSignal,
-        onRegisterTask = viewModel::registerTask,
-    )
+    when (val currentState = state) {
+        UiState.Loading, UiState.Failure -> {
+            // TODO: 로딩 화면 연결 예정
+        }
+
+        is UiState.Success -> {
+            SignalScreen(
+                state = currentState.data,
+                avatarUrl = projectContext.avatarUrl,
+                paddingValues = paddingValues,
+                onSignalClick = viewModel::onSignalClick,
+                onDeleteSignal = viewModel::deleteSignal,
+                onRegisterTask = viewModel::registerTask,
+            )
+        }
+
+        UiState.Empty -> Unit
+    }
 }
 
 private const val EMPTY_STATE_TOP_WEIGHT = 80f
@@ -86,6 +103,7 @@ private fun SignalScreen(
     state: SignalState,
     avatarUrl: String?,
     paddingValues: PaddingValues,
+    onSignalClick: (String) -> Unit,
     onDeleteSignal: (String) -> Unit,
     onRegisterTask: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -121,7 +139,10 @@ private fun SignalScreen(
         } else {
             SignalList(
                 signals = state.signals,
-                onSignalClick = { selectedSignal = it },
+                onSignalClick = {
+                    selectedSignal = it
+                    onSignalClick(it.id)
+                },
                 modifier = Modifier.weight(1f),
             )
         }
@@ -152,6 +173,7 @@ private fun SignalScreenPreview() {
             state = SignalState.Fake,
             avatarUrl = null,
             paddingValues = PaddingValues(),
+            onSignalClick = {},
             onDeleteSignal = {},
             onRegisterTask = {},
         )
@@ -166,6 +188,7 @@ private fun SignalScreenEmptyPreview() {
             state = SignalState(),
             avatarUrl = null,
             paddingValues = PaddingValues(),
+            onSignalClick = {},
             onDeleteSignal = {},
             onRegisterTask = {},
         )

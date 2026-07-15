@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.toApiFilter
@@ -12,16 +12,15 @@ import com.momens.android.presentation.brief.model.toUiModel
 import com.momens.android.presentation.brief.state.BriefUiState
 import com.momens.android.presentation.brief.state.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
 class BriefViewModel @Inject constructor(
@@ -38,7 +37,7 @@ class BriefViewModel @Inject constructor(
         initialValue = projectManager.currentProjectContext,
     )
 
-    fun loadBrief(projectId: String = DEFAULT_PROJECT_ID) {
+    fun loadBrief(projectId: String) {
         _uiState.value = UiState.Loading
 
         viewModelScope.launch {
@@ -63,13 +62,12 @@ class BriefViewModel @Inject constructor(
         val currentState = (_uiState.value as? UiState.Success)?.data ?: return
         val filter = filterType.toApiFilter()
 
-
         viewModelScope.launch {
             briefRepository.getSignalSummary(
                 projectId = currentState.project.id,
                 filter = filter,
                 cursor = null,
-                limit = SIGNAL_SUMMARY_PAGE_SIZE,
+                limit =  null
             ).onSuccess { response ->
                 Timber.tag(BRIEF_LOG_TAG).i(
                     "getSignalSummary 응답 수신: projectId=${currentState.project.id}, " +
@@ -117,7 +115,7 @@ class BriefViewModel @Inject constructor(
                 projectId = currentState.project.id,
                 filter = filter,
                 cursor = nextCursor,
-                limit = SIGNAL_SUMMARY_PAGE_SIZE,
+                limit = null
             ).onSuccess { response ->
                 Timber.tag(BRIEF_LOG_TAG).i(
                     "getSignalSummary 더보기 응답 수신: projectId=${currentState.project.id}, " +
@@ -159,7 +157,5 @@ class BriefViewModel @Inject constructor(
 
     companion object {
         private const val BRIEF_LOG_TAG = "BriefApi"
-        private const val DEFAULT_PROJECT_ID = "a0000000-0000-4000-8000-000000000003"
-        private const val SIGNAL_SUMMARY_PAGE_SIZE = 20
     }
 }

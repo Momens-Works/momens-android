@@ -1,6 +1,6 @@
 package com.momens.android.data.signin.repositoryimpl
 
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.local.model.ProjectContextModel
 import com.momens.android.core.util.suspendRunCatching
@@ -37,13 +37,7 @@ class SignInRepositoryImpl @Inject constructor(
         )
 
         runCatching {
-            val bootstrapResponse = signInRemoteDataSource.getMobileBootstrap()
-            projectManager.saveProjectContext(
-                projectContext = ProjectContextModel(
-                    projectId = bootstrapResponse.defaultProjectId,
-                    avatarUrl = bootstrapResponse.me.avatarUrl,
-                    ),
-            )
+            syncProjectContext()
         }.onFailure {
             tokenManager.clearTokens()
             projectManager.clearProjectContext()
@@ -70,12 +64,26 @@ class SignInRepositoryImpl @Inject constructor(
             )
         }
 
+        if (result.isSuccess && projectManager.currentProjectContext.projectId == null) {
+            runCatching { syncProjectContext() }
+        }
+
         val failure = result.exceptionOrNull()
         if (failure is HttpException && failure.code() == HTTP_UNAUTHORIZED) {
             tokenManager.clearTokens()
         }
 
         return result
+    }
+
+    private suspend fun syncProjectContext() {
+        val bootstrapResponse = signInRemoteDataSource.getMobileBootstrap()
+        projectManager.saveProjectContext(
+            projectContext = ProjectContextModel(
+                projectId = bootstrapResponse.defaultProjectId,
+                avatarUrl = bootstrapResponse.me.avatarUrl,
+            ),
+        )
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {

@@ -1,4 +1,4 @@
-package com.momens.android.core.local
+package com.momens.android.core.local.project
 
 import com.momens.android.core.local.model.ProjectContextModel
 import kotlinx.coroutines.flow.Flow

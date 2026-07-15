@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.presentation.project.task.model.MomensTaskButtonType
 import com.momens.android.presentation.project.task.model.TaskItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
