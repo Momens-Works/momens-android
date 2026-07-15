@@ -170,6 +170,11 @@ class TaskEditViewModel @Inject constructor(
                 taskId = taskId,
                 request = _state.value.task.toTaskEditModel(),
             ).onSuccess {
+                _sideEffect.emit(
+                    TaskEditSideEffect.ShowSnackBar(
+                        message = "저장되었습니다.",
+                    ),
+                )
                 _sideEffect.emit(TaskEditSideEffect.NavigateUp)
             }.onFailure {
                 _sideEffect.emit(

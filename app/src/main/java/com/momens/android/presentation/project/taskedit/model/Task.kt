@@ -64,12 +64,12 @@ fun TaskDetailModel.toEditTask(): Task = Task(
 
 fun Task.toTaskEditModel(): TaskEditModel = TaskEditModel(
     title = titleState,
-    role = role.name,
+    role = role.name.lowercase(),
     assigneeId = assignee?.id,
-    priority = priority.name,
-    status = status.name,
+    priority = priority.label,
+    status = status.key,
     purpose = purposeState,
-    checklistItems = checklist.map {
-        ChecklistItemsModel(id = it.id, title = it.title, completed = it.completed)
-    },
+    checklistItems = checklist
+        .filter { it.title.isNotBlank() }
+        .map { ChecklistItemsModel(id = it.id, title = it.title, completed = it.completed) },
 )
