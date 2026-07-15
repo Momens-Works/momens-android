@@ -8,8 +8,10 @@ import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
 import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
 import com.momens.android.data.signin.remote.dto.request.SignInTokenRequest
+import com.momens.android.data.signin.remote.dto.request.TokenRefreshRequest
 import com.momens.android.data.signin.repository.SignInRepository
 import javax.inject.Inject
+import retrofit2.HttpException
 
 class SignInRepositoryImpl @Inject constructor(
     private val googleCredentialLocalDataSource: GoogleCredentialLocalDataSource,
@@ -49,9 +51,44 @@ class SignInRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun refreshSession(): Result<Unit> {
+        val refreshToken = tokenManager.getRefreshToken()
+
+        if (refreshToken.isNullOrBlank()) {
+            tokenManager.clearTokens()
+            return Result.failure(MissingRefreshTokenException())
+        }
+
+        val result = suspendRunCatching {
+            val response = signInRemoteDataSource.refreshToken(
+                request = TokenRefreshRequest(refreshToken = refreshToken),
+            )
+
+            tokenManager.saveTokens(
+                accessToken = response.accessToken,
+                refreshToken = response.refreshToken,
+            )
+        }
+
+        val failure = result.exceptionOrNull()
+        if (failure is HttpException && failure.code() == HTTP_UNAUTHORIZED) {
+            tokenManager.clearTokens()
+        }
+
+        return result
+    }
+
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {
         googleCredentialLocalDataSource.clearCredentialState().getOrThrow()
         tokenManager.clearTokens()
         projectManager.clearProjectContext()
     }
+
+    private companion object {
+        private const val HTTP_UNAUTHORIZED = 401
+    }
 }
+
+private class MissingRefreshTokenException : IllegalStateException(
+    "저장된 refresh token이 없습니다.",
+)

@@ -2,10 +2,10 @@ package com.momens.android.presentation.splash.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.momens.android.core.local.TokenManager
+import com.momens.android.data.signin.repository.SignInRepository
 import com.momens.android.presentation.splash.state.SplashSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,10 +16,10 @@ private const val SPLASH_DELAY_MILLIS = 1_500L
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val tokenManager: TokenManager
+    private val signInRepository: SignInRepository,
 ) : ViewModel() {
     private val _sideEffect = MutableSharedFlow<SplashSideEffect>()
-    var sideEffect = _sideEffect.asSharedFlow()
+    val sideEffect = _sideEffect.asSharedFlow()
 
     init {
         checkStoredSession()
@@ -29,15 +29,10 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             delay(SPLASH_DELAY_MILLIS.milliseconds)
 
-            val refreshToken = tokenManager.getRefreshToken()
-
-            // 임시 storedSession 로직입니다. 추후 토큰 재발급 api연동 플로우로 바꿀 예쩡
-            val sideEffect = if (refreshToken.isNullOrBlank()) {
-                SplashSideEffect.NavigateToSignIn
-            } else {
-                // TODO: refresh API 구현 후 서버에서 토큰을 갱신한 경우에만 이동
-                    SplashSideEffect.NavigateToSignal
-            }
+            val sideEffect = signInRepository.refreshSession().fold(
+                onSuccess = { SplashSideEffect.NavigateToSignal },
+                onFailure = { SplashSideEffect.NavigateToSignIn },
+            )
 
             _sideEffect.emit(sideEffect)
         }
