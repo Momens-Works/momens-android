@@ -25,6 +25,7 @@ import com.momens.android.presentation.main.component.MomensMainTabBar
 import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.onboarding.component.CoachmarkOverlay
 import com.momens.android.presentation.onboarding.component.OnboardingSignalContent
+import com.momens.android.presentation.onboarding.extension.offsetBy
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -125,16 +126,6 @@ fun OnboardingScreen(
         )
     }
 }
-
-private fun Rect.offsetBy(
-    horizontal: Float,
-    vertical: Float,
-): Rect = Rect(
-    left = left + horizontal,
-    top = top + vertical,
-    right = right + horizontal,
-    bottom = bottom + vertical,
-)
 
 @Preview(showBackground = true)
 @Composable
