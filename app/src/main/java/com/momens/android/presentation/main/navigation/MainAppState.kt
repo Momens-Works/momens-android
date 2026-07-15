@@ -16,8 +16,8 @@ import com.momens.android.presentation.project.task.navigation.navigateToTask
 import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
-import com.momens.android.presentation.signal.navigation.Signal
 import com.momens.android.presentation.signal.navigation.navigateToSignal
+import com.momens.android.presentation.signin.navigation.SignIn
 import com.momens.android.presentation.signin.navigation.navigateToSignIn
 import com.momens.android.presentation.splash.navigation.Splash
 import com.momens.android.presentation.splash.navigation.navigateToSplash
