@@ -37,11 +37,7 @@ class TaskDetailViewModel @Inject constructor(
     private val _sideEffect = MutableSharedFlow<TaskDetailSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
-    init {
-        loadTaskDetail()
-    }
-
-    private fun loadTaskDetail() {
+    fun loadTaskDetail() {
         viewModelScope.launch {
             taskDetailRepository.getTaskDetail(taskId = taskId)
                 .onSuccess { detail ->

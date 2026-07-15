@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.common.extension.collectSideEffect
 import com.momens.android.core.common.state.UiState
@@ -50,6 +51,11 @@ fun TaskDetailRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val globalTrigger = LocalGlobalUiEventTrigger.current
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.loadTaskDetail()
+        onPauseOrDispose { }
+    }
 
     viewModel.sideEffect.collectSideEffect {
         when (it) {
