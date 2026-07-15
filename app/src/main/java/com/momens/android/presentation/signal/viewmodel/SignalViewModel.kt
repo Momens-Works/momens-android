@@ -32,11 +32,9 @@ class SignalViewModel @Inject constructor(
     private val _sideEffect = MutableSharedFlow<SignalSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
-    init {
-        loadSignals()
-    }
+    fun loadSignals() {
+        _state.value = UiState.Loading
 
-    private fun loadSignals() {
         viewModelScope.launch {
             signalRepository.getSignals(projectId = "")
                 .onSuccess { signalList ->
