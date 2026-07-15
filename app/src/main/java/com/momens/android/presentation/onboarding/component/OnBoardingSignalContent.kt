@@ -67,7 +67,7 @@ internal fun OnBoardingSignalContent(
         ) {
             OnBoardingSignalCard(
                 type = SignalTagType.RISK,
-                modifier = Modifier.coachmarkTarget(onPositioned = onSignalCardPositioned,),
+                modifier = Modifier.coachmarkTarget(onSignalCardPositioned),
                 suggestionModifier = Modifier.coachmarkTarget(onMinsuSuggestionPositioned),
             )
 
@@ -97,7 +97,7 @@ private fun OnBoardingSignalTitleSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .coachmarkTarget(
-                    onPositioned = onTitlePositioned,
+                    onTitlePositioned,
                     startPadding = 6.dp,
                 ),
             style = MomensTheme.typography.titleB24,
@@ -170,13 +170,18 @@ private fun OnBoardingSignalCard(
     }
 }
 
+private fun Modifier.coachmarkTarget(
+    onPositioned: (Rect) -> Unit,
+): Modifier {
+    return onGloballyPositioned { coordinates ->
+        onPositioned(coordinates.boundsInRoot())
+    }
+}
+
 @Composable
 private fun Modifier.coachmarkTarget(
     onPositioned: (Rect) -> Unit,
-    startPadding: Dp = 0.dp,
-    topPadding: Dp = 0.dp,
-    endPadding: Dp = 0.dp,
-    bottomPadding: Dp = 0.dp,
+    startPadding: Dp,
 ): Modifier {
     val density = LocalDensity.current
 
@@ -186,9 +191,9 @@ private fun Modifier.coachmarkTarget(
         onPositioned(
             Rect(
                 left = bounds.left - with(density) { startPadding.toPx() },
-                top = bounds.top - with(density) { topPadding.toPx() },
-                right = bounds.right + with(density) { endPadding.toPx() },
-                bottom = bounds.bottom + with(density) { bottomPadding.toPx() },
+                top = bounds.top,
+                right = bounds.right,
+                bottom = bounds.bottom,
             ),
         )
     }

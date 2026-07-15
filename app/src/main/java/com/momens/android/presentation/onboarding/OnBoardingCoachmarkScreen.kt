@@ -3,9 +3,7 @@ package com.momens.android.presentation.onboarding
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -16,8 +14,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.momens.android.core.common.extension.collectSideEffect
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.main.component.MomensMainTabBar
 import com.momens.android.presentation.main.type.MainTab
@@ -26,12 +28,19 @@ import com.momens.android.presentation.onboarding.component.OnBoardingSignalCont
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun OnBoardingRoute(
+fun OnboardingRoute(
     paddingValues: PaddingValues,
+    navigateToSignal: () -> Unit,
     modifier: Modifier = Modifier,
-    onCoachmarkFinished: () -> Unit = {},
+    viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     var step by remember { mutableStateOf(OnBoardingCoachmarkStep.SignalTitle) }
+
+    viewModel.sideEffect.collectSideEffect {
+        when (it) {
+            OnboardingSideEffect.NavigateToSignal -> navigateToSignal()
+        }
+    }
 
     OnBoardingScreen(
         step = step,
@@ -47,7 +56,7 @@ fun OnBoardingRoute(
                 }
 
                 OnBoardingCoachmarkStep.MinsuSuggestion -> {
-                    onCoachmarkFinished()
+                    viewModel.completeOnboarding()
                 }
             }
         },
@@ -65,25 +74,35 @@ fun OnBoardingScreen(
     var signalTitleBounds by remember { mutableStateOf<Rect?>(null) }
     var signalCardBounds by remember { mutableStateOf<Rect?>(null) }
     var minsuSuggestionBounds by remember { mutableStateOf<Rect?>(null) }
+    var screenBounds by remember { mutableStateOf<Rect?>(null) }
     val targetBounds = when (step) {
         OnBoardingCoachmarkStep.SignalTitle -> signalTitleBounds
         OnBoardingCoachmarkStep.SignalCard -> signalCardBounds
         OnBoardingCoachmarkStep.MinsuSuggestion -> minsuSuggestionBounds
+    }
+    val overlayTargetBounds = targetBounds?.let { bounds ->
+        screenBounds?.let { screenBounds ->
+            bounds.offsetBy(
+                horizontal = -screenBounds.left,
+                vertical = -screenBounds.top,
+            )
+        } ?: bounds
     }
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(color = MomensTheme.colors.uiBg)
-            .padding(paddingValues),
+            .padding(paddingValues)
+            .onGloballyPositioned { coordinates ->
+                screenBounds = coordinates.boundsInRoot()
+            },
     ) {
         OnBoardingSignalContent(
             onSignalTitlePositioned = { signalTitleBounds = it },
             onSignalCardPositioned = { signalCardBounds = it },
             onMinsuSuggestionPositioned = { minsuSuggestionBounds = it },
         )
-
-        Spacer(Modifier.height(20.dp))
 
         MomensMainTabBar(
             tabs = persistentListOf(
@@ -101,11 +120,21 @@ fun OnBoardingScreen(
 
         CoachmarkOverlay(
             step = step,
-            targetBounds = targetBounds,
+            targetBounds = overlayTargetBounds,
             onNextClick = onNextClick,
         )
     }
 }
+
+private fun Rect.offsetBy(
+    horizontal: Float,
+    vertical: Float,
+): Rect = Rect(
+    left = left + horizontal,
+    top = top + vertical,
+    right = right + horizontal,
+    bottom = bottom + vertical,
+)
 
 @Preview(showBackground = true)
 @Composable

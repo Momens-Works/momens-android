@@ -1,4 +1,4 @@
-package com.momens.android.presentation.signin.navigation
+package com.momens.android.presentation.onboarding.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -6,30 +6,28 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.momens.android.core.common.navigation.Route
-import com.momens.android.presentation.signin.SignInRoute
+import com.momens.android.presentation.onboarding.OnboardingRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object SignIn : Route
+data object Onboarding : Route
 
-fun NavController.navigateToSignIn(
+fun NavController.navigateToOnboarding(
     navOptions: NavOptions? = null,
 ) {
     navigate(
-        route = SignIn,
+        route = Onboarding,
         navOptions = navOptions,
     )
 }
 
-fun NavGraphBuilder.signInNavGraph(
+fun NavGraphBuilder.onboardingNavGraph(
     paddingValues: PaddingValues,
-    navigateToOnboarding: () -> Unit,
     navigateToSignal: () -> Unit,
 ) {
-    composable<SignIn> {
-        SignInRoute(
+    composable<Onboarding> {
+        OnboardingRoute(
             paddingValues = paddingValues,
-            navigateToOnboarding = navigateToOnboarding,
             navigateToSignal = navigateToSignal,
         )
     }
