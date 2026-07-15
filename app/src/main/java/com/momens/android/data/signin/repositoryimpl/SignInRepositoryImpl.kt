@@ -62,11 +62,10 @@ class SignInRepositoryImpl @Inject constructor(
                 accessToken = response.accessToken,
                 refreshToken = response.refreshToken,
             )
+        }
 
-            // 예전 세션 등으로 projectId가 비어있을 수 있어, 토큰 갱신 시점에도 채워지도록 보장합니다.
-            if (projectManager.currentProjectContext.projectId == null) {
-                syncProjectContext()
-            }
+        if (result.isSuccess && projectManager.currentProjectContext.projectId == null) {
+            runCatching { syncProjectContext() }
         }
 
         val failure = result.exceptionOrNull()
