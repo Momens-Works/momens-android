@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.core.local.ProjectManager
 import com.momens.android.presentation.project.task.model.MomensTaskButtonType
 import com.momens.android.presentation.project.task.model.TaskItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,20 +13,30 @@ import jakarta.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 @HiltViewModel
-class TaskViewModel @Inject constructor() : ViewModel() {
+class TaskViewModel @Inject constructor(
+    projectManager: ProjectManager,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(TaskUiState.Fake)
     val uiState: StateFlow<TaskUiState> = _uiState.asStateFlow()
 
     private val _sideEffect = MutableSharedFlow<TaskSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
+
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
 
     fun addTask(
         title: String,

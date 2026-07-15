@@ -3,6 +3,7 @@ package com.momens.android.data.signin.remote.datasource
 import com.momens.android.data.signin.remote.dto.request.SignInTokenRequest
 import com.momens.android.data.signin.remote.dto.request.TokenRefreshRequest
 import com.momens.android.data.signin.remote.dto.response.TokenResponse
+import com.momens.android.data.signin.remote.dto.response.MobileBootstrapResponse
 
 interface SignInRemoteDataSource {
     suspend fun postGoogleToken(
@@ -12,4 +13,7 @@ interface SignInRemoteDataSource {
     suspend fun refreshToken(
         request: TokenRefreshRequest,
     ): TokenResponse
+
+    suspend fun getMobileBootstrap(): MobileBootstrapResponse
+
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.ProjectManagerImpl
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.local.TokenManagerImpl
 import com.momens.android.core.local.constant.DataStoreConstant
@@ -52,4 +54,10 @@ object DataStoreModule {
     fun provideTokenManager(
         dataStore: DataStore<Preferences>
     ): TokenManager = TokenManagerImpl(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideProjectManager(
+        dataStore: DataStore<Preferences>,
+    ): ProjectManager = ProjectManagerImpl(dataStore)
 }

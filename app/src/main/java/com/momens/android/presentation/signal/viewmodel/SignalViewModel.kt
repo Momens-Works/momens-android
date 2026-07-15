@@ -2,6 +2,7 @@ package com.momens.android.presentation.signal.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.momens.android.core.local.ProjectManager
 import com.momens.android.presentation.signal.state.SignalSideEffect
 import com.momens.android.presentation.signal.state.SignalState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,19 +10,28 @@ import jakarta.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SignalViewModel @Inject constructor(
+    projectManager: ProjectManager,
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignalState.Fake)
     val state = _state.asStateFlow()
 
     private val _sideEffect = MutableSharedFlow<SignalSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
+
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
 
     fun deleteSignal(signalId: String) {
         removeSignal(signalId)

@@ -4,6 +4,7 @@ import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
 import com.momens.android.data.signin.remote.dto.request.SignInTokenRequest
 import com.momens.android.data.signin.remote.dto.request.TokenRefreshRequest
 import com.momens.android.data.signin.remote.dto.response.TokenResponse
+import com.momens.android.data.signin.remote.dto.response.MobileBootstrapResponse
 import com.momens.android.data.signin.remote.service.SignInService
 import javax.inject.Inject
 
@@ -21,5 +22,9 @@ class SignInRemoteDataSourceImpl @Inject constructor(
         request: TokenRefreshRequest,
     ): TokenResponse {
         return signInService.getNewAccessToken(request)
+    }
+
+    override suspend fun getMobileBootstrap(): MobileBootstrapResponse {
+        return signInService.getMobileBootstrap()
     }
 }
