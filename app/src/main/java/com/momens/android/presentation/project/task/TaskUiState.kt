@@ -4,11 +4,14 @@ import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.data.project.task.model.TaskBoard
 import com.momens.android.presentation.project.task.model.MomensTaskButtonType
 import com.momens.android.presentation.project.task.model.TaskItemData
 import com.momens.android.presentation.project.task.model.TaskSectionUiModel
+import com.momens.android.presentation.project.task.model.toUiModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Immutable
 data class TaskUiState(
@@ -65,6 +68,12 @@ data class TaskUiState(
         )
     }
 }
+
+fun TaskBoard.toUiModel(): TaskUiState = TaskUiState(
+    title = title,
+    description = description,
+    sections = groups.map { it.toUiModel() }.toPersistentList(),
+)
 
 sealed interface TaskSideEffect {
     data class ShowActionSnackbar(

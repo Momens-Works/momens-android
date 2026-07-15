@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.button.MomensFloatingActionButton
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
@@ -44,6 +45,10 @@ fun TaskRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val globalUiEvent = LocalGlobalUiEventTrigger.current
+
+    LaunchedEffect(Unit) {
+        viewModel.loadTaskBoard()
+    }
 
     LaunchedEffect(viewModel) {
         viewModel.sideEffect.collect { effect ->
@@ -72,12 +77,20 @@ fun TaskRoute(
         }
     }
 
-    TaskScreen(
-        paddingValues = paddingValues,
-        onTaskClick = navigateToTaskDetail,
-        uiState = uiState,
-        onRegisterClick = viewModel::addTask,
-    )
+    when (val state = uiState) {
+        is UiState.Success -> TaskScreen(
+            paddingValues = paddingValues,
+            onTaskClick = navigateToTaskDetail,
+            uiState = state.data,
+            onRegisterClick = viewModel::addTask,
+        )
+
+        UiState.Loading, UiState.Failure -> {
+            // TODO: 로딩 화면 연결 예정
+        }
+
+        UiState.Empty -> Unit
+    }
 }
 
 @Composable
@@ -105,17 +118,15 @@ private fun TaskScreen(
                 modifier = Modifier.padding(bottom = 12.dp),
             )
 
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                item {
-                    TaskTitle(
-                        title = uiState.title,
-                        description = uiState.description,
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .padding(bottom = 24.dp),
-                    )
-                }
+            TaskTitle(
+                title = uiState.title,
+                description = uiState.description,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 24.dp),
+            )
 
+            LazyColumn(modifier = Modifier.weight(1f)) {
                 items(
                     items = uiState.sections,
                     key = { it.type },

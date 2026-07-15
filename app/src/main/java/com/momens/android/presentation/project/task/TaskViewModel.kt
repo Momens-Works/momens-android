@@ -2,13 +2,16 @@ package com.momens.android.presentation.project.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.momens.android.core.common.extension.onLogFailure
+import com.momens.android.core.common.extension.updateSuccess
+import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.data.project.task.model.TaskCreateModel
 import com.momens.android.data.project.task.repository.TaskRepository
-import com.momens.android.presentation.project.task.mapper.toItemData
-import com.momens.android.presentation.project.task.mapper.toRequestValue
-import com.momens.android.presentation.project.task.mapper.toUiState
 import com.momens.android.presentation.project.task.model.MomensTaskButtonType
+import com.momens.android.presentation.project.task.model.toRequestValue
+import com.momens.android.presentation.project.task.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
@@ -17,37 +20,29 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(TaskUiState())
-    val uiState: StateFlow<TaskUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<UiState<TaskUiState>>(UiState.Loading)
+    val uiState: StateFlow<UiState<TaskUiState>> = _uiState.asStateFlow()
 
     private val _sideEffect = MutableSharedFlow<TaskSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
-    init {
-        loadTaskBoard()
-    }
+    fun loadTaskBoard() {
+        _uiState.value = UiState.Loading
 
-    private fun loadTaskBoard() {
         viewModelScope.launch {
             taskRepository.getTaskBoard(TEST_PROJECT_ID)
-                .onSuccess { board ->
-                    val content = board.toUiState()
-                    _uiState.update { state ->
-                        state.copy(
-                            title = content.title,
-                            description = content.description,
-                            sections = content.sections,
-                        )
-                    }
+                .mapCatching { board -> board.toUiModel() }
+                .onSuccess { content ->
+                    _uiState.value = UiState.Success(content)
                 }
-                .onFailure {
+                .onLogFailure("Failed to load TaskBoard") {
+                    _uiState.value = UiState.Failure
                     _sideEffect.emit(TaskSideEffect.ShowSnackbar("태스크를 불러오지 못했습니다"))
                 }
         }
@@ -61,34 +56,36 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             taskRepository.createTask(
                 projectId = TEST_PROJECT_ID,
-                title = title,
-                role = role.toRequestValue(),
-                priority = priority.toRequestValue(),
-            ).onSuccess { created ->
-                val newTask = created.toItemData()
+                task = TaskCreateModel(
+                    title = title,
+                    role = role.toRequestValue(),
+                    priority = priority.toRequestValue(),
+                ),
+            ).mapCatching { created -> created.toUiModel() }
+                .onSuccess { newTask ->
+                    _uiState.updateSuccess { state ->
+                        state.copy(
+                            sections = state.sections.map { section ->
+                                if (section.type == MomensStatusEditType.TODO) {
+                                    section.copy(tasks = (section.tasks + newTask).toPersistentList())
+                                } else {
+                                    section
+                                }
+                            }.toPersistentList(),
+                        )
+                    }
 
-                _uiState.update { state ->
-                    state.copy(
-                        sections = state.sections.map { section ->
-                            if (section.type == MomensStatusEditType.TODO) {
-                                section.copy(tasks = (section.tasks + newTask).toPersistentList())
-                            } else {
-                                section
-                            }
-                        }.toPersistentList(),
+                    _sideEffect.emit(
+                        TaskSideEffect.ShowActionSnackbar(
+                            message = "태스크가 등록되었습니다",
+                            description = "'투두'에 추가됨",
+                            taskId = newTask.id,
+                        ),
                     )
                 }
-
-                _sideEffect.emit(
-                    TaskSideEffect.ShowActionSnackbar(
-                        message = "태스크가 등록되었습니다",
-                        description = "'투두'에 추가됨",
-                        taskId = newTask.id,
-                    ),
-                )
-            }.onFailure {
-                _sideEffect.emit(TaskSideEffect.ShowSnackbar("태스크 등록에 실패했습니다"))
-            }
+                .onLogFailure("Failed to create task") {
+                    _sideEffect.emit(TaskSideEffect.ShowSnackbar("태스크 등록에 실패했습니다"))
+                }
         }
     }
 
