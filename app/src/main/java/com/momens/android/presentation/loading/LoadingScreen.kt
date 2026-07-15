@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -25,8 +26,9 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun LoadingScreen(
+    background: Color = MomensTheme.colors.uiBg,
+    text: String? = null,
     modifier: Modifier = Modifier,
-    text: String = "민수가 생각 중입니다.",
 ) {
     val composition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.loading_animation),
@@ -35,7 +37,7 @@ fun LoadingScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = MomensTheme.colors.uiBg),
+            .background(color = background),
     ) {
         Spacer(modifier = Modifier.weight(265f))
 
@@ -54,11 +56,13 @@ fun LoadingScreen(
                 iterations = LottieConstants.IterateForever,
             )
 
-            Text(
-                text = text,
-                style = MomensTheme.typography.titleB20,
-                color = MomensTheme.colors.primary100,
-            )
+            if (text != null) {
+                Text(
+                    text = text,
+                    style = MomensTheme.typography.titleB20,
+                    color = MomensTheme.colors.primary100,
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(340f))
