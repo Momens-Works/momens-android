@@ -13,7 +13,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun TaskDetailPurposeSection(
-    purpose: String,
+    purpose: String?,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -26,11 +26,19 @@ fun TaskDetailPurposeSection(
             color = MomensTheme.colors.gray900,
         )
 
-        Text(
-            text = purpose,
-            style = MomensTheme.typography.bodyM12,
-            color = MomensTheme.colors.gray800,
-        )
+        if (purpose.isNullOrBlank()) {
+            Text(
+                text = "목적이 입력되지 않았습니다.",
+                style = MomensTheme.typography.bodyM12,
+                color = MomensTheme.colors.gray300,
+            )
+        } else {
+            Text(
+                text = purpose,
+                style = MomensTheme.typography.bodyM12,
+                color = MomensTheme.colors.gray800,
+            )
+        }
     }
 }
 
@@ -42,6 +50,17 @@ private fun TaskDetailPurposeSectionPreview() {
             modifier = Modifier.padding(16.dp),
             purpose = "어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구어쩌구저쩌구어쩌구저쩌구어쩌구어쩌구" +
                 "저쩌구어쩌구저쩌구어쩌구어쩌구저쩌구어쩌구저쩌구어쩌구구",
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "빈 상태")
+@Composable
+private fun TaskDetailPurposeSectionEmptyPreview() {
+    MomensTheme {
+        TaskDetailPurposeSection(
+            modifier = Modifier.padding(16.dp),
+            purpose = null,
         )
     }
 }

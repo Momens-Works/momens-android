@@ -33,19 +33,27 @@ fun TaskDetailFileSection(
             color = MomensTheme.colors.gray900,
         )
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            files.forEach { file ->
-                key(file.id) {
-                    MomensFileListItem(
-                        title = file.title,
-                        role = file.kind.text,
-                        category = file.createdAtText,
-                        iconResId = file.kind.icon,
-                        onClick = { onFileClick(file) },
-                    )
+        if (files.isEmpty()) {
+            Text(
+                text = "관련자료가 등록되지 않았습니다.",
+                style = MomensTheme.typography.bodyM12,
+                color = MomensTheme.colors.gray300,
+            )
+        } else {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                files.forEach { file ->
+                    key(file.id) {
+                        MomensFileListItem(
+                            title = file.title,
+                            role = file.kind.text,
+                            category = file.createdAtText,
+                            iconResId = file.kind.icon,
+                            onClick = { onFileClick(file) },
+                        )
+                    }
                 }
             }
         }
@@ -78,6 +86,18 @@ private fun TaskDetailFileSectionPreview() {
                     createdAtText = "2026.07.15 22:50",
                 ),
             ),
+            onFileClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "빈 상태")
+@Composable
+private fun TaskDetailFileSectionEmptyPreview() {
+    MomensTheme {
+        TaskDetailFileSection(
+            modifier = Modifier.padding(16.dp),
+            files = persistentListOf(),
             onFileClick = {},
         )
     }

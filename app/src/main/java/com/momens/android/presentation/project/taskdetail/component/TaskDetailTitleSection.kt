@@ -13,6 +13,8 @@ import com.momens.android.core.designsystem.component.tag.MomensTaskTag
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.core.designsystem.theme.MomensTheme
 
+private const val EMPTY_TITLE_TEXT = "새 태스크"
+
 @Composable
 fun TaskDetailTitleSection(
     taskDetailTitle: String,
@@ -25,7 +27,7 @@ fun TaskDetailTitleSection(
         horizontalArrangement = Arrangement.spacedBy(9.dp)
     ) {
         Text(
-            text = taskDetailTitle,
+            text = taskDetailTitle.ifBlank { EMPTY_TITLE_TEXT },
             style = MomensTheme.typography.titleB20,
             color = MomensTheme.colors.black,
         )
@@ -41,6 +43,17 @@ private fun TaskDetailTitleSectionPreview() {
     MomensTheme {
         TaskDetailTitleSection(
             taskDetailTitle = "일이삼사오육칠팔일이삼사오",
+            status = MomensStatusEditType.TODO,
+        )
+    }
+}
+
+@Preview(showBackground = true, heightDp = 33, name = "빈 상태")
+@Composable
+private fun TaskDetailTitleSectionEmptyPreview() {
+    MomensTheme {
+        TaskDetailTitleSection(
+            taskDetailTitle = "",
             status = MomensStatusEditType.TODO,
         )
     }

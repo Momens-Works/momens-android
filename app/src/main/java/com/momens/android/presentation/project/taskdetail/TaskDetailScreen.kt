@@ -69,7 +69,7 @@ fun TaskDetailRoute(
 
     when (val currentState = state) {
         UiState.Loading, UiState.Failure -> {
-           // TODO: 로딩 화면 연결 예정
+            // TODO: 로딩 화면 연결 예정
         }
 
         is UiState.Success -> {
@@ -158,68 +158,57 @@ private fun TaskDetailContent(
             }
         }
 
-        taskDetail.purpose?.let { purpose ->
-            item {
-                TaskDetailPurposeSection(
-                    purpose = purpose,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                )
-            }
+        item {
+            TaskDetailPurposeSection(
+                purpose = taskDetail.purpose,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
+            )
         }
 
-        if (taskDetail.checklist.totalCount > 0) {
-            item {
-                TaskDetailCompletionSection(
-                    completedCount = taskDetail.checklist.completedCount,
-                    totalCount = taskDetail.checklist.totalCount,
-                    items = taskDetail.checklist.items,
-                    onCheckedChange = onCheck,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                )
-            }
+        item {
+            TaskDetailCompletionSection(
+                completedCount = taskDetail.checklist.completedCount,
+                totalCount = taskDetail.checklist.totalCount,
+                items = taskDetail.checklist.items,
+                onCheckedChange = onCheck,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
+            )
         }
 
-        if (taskDetail.materials.isNotEmpty()) {
-            item {
-                TaskDetailFileSection(
-                    files = taskDetail.materials,
-                    onFileClick = onFileClick,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                )
-            }
+        item {
+            TaskDetailFileSection(
+                files = taskDetail.materials,
+                onFileClick = onFileClick,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
+            )
         }
 
-        if (taskDetail.materials.isNotEmpty() && taskDetail.openQuestions.isNotEmpty()) {
-            item {
-                HorizontalDivider(
-                    color = MomensTheme.colors.gray100,
-                    thickness = 4.dp,
-                )
-            }
+        item {
+            HorizontalDivider(
+                color = MomensTheme.colors.gray100,
+                thickness = 4.dp,
+            )
         }
 
-        if (taskDetail.openQuestions.isNotEmpty()) {
-            item {
-                TaskDetailQuestionSection(
-                    questions = taskDetail.openQuestions,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                )
-            }
+        item {
+            TaskDetailQuestionSection(
+                questions = taskDetail.openQuestions,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
+            )
         }
 
-        taskDetail.nextAction?.let { nextAction ->
-            item {
-                TaskDetailNextActionSection(
-                    recommendationText = nextAction,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp, vertical = 0.dp)
-                        .padding(bottom = 42.dp),
-                )
-            }
+
+        item {
+            TaskDetailNextActionSection(
+                recommendationText = taskDetail.nextAction,
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 0.dp)
+                    .padding(bottom = 42.dp),
+            )
         }
     }
 }
@@ -244,6 +233,20 @@ private fun TaskDetailScreenEmptyPreview() {
     MomensTheme {
         TaskDetailScreen(
             state = TaskDetailState(),
+            paddingValues = PaddingValues(),
+            navigateUp = {},
+            onEditClick = {},
+            onCheck = { _, _ -> },
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "태스크 상세 - 아무것도 입력 안된 상태")
+@Composable
+private fun TaskDetailScreenEmptyFieldsPreview() {
+    MomensTheme {
+        TaskDetailScreen(
+            state = TaskDetailState.FakeEmptyFields,
             paddingValues = PaddingValues(),
             navigateUp = {},
             onEditClick = {},
