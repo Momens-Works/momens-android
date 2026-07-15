@@ -1,15 +1,15 @@
 package com.momens.android.data.brief.repository
 
-import com.momens.android.data.brief.remote.dto.response.BriefResponse
-import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryPageResponse
+import com.momens.android.data.brief.model.BriefModel
+import com.momens.android.data.brief.model.BriefSignalSummaryPageModel
 
 interface BriefRepository {
-    suspend fun getBrief(projectId: String): Result<BriefResponse>
+    suspend fun getBrief(projectId: String): Result<BriefModel>
 
     suspend fun getSignalSummary(
         projectId: String,
         filter: String?,
         cursor: String?,
         limit: Int?,
-    ): Result<BriefSignalSummaryPageResponse>
+    ): Result<BriefSignalSummaryPageModel>
 }
