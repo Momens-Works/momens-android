@@ -60,12 +60,6 @@ android {
 
             buildConfigField(
                 "String",
-                "DEBUG_REFRESH_TOKEN",
-                "\"${properties.getProperty("debug.refresh.token", "")}\"",
-            )
-
-            buildConfigField(
-                "String",
                 "DEBUG_ACCESS_TOKEN",
                 "\"${properties.getProperty("debug.access.token", "")}\"",
             )
@@ -107,6 +101,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.androidx.room.ktx)
     implementation(libs.bundles.androidx.core)
 
     implementation(platform(libs.androidx.compose.bom))
