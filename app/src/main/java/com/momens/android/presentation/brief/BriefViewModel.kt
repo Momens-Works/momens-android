@@ -2,7 +2,7 @@ package com.momens.android.presentation.brief
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.SampleBriefUiState
 import com.momens.android.presentation.brief.state.BriefUiState

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.core.local.ProjectManagerImpl
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.local.TokenManagerImpl

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.core.util.successData
 import com.momens.android.data.signal.repository.SignalRepository
 import com.momens.android.presentation.signal.model.toUiModels
@@ -41,10 +41,12 @@ class SignalViewModel @Inject constructor(
     )
 
     fun loadSignals() {
+        val projectId = projectContext.value.projectId ?: return
+
         _state.value = UiState.Loading
 
         viewModelScope.launch {
-            signalRepository.getSignals(projectId = "")
+            signalRepository.getSignals(projectId = projectId)
                 .onSuccess { signalList ->
                     _state.update { currentState ->
                         val currentData = currentState.successData ?: SignalState()

@@ -1,6 +1,6 @@
 package com.momens.android.data.signin.repositoryimpl
 
-import com.momens.android.core.local.ProjectManager
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.local.model.ProjectContextModel
 import com.momens.android.core.util.suspendRunCatching
