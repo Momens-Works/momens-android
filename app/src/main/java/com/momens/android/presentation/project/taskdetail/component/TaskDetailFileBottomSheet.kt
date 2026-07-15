@@ -14,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.R
 import com.momens.android.core.designsystem.component.bottomsheet.MomensBottomSheet
 import com.momens.android.core.designsystem.component.dot.MomensDot
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailFileModel
+import com.momens.android.presentation.signal.model.SignalAccordionType
 import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +53,7 @@ fun TaskDetailFileBottomSheet(
                 MomensDot(color = MomensTheme.colors.gray400)
 
                 Text(
-                    text = file.kind,
+                    text = file.createdAtText,
                     color = MomensTheme.colors.gray400,
                     style = MomensTheme.typography.captionM11,
                 )
@@ -79,7 +79,7 @@ fun TaskDetailFileBottomSheet(
 
             MomensTextBox(
                 text = file.title,
-                iconResId = R.drawable.ic_file,
+                iconResId = file.kind.icon,
                 iconColor = MomensTheme.colors.primary100,
                 textColor = MomensTheme.colors.gray500,
                 isArrowVisible = true,
@@ -100,8 +100,9 @@ private fun TaskDetailFileBottomSheetPreview() {
                 title = "회원가입 에러 메시지 정책 초안",
                 summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
                 roles = persistentListOf("PM"),
-                kind = "copy policy",
+                kind = SignalAccordionType.FIGMA,
                 sourceUrl = "https://example.com",
+                createdAtText = "2026.07.15 22:48",
             ),
             onDismiss = {},
             onOpenSourceClick = {},

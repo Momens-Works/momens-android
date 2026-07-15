@@ -1,5 +1,6 @@
 package com.momens.android.core.designsystem.component.list
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ fun MomensFileListItem(
     category: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    @DrawableRes iconResId: Int = R.drawable.ic_file,
 ) {
     Row(
         modifier = modifier
@@ -46,7 +48,7 @@ fun MomensFileListItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            FileIcon()
+            FileIcon(iconResId = iconResId)
 
             FileTextContent(
                 title = title,
@@ -67,6 +69,7 @@ fun MomensFileListItem(
 
 @Composable
 private fun FileIcon(
+    @DrawableRes iconResId: Int,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -79,7 +82,7 @@ private fun FileIcon(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_file),
+            painter = painterResource(id = iconResId),
             contentDescription = null,
             modifier = Modifier.size(24.dp),
             tint = MomensTheme.colors.primary50,

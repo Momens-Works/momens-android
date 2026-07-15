@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.momens.android.core.designsystem.component.list.MomensFileListItem
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailFileModel
+import com.momens.android.presentation.signal.model.SignalAccordionType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -40,8 +41,9 @@ fun TaskDetailFileSection(
                 key(file.id) {
                     MomensFileListItem(
                         title = file.title,
-                        role = file.roles.joinToString(separator = ", "),
-                        category = file.kind,
+                        role = file.kind.text,
+                        category = file.createdAtText,
+                        iconResId = file.kind.icon,
                         onClick = { onFileClick(file) },
                     )
                 }
@@ -62,16 +64,18 @@ private fun TaskDetailFileSectionPreview() {
                     title = "회원가입 에러 메시지 정책 초안",
                     summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
                     roles = persistentListOf("PM"),
-                    kind = "copy policy",
+                    kind = SignalAccordionType.FIGMA,
                     sourceUrl = "https://example.com/docs/1",
+                    createdAtText = "2026.07.15 22:48",
                 ),
                 TaskDetailFileModel(
                     id = "2",
                     title = "회원가입 에러 메시지 정책 초안",
                     summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
                     roles = persistentListOf("PM"),
-                    kind = "copy policy",
+                    kind = SignalAccordionType.FILE,
                     sourceUrl = "https://example.com/docs/2",
+                    createdAtText = "2026.07.15 22:50",
                 ),
             ),
             onFileClick = {},
