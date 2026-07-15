@@ -41,6 +41,7 @@ fun SignalRoute(
     viewModel: SignalViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
     val globalTrigger = LocalGlobalUiEventTrigger.current
 
     viewModel.sideEffect.collectSideEffect {
@@ -70,6 +71,7 @@ fun SignalRoute(
 
     SignalScreen(
         state = state,
+        avatarUrl = projectContext.avatarUrl,
         paddingValues = paddingValues,
         onDeleteSignal = viewModel::deleteSignal,
         onRegisterTask = viewModel::registerTask,
@@ -82,6 +84,7 @@ private const val EMPTY_STATE_BOTTOM_WEIGHT = 270f
 @Composable
 private fun SignalScreen(
     state: SignalState,
+    avatarUrl: String?,
     paddingValues: PaddingValues,
     onDeleteSignal: (String) -> Unit,
     onRegisterTask: (String) -> Unit,
@@ -95,7 +98,10 @@ private fun SignalScreen(
             .background(color = MomensTheme.colors.uiBg)
             .padding(paddingValues),
     ) {
-        MomensDefaultHeader(onProfileClick = {})
+        MomensDefaultHeader(
+            onProfileClick = {},
+            avatarUrl = avatarUrl,
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -144,6 +150,7 @@ private fun SignalScreenPreview() {
     MomensTheme {
         SignalScreen(
             state = SignalState.Fake,
+            avatarUrl = null,
             paddingValues = PaddingValues(),
             onDeleteSignal = {},
             onRegisterTask = {},
@@ -157,6 +164,7 @@ private fun SignalScreenEmptyPreview() {
     MomensTheme {
         SignalScreen(
             state = SignalState(),
+            avatarUrl = null,
             paddingValues = PaddingValues(),
             onDeleteSignal = {},
             onRegisterTask = {},

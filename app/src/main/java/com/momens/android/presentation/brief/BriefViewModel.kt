@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
 import com.momens.android.data.brief.repository.BriefRepository
+import com.momens.android.core.local.ProjectManager
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.toApiFilter
 import com.momens.android.presentation.brief.model.toUiModel
@@ -14,16 +15,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 
 @HiltViewModel
 class BriefViewModel @Inject constructor(
-    private val briefRepository: BriefRepository,
+    projectManager: ProjectManager,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<BriefUiState>>(UiState.Loading)
+    private val _uiState = MutableStateFlow<BriefUiState>(SampleBriefUiState)
 
     val uiState: StateFlow<UiState<BriefUiState>> = _uiState.asStateFlow()
 
@@ -53,6 +55,12 @@ class BriefViewModel @Inject constructor(
                 }
         }
     }
+
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
 
     fun selectSignalFilter(filterType: BriefSignalSummaryFilterType) {
         val currentState = (_uiState.value as? UiState.Success)?.data ?: return

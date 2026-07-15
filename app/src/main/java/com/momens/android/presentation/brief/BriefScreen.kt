@@ -42,6 +42,7 @@ fun BriefRoute(
     viewModel: BriefViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
 
     when (val state = uiState) {
         UiState.Empty, UiState.Loading -> {
@@ -55,6 +56,7 @@ fun BriefRoute(
         is UiState.Success -> BriefScreen(
             paddingValues = paddingValues,
             uiState = state.data,
+           avatarUrl = projectContext.avatarUrl,
             onFilterClick = viewModel::selectSignalFilter,
             onSummaryMoreClick = viewModel::loadMoreSignalSummary,
             onSummaryFoldClick = viewModel::foldSignalSummary,
@@ -66,6 +68,7 @@ fun BriefRoute(
 private fun BriefScreen(
     paddingValues: PaddingValues,
     uiState: BriefUiState,
+    avatarUrl: String?,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
     onSummaryMoreClick: () -> Unit,
     onSummaryFoldClick: () -> Unit,
@@ -80,6 +83,7 @@ private fun BriefScreen(
         MomensDefaultHeader(
             onProfileClick = { },
             backgroundColor = MomensTheme.colors.uiBg,
+            avatarUrl = avatarUrl,
         )
 
         Column(
@@ -172,6 +176,7 @@ private fun BriefScreenPreview() {
         BriefScreen(
             paddingValues = PaddingValues(),
             uiState = SampleBriefUiState,
+            avatarUrl = null,
             onFilterClick = {},
             onSummaryMoreClick = {},
             onSummaryFoldClick = {},
