@@ -6,12 +6,7 @@ import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
 import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.core.local.ProjectManager
-import androidx.lifecycle.viewModelScope
-import com.momens.android.core.common.extension.updateSuccess
-import com.momens.android.core.common.state.UiState
-import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
-import com.momens.android.presentation.brief.model.SampleBriefUiState
 import com.momens.android.presentation.brief.model.toApiFilter
 import com.momens.android.presentation.brief.model.toUiModel
 import com.momens.android.presentation.brief.state.BriefUiState
