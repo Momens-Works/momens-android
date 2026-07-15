@@ -9,6 +9,7 @@ import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.data.project.task.model.TaskCreateModel
 import com.momens.android.data.project.task.repository.TaskRepository
+import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.presentation.project.task.model.MomensTaskButtonType
 import com.momens.android.presentation.project.task.model.toRequestValue
 import com.momens.android.presentation.project.task.model.toUiModel
@@ -17,13 +18,16 @@ import jakarta.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
+    projectManager: ProjectManager,
     private val taskRepository: TaskRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<TaskUiState>>(UiState.Loading)
@@ -32,11 +36,19 @@ class TaskViewModel @Inject constructor(
     private val _sideEffect = MutableSharedFlow<TaskSideEffect>()
     val sideEffect = _sideEffect.asSharedFlow()
 
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
+
+    val projectId = projectContext.value.projectId.toString()
+
     fun loadTaskBoard() {
         _uiState.value = UiState.Loading
 
         viewModelScope.launch {
-            taskRepository.getTaskBoard(TEST_PROJECT_ID)
+            taskRepository.getTaskBoard(projectId)
                 .mapCatching { board -> board.toUiModel() }
                 .onSuccess { content ->
                     _uiState.value = UiState.Success(content)
@@ -55,7 +67,7 @@ class TaskViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             taskRepository.createTask(
-                projectId = TEST_PROJECT_ID,
+                projectId = projectId,
                 task = TaskCreateModel(
                     title = title,
                     role = role.toRequestValue(),
@@ -87,10 +99,5 @@ class TaskViewModel @Inject constructor(
                     _sideEffect.emit(TaskSideEffect.ShowSnackbar("태스크 등록에 실패했습니다"))
                 }
         }
-    }
-
-    companion object {
-        // TODO: 프로젝트 선택/네비게이션 인자 연동 후 실제 projectId로 교체 (현재 테스트용 하드코딩)
-        private const val TEST_PROJECT_ID = "a0000000-0000-4000-8000-000000000003"
     }
 }

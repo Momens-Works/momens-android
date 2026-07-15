@@ -5,5 +5,7 @@ interface SignInRepository {
         idToken: String,
     ): Result<Unit>
 
+    suspend fun refreshSession(): Result<Unit>
+
     suspend fun signOut(): Result<Unit>
 }

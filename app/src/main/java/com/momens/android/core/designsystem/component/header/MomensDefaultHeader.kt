@@ -11,10 +11,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.momens.android.R
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
@@ -24,6 +27,7 @@ fun MomensDefaultHeader(
     onProfileClick: () -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.Transparent,
+    avatarUrl: String? = null,
 ) {
     Box(
         modifier = modifier
@@ -35,7 +39,7 @@ fun MomensDefaultHeader(
             painter = painterResource(id = R.drawable.ic_momens_logo),
             contentDescription = null,
             modifier = Modifier.align(Alignment.CenterStart),
-            tint = Color.Unspecified
+            tint = Color.Unspecified,
         )
 
         Box(
@@ -48,12 +52,26 @@ fun MomensDefaultHeader(
                 )
                 .noRippleClickable(onClick = onProfileClick),
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_person),
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.Center),
-                tint = MomensTheme.colors.white
-            )
+            if (avatarUrl == null) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_person),
+                    contentDescription = null,
+                    modifier = Modifier.align(Alignment.Center),
+                    tint = MomensTheme.colors.white,
+                )
+            } else {
+                AsyncImage(
+                    model = avatarUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.ic_person),
+                    error = painterResource(id = R.drawable.ic_person),
+                    fallback = painterResource(id = R.drawable.ic_person),
+                    modifier = Modifier
+                        .matchParentSize()
+                        .clip(CircleShape),
+                )
+            }
         }
     }
 }
@@ -64,7 +82,7 @@ private fun MomensDefaultHeaderPreview() {
     MomensTheme {
         Column {
             MomensDefaultHeader(
-                onProfileClick = { }
+                onProfileClick = { },
             )
         }
     }

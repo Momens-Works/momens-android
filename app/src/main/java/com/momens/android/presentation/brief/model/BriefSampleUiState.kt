@@ -75,6 +75,7 @@ val SampleBriefUiState = BriefUiState(
                 title = "권한 요청 전 안내 화면 추가 여부",
             ),
         ),
+        nextCursor = null,
         isExpanded = false,
     ),
     priorities = persistentListOf(
