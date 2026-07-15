@@ -1,7 +1,6 @@
 package com.momens.android.presentation.brief
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -11,22 +10,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.common.state.UiState
-import com.momens.android.core.designsystem.component.button.MomensButton
-import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
-import com.momens.android.core.designsystem.component.type.MomensButtonType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.brief.component.BriefCurrentPriority
 import com.momens.android.presentation.brief.component.BriefSignalFilterSummary
@@ -44,8 +38,10 @@ fun BriefRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.loadBrief()
+    LaunchedEffect(projectContext.projectId) {
+        projectContext.projectId?.let { projectId ->
+            viewModel.loadBrief(projectId = projectId)
+        }
     }
 
     when (val state = uiState) {
