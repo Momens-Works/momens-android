@@ -34,10 +34,7 @@ class SignInRepositoryImpl @Inject constructor(
         )
 
         val bootstrapResponse = signInRemoteDataSource.getMobileBootstrap()
-        projectManager.saveProjectContext(
-            projectId = bootstrapResponse.defaultProjectId,
-            avatarUrl = bootstrapResponse.me.user.avatarUrl,
-        )
+        projectManager.saveProjectContext(bootstrapResponse.toProjectContextModel())
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {

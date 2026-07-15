@@ -1,5 +1,6 @@
 package com.momens.android.data.signin.remote.dto.response
 
+import com.momens.android.core.local.model.ProjectContextModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,20 +12,17 @@ data class MobileBootstrapResponse(
     val defaultProjectId: String?,
     @SerialName("projects")
     val projects: List<MobileBootstrapProjectResponse>,
-)
+) {
+    fun toProjectContextModel(): ProjectContextModel = ProjectContextModel(
+        projectId = defaultProjectId,
+        avatarUrl = me.avatarUrl,
+    )
+}
 
 @Serializable
 data class MobileBootstrapMeResponse(
-    @SerialName("user")
-    val user: MobileBootstrapUserResponse,
-)
-
-@Serializable
-data class MobileBootstrapUserResponse(
     @SerialName("id")
     val id: String,
-    @SerialName("email")
-    val email: String,
     @SerialName("name")
     val name: String,
     @SerialName("avatar_url")

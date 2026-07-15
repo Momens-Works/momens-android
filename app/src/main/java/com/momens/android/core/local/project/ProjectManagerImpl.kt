@@ -4,55 +4,46 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.momens.android.core.local.model.ProjectContextModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 class ProjectManagerImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>,
 ) : ProjectManager {
 
     @Volatile
-    private var cachedProjectId: String? = null
+    override var currentProjectContext: ProjectContextModel = ProjectContextModel()
+        private set
 
-    @Volatile
-    private var cachedAvatarUrl: String? = null
-
-    override suspend fun saveProjectContext(
-        projectId: String?,
-        avatarUrl: String?,
-    ) {
+    override suspend fun saveProjectContext(projectContext: ProjectContextModel) {
         dataStore.edit { preferences ->
-            if (projectId == null) {
+            if (projectContext.projectId == null) {
                 preferences.remove(KEY_PROJECT_ID)
             } else {
-                preferences[KEY_PROJECT_ID] = projectId
+                preferences[KEY_PROJECT_ID] = projectContext.projectId
             }
 
-            if (avatarUrl == null) {
+            if (projectContext.avatarUrl == null) {
                 preferences.remove(KEY_AVATAR_URL)
             } else {
-                preferences[KEY_AVATAR_URL] = avatarUrl
+                preferences[KEY_AVATAR_URL] = projectContext.avatarUrl
             }
         }
 
-        cachedProjectId = projectId
-        cachedAvatarUrl = avatarUrl
+        currentProjectContext = projectContext
     }
 
-    override suspend fun getProjectId(): String? {
-        return cachedProjectId ?: dataStore.data.map { preferences ->
-            preferences[KEY_PROJECT_ID]
-        }.first().also {
-            cachedProjectId = it
-        }
-    }
-
-    override suspend fun getAvatarUrl(): String? {
-        return cachedAvatarUrl ?: dataStore.data.map { preferences ->
-            preferences[KEY_AVATAR_URL]
-        }.first().also {
-            cachedAvatarUrl = it
+    override fun observeProjectContext(): Flow<ProjectContextModel> {
+        return dataStore.data.map { preferences ->
+            ProjectContextModel(
+                projectId = preferences[KEY_PROJECT_ID],
+                avatarUrl = preferences[KEY_AVATAR_URL],
+            )
+        }.onEach { projectContext ->
+            currentProjectContext = projectContext
         }
     }
 
@@ -62,8 +53,7 @@ class ProjectManagerImpl @Inject constructor(
             preferences.remove(KEY_AVATAR_URL)
         }
 
-        cachedProjectId = null
-        cachedAvatarUrl = null
+        currentProjectContext = ProjectContextModel()
     }
 
     companion object {

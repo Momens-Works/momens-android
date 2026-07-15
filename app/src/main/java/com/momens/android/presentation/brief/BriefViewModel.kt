@@ -1,6 +1,8 @@
 package com.momens.android.presentation.brief
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.momens.android.core.local.ProjectManager
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.SampleBriefUiState
 import com.momens.android.presentation.brief.state.BriefUiState
@@ -8,15 +10,25 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 @HiltViewModel
-class BriefViewModel @Inject constructor() : ViewModel() {
+class BriefViewModel @Inject constructor(
+    projectManager: ProjectManager,
+) : ViewModel() {
     private val _uiState = MutableStateFlow<BriefUiState>(SampleBriefUiState)
 
     val uiState: StateFlow<BriefUiState> = _uiState.asStateFlow()
+
+    val projectContext = projectManager.observeProjectContext().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
+        initialValue = projectManager.currentProjectContext,
+    )
 
     fun selectSignalFilter(filterType: BriefSignalSummaryFilterType) {
         _uiState.update { currentState ->
