@@ -9,6 +9,8 @@ import com.momens.android.core.local.ProjectManagerImpl
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.local.TokenManagerImpl
 import com.momens.android.core.local.constant.DataStoreConstant
+import com.momens.android.core.local.onboarding.OnboardingManager
+import com.momens.android.core.local.onboarding.OnboardingManagerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -60,4 +62,10 @@ object DataStoreModule {
     fun provideProjectManager(
         dataStore: DataStore<Preferences>,
     ): ProjectManager = ProjectManagerImpl(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideOnboardingManager(
+        dataStore: DataStore<Preferences>,
+    ): OnboardingManager = OnboardingManagerImpl(dataStore)
 }

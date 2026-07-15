@@ -12,6 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.momens.android.presentation.brief.navigation.navigateToBrief
 import com.momens.android.presentation.main.type.MainTab
+import com.momens.android.presentation.onboarding.navigation.Onboarding
+import com.momens.android.presentation.onboarding.navigation.navigateToOnboarding
 import com.momens.android.presentation.project.task.navigation.navigateToTask
 import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
@@ -89,6 +91,10 @@ class MainAppState(
 
     fun navigateToSignIn(navOptions: NavOptions? = clearStackNavOptions) {
         navController.navigateToSignIn(navOptions = navOptions)
+    }
+
+    fun navigateToOnboarding(navOptions: NavOptions? = clearStackNavOptions) {
+        navController.navigateToOnboarding(navOptions = navOptions)
     }
 
     fun navigateToBrief(navOptions: NavOptions? = clearStackNavOptions) {

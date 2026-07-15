@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.momens.android.presentation.brief.navigation.briefNavGraph
+import com.momens.android.presentation.onboarding.navigation.onboardingNavGraph
 import com.momens.android.presentation.project.task.navigation.taskNavGraph
 import com.momens.android.presentation.project.taskdetail.navigation.taskDetailNavGraph
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
@@ -55,6 +56,11 @@ fun MomensNavHost(
             },
         )
         signInNavGraph(
+            paddingValues = paddingValues,
+            navigateToOnboarding = appState::navigateToOnboarding,
+            navigateToSignal = appState::navigateToSignal,
+        )
+        onboardingNavGraph(
             paddingValues = paddingValues,
             navigateToSignal = appState::navigateToSignal,
         )

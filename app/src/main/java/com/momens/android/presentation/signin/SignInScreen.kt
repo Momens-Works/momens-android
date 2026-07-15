@@ -33,6 +33,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 @Composable
 fun SignInRoute(
     paddingValues: PaddingValues,
+    navigateToOnboarding: () -> Unit,
     navigateToSignal: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
@@ -46,6 +47,8 @@ fun SignInRoute(
                     googleSignInLauncher.launch(),
                 )
             }
+
+            SignInSideEffect.NavigateToOnboarding -> navigateToOnboarding()
 
             SignInSideEffect.NavigateToSignal -> navigateToSignal()
         }
