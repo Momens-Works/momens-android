@@ -3,12 +3,15 @@ package com.momens.android.presentation.project.taskedit.model
 import androidx.compose.runtime.Immutable
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.data.project.taskedit.model.ChecklistItemsModel
+import com.momens.android.data.project.taskedit.model.TaskEditModel
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import java.util.UUID
 
 @Immutable
 data class Task(
@@ -34,8 +37,8 @@ data class Task(
             priority = ImportantLevel.MEDIUM,
             purposeState = "사용자 인증 플로우 완성",
             checklist = persistentListOf(
-                ChecklistItemState(id = "1", title = "로그인 API 연동 완료", completed = true),
-                ChecklistItemState(id = "2", title = "에러 핸들링 처리", completed = false),
+                ChecklistItemState(id = "1", localId = "1", title = "로그인 API 연동 완료", completed = true),
+                ChecklistItemState(id = "2", localId = "2", title = "에러 핸들링 처리", completed = false),
             ),
         )
     }
@@ -50,6 +53,23 @@ fun TaskDetailModel.toEditTask(): Task = Task(
     priority = priority,
     purposeState = purpose ?: "",
     checklist = checklist.items.map {
-        ChecklistItemState(id = it.id, title = it.title, completed = it.completed)
+        ChecklistItemState(
+            id = it.id,
+            localId = UUID.randomUUID().toString(),
+            title = it.title,
+            completed = it.completed,
+        )
     }.toPersistentList(),
+)
+
+fun Task.toTaskEditModel(): TaskEditModel = TaskEditModel(
+    title = titleState,
+    role = role.name.lowercase(),
+    assigneeId = assignee?.id,
+    priority = priority.label,
+    status = status.key,
+    purpose = purposeState,
+    checklistItems = checklist
+        .filter { it.title.isNotBlank() }
+        .map { ChecklistItemsModel(id = it.id, title = it.title, completed = it.completed) },
 )

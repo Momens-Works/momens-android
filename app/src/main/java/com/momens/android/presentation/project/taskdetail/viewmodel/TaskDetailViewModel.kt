@@ -14,7 +14,7 @@ import com.momens.android.presentation.project.taskdetail.navigation.TaskDetail
 import com.momens.android.presentation.project.taskdetail.state.TaskDetailSideEffect
 import com.momens.android.presentation.project.taskdetail.state.TaskDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import javax.inject.Inject
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

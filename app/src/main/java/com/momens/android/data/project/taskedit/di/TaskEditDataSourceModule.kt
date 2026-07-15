@@ -1,8 +1,13 @@
 package com.momens.android.data.project.taskedit.di
 
+import com.momens.android.data.project.taskedit.remote.datasource.TaskEditRemoteDataSource
+import com.momens.android.data.project.taskedit.remote.datasourceimpl.TaskEditRemoteDataSourceImpl
+import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
 
 /**
  * DataSource 인터페이스와 구현체를 Hilt에 연결하는 모듈입니다.
@@ -22,5 +27,9 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class TaskEditDataSourceModule{
-
+    @Binds
+    @Singleton
+    internal abstract fun bindTaskEditRemoteDataSource(
+        taskEditRemoteDataSourceImpl: TaskEditRemoteDataSourceImpl,
+    ): TaskEditRemoteDataSource
 }

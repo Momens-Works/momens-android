@@ -1,5 +1,6 @@
 package com.momens.android.data
 
+import com.momens.android.data.project.taskedit.remote.service.TaskEditService
 import com.momens.android.data.project.taskdetail.remote.service.TaskDetailService
 import com.momens.android.data.project.task.remote.service.TaskService
 import com.momens.android.data.signal.remote.service.SignalService
@@ -29,6 +30,11 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
+
+    @Provides
+    @Singleton
+    internal fun provideTaskEditService(retrofit: Retrofit): TaskEditService =
+        retrofit.create(TaskEditService::class.java)
 
     @Provides
     @Singleton

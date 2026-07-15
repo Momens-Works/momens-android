@@ -10,21 +10,25 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class ImportantLevel(
+    val label: String,
     val text: String,
     @param:DrawableRes val grayIcon: Int,
     @param:DrawableRes val blueIcon: Int,
 ) {
     LOW(
+        label = "low",
         text = "낮음",
         grayIcon = R.drawable.ic_importance_low_gray,
         blueIcon = R.drawable.ic_importance_low_blue,
     ),
     MEDIUM(
+        label = "medium",
         text = "중간",
         grayIcon = R.drawable.ic_importance_medium_gray,
         blueIcon = R.drawable.ic_importance_medium_blue,
     ),
     HIGH(
+        label = "high",
         text = "높음",
         grayIcon = R.drawable.ic_importance_high_gray,
         blueIcon = R.drawable.ic_importance_high_blue,

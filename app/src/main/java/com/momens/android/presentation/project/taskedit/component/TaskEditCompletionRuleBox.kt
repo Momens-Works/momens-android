@@ -42,12 +42,12 @@ fun TaskEditCompletionRuleBox(
     onClearClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val titleState = remember(rule.id) { TextFieldState(rule.title) }
+    val titleState = remember(rule.localId) { TextFieldState(rule.title) }
 
     LaunchedEffect(titleState) {
         snapshotFlow { titleState.text.toString() }
             .collect { text ->
-                onTitleChange(rule.id, text)
+                onTitleChange(rule.localId, text)
             }
     }
 
@@ -81,7 +81,7 @@ fun TaskEditCompletionRuleBox(
                 .noRippleToggleable(
                     value = rule.completed,
                     role = Role.Checkbox,
-                    onValueChange = { checked -> onCheckedChange(rule.id, checked) },
+                    onValueChange = { checked -> onCheckedChange(rule.localId, checked) },
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -127,7 +127,7 @@ fun TaskEditCompletionRuleBox(
             modifier = Modifier
                 .size(14.dp)
                 .noRippleClickable(
-                    onClick = { onClearClick(rule.id) },
+                    onClick = { onClearClick(rule.localId) },
                 ),
         )
     }
@@ -145,14 +145,14 @@ private fun TaskEditCompletionRuleBoxPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(id = "1", title = writeState.text.toString(), completed = true),
+                rule = ChecklistItemState(id = "1", localId = "1", title = writeState.text.toString(), completed = true),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
                 onTitleChange = { _, _ -> }
             )
 
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(id = "2", title = exampleState.text.toString(), completed = false),
+                rule = ChecklistItemState(id = "2", localId = "2", title = exampleState.text.toString(), completed = false),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
                 onTitleChange = { _, _ -> }

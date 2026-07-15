@@ -6,17 +6,21 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.data.project.taskedit.repository.TaskEditRepository
 import com.momens.android.data.project.taskdetail.repository.TaskDetailRepository
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
+import com.momens.android.presentation.project.model.toAssignee
 import com.momens.android.presentation.project.taskdetail.model.toUiModel
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
+import com.momens.android.presentation.project.taskedit.model.toTaskEditModel
 import com.momens.android.presentation.project.taskedit.model.toEditTask
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +34,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val taskEditRepository: TaskEditRepository,
     taskDetailRepository: TaskDetailRepository,
 ) : ViewModel() {
     private val taskId: String = savedStateHandle.toRoute<TaskEdit>().taskId
@@ -79,7 +84,8 @@ class TaskEditViewModel @Inject constructor(
 
         _state.update {
             val newItem = ChecklistItemState(
-                id = UUID.randomUUID().toString(),
+                id = null,
+                localId = UUID.randomUUID().toString(),
                 title = "",
                 completed = false,
             )
@@ -91,34 +97,34 @@ class TaskEditViewModel @Inject constructor(
         }
     }
 
-    fun clearChecklistItem(itemId: String) {
+    fun clearChecklistItem(localId: String) {
         _state.update { state ->
             state.copy(
                 task = state.task.copy(
-                    checklist = state.task.checklist.removeAll { it.id == itemId },
+                    checklist = state.task.checklist.removeAll { it.localId == localId },
                 ),
             )
         }
     }
 
-    fun updateChecklistTitle(itemId: String, title: String) {
+    fun updateChecklistTitle(localId: String, title: String) {
         _state.update { state ->
             state.copy(
                 task = state.task.copy(
                     checklist = state.task.checklist.map {
-                        if (it.id == itemId) it.copy(title = title) else it
+                        if (it.localId == localId) it.copy(title = title) else it
                     }.toPersistentList(),
                 ),
             )
         }
     }
 
-    fun changeCheck(itemId: String, checked: Boolean) {
+    fun changeCheck(localId: String, checked: Boolean) {
         _state.update { state ->
             state.copy(
                 task = state.task.copy(
                     checklist = state.task.checklist.map {
-                        if (it.id == itemId) it.copy(completed = checked) else it
+                        if (it.localId == localId) it.copy(completed = checked) else it
                     }.toPersistentList(),
                 ),
             )
@@ -134,17 +140,49 @@ class TaskEditViewModel @Inject constructor(
     }
 
     fun getAssignees(search: String) {
-        // 나중에 API 연결
+        viewModelScope.launch {
+            taskEditRepository.getTaskEditMembers(
+                projectId = "a0000000-0000-4000-8000-000000000003",
+                query = search.ifBlank { null },
+            ).onSuccess { response ->
+                _state.update {
+                    it.copy(
+                        assignees = response.map { member ->
+                            member.toAssignee()
+                        }.toImmutableList(),
+                    )
+                }
+            }.onFailure { throwable ->
+                _sideEffect.emit(
+                    TaskEditSideEffect.ShowSnackBar(message = throwable.message ?: "담당자 검색에 실패했습니다."),
+                )
+            }
+        }
     }
 
     fun saveTask(title: String, purpose: String) {
         _state.update {
-            it.copy(task = it.task.copy())
+            it.copy(task = it.task.copy(titleState = title, purposeState = purpose))
         }
-        // 나중에 API 연결
 
         viewModelScope.launch {
-            _sideEffect.emit(TaskEditSideEffect.NavigateUp)
+            taskEditRepository.patchTaskEdit(
+                taskId = taskId,
+                request = _state.value.task.toTaskEditModel(),
+            ).onSuccess {
+                _sideEffect.emit(
+                    TaskEditSideEffect.ShowSnackBar(
+                        message = "저장되었습니다.",
+                    ),
+                )
+                _sideEffect.emit(TaskEditSideEffect.NavigateUp)
+            }.onFailure {
+                _sideEffect.emit(
+                    TaskEditSideEffect.ShowSnackBar(
+                        message = "저장에 실패했습니다.",
+                    ),
+                )
+            }
         }
     }
 }
