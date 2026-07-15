@@ -13,8 +13,8 @@ import com.momens.android.data.brief.repository.BriefRepository
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.toApiFilter
 import com.momens.android.presentation.brief.model.toUiModel
-import com.momens.android.presentation.brief.model.toUiState
 import com.momens.android.presentation.brief.state.BriefUiState
+import com.momens.android.presentation.brief.state.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.collections.immutable.toImmutableList

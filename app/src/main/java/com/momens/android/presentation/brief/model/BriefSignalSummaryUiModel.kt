@@ -1,7 +1,11 @@
 package com.momens.android.presentation.brief.model
 
 import androidx.compose.runtime.Immutable
+import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryFilterResponse
+import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryItemResponse
+import com.momens.android.data.brief.remote.dto.response.BriefSignalSummaryResponse
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Immutable
 data class BriefSignalSummaryUiModel(
@@ -20,3 +24,14 @@ data class BriefSignalSummaryUiModel(
 }
 
 private const val DEFAULT_VISIBLE_COUNT = 3
+
+fun BriefSignalSummaryResponse.toUiModel(
+    selectedFilterType: BriefSignalSummaryFilterType,
+): BriefSignalSummaryUiModel = BriefSignalSummaryUiModel(
+    summary = summary.orEmpty(),
+    filters = filters.map(BriefSignalSummaryFilterResponse::toUiModel).toImmutableList(),
+    selectedFilterType = selectedFilterType,
+    items = items.map(BriefSignalSummaryItemResponse::toUiModel).toImmutableList(),
+    nextCursor = nextCursor,
+    isExpanded = false,
+)
