@@ -53,10 +53,6 @@ internal fun OnBoardingSignalContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OnBoardingSignalFilter(
-            modifier = Modifier.padding(horizontal = 20.dp),
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -110,58 +106,6 @@ private fun OnBoardingSignalTitleSection(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
-    }
-}
-
-@Composable
-private fun OnBoardingSignalFilter(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        OnBoardingFilterChip(
-            text = "안읽음",
-            selected = true,
-        )
-        OnBoardingFilterChip(
-            text = "읽음",
-            selected = false,
-        )
-    }
-}
-
-@Composable
-private fun OnBoardingFilterChip(
-    text: String,
-    selected: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .background(
-                color = if (selected) MomensTheme.colors.primary100 else MomensTheme.colors.white,
-                shape = RoundedCornerShape(23.dp),
-            )
-            .padding(horizontal = 14.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        Text(
-            text = text,
-            style = if (selected) MomensTheme.typography.bodyB12 else MomensTheme.typography.bodyM12,
-            color = if (selected) MomensTheme.colors.white else MomensTheme.colors.gray400,
-        )
-
-        if (selected) {
-            Box(
-                modifier = Modifier
-                    .size(7.dp)
-                    .clip(RoundedCornerShape(percent = 50))
-                    .background(color = MomensTheme.colors.white.copy(alpha = 0.55f)),
-            )
-        }
     }
 }
 
@@ -236,16 +180,6 @@ private fun OnBoardingSignalContentPreview() {
 
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
-private fun OnBoardingSignalFilterPreview() {
-    MomensTheme {
-        OnBoardingSignalFilter(
-            modifier = Modifier.padding(20.dp),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
-@Composable
 private fun OnBoardingSignalTitleSectionPreview() {
     MomensTheme {
         OnBoardingSignalTitleSection(
@@ -255,25 +189,6 @@ private fun OnBoardingSignalTitleSectionPreview() {
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
-@Composable
-private fun OnBoardingFilterChipPreview() {
-    MomensTheme {
-        Row(
-            modifier = Modifier.padding(20.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            OnBoardingFilterChip(
-                text = "안읽음",
-                selected = true,
-            )
-            OnBoardingFilterChip(
-                text = "읽음",
-                selected = false,
-            )
-        }
-    }
-}
 
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable

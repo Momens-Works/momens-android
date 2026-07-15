@@ -60,8 +60,8 @@ android {
 
             buildConfigField(
                 "String",
-                "DEBUG_REFRESH_TOKEN",
-                "\"${properties.getProperty("debug.refresh.token", "")}\"",
+                "DEBUG_ACCESS_TOKEN",
+                "\"${properties.getProperty("debug.access.token", "")}\"",
             )
         }
 
