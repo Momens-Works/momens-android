@@ -3,7 +3,10 @@ package com.momens.android.presentation.onboarding
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,11 +83,18 @@ fun OnBoardingScreen(
             onMinsuSuggestionPositioned = { minsuSuggestionBounds = it },
         )
 
+        Spacer(Modifier.height(20.dp))
+
         MomensMainTabBar(
-            tabs = persistentListOf(MainTab.SIGNAL, MainTab.BRIEF, MainTab.TASK),
+            tabs = persistentListOf(
+                MainTab.SIGNAL,
+                MainTab.BRIEF,
+                MainTab.TASK
+            ),
             selectedTab = MainTab.SIGNAL,
             onTabClick = {},
             modifier = Modifier
+                .navigationBarsPadding()
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 12.dp),
         )

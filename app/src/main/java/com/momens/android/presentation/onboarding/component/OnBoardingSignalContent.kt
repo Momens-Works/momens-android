@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +21,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
@@ -39,7 +42,9 @@ internal fun OnBoardingSignalContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         MomensDefaultHeader(onProfileClick = {})
 
@@ -62,14 +67,14 @@ internal fun OnBoardingSignalContent(
         ) {
             OnBoardingSignalCard(
                 type = SignalTagType.RISK,
-                modifier = Modifier.coachmarkTarget(onSignalCardPositioned),
+                modifier = Modifier.coachmarkTarget(onPositioned = onSignalCardPositioned,),
                 suggestionModifier = Modifier.coachmarkTarget(onMinsuSuggestionPositioned),
             )
 
             repeat(3) { index ->
                 OnBoardingSignalCard(
                     type = if (index % 2 == 0) SignalTagType.CHANGE else SignalTagType.QUESTION,
-                    minsuSuggestion = "내용이 들어갈 공간입니다",
+                    minsuSuggestion = "content",
                 )
             }
         }
@@ -82,14 +87,19 @@ private fun OnBoardingSignalTitleSection(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 14.dp, end = 14.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
             text = "오늘 확인해야 할 시그널",
             modifier = Modifier
-                .padding(start = 8.dp)
-                .coachmarkTarget(onTitlePositioned),
+                .fillMaxWidth()
+                .coachmarkTarget(
+                    onPositioned = onTitlePositioned,
+                    startPadding = 6.dp,
+                ),
             style = MomensTheme.typography.titleB24,
             color = MomensTheme.colors.black,
             maxLines = 1,
@@ -100,7 +110,7 @@ private fun OnBoardingSignalTitleSection(
             text = "프로젝트의 의사결정에 영향을 줄 수 있는 변화입니다.",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp),
+                .padding(start = 8.dp, top = 4.dp),
             style = MomensTheme.typography.bodyM14,
             color = MomensTheme.colors.gray500,
             maxLines = 1,
@@ -160,9 +170,27 @@ private fun OnBoardingSignalCard(
     }
 }
 
-private fun Modifier.coachmarkTarget(onPositioned: (Rect) -> Unit): Modifier {
+@Composable
+private fun Modifier.coachmarkTarget(
+    onPositioned: (Rect) -> Unit,
+    startPadding: Dp = 0.dp,
+    topPadding: Dp = 0.dp,
+    endPadding: Dp = 0.dp,
+    bottomPadding: Dp = 0.dp,
+): Modifier {
+    val density = LocalDensity.current
+
     return onGloballyPositioned { coordinates ->
-        onPositioned(coordinates.boundsInRoot())
+        val bounds = coordinates.boundsInRoot()
+
+        onPositioned(
+            Rect(
+                left = bounds.left - with(density) { startPadding.toPx() },
+                top = bounds.top - with(density) { topPadding.toPx() },
+                right = bounds.right + with(density) { endPadding.toPx() },
+                bottom = bounds.bottom + with(density) { bottomPadding.toPx() },
+            ),
+        )
     }
 }
 
@@ -177,18 +205,6 @@ private fun OnBoardingSignalContentPreview() {
         )
     }
 }
-
-@Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
-@Composable
-private fun OnBoardingSignalTitleSectionPreview() {
-    MomensTheme {
-        OnBoardingSignalTitleSection(
-            onTitlePositioned = {},
-            modifier = Modifier.padding(start = 12.dp, end = 20.dp),
-        )
-    }
-}
-
 
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
