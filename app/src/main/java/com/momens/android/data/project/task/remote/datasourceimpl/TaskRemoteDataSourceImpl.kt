@@ -5,7 +5,7 @@ import com.momens.android.data.project.task.remote.dto.request.TaskCreateRequest
 import com.momens.android.data.project.task.remote.dto.response.TaskBoardResponse
 import com.momens.android.data.project.task.remote.dto.response.TaskCreateResponse
 import com.momens.android.data.project.task.remote.service.TaskService
-import jakarta.inject.Inject
+import javax.inject.Inject
 
 class TaskRemoteDataSourceImpl @Inject constructor(
     private val taskService: TaskService,

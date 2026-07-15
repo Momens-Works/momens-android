@@ -1,6 +1,7 @@
 package com.momens.android.data.project.task.repository
 
 import com.momens.android.data.project.task.model.TaskBoard
+import com.momens.android.data.project.task.model.TaskCreateModel
 import com.momens.android.data.project.task.model.TaskItem
 
 interface TaskRepository {
@@ -8,8 +9,6 @@ interface TaskRepository {
 
     suspend fun createTask(
         projectId: String,
-        title: String,
-        role: String,
-        priority: String,
+        task: TaskCreateModel,
     ): Result<TaskItem>
 }
