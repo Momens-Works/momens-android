@@ -1,6 +1,7 @@
 package com.momens.android.presentation.signal.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,8 @@ import com.momens.android.presentation.signal.model.SignalCardUiModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+private val SIGNAL_LIST_BOTTOM_PADDING = 96.dp
+
 @Composable
 fun SignalList(
     signals: ImmutableList<SignalCardUiModel>,
@@ -24,8 +27,11 @@ fun SignalList(
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
-            .padding(top = 16.dp),
+            .padding(horizontal = 20.dp),
+        contentPadding = PaddingValues(
+            top = 16.dp,
+            bottom = SIGNAL_LIST_BOTTOM_PADDING,
+        ),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(

@@ -2,7 +2,6 @@ package com.momens.android.presentation.onboarding.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -18,6 +17,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +34,7 @@ import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -47,8 +51,9 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.onboarding.OnBoardingCoachmarkStep
 
 private val CoachBubbleArrowCenterX = 48.dp
-private val HighlightHorizontalPadding = 8.dp
+private val HighlightHorizontalPadding = 4.dp
 private val HighlightVerticalPadding = 4.dp
+private val CoachBubbleFallbackHeight = 142.dp
 
 @Composable
 internal fun BoxScope.CoachmarkOverlay(
@@ -68,6 +73,7 @@ internal fun BoxScope.CoachmarkOverlay(
 
     HighlightFrame(
         modifier = Modifier
+            .fillMaxWidth()
             .highlightBounds(bounds = highlightBounds),
     )
 
@@ -186,11 +192,6 @@ private fun BoxScope.HighlightFrame(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .border(
-                width = 1.dp,
-                color = MomensTheme.colors.primary50,
-                shape = RoundedCornerShape(8.dp),
-            ),
     )
 }
 
@@ -208,11 +209,16 @@ private fun BoxScope.CoachBubble(
     ) {
         val density = LocalDensity.current
         val bubbleWidth = maxWidth.coerceAtMost(320.dp)
-        val bubbleHeight = 142.dp
+        var measuredBubbleHeightPx by remember { mutableIntStateOf(0) }
+        val bubbleHeight = if (measuredBubbleHeightPx > 0) {
+            with(density) { measuredBubbleHeightPx.toDp() }
+        } else {
+            CoachBubbleFallbackHeight
+        }
         val screenWidth = maxWidth
         val screenHeight = maxHeight
         val horizontalMargin = 20.dp
-        val verticalGap = 12.dp
+        val verticalGap = 15.dp
 
         val targetTop = with(density) { targetBounds.top.toDp() }
         val targetBottom = with(density) { targetBounds.bottom.toDp() }
@@ -242,33 +248,38 @@ private fun BoxScope.CoachBubble(
                     x = bubbleX,
                     y = bubbleY,
                 )
-                .size(
-                    width = bubbleWidth,
-                    height = bubbleHeight,
-                ),
+                .width(bubbleWidth)
+                .onSizeChanged { size ->
+                    measuredBubbleHeightPx = size.height
+                },
         ) {
             BubbleBackground(
                 arrowX = arrowX,
                 arrowOnTop = showBelowTarget,
+                modifier = Modifier.matchParentSize(),
             )
 
             Column(
                 modifier = Modifier
-                    .offset(y = if (showBelowTarget) 28.dp else 16.dp)
-                    .width(bubbleWidth - 40.dp)
-                    .align(Alignment.TopCenter),
+                    .fillMaxWidth()
+                    .padding(
+                        start = 20.dp,
+                        top = if (showBelowTarget) 28.dp else 16.dp,
+                        end = 20.dp,
+                        bottom = if (showBelowTarget) 16.dp else 28.dp,
+                    ),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
                         text = title,
-                        style = MomensTheme.typography.titleB24,
+                        style = MomensTheme.typography.bodyB16,
                         color = MomensTheme.colors.black,
                     )
                     Text(
                         text = description,
-                        style = MomensTheme.typography.bodyM14,
-                        color = MomensTheme.colors.gray500,
+                        style = MomensTheme.typography.bodyM12,
+                        color = MomensTheme.colors.gray600,
                     )
                 }
 
@@ -297,8 +308,9 @@ private fun BoxScope.CoachBubble(
 private fun BubbleBackground(
     arrowX: Dp,
     arrowOnTop: Boolean,
+    modifier: Modifier = Modifier,
 ) {
-    Canvas(modifier = Modifier.fillMaxSize()) {
+    Canvas(modifier = modifier) {
         val arrowCenterX = arrowX.toPx()
         val arrowHeight = 12.dp.toPx()
         val arrowHalfWidth = 10.dp.toPx()
