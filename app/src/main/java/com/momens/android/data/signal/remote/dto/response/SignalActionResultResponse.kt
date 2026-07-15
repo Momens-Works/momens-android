@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SignalActionResultDto(
+data class SignalActionResultResponse(
     @SerialName("id")
     val id: String,
     @SerialName("action")

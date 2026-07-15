@@ -1,6 +1,6 @@
 package com.momens.android.data.signal.model
 
-import com.momens.android.data.signal.remote.dto.response.SignalEvidenceDetailsDto
+import com.momens.android.data.signal.remote.dto.response.SignalEvidenceDetailsResponse
 
 data class SignalEvidenceDetailsModel(
     val target: String,
@@ -8,7 +8,7 @@ data class SignalEvidenceDetailsModel(
     val impact: String,
 )
 
-fun SignalEvidenceDetailsDto.toModel(): SignalEvidenceDetailsModel = SignalEvidenceDetailsModel(
+fun SignalEvidenceDetailsResponse.toModel(): SignalEvidenceDetailsModel = SignalEvidenceDetailsModel(
     target = target,
     change = change,
     impact = impact,

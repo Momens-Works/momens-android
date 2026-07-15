@@ -1,6 +1,6 @@
 package com.momens.android.data.signal.model
 
-import com.momens.android.data.signal.remote.dto.response.TaskSummaryDto
+import com.momens.android.data.signal.remote.dto.response.TaskSummaryResponse
 
 data class SignalTaskModel(
     val id: String,
@@ -8,7 +8,7 @@ data class SignalTaskModel(
     val status: String,
 )
 
-fun TaskSummaryDto.toModel(): SignalTaskModel = SignalTaskModel(
+fun TaskSummaryResponse.toModel(): SignalTaskModel = SignalTaskModel(
     id = id,
     title = title,
     status = status,

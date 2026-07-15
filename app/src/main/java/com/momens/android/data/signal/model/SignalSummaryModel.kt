@@ -1,6 +1,6 @@
 package com.momens.android.data.signal.model
 
-import com.momens.android.data.signal.remote.dto.response.SignalSummaryDto
+import com.momens.android.data.signal.remote.dto.response.SignalSummaryResponse
 
 data class SignalSummaryModel(
     val id: String,
@@ -10,7 +10,7 @@ data class SignalSummaryModel(
     val minsuSuggestion: String?,
 )
 
-fun SignalSummaryDto.toModel(): SignalSummaryModel = SignalSummaryModel(
+fun SignalSummaryResponse.toModel(): SignalSummaryModel = SignalSummaryModel(
     id = id,
     type = type.toModel(),
     title = title,

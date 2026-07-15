@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class SignalTypeDto {
+enum class SignalTypeResponse {
     @SerialName("risk")
     RISK,
 

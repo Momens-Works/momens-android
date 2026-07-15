@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DismissResponse(
     @SerialName("signal")
-    val signal: SignalActionResultDto,
+    val signal: SignalActionResultResponse,
 )
