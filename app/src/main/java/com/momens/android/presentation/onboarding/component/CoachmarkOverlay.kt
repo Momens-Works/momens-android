@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.theme.MomensTheme
-import com.momens.android.presentation.onboarding.OnBoardingCoachmarkStep
+import com.momens.android.presentation.onboarding.OnboardingCoachmarkStep
 
 private val CoachBubbleArrowCenterX = 48.dp
 private val HighlightHorizontalPadding = 4.dp
@@ -57,7 +57,7 @@ private val CoachBubbleFallbackHeight = 142.dp
 
 @Composable
 internal fun BoxScope.CoachmarkOverlay(
-    step: OnBoardingCoachmarkStep,
+    step: OnboardingCoachmarkStep,
     targetBounds: Rect?,
     onNextClick: () -> Unit,
 ) {
@@ -78,7 +78,7 @@ internal fun BoxScope.CoachmarkOverlay(
     )
 
     when (step) {
-        OnBoardingCoachmarkStep.SignalTitle -> {
+        OnboardingCoachmarkStep.SignalTitle -> {
             CoachBubble(
                 title = "오늘 확인해야 할 시그널",
                 description = buildAnnotatedString {
@@ -95,7 +95,7 @@ internal fun BoxScope.CoachmarkOverlay(
             )
         }
 
-        OnBoardingCoachmarkStep.SignalCard -> {
+        OnboardingCoachmarkStep.SignalCard -> {
             CoachBubble(
                 title = "시그널카드",
                 description = buildAnnotatedString {
@@ -108,7 +108,7 @@ internal fun BoxScope.CoachmarkOverlay(
             )
         }
 
-        OnBoardingCoachmarkStep.MinsuSuggestion -> {
+        OnboardingCoachmarkStep.MinsuSuggestion -> {
             CoachBubble(
                 title = "민수의 제안",
                 description = buildAnnotatedString {
@@ -409,7 +409,7 @@ private fun CoachmarkOverlayPreview() {
             )
 
             CoachmarkOverlay(
-                step = OnBoardingCoachmarkStep.SignalTitle,
+                step = OnboardingCoachmarkStep.SignalTitle,
                 targetBounds = targetBounds,
                 onNextClick = {},
             )

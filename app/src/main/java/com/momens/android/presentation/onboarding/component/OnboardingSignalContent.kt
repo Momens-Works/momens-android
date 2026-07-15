@@ -2,29 +2,20 @@ package com.momens.android.presentation.onboarding.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.layout.boundsInRoot
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
@@ -33,9 +24,10 @@ import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.component.type.SignalTagType
 import com.momens.android.core.designsystem.effect.momensUiShadow
 import com.momens.android.core.designsystem.theme.MomensTheme
+import com.momens.android.presentation.onboarding.extension.coachmarkTarget
 
 @Composable
-internal fun OnBoardingSignalContent(
+fun OnboardingSignalContent(
     onSignalTitlePositioned: (Rect) -> Unit,
     onSignalCardPositioned: (Rect) -> Unit,
     onMinsuSuggestionPositioned: (Rect) -> Unit,
@@ -50,7 +42,7 @@ internal fun OnBoardingSignalContent(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        OnBoardingSignalTitleSection(
+        OnboardingSignalTitleSection(
             onTitlePositioned = onSignalTitlePositioned,
             modifier = Modifier
                 .padding(start = 12.dp, end = 20.dp),
@@ -65,14 +57,14 @@ internal fun OnBoardingSignalContent(
                 .padding(top = 12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            OnBoardingSignalCard(
+            OnboardingSignalCard(
                 type = SignalTagType.RISK,
                 modifier = Modifier.coachmarkTarget(onSignalCardPositioned),
                 suggestionModifier = Modifier.coachmarkTarget(onMinsuSuggestionPositioned),
             )
 
             repeat(3) { index ->
-                OnBoardingSignalCard(
+                OnboardingSignalCard(
                     type = if (index % 2 == 0) SignalTagType.CHANGE else SignalTagType.QUESTION,
                     minsuSuggestion = "content",
                 )
@@ -82,7 +74,7 @@ internal fun OnBoardingSignalContent(
 }
 
 @Composable
-private fun OnBoardingSignalTitleSection(
+private fun OnboardingSignalTitleSection(
     onTitlePositioned: (Rect) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -120,7 +112,7 @@ private fun OnBoardingSignalTitleSection(
 }
 
 @Composable
-private fun OnBoardingSignalCard(
+private fun OnboardingSignalCard(
     type: SignalTagType,
     modifier: Modifier = Modifier,
     suggestionModifier: Modifier = Modifier,
@@ -170,40 +162,11 @@ private fun OnBoardingSignalCard(
     }
 }
 
-private fun Modifier.coachmarkTarget(
-    onPositioned: (Rect) -> Unit,
-): Modifier {
-    return onGloballyPositioned { coordinates ->
-        onPositioned(coordinates.boundsInRoot())
-    }
-}
-
-@Composable
-private fun Modifier.coachmarkTarget(
-    onPositioned: (Rect) -> Unit,
-    startPadding: Dp,
-): Modifier {
-    val density = LocalDensity.current
-
-    return onGloballyPositioned { coordinates ->
-        val bounds = coordinates.boundsInRoot()
-
-        onPositioned(
-            Rect(
-                left = bounds.left - with(density) { startPadding.toPx() },
-                top = bounds.top,
-                right = bounds.right,
-                bottom = bounds.bottom,
-            ),
-        )
-    }
-}
-
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
-private fun OnBoardingSignalContentPreview() {
+private fun OnboardingSignalContentPreview() {
     MomensTheme {
-        OnBoardingSignalContent(
+        OnboardingSignalContent(
             onSignalTitlePositioned = {},
             onSignalCardPositioned = {},
             onMinsuSuggestionPositioned = {},
@@ -213,9 +176,9 @@ private fun OnBoardingSignalContentPreview() {
 
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
-private fun OnBoardingSignalCardPreview() {
+private fun OnboardingSignalCardPreview() {
     MomensTheme {
-        OnBoardingSignalCard(
+        OnboardingSignalCard(
             type = SignalTagType.RISK,
             modifier = Modifier.padding(20.dp),
         )
