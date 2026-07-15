@@ -169,6 +169,7 @@ private fun TaskEditScreen(
                     onTitleChange = onChecklistTitleChange,
                     onCheckedChange = onCheckedChange,
                     onClearClick = onChecklistClearClick,
+                    maxLength = 50,
                     modifier = Modifier,
                 )
             }

@@ -31,6 +31,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun TaskEditCompleteSection(
     completedCount: Int,
     totalCount: Int,
+    maxLength: Int,
     rules: ImmutableList<ChecklistItemState>,
     onAddClick: () -> Unit,
     onTitleChange: (String, String) -> Unit,
@@ -90,6 +91,7 @@ fun TaskEditCompleteSection(
                     key(rule.localId) {
                         TaskEditCompletionRuleBox(
                             rule = rule,
+                            maxLength = maxLength,
                             onTitleChange = onTitleChange,
                             onCheckedChange = { localId, checked -> onCheckedChange(localId, checked) },
                             onClearClick = { onClearClick(rule.localId) },
@@ -121,6 +123,7 @@ private fun TaskEditCompleteSectionPreview() {
             onAddClick = {},
             onCheckedChange = { _, _ -> },
             onClearClick = {},
+            maxLength = 50,
             onTitleChange = { _, _ -> },
         )
     }
@@ -138,6 +141,7 @@ private fun TaskEditCompleteSectionEmptyPreview() {
             onAddClick = {},
             onCheckedChange = { _, _ -> },
             onTitleChange = { _, _ -> },
+            maxLength = 50,
             onClearClick = {},
         )
     }

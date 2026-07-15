@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.maxLength
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,6 +39,7 @@ import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 @Composable
 fun TaskEditCompletionRuleBox(
     rule: ChecklistItemState,
+    maxLength: Int,
     onTitleChange: (String, String) -> Unit,
     onCheckedChange: (String, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
@@ -99,6 +102,7 @@ fun TaskEditCompletionRuleBox(
                     .fillMaxWidth(),
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
+                inputTransformation = InputTransformation.maxLength(maxLength),
                 decorator = { innerTextField ->
                     Row(
                         modifier = Modifier
@@ -148,6 +152,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
                 rule = ChecklistItemState(id = "1", localId = "1", title = writeState.text.toString(), completed = true),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
+                maxLength = 50,
                 onTitleChange = { _, _ -> }
             )
 
@@ -155,6 +160,7 @@ private fun TaskEditCompletionRuleBoxPreview() {
                 rule = ChecklistItemState(id = "2", localId = "2", title = exampleState.text.toString(), completed = false),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
+                maxLength = 50,
                 onTitleChange = { _, _ -> }
             )
         }
