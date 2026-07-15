@@ -7,9 +7,3 @@ fun BriefSignalSummaryFilterType.toApiFilter(): String? {
         name.lowercase()
     }
 }
-
-fun String.toFilterType(): BriefSignalSummaryFilterType {
-    return BriefSignalSummaryFilterType.entries.firstOrNull { filterType ->
-        filterType.name.equals(this, ignoreCase = true)
-    } ?: BriefSignalSummaryFilterType.ALL
-}
