@@ -4,16 +4,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.momens.android.core.common.extension.toTaskEditPayload
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
+import com.momens.android.data.project.taskdetail.repository.TaskDetailRepository
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
+import com.momens.android.presentation.project.taskdetail.model.toUiModel
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
+import com.momens.android.presentation.project.taskedit.model.toEditTask
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,26 +24,24 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    taskDetailRepository: TaskDetailRepository,
 ) : ViewModel() {
-    private val args = savedStateHandle.toRoute<TaskEdit>()
-    private val argsPayload = args.payloadJson.toTaskEditPayload()
+    private val taskId: String = savedStateHandle.toRoute<TaskEdit>().taskId
 
-    init {
-        Timber.d(
-            "TaskEdit args 수신: taskId=${args.taskId}, title=${args.title}, role=${args.role}, " +
-                "priority=${args.priority}, status=${args.status}, purpose=${args.purpose}, " +
-                "assignee=${argsPayload.assignee}, checklist=${argsPayload.checklist}",
-        )
-    }
+    private val initialTask = taskDetailRepository.cachedTaskDetail.value!!.toUiModel().toEditTask()
 
-    private val _state = MutableStateFlow(TaskEditState.Fake)
+    private val _state = MutableStateFlow(
+        TaskEditState(
+            task = initialTask,
+            assignees = persistentListOf(),
+        ),
+    )
     val state = _state.asStateFlow()
 
     private val _sideEffect = MutableSharedFlow<TaskEditSideEffect>()

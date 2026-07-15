@@ -10,6 +10,7 @@ import com.momens.android.presentation.project.taskdetail.model.TaskDetailCheckl
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailFileModel
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailModel
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailQuestionModel
+import com.momens.android.presentation.signal.model.SignalAccordionType
 import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
@@ -48,16 +49,18 @@ data class TaskDetailState(
                         title = "회원가입 에러 메시지 정책 초안",
                         summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.\n회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
                         roles = persistentListOf("PM"),
-                        kind = "Copy policy",
+                        kind = SignalAccordionType.FIGMA,
                         sourceUrl = "https://example.com",
+                        createdAtText = "2026.07.15 22:48",
                     ),
                     TaskDetailFileModel(
                         id = "2",
                         title = "회원가입 에러 메시지 정책 초안",
                         summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
                         roles = persistentListOf("PM"),
-                        kind = "Copy policy",
+                        kind = SignalAccordionType.FILE,
                         sourceUrl = "https://example.com",
+                        createdAtText = "2026.07.15 22:50",
                     ),
                 ),
                 openQuestions = persistentListOf(

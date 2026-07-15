@@ -1,5 +1,6 @@
 package com.momens.android.data
 
+import com.momens.android.data.project.taskdetail.remote.service.TaskDetailService
 import com.momens.android.data.project.task.remote.service.TaskService
 import com.momens.android.data.signal.remote.service.SignalService
 import com.momens.android.data.brief.remote.service.BriefService
@@ -51,4 +52,10 @@ object ServiceModule {
     @Singleton
     fun provideTaskService(retrofit: Retrofit): TaskService =
         retrofit.create(TaskService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTaskDetailService(
+        retrofit: Retrofit,
+    ): TaskDetailService = retrofit.create(TaskDetailService::class.java)
 }
