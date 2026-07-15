@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.InputTransformation
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.maxLength
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -33,6 +35,8 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
+
+private const val TITLE_MAX_LENGTH = 50
 
 @Composable
 fun TaskEditCompletionRuleBox(
@@ -97,6 +101,7 @@ fun TaskEditCompletionRuleBox(
                 state = titleState,
                 modifier = Modifier
                     .fillMaxWidth(),
+                inputTransformation = InputTransformation.maxLength(TITLE_MAX_LENGTH),
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
                 decorator = { innerTextField ->
