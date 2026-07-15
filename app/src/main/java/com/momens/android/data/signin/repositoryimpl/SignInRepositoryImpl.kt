@@ -1,7 +1,5 @@
 package com.momens.android.data.signin.repositoryimpl
 
-import android.util.Log
-import com.momens.android.BuildConfig
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.util.suspendRunCatching
 import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
@@ -32,8 +30,6 @@ class SignInRepositoryImpl @Inject constructor(
             accessToken = response.accessToken,
             refreshToken = response.refreshToken,
         )
-
-        tokenManager.getAccessToken()?.let { Log.d("TOKEN", it) }
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {

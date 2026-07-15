@@ -4,6 +4,8 @@ build/
 
 # Local configuration
 local.properties
+*.keystore
+*.jks
 
 # Android Studio / IntelliJ
 *.iml
