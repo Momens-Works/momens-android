@@ -1,20 +1,28 @@
-
+<img width="2000" alt="image" src="https://github.com/user-attachments/assets/96c7dfba-2400-4be4-961a-3a007a424570" />
 
 #  Momens 서비스 소개
-> 흩어진 프로젝트 맥락을 하나의 메모리로 연결하고, 팀원이 오늘의 할 일·결정·리스크를 빠르게 확인하고 업데이트할 수 있는 프로젝트 실행 인터페이스
+> 프로젝트 → 마일스톤 → 작업으로 이어지는 하나의 실행 흐름 위에 결정·리스크·질문·소스 같은 컨텍스트를 함께 연결해, "이 작업이 왜 존재하는지"를 팀 전체가 놓치지 않게 만드는 프로젝트 실행 인터페이스
 
 
+  
 <br/>
 
 ## Momens 주요 기능
+- 프로젝트 → 마일스톤 → 작업 구조로 진행 상황 파악
+- 담당자 공백·기한 임박·차단 자동 감지 및 위험 배너
+- Signal 기반 이슈 확인, 민수 AI의 요약·액션 제안
+- 결정·리스크·질문·소스 메모리 축적
+- ⌘K 커맨드 팔레트로 빠른 이동/생성
 
-- 프로젝트 Signal 기반 중요 이슈 확인
+<br/>
 
-- Signal 근거 요약 및 원천 도구 연결
+## Contributors
 
-- 민수 AI의 리스크·결정·질문 요약 및 액션 제안
+| 🤴남궁혜민<br/>[@hyeminililo](https://github.com/hyeminililo) | 🖌️ 최승재<br/>[@seungjae708](https://github.com/seungjae708) | 🖌️ 안태훈<br/>[@taehoon-An](https://github.com/taehoon-An) | 🖌️ 윤갑유<br/>[@gahbyu](https://github.com/gahbyu) | 🖌️ 최은지<br/>[@chldmswll](https://github.com/chldmswll) |
+| :---: | :---: | :---: | :---: | :---: |
+| <img width="170" alt="KakaoTalk_20260715_232638689_02" src="https://github.com/user-attachments/assets/d543130f-4f56-47f5-8bf5-e49b36e1caea" /> | <img width="170" alt="KakaoTalk_20260715_232638689_05" src="https://github.com/user-attachments/assets/6d14f758-a517-45ed-8c09-d0c8fd7e2c55" /> | <img width="170" alt="KakaoTalk_20260715_232638689_01" src="https://github.com/user-attachments/assets/4bb3a702-9483-4bf4-a702-8f648566d4f0" /> | <img width="170" alt="KakaoTalk_20260715_232638689_04" src="https://github.com/user-attachments/assets/e38a6c8e-6fce-4379-af09-125b768c64e2" /> | <img width="170" alt="KakaoTalk_20260715_232638689_03" src="https://github.com/user-attachments/assets/131c7a02-edd0-423e-ae68-c91e4e0c367f" /> |
+| `브리프` `온보딩`| `시그널` `태스크 상세` | `로그인` | `태스크` | `태스크 수정` |
 
-- Signal 기반 공유, 태스크 전환, 결정 기록, 해결 처리
 
 <br/>
 
@@ -64,15 +72,6 @@ Hilt는 Google에서 공식 지원하는 DI 라이브러리이기 때문에 Andr
 📂 [Packaging Convention](https://app.notion.com/p/ffeac442a8578227b59d810fa687e8a5?source=copy_link)<br/>
 🔐 [Debug Keystore Setup](docs/debug-keystore.md)<br/>
 
-<br/>
-
-## Contributors
-
-| 🤴남궁혜민<br/>[@hyeminililo](https://github.com/hyeminililo) | 🖌️ 최승재<br/>[@seungjae708](https://github.com/seungjae708) | 🖌️ 안태훈<br/>[@taehoon-An](https://github.com/taehoon-An) | 🖌️ 윤갑유<br/>[@gahbyu](https://github.com/gahbyu) | 🖌️ 최은지<br/>[@chldmswll](https://github.com/chldmswll) |
-| --------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------ |
-| <img width="88" height="88" alt="image" src="https://github.com/user-attachments/assets/7ece411b-8b80-4373-aaf2-f9988088bc6f" />|<img width="88" height="88" alt="image" src="https://github.com/user-attachments/assets/5f9812b4-eb55-4ad7-8161-aa26e1c3c67c" />| <img width="88" height="88" alt="image" src="https://github.com/user-attachments/assets/7e6fb4e2-5a0a-497f-8150-99171a47301b" />|<img width="88" height="88" alt="image" src="https://github.com/user-attachments/assets/a4e10902-7b7f-449c-975d-6fc1c93ed511" />|<img width="88" height="88" alt="image" src="https://github.com/user-attachments/assets/0a3df16d-b6df-4f21-b229-593816f34e6f" />|
-| `홈`                                                       | `태스크 작성`                                                   | `로그인` `온보딩`                                              | `프로젝트 상세`                                        | `브리프`                                                  |
-
 
 <br/>
 
@@ -96,7 +95,10 @@ Hilt는 Google에서 공식 지원하는 DI 라이브러리이기 때문에 Andr
 ┃ ┣ 📂 brief    
 ┃ ┣ 📂 home 
 ┃ ┣ 📂 main
-┃ ┣ 📂 project 
+┃ ┣ 📂 project
+┃ ┃ ┣ 📂 task
+┃ ┃ ┣ 📂 taskdetail
+┃ ┃ ┣ 📂 taskedit
 ┃ ┣ 📂 signal  
 ┃ ┣ 📂 signin 
 ┃ ┣ 📂 splash
