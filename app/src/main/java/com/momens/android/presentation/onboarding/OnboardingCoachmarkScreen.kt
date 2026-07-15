@@ -24,7 +24,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.main.component.MomensMainTabBar
 import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.onboarding.component.CoachmarkOverlay
-import com.momens.android.presentation.onboarding.component.OnBoardingSignalContent
+import com.momens.android.presentation.onboarding.component.OnboardingSignalContent
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -34,7 +34,7 @@ fun OnboardingRoute(
     modifier: Modifier = Modifier,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
-    var step by remember { mutableStateOf(OnBoardingCoachmarkStep.SignalTitle) }
+    var step by remember { mutableStateOf(OnboardingCoachmarkStep.SignalTitle) }
 
     viewModel.sideEffect.collectSideEffect {
         when (it) {
@@ -42,20 +42,20 @@ fun OnboardingRoute(
         }
     }
 
-    OnBoardingScreen(
+    OnboardingScreen(
         step = step,
         paddingValues = paddingValues,
         onNextClick = {
             when (step) {
-                OnBoardingCoachmarkStep.SignalTitle -> {
-                    step = OnBoardingCoachmarkStep.SignalCard
+                OnboardingCoachmarkStep.SignalTitle -> {
+                    step = OnboardingCoachmarkStep.SignalCard
                 }
 
-                OnBoardingCoachmarkStep.SignalCard -> {
-                    step = OnBoardingCoachmarkStep.MinsuSuggestion
+                OnboardingCoachmarkStep.SignalCard -> {
+                    step = OnboardingCoachmarkStep.MinsuSuggestion
                 }
 
-                OnBoardingCoachmarkStep.MinsuSuggestion -> {
+                OnboardingCoachmarkStep.MinsuSuggestion -> {
                     viewModel.completeOnboarding()
                 }
             }
@@ -65,8 +65,8 @@ fun OnboardingRoute(
 }
 
 @Composable
-fun OnBoardingScreen(
-    step: OnBoardingCoachmarkStep,
+fun OnboardingScreen(
+    step: OnboardingCoachmarkStep,
     paddingValues: PaddingValues,
     onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -76,9 +76,9 @@ fun OnBoardingScreen(
     var minsuSuggestionBounds by remember { mutableStateOf<Rect?>(null) }
     var screenBounds by remember { mutableStateOf<Rect?>(null) }
     val targetBounds = when (step) {
-        OnBoardingCoachmarkStep.SignalTitle -> signalTitleBounds
-        OnBoardingCoachmarkStep.SignalCard -> signalCardBounds
-        OnBoardingCoachmarkStep.MinsuSuggestion -> minsuSuggestionBounds
+        OnboardingCoachmarkStep.SignalTitle -> signalTitleBounds
+        OnboardingCoachmarkStep.SignalCard -> signalCardBounds
+        OnboardingCoachmarkStep.MinsuSuggestion -> minsuSuggestionBounds
     }
     val overlayTargetBounds = targetBounds?.let { bounds ->
         screenBounds?.let { screenBounds ->
@@ -98,7 +98,7 @@ fun OnBoardingScreen(
                 screenBounds = coordinates.boundsInRoot()
             },
     ) {
-        OnBoardingSignalContent(
+        OnboardingSignalContent(
             onSignalTitlePositioned = { signalTitleBounds = it },
             onSignalCardPositioned = { signalCardBounds = it },
             onMinsuSuggestionPositioned = { minsuSuggestionBounds = it },
@@ -138,18 +138,18 @@ private fun Rect.offsetBy(
 
 @Preview(showBackground = true)
 @Composable
-private fun OnBoardingScreenPreview() {
-    var step by remember { mutableStateOf(OnBoardingCoachmarkStep.SignalTitle) }
+private fun OnboardingScreenPreview() {
+    var step by remember { mutableStateOf(OnboardingCoachmarkStep.SignalTitle) }
 
     MomensTheme {
-        OnBoardingScreen(
+        OnboardingScreen(
             step = step,
             paddingValues = PaddingValues(),
             onNextClick = {
                 step = when (step) {
-                    OnBoardingCoachmarkStep.SignalTitle -> OnBoardingCoachmarkStep.SignalCard
-                    OnBoardingCoachmarkStep.SignalCard -> OnBoardingCoachmarkStep.MinsuSuggestion
-                    OnBoardingCoachmarkStep.MinsuSuggestion -> OnBoardingCoachmarkStep.SignalTitle
+                    OnboardingCoachmarkStep.SignalTitle -> OnboardingCoachmarkStep.SignalCard
+                    OnboardingCoachmarkStep.SignalCard -> OnboardingCoachmarkStep.MinsuSuggestion
+                    OnboardingCoachmarkStep.MinsuSuggestion -> OnboardingCoachmarkStep.SignalTitle
                 }
             },
         )
