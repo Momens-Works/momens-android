@@ -5,6 +5,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.navigation.compose.NavHost
 import com.momens.android.presentation.brief.navigation.briefNavGraph
 import com.momens.android.presentation.onboarding.navigation.onboardingNavGraph
@@ -20,6 +21,7 @@ import com.momens.android.presentation.splash.navigation.splashNavGraph
 fun MomensNavHost(
     appState: MainAppState,
     paddingValues: PaddingValues,
+    tabBarHeight: Dp,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
@@ -38,7 +40,10 @@ fun MomensNavHost(
                 appState.navigateToTaskDetail(taskId = taskId)
             },
         )
-        briefNavGraph(paddingValues = paddingValues)
+        briefNavGraph(
+            paddingValues = paddingValues,
+            tabBarHeight = tabBarHeight,
+        )
         taskNavGraph(
             paddingValues = paddingValues,
             navigateToTaskDetail = appState::navigateToTaskDetail,

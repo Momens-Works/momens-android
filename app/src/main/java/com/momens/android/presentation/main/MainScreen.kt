@@ -84,6 +84,7 @@ fun MainScreen(
                 MomensNavHost(
                     appState = appState,
                     paddingValues = innerPadding,
+                    tabBarHeight = tabBarBoxHeight,
                 )
             }
 

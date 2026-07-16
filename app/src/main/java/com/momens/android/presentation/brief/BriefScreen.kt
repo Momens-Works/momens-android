@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,6 +36,7 @@ import com.momens.android.presentation.loading.LoadingScreen
 @Composable
 fun BriefRoute(
     paddingValues: PaddingValues,
+    tabBarHeight: Dp,
     viewModel: BriefViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -57,6 +59,7 @@ fun BriefRoute(
 
         is UiState.Success -> BriefScreen(
             paddingValues = paddingValues,
+            bottomContentPadding = tabBarHeight,
             uiState = renderState.data,
             avatarUrl = projectContext.avatarUrl,
             onFilterClick = viewModel::selectSignalFilter,
@@ -69,6 +72,7 @@ fun BriefRoute(
 @Composable
 private fun BriefScreen(
     paddingValues: PaddingValues,
+    bottomContentPadding: Dp,
     uiState: BriefUiState,
     avatarUrl: String?,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
@@ -139,7 +143,10 @@ private fun BriefScreen(
                 priorities = uiState.priorities,
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(45.dp))
+
+            Spacer(modifier = Modifier.height(bottomContentPadding))
+
         }
     }
 }
@@ -151,6 +158,7 @@ private fun BriefScreenPreview() {
     MomensTheme {
         BriefScreen(
             paddingValues = PaddingValues(),
+            bottomContentPadding = 20.dp,
             uiState = SampleBriefUiState,
             avatarUrl = null,
             onFilterClick = {},
