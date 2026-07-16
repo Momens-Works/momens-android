@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.extension.advancedImePadding
 import com.momens.android.core.designsystem.component.header.MomensHeader
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
 import com.momens.android.core.designsystem.component.type.ImportantLevel
@@ -104,22 +104,29 @@ private fun TaskEditScreen(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    var isAssigneeOpen by remember { mutableStateOf(false) }
-    var isAssigneeClicked by remember { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
-    val isImeVisible = WindowInsets.isImeVisible
-
-    var isStatusClicked by remember { mutableStateOf(value = false) }
-
     val task = state.task
 
     val titleState = remember { TextFieldState(task.titleState) }
     val purposeState = remember { TextFieldState(task.purposeState) }
 
-    LaunchedEffect(isAssigneeClicked, isImeVisible) {
+    var isAssigneeOpen by remember { mutableStateOf(false) }
+    var isAssigneeClicked by remember { mutableStateOf(false) }
+
+    var isStatusOpen by remember { mutableStateOf(false) }
+    var isStatusClicked by remember { mutableStateOf(false) }
+
+    val focusManager = LocalFocusManager.current
+    val isImeVisible = WindowInsets.isImeVisible
+
+    LaunchedEffect(isAssigneeClicked, isStatusClicked, isImeVisible) {
         if (isAssigneeClicked && !isImeVisible) {
             isAssigneeOpen = true
             isAssigneeClicked = false
+        }
+
+        if (isStatusClicked && !isImeVisible) {
+            isStatusOpen = true
+            isStatusClicked = false
         }
     }
 
@@ -127,7 +134,7 @@ private fun TaskEditScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .imePadding(),
+            .advancedImePadding(),
     ) {
         MomensHeader(
             text = state.pageTitle,
@@ -149,7 +156,10 @@ private fun TaskEditScreen(
                     titleState = titleState,
                     status = task.status,
                     maxLength = 15,
-                    onStatusClick = { isStatusClicked = true },
+                    onStatusClick = {
+                        isStatusClicked = true
+                        focusManager.clearFocus()
+                    },
                 )
             }
 
@@ -203,11 +213,11 @@ private fun TaskEditScreen(
     }
 
 
-    if (isStatusClicked) {
+    if (isStatusOpen) {
         TaskEditStatusBottomSheet(
             status = task.status,
             onStatusChange = onStatusChange,
-            onDismiss = { isStatusClicked = false },
+            onDismiss = { isStatusOpen = false },
         )
     }
 
