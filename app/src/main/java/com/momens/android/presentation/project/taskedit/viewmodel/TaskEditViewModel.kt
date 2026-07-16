@@ -160,6 +160,12 @@ class TaskEditViewModel @Inject constructor(
         }
     }
 
+    fun navigateUp() {
+        viewModelScope.launch {
+            _sideEffect.emit(TaskEditSideEffect.NavigateUp)
+        }
+    }
+
     fun saveTask(title: String, purpose: String) {
         _state.update {
             it.copy(task = it.task.copy(titleState = title.ifBlank { "새 태스크" }, purposeState = purpose))

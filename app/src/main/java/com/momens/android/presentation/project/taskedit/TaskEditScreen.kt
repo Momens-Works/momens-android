@@ -80,6 +80,7 @@ fun TaskEditRoute(
         onCheckedChange = viewModel::changeCheck,
         onChecklistClearClick = viewModel::clearChecklistItem,
         onSaveClick = viewModel::saveTask,
+        onBackClick = viewModel::navigateUp,
         onAssigneeDeleteClick = viewModel::removeAssignee,
     )
 }
@@ -99,6 +100,7 @@ private fun TaskEditScreen(
     onChecklistClearClick: (String) -> Unit,
     onSaveClick: (String, String) -> Unit,
     onAssigneeDeleteClick: () -> Unit,
+    onBackClick: () -> Unit,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -129,7 +131,9 @@ private fun TaskEditScreen(
     ) {
         MomensHeader(
             text = state.pageTitle,
-            onBackClick = { onSaveClick(titleState.text.toString(), purposeState.text.toString()) },
+            isSaveVisible = true,
+            onSaveClick = { onSaveClick(titleState.text.toString(), purposeState.text.toString()) },
+            onBackClick = onBackClick,
         )
 
         LazyColumn(
@@ -241,6 +245,7 @@ private fun TaskEditScreenPreview() {
             onSaveClick = { _, _ -> },
             onAssigneeDeleteClick = {},
             onAssigneeSearchClick = {},
+            onBackClick = {},
             onChecklistTitleChange = { _, _ -> },
         )
     }
