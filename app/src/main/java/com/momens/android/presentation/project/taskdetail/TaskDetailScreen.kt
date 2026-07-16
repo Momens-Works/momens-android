@@ -22,12 +22,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.common.extension.collectSideEffect
+import com.momens.android.core.common.extension.rememberMinDurationUiState
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.header.MomensHeader
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.SnackbarState
+import com.momens.android.presentation.loading.LoadingScreen
 import com.momens.android.presentation.project.taskdetail.component.TaskDetailCompletionSection
 import com.momens.android.presentation.project.taskdetail.component.TaskDetailFileBottomSheet
 import com.momens.android.presentation.project.taskdetail.component.TaskDetailFileSection
@@ -67,17 +69,17 @@ fun TaskDetailRoute(
         }
     }
 
-    when (val currentState = state) {
+    when (val renderState = rememberMinDurationUiState(state)) {
         UiState.Loading, UiState.Failure -> {
-            // TODO: 로딩 화면 연결 예정
+            LoadingScreen()
         }
 
         is UiState.Success -> {
             TaskDetailScreen(
-                state = currentState.data,
+                state = renderState.data,
                 paddingValues = paddingValues,
                 navigateUp = navigateUp,
-                onEditClick = { currentState.data.taskDetail?.let(navigateToTaskEdit) },
+                onEditClick = { renderState.data.taskDetail?.let(navigateToTaskEdit) },
                 onCheck = viewModel::toggleChecklistItem,
             )
         }
