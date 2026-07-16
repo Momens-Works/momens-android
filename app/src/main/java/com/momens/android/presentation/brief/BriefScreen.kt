@@ -88,6 +88,7 @@ private fun BriefScreen(
 
         Column(
             modifier = Modifier
+                .weight(1f)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp),
         ) {
