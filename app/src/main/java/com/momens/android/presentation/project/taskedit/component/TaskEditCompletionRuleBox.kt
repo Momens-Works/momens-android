@@ -26,11 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.hideKeyboardOnFocusLost
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
@@ -47,6 +49,7 @@ fun TaskEditCompletionRuleBox(
     modifier: Modifier = Modifier,
 ) {
     val titleState = remember(rule.localId) { TextFieldState(rule.title) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(titleState) {
         snapshotFlow { titleState.text.toString() }
@@ -100,7 +103,8 @@ fun TaskEditCompletionRuleBox(
             BasicTextField(
                 state = titleState,
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .hideKeyboardOnFocusLost(keyboardController),
                 inputTransformation = InputTransformation.maxLength(TITLE_MAX_LENGTH),
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
@@ -150,17 +154,27 @@ private fun TaskEditCompletionRuleBoxPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(id = "1", localId = "1", title = writeState.text.toString(), completed = true),
+                rule = ChecklistItemState(
+                    id = "1",
+                    localId = "1",
+                    title = writeState.text.toString(),
+                    completed = true,
+                ),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
-                onTitleChange = { _, _ -> }
+                onTitleChange = { _, _ -> },
             )
 
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(id = "2", localId = "2", title = exampleState.text.toString(), completed = false),
+                rule = ChecklistItemState(
+                    id = "2",
+                    localId = "2",
+                    title = exampleState.text.toString(),
+                    completed = false,
+                ),
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
-                onTitleChange = { _, _ -> }
+                onTitleChange = { _, _ -> },
             )
         }
     }

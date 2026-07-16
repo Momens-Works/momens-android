@@ -17,10 +17,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.extension.addFocusCleaner
 import com.momens.android.core.designsystem.component.header.MomensHeader
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
 import com.momens.android.core.designsystem.component.type.ImportantLevel
@@ -105,11 +107,14 @@ private fun TaskEditScreen(
     val titleState = remember { TextFieldState(task.titleState) }
     val purposeState = remember { TextFieldState(task.purposeState) }
 
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .imePadding(),
+            .imePadding()
+            .addFocusCleaner(focusManager),
     ) {
         MomensHeader(
             text = state.pageTitle,

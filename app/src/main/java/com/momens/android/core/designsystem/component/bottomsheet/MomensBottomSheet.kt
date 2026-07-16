@@ -25,9 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.addFocusCleaner
 import com.momens.android.core.common.extension.dragToDismiss
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.effect.momensBottomSheetShadow
@@ -79,13 +81,16 @@ private fun MomensBottomSheetContent(
     dragHandle: @Composable (() -> Unit)?,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = modifier
             .dragToDismiss(sheetState = sheetState, onDismiss = onDismiss)
             .fillMaxWidth()
             .padding(top = 25.dp)
             .momensBottomSheetShadow(shape = shape)
-            .background(color = containerColor, shape = shape),
+            .background(color = containerColor, shape = shape)
+            .addFocusCleaner(focusManager),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         dragHandle?.invoke()
