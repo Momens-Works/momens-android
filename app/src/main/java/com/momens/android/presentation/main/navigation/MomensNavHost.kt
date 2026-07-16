@@ -33,7 +33,10 @@ fun MomensNavHost(
     ) {
         signalNavGraph(
             paddingValues = paddingValues,
-            navigateToTask = appState::navigateToTask,
+            navigateToTaskDetail = { taskId ->
+                appState.navigateToTask()
+                appState.navigateToTaskDetail(taskId = taskId)
+            },
         )
         briefNavGraph(paddingValues = paddingValues)
         taskNavGraph(

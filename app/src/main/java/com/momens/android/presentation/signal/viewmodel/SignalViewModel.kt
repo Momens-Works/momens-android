@@ -97,12 +97,13 @@ class SignalViewModel @Inject constructor(
 
     fun registerTask(signalId: String) {
         viewModelScope.launch {
-            signalRepository.convertToTask(signalId = signalId).onSuccess {
+            signalRepository.convertToTask(signalId = signalId).onSuccess { result ->
                     loadSignals()
                     _sideEffect.emit(
                         SignalSideEffect.ShowActionSnackbar(
                             message = "태스크가 등록되었습니다",
                             description = "'투두'에 추가됨",
+                            taskId = result.task.id,
                         ),
                     )
                 }.onFailure {

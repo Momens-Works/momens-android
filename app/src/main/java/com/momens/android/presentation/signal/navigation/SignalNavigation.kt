@@ -23,12 +23,12 @@ fun NavController.navigateToSignal(
 
 fun NavGraphBuilder.signalNavGraph(
     paddingValues: PaddingValues,
-    navigateToTask: () -> Unit,
+    navigateToTaskDetail: (String) -> Unit,
 ) {
     composable<Signal> {
         SignalRoute(
             paddingValues = paddingValues,
-            navigateToTask = navigateToTask,
+            navigateToTaskDetail = navigateToTaskDetail,
         )
     }
 }
