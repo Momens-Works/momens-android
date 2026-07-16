@@ -61,7 +61,10 @@ fun MomensTextField(
         }
     }
 
-    Column(modifier = modifier.bringIntoViewRequester(bringIntoViewRequester)) {
+    Column(
+        modifier = modifier
+            .bringIntoViewRequester(bringIntoViewRequester),
+    ) {
         BasicTextField(
             state = state,
             modifier = Modifier
