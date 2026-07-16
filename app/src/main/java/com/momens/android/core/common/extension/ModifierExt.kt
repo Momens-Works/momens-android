@@ -24,11 +24,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.findRootCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -70,6 +72,16 @@ fun Modifier.addFocusCleaner(focusManager: FocusManager): Modifier {
         detectTapGestures(
             onTap = { focusManager.clearFocus() },
         )
+    }
+}
+
+fun Modifier.hideKeyboardOnFocusLost(
+    keyboardController: SoftwareKeyboardController?,
+): Modifier {
+    return this.onFocusChanged { focusState ->
+        if (!focusState.isFocused) {
+            keyboardController?.hide()
+        }
     }
 }
 

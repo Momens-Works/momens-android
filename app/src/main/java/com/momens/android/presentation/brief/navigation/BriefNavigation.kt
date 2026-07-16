@@ -1,6 +1,7 @@
 package com.momens.android.presentation.brief.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -24,10 +25,12 @@ fun NavController.navigateToBrief(
 
 fun NavGraphBuilder.briefNavGraph(
     paddingValues: PaddingValues,
+    tabBarHeight: Dp,
 ) {
     composable<Brief> {
         BriefRoute(
             paddingValues = paddingValues,
+            tabBarHeight = tabBarHeight,
         )
     }
 }

@@ -39,15 +39,19 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.hideKeyboardOnFocusLost
 import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
+
+private const val TITLE_MAX_LENGTH = 50
 
 @Composable
 fun TaskEditCompletionRuleBox(
@@ -61,6 +65,7 @@ fun TaskEditCompletionRuleBox(
     modifier: Modifier = Modifier,
 ) {
     val titleState = remember(rule.localId) { TextFieldState(rule.title) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(titleState) {
         snapshotFlow { titleState.text.toString() }
@@ -147,7 +152,8 @@ fun TaskEditCompletionRuleBox(
                 state = titleState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .onFocusEvent { isFocused = it.isFocused },
+                    .onFocusEvent { isFocused = it.isFocused }
+                    .hideKeyboardOnFocusLost(keyboardController),
                 inputTransformation = InputTransformation.maxLength(maxLength),
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),

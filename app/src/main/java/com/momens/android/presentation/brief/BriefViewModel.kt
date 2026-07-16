@@ -28,6 +28,7 @@ class BriefViewModel @Inject constructor(
     private val briefRepository: BriefRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<BriefUiState>>(UiState.Loading)
+    private var isLoadingMoreSignalSummary = false
 
     val uiState: StateFlow<UiState<BriefUiState>> = _uiState.asStateFlow()
 
@@ -67,7 +68,7 @@ class BriefViewModel @Inject constructor(
                 projectId = currentState.project.id,
                 filter = filter,
                 cursor = null,
-                limit =  null
+                limit = null,
             ).onSuccess { response ->
                 Timber.tag(BRIEF_LOG_TAG).i(
                     "getSignalSummary 응답 수신: projectId=${currentState.project.id}, " +
@@ -96,12 +97,15 @@ class BriefViewModel @Inject constructor(
     fun loadMoreSignalSummary() {
         val currentState = (_uiState.value as? UiState.Success)?.data ?: return
         val signalSummary = currentState.signalSummary
-        val nextCursor = signalSummary.nextCursor
 
-        if (nextCursor == null) {
+        if (!signalSummary.isExpanded) {
             updateSignalSummaryExpanded(isExpanded = true)
             return
         }
+
+        val nextCursor = signalSummary.nextCursor
+
+        if (nextCursor == null || isLoadingMoreSignalSummary) return
 
         val filter = signalSummary.selectedFilterType.toApiFilter()
 
@@ -111,11 +115,12 @@ class BriefViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
+            isLoadingMoreSignalSummary = true
             briefRepository.getSignalSummary(
                 projectId = currentState.project.id,
                 filter = filter,
                 cursor = nextCursor,
-                limit = null
+                limit = null,
             ).onSuccess { response ->
                 Timber.tag(BRIEF_LOG_TAG).i(
                     "getSignalSummary 더보기 응답 수신: projectId=${currentState.project.id}, " +
@@ -139,6 +144,8 @@ class BriefViewModel @Inject constructor(
                     "getSignalSummary 더보기 요청 실패: projectId=${currentState.project.id}, " +
                         "filter=$filter, cursor=$nextCursor",
                 )
+            }.also {
+                isLoadingMoreSignalSummary = false
             }
         }
     }

@@ -30,9 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.common.extension.hideKeyboardOnFocusLost
 import com.momens.android.core.designsystem.effect.momensUiShadow
 import com.momens.android.core.designsystem.theme.MomensTheme
 
@@ -48,6 +50,7 @@ fun MomensTextField(
     val shape = RoundedCornerShape(8.dp)
     val isError = maxLength != null && state.text.length > maxLength
     val borderColor = if (isError) MomensTheme.colors.pointRed else MomensTheme.colors.gray100
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     var isFocused by remember { mutableStateOf(false) }
@@ -76,6 +79,7 @@ fun MomensTextField(
                     color = borderColor,
                     shape = shape,
                 )
+                .hideKeyboardOnFocusLost(keyboardController)
                 .onFocusEvent { isFocused = it.isFocused },
             inputTransformation = maxLength?.let { InputTransformation.maxLength(it) },
             lineLimits = lineLimits,

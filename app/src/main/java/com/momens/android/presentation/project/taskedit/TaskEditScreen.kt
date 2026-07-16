@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.extension.addFocusCleaner
 import com.momens.android.presentation.project.taskedit.component.rememberDragDropState
 import com.momens.android.core.common.extension.advancedImePadding
 import com.momens.android.core.designsystem.component.header.MomensHeader
@@ -151,6 +152,7 @@ private fun TaskEditScreen(
             .fillMaxSize()
             .background(color = MomensTheme.colors.white)
             .padding(paddingValues)
+            .addFocusCleaner(focusManager)
             .advancedImePadding(),
     ) {
         MomensHeader(
