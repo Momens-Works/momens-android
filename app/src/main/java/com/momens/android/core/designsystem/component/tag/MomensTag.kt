@@ -26,7 +26,7 @@ fun MomensSignalTag(
                 color = type.background(),
                 shape = RoundedCornerShape(4.dp),
             )
-            .padding(horizontal = 12.dp, vertical = 3.dp),
+            .padding(horizontal = 12.dp, vertical = 2.dp),
     ) {
         Text(
             text = type.label,
