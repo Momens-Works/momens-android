@@ -140,6 +140,7 @@ private fun BriefScreen(
     }
 }
 
+
 @Preview(showBackground = true, backgroundColor = 0xFFEFF1F1)
 @Composable
 private fun BriefScreenPreview() {

@@ -35,25 +35,25 @@ data class SignalEvidenceResponse(
 
 @Serializable
 enum class SignalEvidenceSourceResponse {
-    @SerialName("SOURCE_TYPE_SLACK")
+    @SerialName("slack")
     SLACK,
 
-    @SerialName("SOURCE_TYPE_GITHUB")
+    @SerialName("github")
     GITHUB,
 
-    @SerialName("SOURCE_TYPE_FIGMA")
+    @SerialName("figma")
     FIGMA,
 
-    @SerialName("SOURCE_TYPE_FILE")
+    @SerialName("file")
     FILE,
 }
 
 @Serializable
 data class SignalEvidenceDetailsResponse(
     @SerialName("target")
-    val target: String,
+    val target: String? = null,
     @SerialName("change")
-    val change: String,
+    val change: String? = null,
     @SerialName("impact")
     val impact: String? = null,
 )

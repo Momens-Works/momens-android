@@ -31,3 +31,8 @@ fun String?.toKstDateTimeText(): String {
             .format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
     }.getOrDefault("-")
 }
+
+/**
+ * 공백을 포함한 글자 수 기준으로 [maxLength]를 초과하지 않도록 자릅니다.
+ */
+fun String.limitLength(maxLength: Int): String = if (length > maxLength) take(maxLength) else this

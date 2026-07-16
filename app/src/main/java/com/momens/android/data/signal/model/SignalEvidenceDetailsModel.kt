@@ -3,8 +3,8 @@ package com.momens.android.data.signal.model
 import com.momens.android.data.signal.remote.dto.response.SignalEvidenceDetailsResponse
 
 data class SignalEvidenceDetailsModel(
-    val target: String,
-    val change: String,
+    val target: String?,
+    val change: String?,
     val impact: String?,
 )
 

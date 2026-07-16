@@ -123,9 +123,9 @@ fun TaskEditCompletionRuleBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { isFocused = it.isFocused },
+                inputTransformation = InputTransformation.maxLength(maxLength),
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
-                inputTransformation = InputTransformation.maxLength(maxLength),
                 decorator = { innerTextField ->
                     Row(
                         modifier = Modifier

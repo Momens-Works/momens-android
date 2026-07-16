@@ -28,7 +28,7 @@ import com.momens.android.core.designsystem.theme.MomensTheme
 fun LoadingScreen(
     modifier: Modifier = Modifier,
     background: Color = MomensTheme.colors.uiBg,
-    text: String? = "민수가 생각 중입니다.",
+    text: String? = null,
 ) {
     val composition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.loading_animation),
@@ -51,8 +51,8 @@ fun LoadingScreen(
             LottieAnimation(
                 composition = composition,
                 modifier = Modifier
-                    .height(34.dp)
-                    .width(120.dp),
+                    .height(17.dp)
+                    .width(60.dp),
                 iterations = LottieConstants.IterateForever,
             )
 

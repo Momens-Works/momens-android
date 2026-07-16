@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.momens.android.core.common.extension.collectSideEffect
+import com.momens.android.core.common.extension.rememberMinDurationUiState
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.emptyview.MomensEmptyView
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
@@ -28,6 +29,7 @@ import com.momens.android.core.designsystem.component.type.MomensSnackbarType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.SnackbarState
+import com.momens.android.presentation.loading.LoadingScreen
 import com.momens.android.presentation.signal.component.SignalList
 import com.momens.android.presentation.signal.component.detail.SignalDetailBottomSheet
 import com.momens.android.presentation.signal.model.SignalCardUiModel
@@ -75,14 +77,14 @@ fun SignalRoute(
         }
     }
 
-    when (val currentState = state) {
+    when (val renderState = rememberMinDurationUiState(state)) {
         UiState.Loading, UiState.Failure -> {
-            // TODO: 로딩 화면 연결 예정
+            LoadingScreen()
         }
 
         is UiState.Success -> {
             SignalScreen(
-                state = currentState.data,
+                state = renderState.data,
                 avatarUrl = projectContext.avatarUrl,
                 paddingValues = paddingValues,
                 onSignalClick = viewModel::onSignalClick,
