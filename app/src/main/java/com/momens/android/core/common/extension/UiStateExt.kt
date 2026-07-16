@@ -36,7 +36,9 @@ fun <T> rememberMinDurationUiState(
 
     LaunchedEffect(state) {
         if (state is UiState.Loading) {
-            loadingStartedAt = SystemClock.elapsedRealtime()
+            if (loadingStartedAt == null) {
+                loadingStartedAt = SystemClock.elapsedRealtime()
+            }
             renderState = UiState.Loading
         } else {
             val elapsed = loadingStartedAt?.let { SystemClock.elapsedRealtime() - it } ?: minDurationMs
