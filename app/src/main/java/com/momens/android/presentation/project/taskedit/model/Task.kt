@@ -18,7 +18,7 @@ data class Task(
     val taskId: String,
     val titleState: String,
     val status: MomensStatusEditType,
-    val role: TaskRole,
+    val role: TaskRole?,
     val assignee: Assignee?,
     val priority: ImportantLevel,
     val purposeState: String,
@@ -48,6 +48,8 @@ fun TaskDetailModel.toEditTask(): Task = Task(
     taskId = id,
     titleState = title,
     status = status,
+    // 실제 역할 상태(미지정 포함)를 그대로 반영합니다. 임의로 기본값을 채우면
+    // 미지정인데 특정 역할이 선택된 것처럼 보이는 오해를 줄 수 있습니다.
     role = role,
     assignee = assignee?.let { Assignee(id = it.id, name = it.name, url = it.avatarUrl) },
     priority = priority,
@@ -64,7 +66,8 @@ fun TaskDetailModel.toEditTask(): Task = Task(
 
 fun Task.toTaskEditModel(): TaskEditModel = TaskEditModel(
     title = titleState,
-    role = role.name.lowercase(),
+    // 서버는 role을 필수값으로 요구하므로, 저장 시점까지 선택되지 않았다면 기본값으로 채워 보냅니다.
+    role = (role ?: TaskRole.PM).name.lowercase(),
     assigneeId = assignee?.id,
     priority = priority.label,
     status = status.key,

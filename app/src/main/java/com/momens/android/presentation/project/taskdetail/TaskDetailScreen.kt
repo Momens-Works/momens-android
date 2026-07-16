@@ -153,7 +153,7 @@ private fun TaskDetailContent(
                 Spacer(modifier = Modifier.height(11.dp))
 
                 TaskDetailInfoSection(
-                    role = taskDetail.role.label,
+                    role = taskDetail.role?.label ?: "미지정",
                     assigneeName = taskDetail.assignee?.name ?: "미지정",
                     priority = taskDetail.priority.text,
                 )
