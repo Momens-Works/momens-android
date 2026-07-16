@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,14 +24,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +44,6 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
-import kotlinx.coroutines.launch
 
 @Composable
 fun TaskEditCompletionRuleBox(
@@ -63,7 +67,16 @@ fun TaskEditCompletionRuleBox(
     val iconTint = if (rule.completed) MomensTheme.colors.primary50 else MomensTheme.colors.gray300
 
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
-    val coroutineScope = rememberCoroutineScope()
+    var isFocused by remember { mutableStateOf(false) }
+    val imeInsets = WindowInsets.ime
+    val density = LocalDensity.current
+
+    LaunchedEffect(isFocused) {
+        if (isFocused) {
+            snapshotFlow { titleState.text.toString() to imeInsets.getBottom(density) }
+                .collect { bringIntoViewRequester.bringIntoView() }
+        }
+    }
 
     Row(
         modifier = modifier
@@ -109,11 +122,7 @@ fun TaskEditCompletionRuleBox(
                 state = titleState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .onFocusEvent {
-                        if (it.isFocused) {
-                            coroutineScope.launch { bringIntoViewRequester.bringIntoView() }
-                        }
-                    },
+                    .onFocusEvent { isFocused = it.isFocused },
                 textStyle = MomensTheme.typography.bodyM12,
                 cursorBrush = SolidColor(value = MomensTheme.colors.gray800),
                 inputTransformation = InputTransformation.maxLength(maxLength),
