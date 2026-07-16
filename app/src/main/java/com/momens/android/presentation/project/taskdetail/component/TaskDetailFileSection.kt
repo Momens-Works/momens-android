@@ -33,19 +33,27 @@ fun TaskDetailFileSection(
             color = MomensTheme.colors.gray900,
         )
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            files.forEach { file ->
-                key(file.id) {
-                    MomensFileListItem(
-                        title = file.title,
-                        role = file.kind.text,
-                        category = file.createdAtText,
-                        iconResId = file.kind.icon,
-                        onClick = { onFileClick(file) },
-                    )
+        if (files.isEmpty()) {
+            Text(
+                text = "관련자료가 등록되지 않았습니다.",
+                style = MomensTheme.typography.bodyM12,
+                color = MomensTheme.colors.gray300,
+            )
+        } else {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                files.forEach { file ->
+                    key(file.id) {
+                        MomensFileListItem(
+                            title = file.title,
+                            role = file.kind.text,
+                            category = file.createdAtText,
+                            iconResId = file.kind.icon,
+                            onClick = { onFileClick(file) },
+                        )
+                    }
                 }
             }
         }
@@ -63,7 +71,6 @@ private fun TaskDetailFileSectionPreview() {
                     id = "1",
                     title = "회원가입 에러 메시지 정책 초안",
                     summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    roles = persistentListOf("PM"),
                     kind = SignalAccordionType.FIGMA,
                     sourceUrl = "https://example.com/docs/1",
                     createdAtText = "2026.07.15 22:48",
@@ -72,12 +79,23 @@ private fun TaskDetailFileSectionPreview() {
                     id = "2",
                     title = "회원가입 에러 메시지 정책 초안",
                     summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                    roles = persistentListOf("PM"),
                     kind = SignalAccordionType.FILE,
                     sourceUrl = "https://example.com/docs/2",
                     createdAtText = "2026.07.15 22:50",
                 ),
             ),
+            onFileClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "빈 상태")
+@Composable
+private fun TaskDetailFileSectionEmptyPreview() {
+    MomensTheme {
+        TaskDetailFileSection(
+            modifier = Modifier.padding(16.dp),
+            files = persistentListOf(),
             onFileClick = {},
         )
     }

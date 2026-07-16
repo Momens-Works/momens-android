@@ -30,7 +30,7 @@ import com.momens.android.presentation.project.model.TaskRole
 
 @Composable
 fun TaskEditOptionSection(
-    selectedRole: TaskRole,
+    selectedRole: TaskRole?,
     selectedPriority: ImportantLevel,
     assigneeName: String,
     onRoleSelect: (TaskRole) -> Unit,

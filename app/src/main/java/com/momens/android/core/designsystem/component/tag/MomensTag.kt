@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.core.designsystem.component.type.SignalTagType
+import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
 fun MomensSignalTag(
@@ -26,7 +26,7 @@ fun MomensSignalTag(
                 color = type.background(),
                 shape = RoundedCornerShape(4.dp),
             )
-            .padding(horizontal = 12.dp, vertical = 1.dp),
+            .padding(horizontal = 12.dp, vertical = 2.dp),
     ) {
         Text(
             text = type.label,
