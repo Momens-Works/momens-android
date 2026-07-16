@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.extension.rememberMinDurationUiState
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.button.MomensFloatingActionButton
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
@@ -48,6 +49,9 @@ fun TaskRoute(
     val projectContext by viewModel.projectContext.collectAsStateWithLifecycle()
     val globalUiEvent = LocalGlobalUiEventTrigger.current
 
+    val renderState = rememberMinDurationUiState(uiState)
+    var pendingActionSnackbar by remember { mutableStateOf<SnackbarState?>(null) }
+
     LaunchedEffect(Unit) {
         viewModel.loadTaskBoard()
     }
@@ -56,14 +60,12 @@ fun TaskRoute(
         viewModel.sideEffect.collect { effect ->
             when (effect) {
                 is TaskSideEffect.ShowActionSnackbar -> {
-                    globalUiEvent.showSnackbar(
-                        SnackbarState(
-                            content = MomensSnackbarModel(
-                                title = effect.message,
-                                description = effect.description,
-                                type = MomensSnackbarType.BUTTON,
-                                onActionClick = { navigateToTaskDetail(effect.taskId) },
-                            ),
+                    pendingActionSnackbar = SnackbarState(
+                        content = MomensSnackbarModel(
+                            title = effect.message,
+                            description = effect.description,
+                            type = MomensSnackbarType.BUTTON,
+                            onActionClick = { navigateToTaskDetail(effect.taskId) },
                         ),
                     )
                 }
@@ -79,18 +81,27 @@ fun TaskRoute(
         }
     }
 
-    when (val state = uiState) {
-        is UiState.Success -> TaskScreen(
-            paddingValues = paddingValues,
-            onTaskClick = navigateToTaskDetail,
-            uiState = state.data,
-            avatarUrl = projectContext.avatarUrl,
-            onRegisterClick = viewModel::addTask,
-        )
+    LaunchedEffect(renderState, pendingActionSnackbar) {
+        val snackbar = pendingActionSnackbar ?: return@LaunchedEffect
+        if (renderState is UiState.Success) {
+            globalUiEvent.showSnackbar(snackbar)
+            pendingActionSnackbar = null
+        }
+    }
 
+    when (renderState) {
         UiState.Loading, UiState.Failure -> {
             LoadingScreen()
         }
+
+        is UiState.Success ->
+            TaskScreen(
+                paddingValues = paddingValues,
+                onTaskClick = navigateToTaskDetail,
+                uiState = renderState.data,
+                avatarUrl = projectContext.avatarUrl,
+                onRegisterClick = viewModel::addTask,
+            )
 
         UiState.Empty -> Unit
     }

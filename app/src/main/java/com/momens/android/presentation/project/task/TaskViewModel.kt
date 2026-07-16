@@ -3,7 +3,6 @@ package com.momens.android.presentation.project.task
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.extension.onLogFailure
-import com.momens.android.core.common.extension.updateSuccess
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
@@ -66,6 +65,9 @@ class TaskViewModel @Inject constructor(
         priority: ImportantLevel,
     ) {
         viewModelScope.launch {
+            val previousBoard = (_uiState.value as? UiState.Success)?.data
+            _uiState.value = UiState.Loading
+
             taskRepository.createTask(
                 projectId = projectId,
                 task = TaskCreateModel(
@@ -75,17 +77,18 @@ class TaskViewModel @Inject constructor(
                 ),
             ).mapCatching { created -> created.toUiModel() }
                 .onSuccess { newTask ->
-                    _uiState.updateSuccess { state ->
-                        state.copy(
-                            sections = state.sections.map { section ->
+                    val base = previousBoard ?: TaskUiState()
+                    _uiState.value = UiState.Success(
+                        base.copy(
+                            sections = base.sections.map { section ->
                                 if (section.type == MomensStatusEditType.TODO) {
                                     section.copy(tasks = (listOf(newTask) + section.tasks).toPersistentList())
                                 } else {
                                     section
                                 }
                             }.toPersistentList(),
-                        )
-                    }
+                        ),
+                    )
 
                     _sideEffect.emit(
                         TaskSideEffect.ShowActionSnackbar(
@@ -96,6 +99,9 @@ class TaskViewModel @Inject constructor(
                     )
                 }
                 .onLogFailure("Failed to create task") {
+                    _uiState.value = previousBoard
+                        ?.let { UiState.Success(it) }
+                        ?: UiState.Failure
                     _sideEffect.emit(TaskSideEffect.ShowSnackbar("태스크 등록에 실패했습니다"))
                 }
         }
