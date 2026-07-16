@@ -32,6 +32,7 @@ import com.momens.android.core.designsystem.component.type.MomensSnackbarType
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.SnackbarState
+import com.momens.android.presentation.loading.LoadingScreen
 import com.momens.android.presentation.project.task.component.TaskBottomSheet
 import com.momens.android.presentation.project.task.component.TaskStatusBox
 import com.momens.android.presentation.project.task.component.TaskTitle
@@ -88,6 +89,7 @@ fun TaskRoute(
         )
 
         UiState.Loading, UiState.Failure -> {
+            LoadingScreen()
         }
 
         UiState.Empty -> Unit
@@ -135,7 +137,10 @@ private fun TaskScreen(
                     .padding(bottom = 24.dp),
             )
 
-            LazyColumn(modifier = Modifier.weight(1f)) {
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(bottom = 50.dp),
+            ) {
                 items(
                     items = uiState.sections,
                     key = { it.type },
@@ -172,7 +177,11 @@ private fun TaskScreen(
                 showTaskBottomSheet = false
             },
             onRegisterClick = {
-                onRegisterClick(titleState.text.toString(), requireNotNull(selectedRole), requireNotNull(selectedPriority))
+                onRegisterClick(
+                    titleState.text.toString(),
+                    requireNotNull(selectedRole),
+                    requireNotNull(selectedPriority),
+                )
                 resetTaskInput()
                 showTaskBottomSheet = false
             },
