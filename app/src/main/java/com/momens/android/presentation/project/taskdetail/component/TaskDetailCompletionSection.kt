@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -59,14 +60,22 @@ fun TaskDetailCompletionSection(
                 .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            items.forEach { item ->
-                key(item.id) {
-                    MomensCheckBox(
-                        isChecked = item.completed,
-                        label = item.title,
-                        onCheckedChange = { checked -> onCheckedChange(item.id, checked) },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+            if (items.isEmpty()) {
+                Text(
+                    text = "완료기준이 입력되지 않았습니다.",
+                    style = MomensTheme.typography.bodyM12,
+                    color = MomensTheme.colors.gray300,
+                )
+            } else {
+                items.forEach { item ->
+                    key(item.id) {
+                        MomensCheckBox(
+                            isChecked = item.completed,
+                            label = item.title,
+                            onCheckedChange = { checked -> onCheckedChange(item.id, checked) },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                 }
             }
         }
@@ -114,6 +123,20 @@ private fun TaskDetailCompletionSectionPreview() {
                     .map { if (it.id == id) it.copy(completed = checked) else it }
                     .toPersistentList()
             },
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "빈 상태")
+@Composable
+private fun TaskDetailCompletionSectionEmptyPreview() {
+    MomensTheme {
+        TaskDetailCompletionSection(
+            modifier = Modifier.padding(16.dp),
+            completedCount = 0,
+            totalCount = 0,
+            items = persistentListOf(),
+            onCheckedChange = { _, _ -> },
         )
     }
 }

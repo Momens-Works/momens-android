@@ -1,6 +1,7 @@
 package com.momens.android.presentation.project.taskdetail.model
 
 import androidx.compose.runtime.Immutable
+import com.momens.android.core.common.extension.limitLength
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
 import com.momens.android.data.project.taskdetail.model.TaskDetailModel as TaskDetailDataModel
@@ -27,19 +28,23 @@ data class TaskDetailModel(
     val nextAction: String?,
 )
 
+private const val TITLE_MAX_LENGTH = 15
+private const val PURPOSE_MAX_LENGTH = 300
+private const val NEXT_ACTION_MAX_LENGTH = 100
+
 fun TaskDetailDataModel.toUiModel(): TaskDetailModel = TaskDetailModel(
     id = id,
     projectId = projectId,
-    title = title,
+    title = title.limitLength(TITLE_MAX_LENGTH),
     status = status.toUiType(),
     role = role.toUiType(),
     assignee = assignee?.toUiModel(),
     priority = priority.toUiType(),
-    purpose = purpose,
+    purpose = purpose?.limitLength(PURPOSE_MAX_LENGTH),
     checklist = checklist.toUiModel(),
     materials = materials.map { it.toUiModel() }.toImmutableList(),
     openQuestions = openQuestions.map { it.toUiModel() }.toImmutableList(),
-    nextAction = nextAction,
+    nextAction = nextAction?.limitLength(NEXT_ACTION_MAX_LENGTH),
 )
 
 private fun TaskStatusModel.toUiType(): MomensStatusEditType = when (this) {

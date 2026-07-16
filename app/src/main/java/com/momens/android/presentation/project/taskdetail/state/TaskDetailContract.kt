@@ -76,6 +76,31 @@ data class TaskDetailState(
                 nextAction = "민수가 추천해주는 다음행동이에용",
             ),
         )
+
+        val FakeEmptyFields = TaskDetailState(
+            taskDetail = TaskDetailModel(
+                id = "27afd507-9c7f-4f0d-a2be-fcdab2477b19",
+                projectId = "30d9e9fe-f43b-4097-a88e-dc19f0a5b025",
+                title = "",
+                status = MomensStatusEditType.TODO,
+                role = TaskRole.PM,
+                assignee = TaskDetailAssigneeModel(
+                    id = "b9b1...e7",
+                    name = "김민지",
+                    avatarUrl = null,
+                ),
+                priority = ImportantLevel.MEDIUM,
+                purpose = null,
+                checklist = TaskDetailChecklistModel(
+                    completedCount = 0,
+                    totalCount = 0,
+                    items = persistentListOf(),
+                ),
+                materials = persistentListOf(),
+                openQuestions = persistentListOf(),
+                nextAction = null,
+            ),
+        )
     }
 }
 
