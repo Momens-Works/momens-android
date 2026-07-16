@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -54,7 +56,7 @@ fun TaskBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier.padding(
                 start = 20.dp,
                 end = 20.dp,
@@ -62,89 +64,119 @@ fun TaskBottomSheet(
                 bottom = 32.dp,
             ),
         ) {
-            Text(
-                text = "새 태스크 생성",
-                color = MomensTheme.colors.black,
-                style = MomensTheme.typography.bodyB16,
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "제목",
-                color = MomensTheme.colors.gray600,
-                style = MomensTheme.typography.bodyB14,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            MomensCountInput(
-                state = titleState,
-                placeholder = "Title",
-                maxLength = 15,
-                lineLimits = TextFieldLineLimits.SingleLine,
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "역할",
-                style = MomensTheme.typography.bodyB14,
-                color = MomensTheme.colors.gray600,
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                roles.forEach { role ->
-                    val isSelected = selectedRole == role
-                    MomensButton(
-                        text = role.text,
-                        onClick = { onRoleSelect(role) },
-                        type = if (isSelected) MomensButtonType.PRIMARY
-                        else MomensButtonType.GRAY,
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "우선순위",
-                style = MomensTheme.typography.bodyB14,
-                color = MomensTheme.colors.gray600,
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                priorities.forEach { level ->
-                    val isSelected = selectedPriority == level
-                    val tone = if (isSelected) ImportantTone.BLUE else ImportantTone.GRAY
-
-                    MomensImportantStatus(
-                        level = level,
-                        tone = tone,
-                        modifier = Modifier.noRippleClickable { onPrioritySelect(level) },
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            MomensCtaButton(
-                onClick = onRegisterClick,
-                enabled = isButtonEnabled,
-            ) {
+            item {
                 Text(
-                    text = "태스크 등록",
-                    color = MomensTheme.colors.white,
+                    text = "새 태스크 생성",
+                    color = MomensTheme.colors.black,
                     style = MomensTheme.typography.bodyB16,
                 )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+
+            item {
+                Text(
+                    text = "제목",
+                    color = MomensTheme.colors.gray600,
+                    style = MomensTheme.typography.bodyB14,
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(4.dp))
+            }
+
+            item {
+                MomensCountInput(
+                    state = titleState,
+                    placeholder = "Title",
+                    maxLength = 15,
+                    lineLimits = TextFieldLineLimits.SingleLine,
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            item {
+                Text(
+                    text = "역할",
+                    style = MomensTheme.typography.bodyB14,
+                    color = MomensTheme.colors.gray600,
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    roles.forEach { role ->
+                        val isSelected = selectedRole == role
+                        MomensButton(
+                            text = role.text,
+                            onClick = { onRoleSelect(role) },
+                            type = if (isSelected) MomensButtonType.PRIMARY
+                            else MomensButtonType.GRAY,
+                        )
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            item {
+                Text(
+                    text = "우선순위",
+                    style = MomensTheme.typography.bodyB14,
+                    color = MomensTheme.colors.gray600,
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    priorities.forEach { level ->
+                        val isSelected = selectedPriority == level
+                        val tone = if (isSelected) ImportantTone.BLUE else ImportantTone.GRAY
+
+                        MomensImportantStatus(
+                            level = level,
+                            tone = tone,
+                            modifier = Modifier.noRippleClickable { onPrioritySelect(level) },
+                        )
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+
+            item {
+                MomensCtaButton(
+                    onClick = onRegisterClick,
+                    enabled = isButtonEnabled,
+                ) {
+                    Text(
+                        text = "태스크 등록",
+                        color = MomensTheme.colors.white,
+                        style = MomensTheme.typography.bodyB16,
+                    )
+                }
             }
         }
     }
