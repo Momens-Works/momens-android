@@ -88,7 +88,6 @@ fun TaskRoute(
         )
 
         UiState.Loading, UiState.Failure -> {
-            // TODO: 로딩 화면 연결 예정
         }
 
         UiState.Empty -> Unit
@@ -108,6 +107,12 @@ private fun TaskScreen(
     val titleState = rememberTextFieldState()
     var selectedRole by remember { mutableStateOf<MomensTaskButtonType?>(null) }
     var selectedPriority by remember { mutableStateOf<ImportantLevel?>(null) }
+
+    val resetTaskInput = {
+        titleState.clearText()
+        selectedRole = null
+        selectedPriority = null
+    }
 
     Box(
         modifier = modifier
@@ -162,12 +167,13 @@ private fun TaskScreen(
             selectedPriority = selectedPriority,
             onRoleSelect = { selectedRole = it },
             onPrioritySelect = { selectedPriority = it },
-            onDismiss = { showTaskBottomSheet = false },
+            onDismiss = {
+                resetTaskInput()
+                showTaskBottomSheet = false
+            },
             onRegisterClick = {
                 onRegisterClick(titleState.text.toString(), requireNotNull(selectedRole), requireNotNull(selectedPriority))
-                titleState.clearText()
-                selectedRole = null
-                selectedPriority = null
+                resetTaskInput()
                 showTaskBottomSheet = false
             },
         )

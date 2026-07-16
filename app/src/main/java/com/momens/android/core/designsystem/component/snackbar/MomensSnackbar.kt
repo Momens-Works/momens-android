@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.designsystem.component.button.MomensButton
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
 import com.momens.android.core.designsystem.component.type.MomensButtonType
@@ -34,6 +35,13 @@ fun MomensSnackbar(
             .background(
                 color = MomensTheme.colors.gray700,
                 shape = RoundedCornerShape(8.dp),
+            )
+            .then(
+                if (content.type == MomensSnackbarType.BUTTON) {
+                    Modifier.noRippleClickable(onClick = content.onActionClick)
+                } else {
+                    Modifier
+                },
             )
             .padding(
                 horizontal = 14.dp,

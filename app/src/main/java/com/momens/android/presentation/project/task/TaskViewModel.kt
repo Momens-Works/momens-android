@@ -79,7 +79,7 @@ class TaskViewModel @Inject constructor(
                         state.copy(
                             sections = state.sections.map { section ->
                                 if (section.type == MomensStatusEditType.TODO) {
-                                    section.copy(tasks = (section.tasks + newTask).toPersistentList())
+                                    section.copy(tasks = (listOf(newTask) + section.tasks).toPersistentList())
                                 } else {
                                     section
                                 }
