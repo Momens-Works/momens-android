@@ -27,9 +27,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +47,8 @@ import com.momens.android.presentation.brief.model.BriefSignalItemUiModel
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 
 private const val MAX_VISIBLE_COUNT = 3
 private val DROPDOWN_CONTENT_MAX_HEIGHT = 156.dp
@@ -53,16 +57,34 @@ private val DROPDOWN_CONTENT_MAX_HEIGHT = 156.dp
 fun BriefDropdown(
     items: ImmutableList<BriefSignalItemUiModel>,
     hasMore: Boolean,
+    canLoadMore: Boolean,
     expanded: Boolean,
     onMoreClick: () -> Unit,
+    onLoadMore: () -> Unit,
     onFoldClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val defaultItems = items.take(MAX_VISIBLE_COUNT)
     val expandableItems = items.drop(MAX_VISIBLE_COUNT)
     val showToggleButton = hasMore || expanded || expandableItems.isNotEmpty()
-    val showMoreButton = hasMore || !expanded
+    val showMoreButton = !expanded
     val scrollState = rememberScrollState()
+
+    LaunchedEffect(
+        expanded,
+        canLoadMore,
+        scrollState,
+    ) {
+        if (!expanded || !canLoadMore) return@LaunchedEffect
+
+        snapshotFlow {
+            scrollState.maxValue > 0 && scrollState.value >= scrollState.maxValue
+        }.distinctUntilChanged()
+            .filter { isScrolledToEnd -> isScrolledToEnd }
+            .collect {
+                onLoadMore()
+            }
+    }
 
     val rotation by animateFloatAsState(
         targetValue = if (showMoreButton) 90f else 270f,
@@ -227,10 +249,12 @@ private fun BriefDropdownPreview() {
                     ),
                 ),
                 hasMore = false,
+                canLoadMore = false,
                 expanded = twoItemExpanded,
                 onMoreClick = {
                     twoItemExpanded = true
                 },
+                onLoadMore = {},
                 onFoldClick = {
                     twoItemExpanded = false
                 },
@@ -265,10 +289,12 @@ private fun BriefDropdownPreview() {
                     ),
                 ),
                 hasMore = true,
+                canLoadMore = false,
                 expanded = manyItemExpanded,
                 onMoreClick = {
                     manyItemExpanded = true
                 },
+                onLoadMore = {},
                 onFoldClick = {
                     manyItemExpanded = false
                 },
