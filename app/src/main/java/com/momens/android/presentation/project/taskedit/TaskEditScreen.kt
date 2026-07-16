@@ -2,11 +2,14 @@ package com.momens.android.presentation.project.taskedit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.TextFieldState
@@ -17,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -80,6 +84,7 @@ fun TaskEditRoute(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TaskEditScreen(
     state: TaskEditState,
@@ -97,13 +102,24 @@ private fun TaskEditScreen(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    var isAssigneeClicked by remember { mutableStateOf(value = false) }
+    var isAssigneeOpen by remember { mutableStateOf(false) }
+    var isAssigneeClicked by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+    val isImeVisible = WindowInsets.isImeVisible
+
     var isStatusClicked by remember { mutableStateOf(value = false) }
 
     val task = state.task
 
     val titleState = remember { TextFieldState(task.titleState) }
     val purposeState = remember { TextFieldState(task.purposeState) }
+
+    LaunchedEffect(isAssigneeClicked, isImeVisible) {
+        if (isAssigneeClicked && !isImeVisible) {
+            isAssigneeOpen = true
+            isAssigneeClicked = false
+        }
+    }
 
     Column(
         modifier = modifier
@@ -142,7 +158,10 @@ private fun TaskEditScreen(
                     assigneeName = task.assignee?.name ?: "미지정",
                     onRoleSelect = onRoleSelect,
                     onPrioritySelect = onPriorityChange,
-                    onAssigneeClick = { isAssigneeClicked = true },
+                    onAssigneeClick = {
+                        isAssigneeClicked = true
+                        focusManager.clearFocus()
+                    },
                     modifier = Modifier,
                 )
             }
@@ -188,14 +207,14 @@ private fun TaskEditScreen(
         )
     }
 
-    if (isAssigneeClicked) {
+    if (isAssigneeOpen) {
         val searchState = remember { TextFieldState() }
 
         TaskEditAssigneeBottomSheet(
             state = searchState,
             selectedAssignee = task.assignee,
             assignees = state.assignees,
-            onDismiss = { isAssigneeClicked = false },
+            onDismiss = { isAssigneeOpen = false },
             onAssigneeChange = onAssigneeChange,
             onDeleteClick = onAssigneeDeleteClick,
             onSearchClick = onAssigneeSearchClick,
