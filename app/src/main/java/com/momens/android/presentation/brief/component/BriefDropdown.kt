@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -44,6 +47,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 private const val MAX_VISIBLE_COUNT = 3
+private val DROPDOWN_CONTENT_MAX_HEIGHT = 156.dp
 
 @Composable
 fun BriefDropdown(
@@ -58,6 +62,7 @@ fun BriefDropdown(
     val expandableItems = items.drop(MAX_VISIBLE_COUNT)
     val showToggleButton = hasMore || expanded || expandableItems.isNotEmpty()
     val showMoreButton = hasMore || !expanded
+    val scrollState = rememberScrollState()
 
     val rotation by animateFloatAsState(
         targetValue = if (showMoreButton) 90f else 270f,
@@ -78,7 +83,10 @@ fun BriefDropdown(
             ),
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+            modifier = Modifier
+                .heightIn(max = DROPDOWN_CONTENT_MAX_HEIGHT)
+                .verticalScroll(scrollState)
+                .padding(horizontal = 20.dp, vertical = 16.dp),
         ) {
             defaultItems.forEachIndexed { index, item ->
                 BriefDropdownRow(
