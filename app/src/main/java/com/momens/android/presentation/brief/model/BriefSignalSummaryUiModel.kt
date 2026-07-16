@@ -21,6 +21,9 @@ data class BriefSignalSummaryUiModel(
 
     val hasMore: Boolean
         get() = nextCursor != null || items.size > DEFAULT_VISIBLE_COUNT
+
+    val hasNextPage: Boolean
+        get() = nextCursor != null
 }
 
 private const val DEFAULT_VISIBLE_COUNT = 3
