@@ -140,7 +140,9 @@ fun BriefDropdown(
                 Icon(
                     painter = painterResource(R.drawable.ic_next),
                     contentDescription = null,
-                    modifier = Modifier.rotate(rotation),
+                    modifier = Modifier
+                        .rotate(rotation)
+                        .size(16.dp),
                     tint = MomensTheme.colors.gray400,
                 )
             }
