@@ -9,35 +9,32 @@ data class TaskMaterialDto(
     val id: String,
 
     @SerialName("title")
-    val title: String,
+    val title: String? = null,
 
     @SerialName("summary")
-    val summary: String,
+    val summary: String? = null,
 
-    @SerialName("roles")
-    val roles: List<String>,
-
-    @SerialName("kind")
+    @SerialName("source")
     val kind: TaskMaterialKindDto,
 
     @SerialName("source_url")
-    val sourceUrl: String,
+    val sourceUrl: String? = null,
 
-    @SerialName("created_at")
+    @SerialName("occurred_at")
     val createdAt: String? = null,
 )
 
 @Serializable
 enum class TaskMaterialKindDto {
-    @SerialName("SOURCE_TYPE_SLACK")
+    @SerialName("slack")
     SLACK,
 
-    @SerialName("SOURCE_TYPE_GITHUB")
+    @SerialName("github")
     GITHUB,
 
-    @SerialName("SOURCE_TYPE_FIGMA")
+    @SerialName("figma")
     FIGMA,
 
-    @SerialName("SOURCE_TYPE_FILE")
+    @SerialName("file")
     FILE,
 }

@@ -25,8 +25,8 @@ fun SignalEvidenceModel.toUiModel(): SignalEvidenceUiModel = SignalEvidenceUiMod
     sourceRefId = sourceRefId,
     source = source.toUiType(),
     time = occurredAt.toRelativeTimeText(),
-    target = details.target,
-    change = details.change,
+    target = details.target.orEmpty(),
+    change = details.change.orEmpty(),
     impact = details.impact.orEmpty(),
     sourceUrl = sourceUrl,
 )

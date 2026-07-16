@@ -20,7 +20,6 @@ import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskdetail.model.TaskDetailFileModel
 import com.momens.android.presentation.signal.model.SignalAccordionType
-import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +44,7 @@ fun TaskDetailFileBottomSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = file.roles.joinToString(separator = ", "),
+                    text = file.kind.text,
                     color = MomensTheme.colors.gray400,
                     style = MomensTheme.typography.captionM11,
                 )
@@ -82,7 +81,7 @@ fun TaskDetailFileBottomSheet(
                 iconResId = file.kind.icon,
                 iconColor = MomensTheme.colors.primary100,
                 textColor = MomensTheme.colors.gray500,
-                isArrowVisible = true,
+                isArrowVisible = file.sourceUrl != null,
                 onArrowClick = onOpenSourceClick,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -99,7 +98,6 @@ private fun TaskDetailFileBottomSheetPreview() {
                 id = "1",
                 title = "회원가입 에러 메시지 정책 초안",
                 summary = "회원가입의 MVP 완료율과 온보딩 품질에 영향을 줄 수 있습니다.",
-                roles = persistentListOf("PM"),
                 kind = SignalAccordionType.FIGMA,
                 sourceUrl = "https://example.com",
                 createdAtText = "2026.07.15 22:48",

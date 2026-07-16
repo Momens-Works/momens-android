@@ -4,13 +4,13 @@ import androidx.compose.runtime.Immutable
 import com.momens.android.core.common.extension.limitLength
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
-import com.momens.android.data.project.taskdetail.model.TaskDetailModel as TaskDetailDataModel
 import com.momens.android.data.project.taskdetail.model.TaskPriorityModel
 import com.momens.android.data.project.taskdetail.model.TaskRoleModel
 import com.momens.android.data.project.taskdetail.model.TaskStatusModel
 import com.momens.android.presentation.project.model.TaskRole
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import com.momens.android.data.project.taskdetail.model.TaskDetailModel as TaskDetailDataModel
 
 @Immutable
 data class TaskDetailModel(
@@ -18,7 +18,7 @@ data class TaskDetailModel(
     val projectId: String,
     val title: String,
     val status: MomensStatusEditType,
-    val role: TaskRole,
+    val role: TaskRole?,
     val assignee: TaskDetailAssigneeModel?,
     val priority: ImportantLevel,
     val purpose: String?,
@@ -37,7 +37,7 @@ fun TaskDetailDataModel.toUiModel(): TaskDetailModel = TaskDetailModel(
     projectId = projectId,
     title = title.limitLength(TITLE_MAX_LENGTH),
     status = status.toUiType(),
-    role = role.toUiType(),
+    role = role?.toUiType(),
     assignee = assignee?.toUiModel(),
     priority = priority.toUiType(),
     purpose = purpose?.limitLength(PURPOSE_MAX_LENGTH),
