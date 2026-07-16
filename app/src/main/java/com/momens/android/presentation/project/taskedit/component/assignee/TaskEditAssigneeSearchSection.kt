@@ -49,7 +49,7 @@ fun TaskEditAssigneeSearchSection(
                     TaskEditPeopleListItem(
                         text = assignee.name,
                         onClick = { onAssigneeClick(assignee) },
-                        isSelected = assignee.id == selectedAssignee?.id,
+                        isSelected =  assignee.id == selectedAssignee?.id,
                         onDeleteClick = onDeleteClick,
                         profileImageUrl = assignee.url,
                     )

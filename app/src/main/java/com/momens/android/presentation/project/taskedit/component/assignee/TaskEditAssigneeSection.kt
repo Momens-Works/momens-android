@@ -34,6 +34,7 @@ fun TaskEditAssigneeSection(
         if (assignee != null) {
             TaskEditPeopleListItem(
                 text = assignee.name,
+                profileImageUrl = assignee.url,
                 onDeleteClick = onDeleteClick,
                 modifier = Modifier.padding(bottom = 16.dp),
                 isSelected = true,
