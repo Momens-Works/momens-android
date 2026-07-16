@@ -3,6 +3,7 @@ package com.momens.android.presentation.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.momens.android.core.common.state.UiState
+import com.momens.android.core.local.onboarding.OnboardingManager
 import com.momens.android.data.signin.repository.SignInRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,6 +19,7 @@ import timber.log.Timber
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInRepository: SignInRepository,
+    private val onboardingManager: OnboardingManager,
 ) : ViewModel() {
 
     private val _signInState = MutableStateFlow<UiState<Unit>>(UiState.Empty)
@@ -50,7 +52,12 @@ class SignInViewModel @Inject constructor(
             signInRepository.signInWithGoogle(idToken)
                 .onSuccess {
                     _signInState.value = UiState.Success(Unit)
-                    _sideEffect.emit(SignInSideEffect.NavigateToSignal)
+                    val sideEffect = if (onboardingManager.getHasSeenOnboarding()) {
+                        SignInSideEffect.NavigateToSignal
+                    } else {
+                        SignInSideEffect.NavigateToOnboarding
+                    }
+                    _sideEffect.emit(sideEffect)
                 }
                 .onFailure { throwable ->
                     Timber.e(throwable, "Google 로그인 또는 bootstrap 처리 실패")

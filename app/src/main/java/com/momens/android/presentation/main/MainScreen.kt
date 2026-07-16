@@ -1,10 +1,12 @@
 package com.momens.android.presentation.main
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
@@ -57,7 +59,9 @@ fun MainScreen(
         Box(modifier = Modifier.fillMaxSize()) {
             Scaffold(
                 modifier = Modifier
+                    .fillMaxSize()
                     .momensNavBlurSource(state = navBlurState),
+                contentWindowInsets = WindowInsets.safeDrawing,
                 snackbarHost = {
                     val snackbarBottomPadding: Dp = if (currentTab != null) {
                         tabBarBoxHeight + SNACKBAR_TAB_BAR_SPACING
