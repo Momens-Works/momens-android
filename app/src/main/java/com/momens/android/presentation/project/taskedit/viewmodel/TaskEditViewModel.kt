@@ -131,6 +131,19 @@ class TaskEditViewModel @Inject constructor(
         }
     }
 
+    fun reorderChecklist(fromIndex: Int, toIndex: Int) {
+        _state.update { state ->
+            val checklist = state.task.checklist
+            if (fromIndex !in checklist.indices || toIndex !in checklist.indices) return@update state
+
+            val reordered = checklist.toMutableList().apply {
+                add(toIndex, removeAt(fromIndex))
+            }.toPersistentList()
+
+            state.copy(task = state.task.copy(checklist = reordered))
+        }
+    }
+
     fun updateAssignee(assignee: Assignee) {
         _state.update { it.copy(task = it.task.copy(assignee = assignee)) }
     }

@@ -1,6 +1,7 @@
 package com.momens.android.presentation.project.taskedit.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -34,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
@@ -49,6 +53,8 @@ import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
 fun TaskEditCompletionRuleBox(
     rule: ChecklistItemState,
     maxLength: Int,
+    index: Int,
+    dragDropState: DragDropState,
     onTitleChange: (String, String) -> Unit,
     onCheckedChange: (String, Boolean) -> Unit,
     onClearClick: (String) -> Unit,
@@ -90,15 +96,34 @@ fun TaskEditCompletionRuleBox(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        val latestIndex by rememberUpdatedState(index)
+
         Box(
             modifier = Modifier
-                .width(2.dp)
-                .height(18.dp)
-                .background(
-                    color = MomensTheme.colors.gray200,
-                    shape = RoundedCornerShape(6.dp),
-                ),
-        )
+                .size(24.dp)
+                .pointerInput(rule.localId) {
+                    detectDragGestures(
+                        onDragStart = { dragDropState.onDragStart(latestIndex) },
+                        onDrag = { change, dragAmount ->
+                            change.consume()
+                            dragDropState.onDrag(dragAmount)
+                        },
+                        onDragEnd = { dragDropState.onDragInterrupted() },
+                        onDragCancel = { dragDropState.onDragInterrupted() },
+                    )
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(2.dp)
+                    .height(18.dp)
+                    .background(
+                        color = MomensTheme.colors.gray200,
+                        shape = RoundedCornerShape(6.dp),
+                    ),
+            )
+        }
 
         Row(
             modifier = Modifier
@@ -166,25 +191,41 @@ private fun TaskEditCompletionRuleBoxPreview() {
     MomensTheme {
         val exampleState = rememberTextFieldState()
         val writeState = rememberTextFieldState(initialText = "어쩌구저쩌구")
+        val listState = rememberLazyListState()
+        val dragDropState = rememberDragDropState(lazyListState = listState, onSwap = { _, _ -> })
 
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(id = "1", localId = "1", title = writeState.text.toString(), completed = true),
+                rule = ChecklistItemState(
+                    id = "1",
+                    localId = "1",
+                    title = writeState.text.toString(),
+                    completed = true,
+                ),
+                index = 0,
+                dragDropState = dragDropState,
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
                 maxLength = 50,
-                onTitleChange = { _, _ -> }
+                onTitleChange = { _, _ -> },
             )
 
             TaskEditCompletionRuleBox(
-                rule = ChecklistItemState(id = "2", localId = "2", title = exampleState.text.toString(), completed = false),
+                rule = ChecklistItemState(
+                    id = "2",
+                    localId = "2",
+                    title = exampleState.text.toString(),
+                    completed = false,
+                ),
+                index = 1,
+                dragDropState = dragDropState,
                 onCheckedChange = { _, _ -> },
                 onClearClick = {},
                 maxLength = 50,
-                onTitleChange = { _, _ -> }
+                onTitleChange = { _, _ -> },
             )
         }
     }

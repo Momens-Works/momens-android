@@ -1,5 +1,6 @@
 package com.momens.android.presentation.project.taskedit
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.presentation.project.taskedit.component.rememberDragDropState
 import com.momens.android.core.common.extension.advancedImePadding
 import com.momens.android.core.designsystem.component.header.MomensHeader
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
@@ -34,15 +37,20 @@ import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.SnackbarState
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
-import com.momens.android.presentation.project.taskedit.component.TaskEditCompleteSection
+import com.momens.android.presentation.project.taskedit.component.TaskEditCompleteSectionHeader
 import com.momens.android.presentation.project.taskedit.component.TaskEditOptionSection
 import com.momens.android.presentation.project.taskedit.component.TaskEditPurposeSection
 import com.momens.android.presentation.project.taskedit.component.TaskEditTitleSection
+import com.momens.android.presentation.project.taskedit.component.taskEditChecklistItems
 import com.momens.android.presentation.project.taskedit.component.assignee.TaskEditAssigneeBottomSheet
 import com.momens.android.presentation.project.taskedit.component.status.TaskEditStatusBottomSheet
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import com.momens.android.presentation.project.taskedit.viewmodel.TaskEditViewModel
+
+// 체크리스트 앞에 오는 LazyColumn item 개수(Spacer 4개 + Title/Option/Purpose 섹션 + 체크리스트 헤더).
+// DragDropState가 LazyListState의 전역 index로 동작하므로, 로컬 체크리스트 index와의 변환에 사용된다.
+private const val CHECKLIST_INDEX_OFFSET = 8
 
 @Composable
 fun TaskEditRoute(
@@ -79,13 +87,14 @@ fun TaskEditRoute(
         onChecklistAddClick = viewModel::addChecklistItem,
         onCheckedChange = viewModel::changeCheck,
         onChecklistClearClick = viewModel::clearChecklistItem,
+        onChecklistReorder = viewModel::reorderChecklist,
         onSaveClick = viewModel::saveTask,
         onBackClick = viewModel::navigateUp,
         onAssigneeDeleteClick = viewModel::removeAssignee,
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun TaskEditScreen(
     state: TaskEditState,
@@ -98,6 +107,7 @@ private fun TaskEditScreen(
     onCheckedChange: (String, Boolean) -> Unit,
     onChecklistTitleChange: (String, String) -> Unit,
     onChecklistClearClick: (String) -> Unit,
+    onChecklistReorder: (Int, Int) -> Unit,
     onSaveClick: (String, String) -> Unit,
     onAssigneeDeleteClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -108,6 +118,12 @@ private fun TaskEditScreen(
 
     val titleState = remember { TextFieldState(task.titleState) }
     val purposeState = remember { TextFieldState(task.purposeState) }
+
+    val listState = rememberLazyListState()
+    val dragDropState = rememberDragDropState(
+        lazyListState = listState,
+        onSwap = { from, to -> onChecklistReorder(from - CHECKLIST_INDEX_OFFSET, to - CHECKLIST_INDEX_OFFSET) },
+    )
 
     var isAssigneeOpen by remember { mutableStateOf(false) }
     var isAssigneeClicked by remember { mutableStateOf(false) }
@@ -133,6 +149,7 @@ private fun TaskEditScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(color = MomensTheme.colors.white)
             .padding(paddingValues)
             .advancedImePadding(),
     ) {
@@ -144,6 +161,7 @@ private fun TaskEditScreen(
         )
 
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .weight(1f)
                 .background(color = MomensTheme.colors.white)
@@ -194,18 +212,23 @@ private fun TaskEditScreen(
             item { Spacer(modifier = Modifier.height(24.dp)) }
 
             item {
-                TaskEditCompleteSection(
+                TaskEditCompleteSectionHeader(
                     completedCount = task.checklistCompletedCount,
                     totalCount = task.checklistTotalCount,
-                    rules = task.checklist,
+                    isEmpty = task.checklist.isEmpty(),
                     onAddClick = onChecklistAddClick,
-                    onTitleChange = onChecklistTitleChange,
-                    onCheckedChange = onCheckedChange,
-                    onClearClick = onChecklistClearClick,
-                    maxLength = 50,
-                    modifier = Modifier,
                 )
             }
+
+            taskEditChecklistItems(
+                rules = task.checklist,
+                maxLength = 50,
+                dragDropState = dragDropState,
+                indexOffset = CHECKLIST_INDEX_OFFSET,
+                onTitleChange = onChecklistTitleChange,
+                onCheckedChange = onCheckedChange,
+                onClearClick = onChecklistClearClick,
+            )
 
             item { Spacer(modifier = Modifier.height(6.dp)) }
         }
@@ -260,6 +283,7 @@ private fun TaskEditScreenPreview() {
             onAssigneeSearchClick = {},
             onBackClick = {},
             onChecklistTitleChange = { _, _ -> },
+            onChecklistReorder = { _, _ -> },
         )
     }
 }
