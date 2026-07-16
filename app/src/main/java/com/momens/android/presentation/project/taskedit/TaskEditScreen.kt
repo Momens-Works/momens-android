@@ -216,7 +216,10 @@ private fun TaskEditScreen(
     if (isStatusOpen) {
         TaskEditStatusBottomSheet(
             status = task.status,
-            onStatusChange = onStatusChange,
+            onStatusChange = {
+                onStatusChange(it)
+                isStatusOpen = false
+            },
             onDismiss = { isStatusOpen = false },
         )
     }
