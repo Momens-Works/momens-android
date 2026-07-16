@@ -41,7 +41,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun SignalRoute(
     paddingValues: PaddingValues,
-    navigateToTask: () -> Unit,
+    navigateToTaskDetail: (String) -> Unit,
     viewModel: SignalViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -61,7 +61,7 @@ fun SignalRoute(
                             title = it.message,
                             description = it.description,
                             type = MomensSnackbarType.BUTTON,
-                            onActionClick = navigateToTask,
+                            onActionClick = { navigateToTaskDetail(it.taskId) },
                         ),
                     ),
                 )
