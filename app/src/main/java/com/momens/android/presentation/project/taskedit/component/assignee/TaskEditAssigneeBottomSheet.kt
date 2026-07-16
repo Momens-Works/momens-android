@@ -70,7 +70,7 @@ fun TaskEditAssigneeBottomSheet(
                 TaskEditAssigneeSearchSection(
                     assignees = assignees,
                     selectedAssignee = selectedAssignee,
-                    onAssigneeClick = onAssigneeChange,
+                    onAssigneeClick = { onAssigneeChange(it);  isSearched = false },
                     onDeleteClick = onDeleteClick,
                 )
             } else {

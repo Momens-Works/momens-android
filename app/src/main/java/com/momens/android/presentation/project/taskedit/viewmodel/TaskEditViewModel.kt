@@ -6,15 +6,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.MomensStatusEditType
-import com.momens.android.data.project.taskedit.repository.TaskEditRepository
 import com.momens.android.data.project.taskdetail.repository.TaskDetailRepository
+import com.momens.android.data.project.taskedit.repository.TaskEditRepository
 import com.momens.android.presentation.project.model.Assignee
 import com.momens.android.presentation.project.model.TaskRole
 import com.momens.android.presentation.project.model.toAssignee
 import com.momens.android.presentation.project.taskdetail.model.toUiModel
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
-import com.momens.android.presentation.project.taskedit.model.toTaskEditModel
 import com.momens.android.presentation.project.taskedit.model.toEditTask
+import com.momens.android.presentation.project.taskedit.model.toTaskEditModel
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
@@ -131,6 +131,19 @@ class TaskEditViewModel @Inject constructor(
         }
     }
 
+    fun reorderChecklist(fromIndex: Int, toIndex: Int) {
+        _state.update { state ->
+            val checklist = state.task.checklist
+            if (fromIndex !in checklist.indices || toIndex !in checklist.indices) return@update state
+
+            val reordered = checklist.toMutableList().apply {
+                add(toIndex, removeAt(fromIndex))
+            }.toPersistentList()
+
+            state.copy(task = state.task.copy(checklist = reordered))
+        }
+    }
+
     fun updateAssignee(assignee: Assignee) {
         _state.update { it.copy(task = it.task.copy(assignee = assignee)) }
     }
@@ -160,9 +173,15 @@ class TaskEditViewModel @Inject constructor(
         }
     }
 
+    fun navigateUp() {
+        viewModelScope.launch {
+            _sideEffect.emit(TaskEditSideEffect.NavigateUp)
+        }
+    }
+
     fun saveTask(title: String, purpose: String) {
         _state.update {
-            it.copy(task = it.task.copy(titleState = title, purposeState = purpose))
+            it.copy(task = it.task.copy(titleState = title.ifBlank { "새 태스크" }, purposeState = purpose))
         }
 
         viewModelScope.launch {
