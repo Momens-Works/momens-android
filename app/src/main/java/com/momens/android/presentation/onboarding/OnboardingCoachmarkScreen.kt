@@ -32,7 +32,6 @@ import kotlinx.collections.immutable.persistentListOf
 fun OnboardingRoute(
     paddingValues: PaddingValues,
     navigateToSignal: () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     var step by remember { mutableStateOf(OnboardingCoachmarkStep.SignalTitle) }
@@ -60,8 +59,7 @@ fun OnboardingRoute(
                     viewModel.completeOnboarding()
                 }
             }
-        },
-        modifier = modifier,
+        }
     )
 }
 
