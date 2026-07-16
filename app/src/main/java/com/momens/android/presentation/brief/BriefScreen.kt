@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.extension.rememberMinDurationUiState
 import com.momens.android.core.common.state.UiState
 import com.momens.android.core.designsystem.component.header.MomensDefaultHeader
 import com.momens.android.core.designsystem.theme.MomensTheme
@@ -29,6 +30,7 @@ import com.momens.android.presentation.brief.component.BriefSummaryCard
 import com.momens.android.presentation.brief.model.BriefSignalSummaryFilterType
 import com.momens.android.presentation.brief.model.SampleBriefUiState
 import com.momens.android.presentation.brief.state.BriefUiState
+import com.momens.android.presentation.loading.LoadingScreen
 
 @Composable
 fun BriefRoute(
@@ -44,9 +46,9 @@ fun BriefRoute(
         }
     }
 
-    when (val state = uiState) {
+    when (val renderState = rememberMinDurationUiState(uiState)) {
         UiState.Empty, UiState.Loading -> {
-
+            LoadingScreen()
         }
 
         UiState.Failure -> {
@@ -55,7 +57,7 @@ fun BriefRoute(
 
         is UiState.Success -> BriefScreen(
             paddingValues = paddingValues,
-            uiState = state.data,
+            uiState = renderState.data,
             avatarUrl = projectContext.avatarUrl,
             onFilterClick = viewModel::selectSignalFilter,
             onSummaryMoreClick = viewModel::loadMoreSignalSummary,
