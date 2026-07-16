@@ -48,6 +48,8 @@ import com.momens.android.core.common.extension.noRippleClickable
 import com.momens.android.core.common.extension.noRippleToggleable
 import com.momens.android.core.designsystem.theme.MomensTheme
 import com.momens.android.presentation.project.taskedit.model.ChecklistItemState
+import com.momens.android.presentation.project.taskedit.util.DragDropState
+import com.momens.android.presentation.project.taskedit.util.rememberDragDropState
 
 @Composable
 fun TaskEditCompletionRuleBox(

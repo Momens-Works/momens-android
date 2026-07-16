@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.findRootCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -46,6 +47,18 @@ inline fun Modifier.noRippleClickable(
         onClick = { onClick() },
         enabled = enabled,
     )
+}
+
+@Composable
+inline fun Modifier.noRippleClickableClearingFocus(
+    enabled: Boolean = true,
+    crossinline onClick: () -> Unit,
+): Modifier {
+    val focusManager = LocalFocusManager.current
+    return noRippleClickable(enabled = enabled) {
+        focusManager.clearFocus()
+        onClick()
+    }
 }
 
 @Composable

@@ -1,6 +1,5 @@
 package com.momens.android.presentation.project.taskedit
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -21,12 +20,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.momens.android.presentation.project.taskedit.component.rememberDragDropState
+
 import com.momens.android.core.common.extension.advancedImePadding
 import com.momens.android.core.designsystem.component.header.MomensHeader
 import com.momens.android.core.designsystem.component.snackbar.model.MomensSnackbarModel
@@ -44,12 +42,11 @@ import com.momens.android.presentation.project.taskedit.component.TaskEditTitleS
 import com.momens.android.presentation.project.taskedit.component.taskEditChecklistItems
 import com.momens.android.presentation.project.taskedit.component.assignee.TaskEditAssigneeBottomSheet
 import com.momens.android.presentation.project.taskedit.component.status.TaskEditStatusBottomSheet
+import com.momens.android.presentation.project.taskedit.util.rememberDragDropState
 import com.momens.android.presentation.project.taskedit.state.TaskEditSideEffect
 import com.momens.android.presentation.project.taskedit.state.TaskEditState
 import com.momens.android.presentation.project.taskedit.viewmodel.TaskEditViewModel
 
-// 체크리스트 앞에 오는 LazyColumn item 개수(Spacer 4개 + Title/Option/Purpose 섹션 + 체크리스트 헤더).
-// DragDropState가 LazyListState의 전역 index로 동작하므로, 로컬 체크리스트 index와의 변환에 사용된다.
 private const val CHECKLIST_INDEX_OFFSET = 8
 
 @Composable
@@ -94,7 +91,7 @@ fun TaskEditRoute(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TaskEditScreen(
     state: TaskEditState,
@@ -131,7 +128,6 @@ private fun TaskEditScreen(
     var isStatusOpen by remember { mutableStateOf(false) }
     var isStatusClicked by remember { mutableStateOf(false) }
 
-    val focusManager = LocalFocusManager.current
     val isImeVisible = WindowInsets.isImeVisible
 
     LaunchedEffect(isAssigneeClicked, isStatusClicked, isImeVisible) {
@@ -176,7 +172,6 @@ private fun TaskEditScreen(
                     maxLength = 15,
                     onStatusClick = {
                         isStatusClicked = true
-                        focusManager.clearFocus()
                     },
                 )
             }
@@ -192,7 +187,6 @@ private fun TaskEditScreen(
                     onPrioritySelect = onPriorityChange,
                     onAssigneeClick = {
                         isAssigneeClicked = true
-                        focusManager.clearFocus()
                     },
                     modifier = Modifier,
                 )

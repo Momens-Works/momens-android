@@ -1,4 +1,4 @@
-package com.momens.android.presentation.project.taskedit.component
+package com.momens.android.presentation.project.taskedit.util
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,11 +18,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import com.momens.android.core.common.extension.offsetEnd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+private fun LazyListState.getVisibleItemInfoFor(absoluteIndex: Int): LazyListItemInfo? =
+    this.layoutInfo.visibleItemsInfo.getOrNull(
+        absoluteIndex - (this.layoutInfo.visibleItemsInfo.firstOrNull()?.index ?: 0),
+    )
 
 @Composable
 fun rememberDragDropState(
@@ -40,14 +42,6 @@ fun rememberDragDropState(
     }
     return state
 }
-
-fun LazyListState.getVisibleItemInfoFor(absoluteIndex: Int): LazyListItemInfo? =
-    this.layoutInfo.visibleItemsInfo.getOrNull(
-        absoluteIndex - this.layoutInfo.visibleItemsInfo.first().index,
-    )
-
-val LazyListItemInfo.offsetEnd: Int
-    get() = this.offset + this.size
 
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalFoundationApi
@@ -70,36 +64,17 @@ fun LazyItemScope.DraggableItem(
         label = "alpha",
     )
 
-    val draggingModifier = if (isDragging) {
-        Modifier
-            .zIndex(1f)
-            .graphicsLayer {
-                translationY = dragDropState.draggingItemOffset
-                scaleX = scale
-                scaleY = scale
-                this.alpha = alpha
-                shadowElevation = 8.dp.toPx()
-                shape = RoundedCornerShape(8.dp)
-                clip = true
-            }
-    } else if (isPrevious) {
-        Modifier
-            .zIndex(1f)
-            .graphicsLayer {
-                translationY = dragDropState.previousItemOffset.value
-                scaleX = scale
-                scaleY = scale
-                this.alpha = alpha
-            }
-    } else {
-        Modifier.animateItem(
-            placementSpec = spring(
-                dampingRatio = Spring.DampingRatioNoBouncy,
-                stiffness = Spring.StiffnessMediumLow,
-            ),
-        )
-    }
-    Column(modifier = modifier.then(draggingModifier)) {
+    val draggingModifier = dragDropItemModifier(
+        dragDropState = dragDropState,
+        isDragging = isDragging,
+        isPrevious = isPrevious,
+        scale = scale,
+        alpha = alpha,
+    )
+    Column(
+        modifier = modifier
+            .then(draggingModifier),
+    ) {
         content(isDragging)
     }
 }
@@ -112,7 +87,7 @@ class DragDropState internal constructor(
     private var draggedDistance by mutableStateOf(0f)
     private var draggingItemInitialOffset by mutableStateOf(0)
 
-    internal val draggingItemOffset: Float
+    val draggingItemOffset: Float
         get() = draggingItemLayoutInfo?.let { item ->
             draggingItemInitialOffset + draggedDistance - item.offset
         } ?: 0f
@@ -121,9 +96,10 @@ class DragDropState internal constructor(
         get() = state.layoutInfo.visibleItemsInfo
             .firstOrNull { it.index == currentIndexOfDraggedItem }
 
-    internal var previousIndexOfDraggedItem by mutableStateOf<Int?>(null)
+    var previousIndexOfDraggedItem by mutableStateOf<Int?>(null)
         private set
-    internal var previousItemOffset = Animatable(0f)
+
+    var previousItemOffset = Animatable(0f)
         private set
 
     private var initiallyDraggedElement by mutableStateOf<LazyListItemInfo?>(null)
@@ -198,4 +174,3 @@ class DragDropState internal constructor(
     }
 
 }
-

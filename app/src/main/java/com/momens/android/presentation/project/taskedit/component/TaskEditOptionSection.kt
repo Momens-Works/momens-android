@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.core.common.extension.noRippleClickable
@@ -38,6 +39,8 @@ fun TaskEditOptionSection(
     onAssigneeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -105,7 +108,10 @@ fun TaskEditOptionSection(
 
         MomensButton(
             text = assigneeName,
-            onClick = onAssigneeClick,
+            onClick = {
+                focusManager.clearFocus()
+                onAssigneeClick()
+            },
             type = MomensButtonType.WHITE
         )
     }
