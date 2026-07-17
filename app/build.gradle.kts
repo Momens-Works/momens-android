@@ -126,6 +126,7 @@ dependencies {
     implementation(libs.bundles.credential)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.installations)
     implementation(libs.bundles.work)
 
     implementation(libs.androidx.navigation)
