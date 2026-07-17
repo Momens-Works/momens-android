@@ -8,13 +8,13 @@ import com.momens.android.core.model.fcm.PushDestination
 import com.momens.android.core.notification.MomensNotificationManager
 import com.momens.android.data.pushdevice.repository.PushDeviceRepository
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MomensFcmService : FirebaseMessagingService() {
@@ -36,8 +36,6 @@ class MomensFcmService : FirebaseMessagingService() {
         Timber.tag(TAG).d("새 FCM 토큰 발급: $token")
 
         serviceScope.launch {
-            // 로그인 전에 토큰이 갱신될 수 있어, 인증 토큰이 있을 때만 서버에 동기화합니다.
-            // 로그인 직후에는 SignInRepository에서 별도로 등록을 호출합니다.
             if (tokenManager.getAccessToken().isNullOrBlank()) {
                 Timber.tag(TAG).d("로그인 상태가 아니어서 FCM 토큰 동기화를 건너뜁니다.")
                 return@launch
