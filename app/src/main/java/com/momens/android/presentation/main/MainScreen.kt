@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,12 +23,15 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momens.android.core.common.permission.RequestNotificationPermissionEffect
 import com.momens.android.core.designsystem.component.snackbar.MomensSnackbar
 import com.momens.android.core.designsystem.effect.momensNavBlurSource
 import com.momens.android.core.designsystem.effect.rememberMomensNavBlurState
 import com.momens.android.core.designsystem.trigger.GlobalUiEventHolder
 import com.momens.android.core.designsystem.trigger.LocalGlobalUiEventTrigger
 import com.momens.android.core.designsystem.trigger.rememberGlobalSnackbarController
+import com.momens.android.core.model.fcm.PushData
+import com.momens.android.core.model.fcm.PushDestination
 import com.momens.android.presentation.main.component.MomensMainTabBar
 import com.momens.android.presentation.main.navigation.MainAppState
 import com.momens.android.presentation.main.navigation.MomensNavHost
@@ -40,6 +44,8 @@ private val SNACKBAR_TAB_BAR_SPACING = 8.dp
 @Composable
 fun MainScreen(
     appState: MainAppState = rememberMainAppState(),
+    pendingPushData: PushData? = null,
+    onPushDataConsumed: () -> Unit = {},
 ) {
     val currentTab by appState.currentTab.collectAsStateWithLifecycle()
     val tabs = remember { MainTab.entries.toImmutableList() }
@@ -47,10 +53,26 @@ fun MainScreen(
     val density = LocalDensity.current
 
     var tabBarBoxHeight by remember { mutableStateOf(0.dp) }
+    var pendingSignalId by remember { mutableStateOf<String?>(null) }
 
     val snackbarController = rememberGlobalSnackbarController()
     val eventHolder = remember(snackbarController) {
         GlobalUiEventHolder(showSnackbar = snackbarController::show)
+    }
+
+    RequestNotificationPermissionEffect()
+
+    LaunchedEffect(pendingPushData, currentTab) {
+        val pushData = pendingPushData ?: return@LaunchedEffect
+        if (currentTab == null) return@LaunchedEffect
+
+        appState.navigateFromPushData(pushData)
+
+        if (pushData.destination == PushDestination.SIGNAL_DETAIL) {
+            pendingSignalId = pushData.signalId
+        }
+
+        onPushDataConsumed()
     }
 
     CompositionLocalProvider(
@@ -85,6 +107,8 @@ fun MainScreen(
                     appState = appState,
                     paddingValues = innerPadding,
                     tabBarHeight = tabBarBoxHeight,
+                    pendingSignalId = pendingSignalId,
+                    onPendingSignalConsumed = { pendingSignalId = null },
                 )
             }
 

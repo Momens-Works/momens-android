@@ -34,7 +34,7 @@ fun OnboardingRoute(
     navigateToSignal: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
-    var step by remember { mutableStateOf(OnboardingCoachmarkStep.SignalTitle) }
+    var step by remember { mutableStateOf(OnboardingCoachmarkStep.SIGNAL_TITLE) }
 
     viewModel.sideEffect.collectSideEffect {
         when (it) {
@@ -47,15 +47,15 @@ fun OnboardingRoute(
         paddingValues = paddingValues,
         onNextClick = {
             when (step) {
-                OnboardingCoachmarkStep.SignalTitle -> {
-                    step = OnboardingCoachmarkStep.SignalCard
+                OnboardingCoachmarkStep.SIGNAL_TITLE -> {
+                    step = OnboardingCoachmarkStep.SIGNAL_CARD
                 }
 
-                OnboardingCoachmarkStep.SignalCard -> {
-                    step = OnboardingCoachmarkStep.MinsuSuggestion
+                OnboardingCoachmarkStep.SIGNAL_CARD -> {
+                    step = OnboardingCoachmarkStep.MINSU_SUGGESTION
                 }
 
-                OnboardingCoachmarkStep.MinsuSuggestion -> {
+                OnboardingCoachmarkStep.MINSU_SUGGESTION -> {
                     viewModel.completeOnboarding()
                 }
             }
@@ -75,9 +75,9 @@ fun OnboardingScreen(
     var minsuSuggestionBounds by remember { mutableStateOf<Rect?>(null) }
     var screenBounds by remember { mutableStateOf<Rect?>(null) }
     val targetBounds = when (step) {
-        OnboardingCoachmarkStep.SignalTitle -> signalTitleBounds
-        OnboardingCoachmarkStep.SignalCard -> signalCardBounds
-        OnboardingCoachmarkStep.MinsuSuggestion -> minsuSuggestionBounds
+        OnboardingCoachmarkStep.SIGNAL_TITLE -> signalTitleBounds
+        OnboardingCoachmarkStep.SIGNAL_CARD -> signalCardBounds
+        OnboardingCoachmarkStep.MINSU_SUGGESTION -> minsuSuggestionBounds
     }
     val overlayTargetBounds = targetBounds?.let { bounds ->
         screenBounds?.let { screenBounds ->
@@ -128,7 +128,7 @@ fun OnboardingScreen(
 @Preview(showBackground = true)
 @Composable
 private fun OnboardingScreenPreview() {
-    var step by remember { mutableStateOf(OnboardingCoachmarkStep.SignalTitle) }
+    var step by remember { mutableStateOf(OnboardingCoachmarkStep.SIGNAL_TITLE) }
 
     MomensTheme {
         OnboardingScreen(
@@ -136,9 +136,9 @@ private fun OnboardingScreenPreview() {
             paddingValues = PaddingValues(),
             onNextClick = {
                 step = when (step) {
-                    OnboardingCoachmarkStep.SignalTitle -> OnboardingCoachmarkStep.SignalCard
-                    OnboardingCoachmarkStep.SignalCard -> OnboardingCoachmarkStep.MinsuSuggestion
-                    OnboardingCoachmarkStep.MinsuSuggestion -> OnboardingCoachmarkStep.SignalTitle
+                    OnboardingCoachmarkStep.SIGNAL_TITLE -> OnboardingCoachmarkStep.SIGNAL_CARD
+                    OnboardingCoachmarkStep.SIGNAL_CARD -> OnboardingCoachmarkStep.MINSU_SUGGESTION
+                    OnboardingCoachmarkStep.MINSU_SUGGESTION -> OnboardingCoachmarkStep.SIGNAL_TITLE
                 }
             },
         )

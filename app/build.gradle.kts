@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.google.services)
 }
 
 val properties = Properties().apply {
@@ -125,6 +126,7 @@ dependencies {
     implementation(libs.bundles.credential)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.installations)
     implementation(libs.bundles.work)
 
     implementation(libs.androidx.navigation)

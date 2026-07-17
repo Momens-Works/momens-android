@@ -1,7 +1,7 @@
 package com.momens.android.presentation.onboarding
 
 enum class OnboardingCoachmarkStep {
-    SignalTitle,
-    SignalCard,
-    MinsuSuggestion,
+    SIGNAL_TITLE,
+    SIGNAL_CARD,
+    MINSU_SUGGESTION,
 }

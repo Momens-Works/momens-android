@@ -42,6 +42,9 @@ import kotlinx.collections.immutable.persistentListOf
 fun SignalRoute(
     paddingValues: PaddingValues,
     navigateToTaskDetail: (String) -> Unit,
+    navigateToTask: () -> Unit,
+    pendingSignalId: String? = null,
+    onPendingSignalConsumed: () -> Unit = {},
     viewModel: SignalViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -49,6 +52,19 @@ fun SignalRoute(
     val globalTrigger = LocalGlobalUiEventTrigger.current
 
     LaunchedEffect(Unit) {
+        viewModel.loadSignals()
+    }
+
+    var hasRetriedLoadForPendingSignal by remember(pendingSignalId) { mutableStateOf(false) }
+
+    LaunchedEffect(state, pendingSignalId) {
+        val signalId = pendingSignalId ?: return@LaunchedEffect
+        val currentData = (state as? UiState.Success)?.data ?: return@LaunchedEffect
+
+        val alreadyLoaded = currentData.signals.any { it.id == signalId }
+        if (alreadyLoaded || hasRetriedLoadForPendingSignal) return@LaunchedEffect
+
+        hasRetriedLoadForPendingSignal = true
         viewModel.loadSignals()
     }
 
@@ -90,6 +106,8 @@ fun SignalRoute(
                 onSignalClick = viewModel::onSignalClick,
                 onDeleteSignal = viewModel::deleteSignal,
                 onRegisterTask = viewModel::registerTask,
+                pendingSignalId = pendingSignalId,
+                onPendingSignalConsumed = onPendingSignalConsumed,
             )
         }
 
@@ -109,8 +127,20 @@ private fun SignalScreen(
     onDeleteSignal: (String) -> Unit,
     onRegisterTask: (String) -> Unit,
     modifier: Modifier = Modifier,
+    pendingSignalId: String? = null,
+    onPendingSignalConsumed: () -> Unit = {},
 ) {
     var selectedSignal by remember { mutableStateOf<SignalCardUiModel?>(null) }
+
+    LaunchedEffect(state.signals, pendingSignalId) {
+        if (pendingSignalId == null) return@LaunchedEffect
+
+        val target = state.signals.find { it.id == pendingSignalId } ?: return@LaunchedEffect
+
+        selectedSignal = target
+        onSignalClick(target.id)
+        onPendingSignalConsumed()
+    }
 
     Column(
         modifier = modifier

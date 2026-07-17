@@ -13,19 +13,6 @@ import kotlin.time.Duration.Companion.milliseconds
 
 private const val DEFAULT_MIN_LOADING_DURATION_MS = 300L
 
-/**
- * [state]가 [UiState.Loading]으로 바뀌면 최소 [minDurationMs]만큼은 로딩 상태를 유지한 뒤
- * 실제 상태로 전환해서 반환합니다. 로딩이 너무 짧게 끝나 화면이 깜빡이는 현상을 방지합니다.
- *
- * 사용 예:
- * ```
- * val renderState = rememberMinDurationUiState(state)
- * when (renderState) {
- *     UiState.Loading -> ...
- *     ...
- * }
- * ```
- */
 @Composable
 fun <T> rememberMinDurationUiState(
     state: UiState<T>,

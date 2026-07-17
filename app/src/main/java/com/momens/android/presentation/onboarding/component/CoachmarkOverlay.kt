@@ -78,7 +78,7 @@ internal fun BoxScope.CoachmarkOverlay(
     )
 
     when (step) {
-        OnboardingCoachmarkStep.SignalTitle -> {
+        OnboardingCoachmarkStep.SIGNAL_TITLE -> {
             CoachBubble(
                 title = "오늘 확인해야 할 시그널",
                 description = buildAnnotatedString {
@@ -95,7 +95,7 @@ internal fun BoxScope.CoachmarkOverlay(
             )
         }
 
-        OnboardingCoachmarkStep.SignalCard -> {
+        OnboardingCoachmarkStep.SIGNAL_CARD -> {
             CoachBubble(
                 title = "시그널카드",
                 description = buildAnnotatedString {
@@ -108,7 +108,7 @@ internal fun BoxScope.CoachmarkOverlay(
             )
         }
 
-        OnboardingCoachmarkStep.MinsuSuggestion -> {
+        OnboardingCoachmarkStep.MINSU_SUGGESTION -> {
             CoachBubble(
                 title = "민수의 제안",
                 description = buildAnnotatedString {
@@ -409,7 +409,7 @@ private fun CoachmarkOverlayPreview() {
             )
 
             CoachmarkOverlay(
-                step = OnboardingCoachmarkStep.SignalTitle,
+                step = OnboardingCoachmarkStep.SIGNAL_TITLE,
                 targetBounds = targetBounds,
                 onNextClick = {},
             )

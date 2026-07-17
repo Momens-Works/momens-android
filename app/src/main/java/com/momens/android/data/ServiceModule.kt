@@ -3,6 +3,7 @@ package com.momens.android.data
 import com.momens.android.data.project.taskedit.remote.service.TaskEditService
 import com.momens.android.data.project.taskdetail.remote.service.TaskDetailService
 import com.momens.android.data.project.task.remote.service.TaskService
+import com.momens.android.data.pushdevice.remote.service.PushDeviceService
 import com.momens.android.data.signal.remote.service.SignalService
 import com.momens.android.data.brief.remote.service.BriefService
 import com.momens.android.data.signin.remote.service.SignInService
@@ -64,4 +65,10 @@ object ServiceModule {
     fun provideTaskDetailService(
         retrofit: Retrofit,
     ): TaskDetailService = retrofit.create(TaskDetailService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePushDeviceService(
+        retrofit: Retrofit,
+    ): PushDeviceService = retrofit.create(PushDeviceService::class.java)
 }

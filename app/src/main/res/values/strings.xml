@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Momens</string>
     <string name="google_server_client_id">957787155946-tonm86mss2l8ahdr6j0kc03ib91860aj.apps.googleusercontent.com</string>
+
+    <string name="push_notification_channel_id">momens_push_channel</string>
+    <string name="push_notification_channel_name">모먼스 알림</string>
+    <string name="push_notification_channel_description">시그널, 태스크 등 모먼스의 새 소식을 알려드려요.</string>
 </resources>

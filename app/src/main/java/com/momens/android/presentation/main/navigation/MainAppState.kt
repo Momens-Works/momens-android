@@ -10,16 +10,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.momens.android.core.model.fcm.PushData
+import com.momens.android.core.model.fcm.PushDestination
 import com.momens.android.presentation.brief.navigation.navigateToBrief
 import com.momens.android.presentation.main.type.MainTab
-import com.momens.android.presentation.onboarding.navigation.Onboarding
 import com.momens.android.presentation.onboarding.navigation.navigateToOnboarding
 import com.momens.android.presentation.project.task.navigation.navigateToTask
 import com.momens.android.presentation.project.taskdetail.navigation.navigateToTaskDetail
 import com.momens.android.presentation.project.taskedit.navigation.TaskEdit
 import com.momens.android.presentation.project.taskedit.navigation.navigateToTaskEdit
 import com.momens.android.presentation.signal.navigation.navigateToSignal
-import com.momens.android.presentation.signin.navigation.SignIn
 import com.momens.android.presentation.signin.navigation.navigateToSignIn
 import com.momens.android.presentation.splash.navigation.Splash
 import com.momens.android.presentation.splash.navigation.navigateToSplash
@@ -119,6 +119,13 @@ class MainAppState(
 
     fun navigateUp() {
         navController.navigateUp()
+    }
+
+    fun navigateFromPushData(pushData: PushData) {
+        when (pushData.destination) {
+            PushDestination.SIGNAL_DETAIL -> navigate(MainTab.SIGNAL)
+            PushDestination.UNKNOWN -> Unit
+        }
     }
 }
 

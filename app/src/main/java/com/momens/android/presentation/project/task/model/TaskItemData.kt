@@ -1,6 +1,7 @@
 package com.momens.android.presentation.project.task.model
 
 import androidx.compose.runtime.Immutable
+import com.momens.android.core.common.extension.limitLength
 import com.momens.android.core.designsystem.component.type.ImportantLevel
 import com.momens.android.core.designsystem.component.type.ImportantTone
 import com.momens.android.data.project.task.model.TaskItem
@@ -15,9 +16,11 @@ data class TaskItemData(
     val tone: ImportantTone,
 )
 
+private const val TITLE_MAX_LENGTH = 15
+
 fun TaskItem.toUiModel(): TaskItemData = TaskItemData(
     id = id,
-    title = title,
+    title = title.limitLength(TITLE_MAX_LENGTH),
     role = role.toButtonType(),
     priority = priority.toImportantLevel(),
     materialCount = materialCount,

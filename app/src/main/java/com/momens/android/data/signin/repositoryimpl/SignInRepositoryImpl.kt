@@ -4,6 +4,7 @@ import com.momens.android.core.local.project.ProjectManager
 import com.momens.android.core.local.TokenManager
 import com.momens.android.core.local.model.ProjectContextModel
 import com.momens.android.core.util.suspendRunCatching
+import com.momens.android.data.pushdevice.repository.PushDeviceRepository
 import com.momens.android.data.signin.local.datasource.DeviceLocalDataSource
 import com.momens.android.data.signin.local.datasource.GoogleCredentialLocalDataSource
 import com.momens.android.data.signin.remote.datasource.SignInRemoteDataSource
@@ -12,6 +13,7 @@ import com.momens.android.data.signin.remote.dto.request.TokenRefreshRequest
 import com.momens.android.data.signin.repository.SignInRepository
 import javax.inject.Inject
 import retrofit2.HttpException
+import timber.log.Timber
 
 class SignInRepositoryImpl @Inject constructor(
     private val googleCredentialLocalDataSource: GoogleCredentialLocalDataSource,
@@ -19,6 +21,7 @@ class SignInRepositoryImpl @Inject constructor(
     private val deviceLocalDataSource: DeviceLocalDataSource,
     private val tokenManager: TokenManager,
     private val projectManager: ProjectManager,
+    private val pushDeviceRepository: PushDeviceRepository,
 ) : SignInRepository {
 
     override suspend fun signInWithGoogle(
@@ -43,6 +46,9 @@ class SignInRepositoryImpl @Inject constructor(
             projectManager.clearProjectContext()
             throw it
         }
+
+        pushDeviceRepository.registerCurrentDevice()
+            .onFailure { Timber.tag(TAG).w(it, "푸시 기기 등록 실패") }
     }
 
     override suspend fun refreshSession(): Result<Unit> {
@@ -64,8 +70,13 @@ class SignInRepositoryImpl @Inject constructor(
             )
         }
 
-        if (result.isSuccess && projectManager.currentProjectContext.projectId == null) {
-            runCatching { syncProjectContext() }
+        if (result.isSuccess) {
+            if (projectManager.currentProjectContext.projectId == null) {
+                runCatching { syncProjectContext() }
+            }
+
+            pushDeviceRepository.registerCurrentDevice()
+                .onFailure { Timber.tag(TAG).w(it, "푸시 기기 등록 실패 (세션 갱신)") }
         }
 
         val failure = result.exceptionOrNull()
@@ -87,12 +98,16 @@ class SignInRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signOut(): Result<Unit> = suspendRunCatching {
+        pushDeviceRepository.deactivateCurrentDevice()
+            .onFailure { Timber.tag(TAG).w(it, "푸시 기기 비활성화 실패") }
+
         googleCredentialLocalDataSource.clearCredentialState().getOrThrow()
         tokenManager.clearTokens()
         projectManager.clearProjectContext()
     }
 
     private companion object {
+        private const val TAG = "SignInRepositoryImpl"
         private const val HTTP_UNAUTHORIZED = 401
     }
 }
