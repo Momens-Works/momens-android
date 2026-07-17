@@ -52,6 +52,19 @@ fun SignalRoute(
         viewModel.loadSignals()
     }
 
+    var hasRetriedLoadForPendingSignal by remember(pendingSignalId) { mutableStateOf(false) }
+
+    LaunchedEffect(state, pendingSignalId) {
+        val signalId = pendingSignalId ?: return@LaunchedEffect
+        val currentData = (state as? UiState.Success)?.data ?: return@LaunchedEffect
+
+        val alreadyLoaded = currentData.signals.any { it.id == signalId }
+        if (alreadyLoaded || hasRetriedLoadForPendingSignal) return@LaunchedEffect
+
+        hasRetriedLoadForPendingSignal = true
+        viewModel.loadSignals()
+    }
+
     viewModel.sideEffect.collectSideEffect {
         when (it) {
             is SignalSideEffect.ShowActionSnackbar -> {
