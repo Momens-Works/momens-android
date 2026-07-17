@@ -37,7 +37,7 @@ fun SignalAccordionHeader(
     modifier: Modifier = Modifier,
 ) {
     val rotation by animateFloatAsState(
-        targetValue = if (expanded) 90f else -90f,
+        targetValue = if (expanded) -90f else 90f,
     )
 
     Row(
