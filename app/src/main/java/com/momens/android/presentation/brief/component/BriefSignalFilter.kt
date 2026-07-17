@@ -29,6 +29,7 @@ fun BriefSignalFilterSummary(
     filters: ImmutableList<BriefSignalSummaryFilter>,
     summaries: ImmutableList<BriefSignalItemUiModel>,
     hasMoreSummaries: Boolean,
+    canLoadMoreSummaries: Boolean,
     isSummaryExpanded: Boolean,
     onFilterClick: (BriefSignalSummaryFilterType) -> Unit,
     onSummaryMoreClick: () -> Unit,
@@ -48,8 +49,10 @@ fun BriefSignalFilterSummary(
         BriefDropdown(
             items = summaries,
             hasMore = hasMoreSummaries,
+            canLoadMore = canLoadMoreSummaries,
             expanded = isSummaryExpanded,
             onMoreClick = onSummaryMoreClick,
+            onLoadMore = onSummaryMoreClick,
             onFoldClick = onSummaryFoldClick,
         )
     }
@@ -184,6 +187,7 @@ private fun BriefSignalSummarySectionPreview() {
             filters = filters,
             summaries = if (isSummaryExpanded) expandedSummaries else initialSummaries,
             hasMoreSummaries = !isSummaryExpanded,
+            canLoadMoreSummaries = false,
             isSummaryExpanded = isSummaryExpanded,
             onFilterClick = { filterType ->
                 selectedFilterType = filterType

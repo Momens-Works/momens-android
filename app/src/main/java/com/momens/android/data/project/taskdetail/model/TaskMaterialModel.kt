@@ -5,11 +5,10 @@ import com.momens.android.data.project.taskdetail.remote.dto.response.TaskMateri
 
 data class TaskMaterialModel(
     val id: String,
-    val title: String,
-    val summary: String,
-    val roles: List<String>,
+    val title: String?,
+    val summary: String?,
     val kind: TaskMaterialKindModel,
-    val sourceUrl: String,
+    val sourceUrl: String?,
     val createdAt: String?,
 )
 
@@ -24,7 +23,6 @@ fun TaskMaterialDto.toModel(): TaskMaterialModel = TaskMaterialModel(
     id = id,
     title = title,
     summary = summary,
-    roles = roles,
     kind = kind.toModel(),
     sourceUrl = sourceUrl,
     createdAt = createdAt,

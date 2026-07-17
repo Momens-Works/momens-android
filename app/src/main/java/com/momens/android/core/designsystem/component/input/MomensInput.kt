@@ -21,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.momens.android.core.common.extension.hideKeyboardOnFocusLost
 import com.momens.android.core.designsystem.theme.MomensTheme
 
 @Composable
@@ -39,6 +41,7 @@ fun MomensInput(
     val textStyle = MomensTheme.typography.bodyM14
     val contentColor = MomensTheme.colors.gray800
     val borderColor = MomensTheme.colors.gray300
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     BasicTextField(
         state = state,
@@ -51,7 +54,8 @@ fun MomensInput(
                     end = Offset(size.width, size.height),
                     strokeWidth = 1.dp.toPx(),
                 )
-            },
+            }
+            .hideKeyboardOnFocusLost(keyboardController),
         inputTransformation = maxLength?.let { InputTransformation.maxLength(it) },
         lineLimits = lineLimits,
         textStyle = textStyle.copy(color = contentColor),
@@ -99,7 +103,7 @@ private fun MomensInputPreview() {
             MomensInput(
                 state = exampleState,
                 placeholder = "Example",
-                maxLength = 6
+                maxLength = 6,
             )
 
             MomensInput(

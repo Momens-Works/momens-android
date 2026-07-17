@@ -26,6 +26,7 @@ fun NavGraphBuilder.signalNavGraph(
     navigateToTask: () -> Unit,
     pendingSignalId: String? = null,
     onPendingSignalConsumed: () -> Unit = {},
+    navigateToTaskDetail: (String) -> Unit,
 ) {
     composable<Signal> {
         SignalRoute(
@@ -33,6 +34,7 @@ fun NavGraphBuilder.signalNavGraph(
             navigateToTask = navigateToTask,
             pendingSignalId = pendingSignalId,
             onPendingSignalConsumed = onPendingSignalConsumed,
+            navigateToTaskDetail = navigateToTaskDetail,
         )
     }
 }

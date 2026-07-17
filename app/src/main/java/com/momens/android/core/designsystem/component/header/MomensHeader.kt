@@ -25,8 +25,10 @@ fun MomensHeader(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = MomensTheme.colors.white,
+    isSaveVisible: Boolean = false,
     isWriteVisible: Boolean = false,
-    onWriteClick: () -> Unit = {}
+    onWriteClick: () -> Unit = {},
+    onSaveClick: () -> Unit = {},
 ) {
     Box(
         modifier = modifier
@@ -61,6 +63,17 @@ fun MomensHeader(
                     .noRippleClickable(onClick = onWriteClick)
             )
         }
+
+        if (isSaveVisible) {
+            Text(
+                text = "완료",
+                style = MomensTheme.typography.bodyB14,
+                color = MomensTheme.colors.gray900,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .noRippleClickable(onClick = onSaveClick)
+            )
+        }
     }
 }
 
@@ -78,8 +91,15 @@ private fun MomensHeaderPreview() {
             MomensHeader(
                 text = "우우와와우와우와와 타쿠타쿠 챠오",
                 onBackClick = {},
-                isWriteVisible = false,
+                isWriteVisible = true,
                 onWriteClick = {}
+            )
+
+            MomensHeader(
+                text = "우우와와우와우와와 타쿠타쿠 챠오",
+                onBackClick = {},
+                isSaveVisible = true,
+                onSaveClick = {}
             )
         }
     }

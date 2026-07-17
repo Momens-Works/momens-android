@@ -117,6 +117,7 @@ sealed interface SignalSideEffect {
     data class ShowActionSnackbar(
         val message: String,
         val description: String,
+        val taskId: String,
     ) : SignalSideEffect
 
     data class ShowSnackbar(val message: String) : SignalSideEffect

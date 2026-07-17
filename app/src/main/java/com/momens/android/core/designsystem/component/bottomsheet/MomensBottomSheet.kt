@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -25,9 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.momens.android.R
+import com.momens.android.core.common.extension.addFocusCleaner
 import com.momens.android.core.common.extension.dragToDismiss
 import com.momens.android.core.designsystem.component.textbox.MomensTextBox
 import com.momens.android.core.designsystem.effect.momensBottomSheetShadow
@@ -55,6 +59,7 @@ fun MomensBottomSheet(
         containerColor = Color.Transparent,
         dragHandle = null,
         sheetGesturesEnabled = false,
+        contentWindowInsets = { WindowInsets(0.dp) },
     ) {
         MomensBottomSheetContent(
             shape = shape,
@@ -79,13 +84,17 @@ private fun MomensBottomSheetContent(
     dragHandle: @Composable (() -> Unit)?,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = modifier
             .dragToDismiss(sheetState = sheetState, onDismiss = onDismiss)
             .fillMaxWidth()
             .padding(top = 25.dp)
             .momensBottomSheetShadow(shape = shape)
-            .background(color = containerColor, shape = shape),
+            .background(color = containerColor, shape = shape)
+            .navigationBarsPadding()
+            .addFocusCleaner(focusManager),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         dragHandle?.invoke()

@@ -18,7 +18,7 @@ data class Task(
     val taskId: String,
     val titleState: String,
     val status: MomensStatusEditType,
-    val role: TaskRole,
+    val role: TaskRole?,
     val assignee: Assignee?,
     val priority: ImportantLevel,
     val purposeState: String,
@@ -64,7 +64,7 @@ fun TaskDetailModel.toEditTask(): Task = Task(
 
 fun Task.toTaskEditModel(): TaskEditModel = TaskEditModel(
     title = titleState,
-    role = role.name.lowercase(),
+    role = (role ?: TaskRole.PM).name.lowercase(),
     assigneeId = assignee?.id,
     priority = priority.label,
     status = status.key,
