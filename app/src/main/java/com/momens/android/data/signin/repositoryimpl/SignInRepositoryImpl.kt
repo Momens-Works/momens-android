@@ -70,8 +70,13 @@ class SignInRepositoryImpl @Inject constructor(
             )
         }
 
-        if (result.isSuccess && projectManager.currentProjectContext.projectId == null) {
-            runCatching { syncProjectContext() }
+        if (result.isSuccess) {
+            if (projectManager.currentProjectContext.projectId == null) {
+                runCatching { syncProjectContext() }
+            }
+
+            pushDeviceRepository.registerCurrentDevice()
+                .onFailure { Timber.tag(TAG).w(it, "푸시 기기 등록 실패 (세션 갱신)") }
         }
 
         val failure = result.exceptionOrNull()
