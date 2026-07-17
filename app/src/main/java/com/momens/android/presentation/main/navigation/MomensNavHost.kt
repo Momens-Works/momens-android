@@ -21,6 +21,8 @@ fun MomensNavHost(
     appState: MainAppState,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
+    pendingSignalId: String? = null,
+    onPendingSignalConsumed: () -> Unit = {},
 ) {
     NavHost(
         enterTransition = { EnterTransition.None },
@@ -34,6 +36,8 @@ fun MomensNavHost(
         signalNavGraph(
             paddingValues = paddingValues,
             navigateToTask = appState::navigateToTask,
+            pendingSignalId = pendingSignalId,
+            onPendingSignalConsumed = onPendingSignalConsumed,
         )
         briefNavGraph(paddingValues = paddingValues)
         taskNavGraph(

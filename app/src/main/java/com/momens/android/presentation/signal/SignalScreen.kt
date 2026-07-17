@@ -40,6 +40,8 @@ import kotlinx.collections.immutable.persistentListOf
 fun SignalRoute(
     paddingValues: PaddingValues,
     navigateToTask: () -> Unit,
+    pendingSignalId: String? = null,
+    onPendingSignalConsumed: () -> Unit = {},
     viewModel: SignalViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -88,6 +90,8 @@ fun SignalRoute(
                 onSignalClick = viewModel::onSignalClick,
                 onDeleteSignal = viewModel::deleteSignal,
                 onRegisterTask = viewModel::registerTask,
+                pendingSignalId = pendingSignalId,
+                onPendingSignalConsumed = onPendingSignalConsumed,
             )
         }
 
@@ -107,8 +111,20 @@ private fun SignalScreen(
     onDeleteSignal: (String) -> Unit,
     onRegisterTask: (String) -> Unit,
     modifier: Modifier = Modifier,
+    pendingSignalId: String? = null,
+    onPendingSignalConsumed: () -> Unit = {},
 ) {
     var selectedSignal by remember { mutableStateOf<SignalCardUiModel?>(null) }
+
+    LaunchedEffect(state.signals, pendingSignalId) {
+        if (pendingSignalId == null) return@LaunchedEffect
+
+        val target = state.signals.find { it.id == pendingSignalId } ?: return@LaunchedEffect
+
+        selectedSignal = target
+        onSignalClick(target.id)
+        onPendingSignalConsumed()
+    }
 
     Column(
         modifier = modifier

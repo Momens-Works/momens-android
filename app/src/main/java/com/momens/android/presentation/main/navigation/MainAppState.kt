@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.momens.android.core.model.fcm.PushData
+import com.momens.android.core.model.fcm.PushDestination
 import com.momens.android.presentation.brief.navigation.navigateToBrief
 import com.momens.android.presentation.main.type.MainTab
 import com.momens.android.presentation.onboarding.navigation.Onboarding
@@ -119,6 +121,19 @@ class MainAppState(
 
     fun navigateUp() {
         navController.navigateUp()
+    }
+
+    /**
+     * 알림을 탭해 들어왔을 때 [PushData.destination]에 맞는 화면으로 이동합니다.
+     *
+     * 시그널 상세처럼 화면 위에 얹히는 바텀시트는 이 함수만으로 열리지 않습니다. 탭 이동 후
+     * signalId를 이용해 바텀시트를 여는 것은 SignalScreen 쪽 pendingSignalId 파라미터가 담당합니다.
+     */
+    fun navigateFromPushData(pushData: PushData) {
+        when (pushData.destination) {
+            PushDestination.SIGNAL_DETAIL -> navigate(MainTab.SIGNAL)
+            PushDestination.UNKNOWN -> Unit
+        }
     }
 }
 

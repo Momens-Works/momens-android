@@ -24,11 +24,15 @@ fun NavController.navigateToSignal(
 fun NavGraphBuilder.signalNavGraph(
     paddingValues: PaddingValues,
     navigateToTask: () -> Unit,
+    pendingSignalId: String? = null,
+    onPendingSignalConsumed: () -> Unit = {},
 ) {
     composable<Signal> {
         SignalRoute(
             paddingValues = paddingValues,
             navigateToTask = navigateToTask,
+            pendingSignalId = pendingSignalId,
+            onPendingSignalConsumed = onPendingSignalConsumed,
         )
     }
 }
