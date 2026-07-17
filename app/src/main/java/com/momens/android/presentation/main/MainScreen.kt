@@ -106,6 +106,7 @@ fun MainScreen(
                 MomensNavHost(
                     appState = appState,
                     paddingValues = innerPadding,
+                    tabBarHeight = tabBarBoxHeight,
                     pendingSignalId = pendingSignalId,
                     onPendingSignalConsumed = { pendingSignalId = null },
                 )
